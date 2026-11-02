@@ -102,23 +102,36 @@
 | H (TTS + ASR) | Fish Audio s2.1-pro-free (daily free quota) + platform ASR | free |
 | I–J (upload, log) | local session → OAuth; CI commits logs | free |
 
-## Residential runner (the bot-wall endgame, ledger L-037)
+## The bot-wall ladder (endgame — everything on GitHub-hosted runners, L-039)
 
-A self-hosted runner on ANY home machine (laptop, mini-PC, NAS) does two things at once:
-jobs start instantly (no hosted-queue lag) and YouTube sees a residential IP — the
-direct paths in transcribe.py stop being blocked, no mirrors needed.
+Directive: no residential hardware. Every rung runs on the sandbox or on
+GitHub-hosted runners, and each adds an independent chance to get the day's
+transcript. One winner is all the daily loop needs.
 
-One-time setup on that machine (3 commands + 1):
+| Rung | Mechanism | Where it lives |
+|---|---|---|
+| 1 | Off-peak cron (06:00 UTC) — fewer runners competing, fresh IPs | `daily-loop.yml` schedule |
+| 2 | The 6-path chain: captions → yt-dlp → Invidious mirrors → Piped mirrors → Whisper → proxy escalation | `tools/transcribe.py` |
+| 3 | **Matrix parallel legs** — 3 jobs = 3 different hosted-runner IPs (fresh per job), `fail-fast: false`, winner merged by priority | `daily-loop.yml` jobs `attempt`/`merge` |
+| 4 | **Proxy rotation** — fresh validated proxies from GitHub-hosted lists (updated every 5–30 min); YouTube sees the proxy IP, never ours | `tools/proxy_pool.py` |
+| 5 | Player-client rotation — `android` client often gets different treatment than `web` | `YTDLP_PLAYER_CLIENT` env (android leg) |
+
+Why this beats a single residential runner: it's 3 lottery tickets a day instead
+of one machine that can die, and it costs zero maintenance. Free proxies are
+opportunistic (heavily shared IPs — many are pre-blocked at the captions
+endpoint), so rung 4 is a bonus, not a dependency; the legs' fresh runner IPs
+and the mirror pool carry the base rate.
+
+Daily ops (3 commands, run anywhere — sandbox or runner):
 
 ```bash
-# get a fresh registration token (expires in 1h):
-curl -s -X POST -H "Authorization: Bearer <GH_PAT>" \
-  https://api.github.com/repos/limitlessprojects/youtube-engine/actions/runners/registration-token
-# then on the machine:
-./config.sh --url https://github.com/limitlessprojects/youtube-engine --token <TOKEN> --labels home --unattended
-./svc.sh install && ./svc.sh start        # or just: ./run.sh for a session runner
+python tools/proxy_pool.py best --n 3     # fresh validated proxies, latency-sorted
+python tools/proxy_pool.py env            # -> PROXY_URL=... (eval $(...) to use)
+python tools/transcribe.py <video-id>     # full 6-path ladder incl. escalation
 ```
 
-Then switch the workflow's `runs-on: ubuntu-latest` to `runs-on: [self-hosted, home]`
-when the runner is online; hosted runners remain the fallback (GitHub routes to them
-if the label doesn't match — keep a dual-job or the default label fallback).
+List sources (auto-fetched, overridable via `PROXY_LIST_URLS`):
+proxifly/free-proxy-list (every 5 min), monosans/proxy-list (every 30 min,
+pre-checked), TheSpeedX/SOCKS-List (daily). Cache: `research/proxies/cache.json`
+(20-min TTL, gitignored). Optional extras in Secrets: `YTA_PROXY`,
+`YTDLP_COOKIES` (a logged-in cookie jar shifts YouTube's bot heuristics).

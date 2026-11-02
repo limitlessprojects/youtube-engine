@@ -3,57 +3,119 @@
   "format": "short",
   "hook": {
     "timestamp_start": 0.0,
-    "narration": "A black hole just appeared in your pocket."
+    "narration": "A black hole just appeared in your pocket.",
+    "audio_dur_s": 2.011
   },
   "scenes": [
     {
-      "timestamp_start": 2.8,
+      "timestamp_start": 2.461,
       "narration": "Coin-sized. Harmless-looking. Completely lying.",
-      "visual": {"pose": "curious", "prop": "coin", "background": "closeup"},
-      "fact_sources": ["premise setup"]
+      "visual": {
+        "pose": "curious",
+        "prop": "coin",
+        "background": "closeup"
+      },
+      "fact_sources": [
+        "premise setup"
+      ],
+      "audio_dur_s": 3.317
     },
     {
-      "timestamp_start": 5.5,
+      "timestamp_start": 6.229,
       "narration": "That little circle weighs about as much as the whole Earth.",
-      "visual": {"pose": "pointing", "prop": "coin_vs_earth", "background": "space"},
-      "fact_sources": ["Schwarzschild radius r_s = 2GM/c^2: a 1 cm-radius black hole has mass ~6.7e24 kg, i.e. roughly one Earth mass (order-of-magnitude)"]
+      "visual": {
+        "pose": "pointing",
+        "prop": "coin_vs_earth",
+        "background": "space"
+      },
+      "fact_sources": [
+        "Schwarzschild radius r_s = 2GM/c^2: a 1 cm-radius black hole has mass ~6.7e24 kg, i.e. roughly one Earth mass (order-of-magnitude)"
+      ],
+      "audio_dur_s": 2.847
     },
     {
-      "timestamp_start": 10.5,
+      "timestamp_start": 9.526,
       "narration": "It falls through your hand, through the floor, through the sidewalk.",
-      "visual": {"pose": "falling", "prop": "floor_layers", "background": "cross_section"},
-      "fact_sources": ["geometry: event horizon radius ~1e-13 m vs atom ~1e-10 m — the hole passes through matter like a ghost, gravity does the damage"]
+      "visual": {
+        "pose": "falling",
+        "prop": "floor_layers",
+        "background": "cross_section"
+      },
+      "fact_sources": [
+        "geometry: event horizon radius ~1e-13 m vs atom ~1e-10 m \u2014 the hole passes through matter like a ghost, gravity does the damage"
+      ],
+      "audio_dur_s": 3.448
     },
     {
-      "timestamp_start": 15.0,
+      "timestamp_start": 13.424,
       "narration": "Matter is mostly empty space. To this thing, solid rock is a rumor.",
-      "visual": {"pose": "amazed", "prop": "atom", "background": "cross_section"},
-      "fact_sources": ["standard atomic-structure fact: nucleus is ~1/100,000 of the atom radius"]
+      "visual": {
+        "pose": "amazed",
+        "prop": "atom",
+        "background": "cross_section"
+      },
+      "fact_sources": [
+        "standard atomic-structure fact: nucleus is ~1/100,000 of the atom radius"
+      ],
+      "audio_dur_s": 4.467
     },
     {
-      "timestamp_start": 20.0,
+      "timestamp_start": 18.341,
       "narration": "It loops the planet through the core, and every pass cracks the crust.",
-      "visual": {"pose": "shocked", "prop": "earth_orbit_line", "background": "globe"},
-      "fact_sources": ["classic gravitation result: an object dropped through Earth oscillates through the core; tidal stresses follow it"]
+      "visual": {
+        "pose": "shocked",
+        "prop": "earth_orbit_line",
+        "background": "globe"
+      },
+      "fact_sources": [
+        "classic gravitation result: an object dropped through Earth oscillates through the core; tidal stresses follow it"
+      ],
+      "audio_dur_s": 4.049
     },
     {
-      "timestamp_start": 24.5,
+      "timestamp_start": 22.84,
       "narration": "And no, it doesn't swallow the Earth in one bite. Real black holes eat slowly: atom by atom, patient, invisible.",
-      "visual": {"pose": "calm", "prop": "atom_trickle", "background": "dark"},
-      "fact_sources": ["micro black-hole accretion is extremely slow (tiny capture cross-section) — CERN LSAG safety review conclusions"]
+      "visual": {
+        "pose": "calm",
+        "prop": "atom_trickle",
+        "background": "dark"
+      },
+      "fact_sources": [
+        "micro black-hole accretion is extremely slow (tiny capture cross-section) \u2014 CERN LSAG safety review conclusions"
+      ],
+      "audio_dur_s": 7.967
     },
     {
-      "timestamp_start": 32.0,
+      "timestamp_start": 31.257,
       "narration": "But patience wins. One day the ground gives up, and the planet folds itself into a marble.",
-      "visual": {"pose": "shocked", "prop": "earth_marble", "background": "space"},
-      "fact_sources": ["Earth's own Schwarzschild radius is ~8.9 mm — the whole planet compressed to marble size"]
+      "visual": {
+        "pose": "shocked",
+        "prop": "earth_marble",
+        "background": "space"
+      },
+      "fact_sources": [
+        "Earth's own Schwarzschild radius is ~8.9 mm \u2014 the whole planet compressed to marble size"
+      ],
+      "audio_dur_s": 5.303
     },
     {
-      "timestamp_start": 38.5,
+      "timestamp_start": 37.01,
       "narration": "Check your pocket. The universe already did.",
-      "visual": {"pose": "smug", "prop": "empty_pocket", "background": "street"},
-      "fact_sources": ["loop line"]
+      "visual": {
+        "pose": "smug",
+        "prop": "empty_pocket",
+        "background": "street"
+      },
+      "fact_sources": [
+        "loop line"
+      ],
+      "audio_dur_s": 2.612
     }
   ],
-  "loop_line": "Check your pocket. The universe already did."
+  "loop_line": "Check your pocket. The universe already did.",
+  "timeline": {
+    "total_s": 40.422,
+    "gap_s": 0.45,
+    "resynced_from": "vo/00-08.mp3 real durations (asr_verify_vo.py)"
+  }
 }

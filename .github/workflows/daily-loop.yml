@@ -3,7 +3,13 @@ name: Daily Learning Loop
 # The studio's heartbeat: transcribe the next competitor video off the queue,
 # extract its structural blueprint, log the day, commit back.
 # LLM-free by design (deterministic; agent sessions do the creative work).
-# YouTube bot-walls cloud IPs (ledger L-031) — blocked days stay green and retry.
+#
+# Bot-wall ladder (docs/architecture.md, L-039) — everything on GitHub-hosted
+# runners, no residential hardware:
+#   rung 3: 3 parallel matrix legs = 3 fresh runner IPs, fail-fast disabled
+#   rung 4: proxy leg rotates fresh proxies from GitHub-hosted lists
+#   rung 5: android leg rotates the yt-dlp player client
+# Blocked days stay green and retry (queue item only pops on success).
 
 on:
   schedule:
@@ -23,7 +29,70 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  learn:
+  attempt:
+    # Each leg runs the full 6-path transcribe chain from a DIFFERENT
+    # GitHub-hosted runner (fresh IP per job). continue-on-error keeps the
+    # workflow green while legs fail independently — one winner is enough.
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        leg: [direct, proxy, android]
+    env:
+      LEG_STRATEGY: ${{ matrix.leg }}
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run one transcription attempt
+        env:
+          # Optional escape hatches (docs/youtube-oauth.md):
+          YTA_PROXY: ${{ secrets.YTA_PROXY }}
+          YTDLP_COOKIES: ${{ secrets.YTDLP_COOKIES }}
+          # Ladder strategy per leg:
+          PROXY_POOL: ${{ matrix.leg == 'direct' && 'off' || 'auto' }}
+          PROXY_POOL_TRIES: "3"
+          YTDLP_PLAYER_CLIENT: ${{ matrix.leg == 'android' && 'android' || '' }}
+        run: |
+          set -x
+          if [ -n "$YTDLP_COOKIES" ]; then
+            echo "$YTDLP_COOKIES" > /tmp/yt_cookies.txt
+            echo "YTDLP_COOKIES_FILE=/tmp/yt_cookies.txt" >> "$GITHUB_ENV"
+          fi
+          ITEM=$(grep -vE '^\s*(#|$)' config/learning_queue.txt | head -1 || true)
+          if [ -z "$ITEM" ]; then
+            echo "queue empty — nothing to attempt"; exit 0
+          fi
+          echo "attempt [$LEG_STRATEGY] on: $ITEM"
+          python tools/transcribe.py "$ITEM"
+
+      - name: Upload attempt artifact (winners only)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: attempt-${{ matrix.leg }}
+          path: research/transcripts/
+          if-no-files-found: ignore
+          retention-days: 1
+
+  merge:
+    # First successful leg (direct > proxy > android priority) becomes the
+    # day's transcript: blueprint, pop queue, log, commit.
+    needs: attempt
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -43,23 +112,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Download all attempt artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .ci-artifacts
+          pattern: attempt-*
+          merge-multiple: false
+
       - name: Git identity
         run: |
           git config user.name "youtube-engine bot"
           git config user.email "341060791+limitlessprojects@users.noreply.github.com"
 
-      - name: Run the daily loop
+      - name: Merge winner (blueprint, pop queue, log)
         env:
-          # Optional escape hatches for YouTube's cloud-IP bot-wall (docs/youtube-oauth.md):
-          YTA_PROXY: ${{ secrets.YTA_PROXY }}
-          YTDLP_COOKIES: ${{ secrets.YTDLP_COOKIES }}
-        run: |
-          if [ -n "$YTDLP_COOKIES" ]; then
-            echo "$YTDLP_COOKIES" > /tmp/yt_cookies.txt
-            echo "YTDLP_COOKIES_FILE=/tmp/yt_cookies.txt" >> "$GITHUB_ENV"
-          fi
-          python tools/daily_loop.py
+          CI_TRANSCRIPTS_DIR: ${{ github.workspace }}/.ci-artifacts
+        run: python tools/daily_loop.py
 
       - name: Push (retry-safe)
         run: |
-          git push || (sleep 5 && git push) || echo "::warning::push failed; local changes preserved for next run"
+          git push || (sleep 5 && git pull --rebase && git push) || echo "::warning::push failed; local changes preserved for next run"

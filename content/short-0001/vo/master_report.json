@@ -1,0 +1,8 @@
+{
+  "file": "content/short-0001/short-0001.mp4",
+  "duration_s": 40.867,
+  "lufs": -13.96,
+  "true_peak_dbtp": -1.43,
+  "size_mb": 3.12,
+  "note": "two-pass loudnorm master; loudness measured on audio stream"
+}

@@ -39,3 +39,11 @@ Thumbs.db
 # blueprints (derived metrics) remain tracked.
 research/transcripts/*.json
 research/transcripts/*.txt
+research/proxies/
+content/*/render/frames/
+content/*/render/scenes.built.html
+content/*/gate/
+content/*/*.mp4
+!content/*/gate/report.json
+content/*/vo/*.wav
+content/*/vo/master.m4a

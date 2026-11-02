@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html,body{margin:0;padding:0;background:#0b0b10;overflow:hidden;
+    font-family:"DejaVu Sans",sans-serif;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+  text{font-weight:700;letter-spacing:-0.5px;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script>
+/* ============================================================
+   Short #0001 — "What if a black hole appeared in your pocket?"
+   Seek-driven SVG renderer: renderFrame(t) draws global time t.
+   Timeline injected by tools/render_short.py (__TIMELINE__/__T_END__).
+   Style: classic white-on-black stickman + single amber accent
+   (stickman-video-director dark theme, what-if-animation staging).
+   Layout rules: characters in central band y 380..1530,
+   captions inside bottom-20% zone y 1560..1820 (VLM checklist #1).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+const AMBER = "#ffb054";
+const WHITE = "#f4f2ec";
+const FAINT = "rgba(244,242,236,0.30)";
+const FAINT2 = "rgba(244,242,236,0.15)";
+const SVGNS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("frame");
+
+function E(tag, attrs, parent) {
+  const el = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(el);
+  return el;
+}
+const ease = u => u <= 0 ? 0 : u >= 1 ? 1 : (u < 0.5 ? 2*u*u : 1 - Math.pow(-2*u + 2, 2)/2);
+const clamp01 = u => Math.max(0, Math.min(1, u));
+
+/* ---------- backdrops ---------- */
+function bgSpace(alpha) {
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 46; i++) {
+    const x = rnd()*1080, y = 380 + rnd()*1150, r = 1.2 + rnd()*2.2;
+    E("circle", {cx:x, cy:y, r:r, fill:WHITE, opacity:alpha*(0.25 + rnd()*0.5)});
+  }
+}
+function platform(x, y, w) {   // the star-deck stickmen stand on in space scenes
+  E("line", {x1:x-w, y1:y, x2:x+w, y2:y, stroke:"rgba(244,242,236,0.55)",
+    "stroke-width":6, "stroke-linecap":"round"});
+}
+function bgStreet() {
+  E("line", {x1:40, y1:1364, x2:1040, y2:1364, stroke:"rgba(244,242,236,0.45)", "stroke-width":5});
+  E("line", {x1:40, y1:1380, x2:1040, y2:1380, stroke:FAINT2, "stroke-width":3});
+  E("rect", {x:110, y:1198, width:16, height:166, fill:"rgba(244,242,236,0.26)"});
+  E("circle", {cx:118, cy:1186, r:17, fill:"none", stroke:"rgba(244,242,236,0.45)", "stroke-width":4});
+  E("rect", {x:660, y:1000, width:380, height:364, fill:"none", stroke:"rgba(244,242,236,0.28)", "stroke-width":4});
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 5; c++)
+    if ((r + c) % 2 === 0)
+      E("rect", {x:700 + c*68, y:1048 + r*78, width:34, height:44, fill:"rgba(244,242,236,0.20)"});
+  E("rect", {x:180, y:1092, width:300, height:272, fill:"none", stroke:"rgba(244,242,236,0.22)", "stroke-width":4});
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++)
+    if ((r + c) % 2 === 1)
+      E("rect", {x:214 + c*66, y:1130 + r*76, width:30, height:40, fill:"rgba(244,242,236,0.16)"});
+}
+function bgCross() {
+  for (let i = 0; i < 4; i++)
+    E("line", {x1:80, y1:520 + i*300, x2:1000, y2:520 + i*300,
+      stroke:FAINT2, "stroke-width":4, "stroke-dasharray":"16 22"});
+}
+function vignette() {
+  const rg = E("radialGradient", {id:"vg", cx:"50%", cy:"46%", r:"75%"});
+  E("stop", {offset:"62%", "stop-color":"#0b0b10", "stop-opacity":0}, rg);
+  E("stop", {offset:"100%", "stop-color":"#050507", "stop-opacity":0.85}, rg);
+  E("rect", {x:0, y:0, width:1080, height:1920, fill:"url(#vg)"});
+}
+
+/* ---------- stickman pose library. origin = hip point ---------- */
+function stickman(x, y, h, pose, t, opts) {
+  const g = E("g", {});
+  const L = (x1,y1,x2,y2,w) => E("line", {x1,y1,x2,y2, stroke:WHITE,
+    "stroke-width":w, "stroke-linecap":"round"}, g);
+  const hr = h*0.115;
+  const bob = Math.sin(t*2.1)*3;
+  const hipY = y + bob;
+  const shX = x, shY = hipY - h*0.56 + bob;
+  const headY = shY - h*0.06 - hr - 6;
+  L(x, hipY, shX, shY, 8);
+  E("circle", {cx:shX, cy:headY, r:hr, stroke:WHITE, "stroke-width":7, fill:"#0b0b10"}, g);
+  const A = (ex,ey) => L(shX - h*0.10, shY, ex, ey, 8);
+  const B = (ex,ey) => L(shX + h*0.10, shY, ex, ey, 8);
+  const LG = (dx) => L(x, hipY, x + dx, y + h*0.42, 9);  // feet planted (no bob)
+  const eyes = (dy) => {
+    E("circle", {cx:x-10, cy:headY + dy, r:3.4, fill:WHITE}, g);
+    E("circle", {cx:x+12, cy:headY + dy + 1, r:3.4, fill:WHITE}, g);
+  };
+  const mouthO = () => E("circle", {cx:x+1, cy:headY+13, r:5.5, fill:"none",
+    stroke:WHITE, "stroke-width":4}, g);
+  const mouthSmile = (tilt) => E("path", {d:`M ${x-9} ${headY+11} Q ${x+1} ${headY+18} ${x+11} ${headY+10+tilt}`,
+    stroke:WHITE, "stroke-width":4, fill:"none", "stroke-linecap":"round"}, g);
+  const mouthFlat = () => L(x-8, headY+13, x+10, headY+13, 4);
+  switch (pose) {
+    case "curious":
+      LG(-h*0.16); LG(h*0.16);
+      A(x + h*0.02, headY + hr + h*0.10);       // hand under chin
+      B(x + h*0.30, shY + h*0.16);
+      eyes(0); mouthFlat();
+      break;
+    case "pointup":
+      LG(-h*0.16); LG(h*0.16);
+      A(x - h*0.26, shY + h*0.22);
+      B(x + h*0.40, shY - h*0.34);              // pointing up-right
+      eyes(-2); mouthFlat();
+      break;
+    case "peerdown":
+      LG(-h*0.18); LG(h*0.18);
+      A(x - h*0.26, shY + h*0.26);
+      B(x + h*0.32, shY + h*0.18);
+      eyes(9);                                   // gaze low
+      L(x-8, headY+17, x+10, headY+18, 4);
+      break;
+    case "amazed":
+      LG(-h*0.16); LG(h*0.16);
+      A(x - hr*1.5, headY - hr*0.55);            // hands on head
+      B(x + hr*1.5, headY - hr*0.55);
+      eyes(0); mouthO();
+      break;
+    case "shocked":
+      LG(-h*0.17); LG(h*0.17);
+      A(x - h*0.36, shY - h*0.34);               // arms thrown up
+      B(x + h*0.36, shY - h*0.34);
+      eyes(0); mouthO();
+      break;
+    case "calm":
+      LG(-h*0.16); LG(h*0.16);
+      A(x + h*0.20, shY + h*0.14);               // arms crossed
+      B(x - h*0.20, shY + h*0.14);
+      eyes(0); mouthFlat();
+      break;
+    case "smug":
+      LG(-h*0.16); LG(h*0.16);
+      A(x - h*0.30, shY + h*0.24);               // hand toward pocket
+      B(x + h*0.18, shY + h*0.20);
+      E("circle", {cx:x-10, cy:headY-3, r:3.4, fill:WHITE}, g);
+      E("path", {d:`M ${x+2} ${headY-8} Q ${x+14} ${headY-7} ${x+14} ${headY+1}`,
+        stroke:WHITE, "stroke-width":3.4, fill:"none", "stroke-linecap":"round"}, g);
+      mouthSmile(1);
+      break;
+  }
+  if (opts && opts.pocket) {
+    E("path", {d:`M ${x + h*0.08} ${hipY - h*0.04} q ${h*0.16} ${-h*0.03} ${h*0.21} ${h*0.11}
+      q ${-h*0.08} ${h*0.06} ${-h*0.23} ${h*0.02} z`, stroke:WHITE, "stroke-width":5,
+      fill:"#0b0b10", "stroke-linejoin":"round"}, g);
+    if (opts.pocket === "hole") {
+      const pulse = 1 + Math.sin(t*5)*0.15;
+      const px = x + h*0.19, py = hipY + h*0.01;
+      E("circle", {cx:px, cy:py, r:15, fill:"#000", stroke:AMBER, "stroke-width":5}, g);
+      E("circle", {cx:px, cy:py, r:26*pulse, fill:"none", stroke:AMBER, "stroke-width":3, opacity:0.5}, g);
+      E("circle", {cx:px, cy:py, r:38*pulse, fill:"none", stroke:AMBER, "stroke-width":2, opacity:0.25}, g);
+    }
+  }
+  return g;
+}
+
+/* ---------- props ---------- */
+function blackHole(cx, cy, r, t, glow, parent) {
+  const g = E("g", {}, parent);
+  const pulse = 1 + Math.sin(t*5)*0.1;
+  if (glow !== false) {
+    E("circle", {cx, cy, r:r*2.6*pulse, fill:"none", stroke:AMBER, "stroke-width":3, opacity:0.35}, g);
+    E("circle", {cx, cy, r:r*1.7*pulse, fill:"none", stroke:AMBER, "stroke-width":5, opacity:0.55}, g);
+  }
+  E("circle", {cx, cy, r, fill:"#000", stroke:AMBER, "stroke-width":Math.max(4, r*0.16)}, g);
+  return g;
+}
+function earth(cx, cy, r, cracks, parent) {
+  const g = E("g", {}, parent);
+  E("circle", {cx, cy, r, fill:"#101722", stroke:"#5a7d9a", "stroke-width":5}, g);
+  E("path", {d:`M ${cx-r*0.55} ${cy-r*0.30} q ${r*0.30} ${-r*0.16} ${r*0.55} ${r*0.02}
+     q ${r*0.25} ${r*0.16} ${r*0.02} ${r*0.30} q ${-r*0.34} ${r*0.10} ${-r*0.50} ${-r*0.06} z`,
+    fill:"#2e4d3f", opacity:0.9}, g);
+  E("path", {d:`M ${cx+r*0.10} ${cy+r*0.22} q ${r*0.30} ${-r*0.10} ${r*0.44} ${r*0.06}
+     q ${-r*0.10} ${r*0.22} ${-r*0.34} ${r*0.16} q ${-r*0.18} ${-r*0.06} ${-r*0.10} ${-r*0.22} z`,
+    fill:"#2e4d3f", opacity:0.75}, g);
+  for (let i = 0; i < (cracks || 0); i++) {
+    const a = i*2.4 + 0.7;
+    E("line", {x1: cx + Math.cos(a)*r*0.96, y1: cy + Math.sin(a)*r*0.96,
+      x2: cx + Math.cos(a + 0.5)*r*0.55, y2: cy + Math.sin(a + 0.5)*r*0.55,
+      stroke:AMBER, "stroke-width":4, "stroke-linecap":"round"}, g);
+  }
+  return g;
+}
+function atom(cx, cy, r, t) {
+  const g = E("g", {});
+  E("circle", {cx, cy, r, fill:"none", stroke:FAINT2, "stroke-width":3, "stroke-dasharray":"6 14"}, g);
+  for (const rot of [0, 1.05, 2.1]) {
+    E("ellipse", {cx, cy, rx:r, ry:r*0.38, fill:"none", stroke:FAINT, "stroke-width":3.5,
+      transform:`rotate(${rot*57.3} ${cx} ${cy})`}, g);
+    const ph = t*1.6 + rot*2.1;
+    const ex = cx + Math.cos(ph)*r, ey = cy + Math.sin(ph)*r*0.38;
+    const c = Math.cos(rot*57.3), s = Math.sin(rot*57.3);
+    E("circle", {cx: cx + (ex-cx)*c - (ey-cy)*s, cy: cy + (ex-cx)*s + (ey-cy)*c, r:7, fill:WHITE}, g);
+  }
+  E("circle", {cx, cy, r: r*0.075, fill:AMBER}, g);
+  E("circle", {cx, cy, r: r*0.075+7, fill:"none", stroke:AMBER, "stroke-width":3, opacity:0.5}, g);
+  return g;
+}
+function label(x, y, txt, size, fill, anchor, opacity) {
+  const el = E("text", {x, y, "font-size":size, fill:fill || WHITE,
+    "text-anchor":anchor || "middle", opacity: opacity === undefined ? 1 : opacity});
+  el.textContent = txt;
+  return el;
+}
+
+/* ---------- captions: bottom band, word-pop, measured widths ---------- */
+const _meas = document.createElement("canvas").getContext("2d");
+function caption(text, u, emWords) {
+  const words = text.split(/\s+/);
+  const em = new Set((emWords || []).map(w => w.toLowerCase()));
+  const wOf = (w, s) => {
+    _meas.font = `700 ${s}px "DejaVu Sans", sans-serif`;
+    return Math.max(10, _meas.measureText(w).width - 0.4*w.length);
+  };
+  let size = 56, lines = null, widths = null, spaceW = 0;
+  for (; size >= 38; size -= 4) {
+    _meas.font = `700 ${size}px "DejaVu Sans", sans-serif`;
+    spaceW = _meas.measureText(" ").width;
+    widths = words.map(w => wOf(w, size));
+    lines = [[]];
+    let wpx = 0;
+    for (let i = 0; i < words.length; i++) {
+      const add = widths[i] + (lines[lines.length-1].length ? spaceW : 0);
+      if (wpx + add > 920 && lines[lines.length-1].length) { lines.push([]); wpx = 0; }
+      lines[lines.length-1].push(i);
+      wpx += widths[i] + (lines[lines.length-1].length > 1 ? spaceW : 0);
+    }
+    if (lines.length <= 3) break;
+  }
+  const lineH = size + 18;
+  const shown = Math.floor(ease(clamp01(u/0.62)) * words.length + 0.5001);
+  const g = E("g", {});
+  const baseY = 1712 - (lines.length-1)*lineH/2;
+  lines.forEach((ln, li) => {
+    const total = ln.reduce((a,i) => a + widths[i], 0) + spaceW*(ln.length-1);
+    let x = 540 - total/2;
+    const y = baseY + li*lineH;
+    ln.forEach(i => {
+      if (i < shown) {
+        const isEm = em.has(words[i].toLowerCase().replace(/[^a-z-]/g, ""));
+        const pop = Math.max(0.6, Math.min(1, (u*words.length - i)*0.6));
+        const el = E("text", {x, y, "font-size":size, fill:isEm ? AMBER : WHITE,
+          opacity: pop,
+          transform:`translate(${x} ${y}) scale(${Math.max(0.7, pop)}) translate(${-x} ${-y})`}, g);
+        el.textContent = words[i];
+      }
+      x += widths[i] + spaceW;
+    });
+  });
+  return g;
+}
+
+/* ---------- scenes (u = local progress, t = global time) ---------- */
+const SCENES = {
+  hook(u, t) {                                   // 0.0 - 2.46  street, pocket glow
+    bgStreet();
+    stickman(470, 1216, 360, "peerdown", t, {pocket:"hole"});
+  },
+  s0(u, t) {                                     // coin-sized, magnifier
+    bgStreet();
+    stickman(330, 1224, 340, "curious", t);
+    const mgx = 770, mgy = 880, mr = 185;
+    E("circle", {cx:mgx, cy:mgy, r:mr, fill:"none", stroke:WHITE, "stroke-width":7});
+    E("line", {x1:mgx + mr*0.72, y1:mgy + mr*0.72, x2:mgx + mr*1.22, y2:mgy + mr*1.22,
+      stroke:WHITE, "stroke-width":16, "stroke-linecap":"round"});
+    blackHole(mgx, mgy, 26, t);
+    const p = ease(clamp01((u-0.4)/0.25));
+    if (p > 0) label(mgx, mgy + 128, "\u2248 1 cm", 46, AMBER, "middle", p);
+  },
+  s1(u, t) {                                     // balance: hole = Earth
+    bgSpace(1);
+    stickman(235, 1150, 330, "pointup", t);
+    platform(235, 1289, 120);
+    const bx = 650, by = 470;
+    E("line", {x1:bx, y1:by - 210, x2:bx, y2:by, stroke:FAINT, "stroke-width":6});
+    E("line", {x1:bx - 90, y1:by - 210, x2:bx + 90, y2:by - 210, stroke:FAINT, "stroke-width":6});
+    const tilt = 13 * ease(clamp01(u/0.7));
+    const g = E("g", {transform:`rotate(${tilt} ${bx} ${by})`});
+    E("line", {x1:bx - 250, y1:by, x2:bx + 250, y2:by, stroke:WHITE, "stroke-width":9}, g);
+    E("line", {x1:bx - 250, y1:by, x2:bx - 250, y2:by + 46, stroke:FAINT, "stroke-width":5}, g);
+    E("line", {x1:bx + 250, y1:by, x2:bx + 250, y2:by + 46, stroke:FAINT, "stroke-width":5}, g);
+    blackHole(bx - 250, by + 78, 20, t, true, g);
+    earth(bx + 250, by + 110, 62, 0, g);
+  },
+  s2(u, t) {                                     // falls through layers
+    bgCross();
+    E("path", {d:"M 450 340 q 90 -60 180 0 q 36 80 -12 112 l -156 0 q -42 -34 -12 -112 z",
+      fill:"none", stroke:WHITE, "stroke-width":7, "stroke-linejoin":"round"});
+    label(540, 292, "YOUR HAND", 36, FAINT);
+    const labels = ["THE FLOOR", "THE SIDEWALK", "THE ROCK"];
+    for (let i = 0; i < 3; i++) label(540, 560 + i*300, labels[i], 36, FAINT);
+    stickman(210, 316, 240, "peerdown", t);
+    E("line", {x1:110, y1:412, x2:320, y2:412, stroke:FAINT, "stroke-width":5, "stroke-linecap":"round"});
+    const fy = 430 + ease(clamp01((u-0.05)/0.70)) * 1170;
+    E("line", {x1:540, y1:430, x2:540, y2:fy, stroke:AMBER, "stroke-width":5,
+      "stroke-dasharray":"5 24", opacity:0.8});
+    blackHole(540, fy, 30, t);
+  },
+  s3(u, t) {                                     // atom: mostly empty space
+    bgCross();
+    atom(450, 740, 320, t);
+    stickman(880, 988, 330, "amazed", t);
+    platform(880, 1126, 120);
+    const p = ease(clamp01((u-0.45)/0.35));
+    if (p > 0) label(450, 1210, "99.9999\u2026% EMPTY", 48, AMBER, "middle", p);
+  },
+  s4(u, t) {                                     // loops the core, cracks
+    bgSpace(1);
+    const cx = 580, cy = 740, R = 250;
+    E("ellipse", {cx, cy, rx:R*1.55, ry:R*0.62, fill:"none", stroke:FAINT,
+      "stroke-width":4, "stroke-dasharray":"10 18", transform:`rotate(-18 ${cx} ${cy})`});
+    const passes = Math.min(4, Math.floor(u*4));
+    earth(cx, cy, R, passes*3);
+    const rot = -18*0.01745;
+    const ph = -1.2 + u*6.42;
+    const ex0 = Math.cos(ph)*R*1.55, ey0 = Math.sin(ph)*R*0.62;
+    blackHole(cx + ex0*Math.cos(rot) - ey0*Math.sin(rot),
+              cy + ex0*Math.sin(rot) + ey0*Math.cos(rot), 20, t);
+    stickman(195, 1408, 280, "shocked", t);
+    platform(195, 1526, 115);
+  },
+  s5(u, t) {                                     // eats slowly, atom by atom
+    bgSpace(0.5);
+    const cx = 690, cy = 700, R = 235;
+    earth(cx, cy, R, 6);
+    const hx = 250, hy = 940;
+    blackHole(hx, hy, 17, t);
+    E("path", {d:`M ${cx - R*0.9} ${cy + R*0.35} Q ${(cx+hx)/2 - 60} ${(cy+hy)/2 + 90} ${hx + 34} ${hy - 20}`,
+      fill:"none", stroke:AMBER, "stroke-width":3, "stroke-dasharray":"3 18", opacity:0.5});
+    for (let i = 0; i < 9; i++) {
+      const au = clamp01((u - i*0.085) / 0.5);
+      if (au <= 0) continue;
+      const a = 1.9 + i*0.34;
+      const sx = cx + Math.cos(a)*R*0.98, sy = cy + Math.sin(a)*R*0.98;
+      E("circle", {cx: sx + (hx - sx)*ease(au), cy: sy + (hy - sy)*ease(au),
+        r:9, fill:WHITE, opacity: 1 - au*0.3});
+    }
+    stickman(235, 1340, 290, "calm", t);
+    platform(235, 1462, 120);
+  },
+  s6(u, t) {                                     // folds into a marble
+    bgSpace(1);
+    const cx = 560, cy = 730;
+    const shrink = ease(clamp01(u/0.85));
+    const R = 245*(1 - shrink) + 30*shrink;
+    if (shrink < 0.98) {
+      earth(cx, cy, R, 6);
+      const folds = Math.floor(shrink*7);
+      for (let i = 0; i < folds; i++) {
+        const yy = cy - R + (i+1)*(2*R/(folds+1));
+        E("line", {x1:cx - R*0.85, y1:yy, x2:cx + R*0.85, y2:yy,
+          stroke:AMBER, "stroke-width":4, opacity:0.7});
+      }
+      if (shrink > 0.15 && shrink < 0.9) {
+        for (let i = 0; i < 8; i++) {
+          const a = i*0.785 + 0.4;
+          const r1 = R*1.15 + 34*Math.sin(shrink*3.14);
+          E("line", {x1:cx + Math.cos(a)*R*1.15, y1:cy + Math.sin(a)*R*1.15,
+            x2:cx + Math.cos(a)*r1, y2:cy + Math.sin(a)*r1,
+            stroke:AMBER, "stroke-width":4, opacity:0.55});
+        }
+      }
+    } else {
+      earth(cx, cy, 34, 3);                       // the folded planet-marble
+      E("circle", {cx, cy, r:52, fill:"none", stroke:AMBER, "stroke-width":4, opacity:0.6});
+      E("circle", {cx, cy, r:66, fill:"none", stroke:AMBER, "stroke-width":3, opacity:0.3});
+    }
+    stickman(195, 1340, 280, "shocked", t);
+    platform(195, 1458, 115);
+  },
+  s7(u, t) {                                     // empty pocket, fade out
+    bgStreet();
+    stickman(470, 1216, 360, "smug", t, {pocket:"empty"});
+    const p = ease(clamp01((u-0.3)/0.3));
+    if (p > 0) {
+      E("circle", {cx:540, cy:730, r:150, fill:"none", stroke:FAINT,
+        "stroke-width":4, "stroke-dasharray":"6 16", opacity:p});
+      label(540, 610, "nothing.", 54, WHITE, "middle", p);
+    }
+    if (u > 0.82)
+      E("rect", {x:0, y:0, width:1080, height:1920, fill:"#050507",
+        opacity:clamp01((u-0.82)/0.16)});
+  },
+};
+
+const EMPHASIS = {
+  hook: ["hole", "pocket"], s0: ["coin-sized", "lying"], s1: ["earth"],
+  s2: ["hand", "floor", "sidewalk"], s3: ["empty", "rumor"],
+  s4: ["core", "crust"], s5: ["atom"],
+  s6: ["marble"], s7: ["universe"],
+};
+
+function renderFrame(t) {
+  svg.innerHTML = "";
+  E("rect", {x:0, y:0, width:1080, height:1920, fill:"#0b0b10"});
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++)
+    if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx];
+  const u = clamp01((t - sc.start) / (sc.end - sc.start));
+  SCENES[sc.id](u, t);
+  vignette();
+  caption(sc.narration, u, EMPHASIS[sc.id]);
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>

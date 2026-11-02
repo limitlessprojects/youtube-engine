@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """transcribe.py — the "youtubecheck": get a transcript for a YouTube video.
 
-Paths, in order (see docs/architecture.md stage B, ledger L-031):
-  1. youtube-transcript-api (captions; optional proxy via YTA_PROXY env)
-  2. yt-dlp auto-subs (cookies via YTDLP_COOKIES_FILE; client via YTDLP_PLAYER_CLIENT)
+Paths, in order (see docs/architecture.md stage B, ledger L-031, ladder L-039):
+  1. youtube-transcript-api (captions; optional proxy via YTA_PROXY / PROXY_URL env)
+  2. yt-dlp auto-subs (cookies via YTDLP_COOKIES_FILE; client via YTDLP_PLAYER_CLIENT;
+     proxy via PROXY_URL)
   3. Invidious mirror captions (mirror's IP talks to YouTube, ours talks to the mirror)
   4. Piped API subtitles (same mirror principle)
   5. local Whisper via faster-whisper on yt-dlp-fetched audio (best-effort)
+  6. proxy escalation: if 1-5 all blocked and PROXY_POOL != off, pull fresh
+     proxies from GitHub-hosted lists (tools/proxy_pool.py) and retry paths 1-2
+     through each — YouTube sees the proxy IP, never ours/runner's.
 
 Day-002 hardening: 3 -> 5 independent paths. The bot-wall (L-031) only sees our
 IP on paths 1-2; paths 3-4 outsource the risky request to community mirrors
@@ -39,6 +43,17 @@ def video_id(url_or_id: str) -> str:
     return m.group(1) if m else url_or_id.strip()
 
 
+def _active_proxy() -> str:
+    """Single explicit proxy: PROXY_URL wins, YTA_PROXY kept for back-compat."""
+    return (os.environ.get("PROXY_URL", "").strip()
+            or os.environ.get("YTA_PROXY", "").strip())
+
+
+def _requests_proxies():
+    p = _active_proxy()
+    return {"http": p, "https": p} if p else None
+
+
 def via_transcript_api(vid: str) -> list[dict] | None:
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
@@ -46,7 +61,7 @@ def via_transcript_api(vid: str) -> list[dict] | None:
         print("[t] youtube-transcript-api not installed", file=sys.stderr)
         return None
     proxy_config = None
-    proxy = os.environ.get("YTA_PROXY", "").strip()
+    proxy = _active_proxy()
     if proxy:
         try:
             from youtube_transcript_api.proxies import GenericProxyConfig
@@ -121,6 +136,9 @@ def via_ytdlp(vid: str) -> list[dict] | None:
     tmpl = str(OUT / f"__tmp_{vid}")
     cmd = [sys.executable, "-m", "yt_dlp", "--skip-download", "--write-auto-subs", "--write-subs",
            "--sub-langs", "en.*,en", "--sub-format", "vtt/srt", "-o", tmpl, url]
+    proxy = _active_proxy()
+    if proxy:
+        cmd += ["--proxy", proxy]
     cookies = os.environ.get("YTDLP_COOKIES_FILE", "").strip()
     if cookies and Path(cookies).exists():
         cmd += ["--cookies", cookies]
@@ -131,7 +149,13 @@ def via_ytdlp(vid: str) -> list[dict] | None:
     if pc:
         cmd += ["--extractor-args", f"youtube:player_client={pc}"]
     print("[t] yt-dlp:", " ".join(cmd[2:]))
-    subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+    # free proxies are slow: bound the wait so escalation stays inside the CI
+    # leg budget (12 min) — 3 proxies x ~75s + captions attempts (L-039)
+    to = 75 if _active_proxy() else 180
+    try:
+        subprocess.run(cmd, capture_output=True, text=True, timeout=to)
+    except subprocess.TimeoutExpired:
+        print(f"[t] yt-dlp timed out after {to}s (proxy mode)", file=sys.stderr)
     vtt = sorted(OUT.glob(f"__tmp_{vid}*.vtt"))
     if not vtt:
         return None
@@ -172,6 +196,8 @@ def _instances(env_key: str, defaults: list[str]) -> list[str]:
 
 
 def _fetch_vtt_text(url: str) -> list[dict] | None:
+    # mirrors are NOT YouTube — always fetch them direct; the proxy is for
+    # the YouTube-facing paths (captions api, yt-dlp) only (L-039)
     r = requests.get(url, timeout=15, headers=_UA)
     if r.status_code != 200 or "-->" not in r.text:
         return None
@@ -244,6 +270,39 @@ def via_whisper(vid: str) -> list[dict] | None:
     return out or None
 
 
+def _proxy_escalation(vid: str) -> list[dict] | None:
+    """Path 6: rotate fresh GitHub-hosted proxies through the direct paths."""
+    if os.environ.get("PROXY_POOL", "auto").strip().lower() in ("off", "0", "no"):
+        return None
+    if _active_proxy():
+        return None  # explicit proxy already tried on paths 1-2
+    try:
+        sys.path.insert(0, str(Path(__file__).parent))
+        import proxy_pool
+    except ImportError:
+        return None
+    for entry in proxy_pool.best(int(os.environ.get("PROXY_POOL_TRIES", "3"))):
+        p = entry["proxy"]
+        print(f"[t] proxy escalation via {p} ({entry['ms']}ms)")
+        os.environ["PROXY_URL"] = p
+        try:
+            for fn in (via_transcript_api, via_ytdlp):
+                try:
+                    segs = fn(vid)
+                except Blocked as e:
+                    # L-033 rule: a block on THIS proxy is evidence about THIS
+                    # proxy only — next path / next proxy still gets its at-bat
+                    print(f"[t] {fn.__name__} blocked via {p}: {str(e)[:80]}",
+                          file=sys.stderr)
+                    continue
+                if segs:
+                    print(f"[t] OK via proxy {p}")
+                    return segs
+        finally:
+            os.environ.pop("PROXY_URL", None)
+    return None
+
+
 class Blocked(Exception):
     pass
 
@@ -252,7 +311,8 @@ def transcribe(vid: str) -> tuple[list[dict], str]:
     errors: list[str] = []
     for name, fn in (("captions", via_transcript_api), ("ytdlp-subs", via_ytdlp),
                      ("invidious-mirror", via_invidious), ("piped-mirror", via_piped),
-                     ("whisper", via_whisper)):
+                     ("whisper", via_whisper),
+                     ("proxy-pool", _proxy_escalation)):
         try:
             segs = fn(vid)
         except Blocked as e:

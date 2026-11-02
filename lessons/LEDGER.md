@@ -20,3 +20,4 @@
 | 000 | [`day000-prior-lessons.md`](day000-prior-lessons.md) | Design from the product ("because-X-so-Y"), real footage only, VLM-gate every scene |
 | 001 | [`2026-11-02-day001.md`](2026-11-02-day001.md) | Verify every repo name against the API; cloud IPs get bot-blocked by YouTube — build graceful retries |
 | 002 | [`2026-11-02-day002.md`](2026-11-02-day002.md) | Caption mirrors beat the bot-wall (until they rotate); a block on path N is evidence about path N only |
+| 003 | [`2026-11-02-day003.md`](2026-11-02-day003.md) | Measure text, never estimate it; gate animations at end-state; runner-only ladder (matrix legs + proxy pool) |

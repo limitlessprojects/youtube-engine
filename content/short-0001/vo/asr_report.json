@@ -1,0 +1,117 @@
+{
+  "short": "short-0001",
+  "verified_at": "2026-11-02T15:21:57Z",
+  "gap_s": 0.45,
+  "total_vo_s": 36.021,
+  "timeline_end_s": 40.422,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "hook",
+      "expected": "A black hole just appeared in your pocket.",
+      "heard": "A black hole just appeared in your pocket.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.011,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "scene 0",
+      "expected": "Coin-sized. Harmless-looking. Completely lying.",
+      "heard": "Coin sized, harmless looking, completely lying.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.317,
+      "synced_start_s": 2.461
+    },
+    {
+      "line": "02",
+      "role": "scene 1",
+      "expected": "That little circle weighs about as much as the whole Earth.",
+      "heard": "That little circle weighs about as much as the whole Earth.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.847,
+      "synced_start_s": 6.229
+    },
+    {
+      "line": "03",
+      "role": "scene 2",
+      "expected": "It falls through your hand, through the floor, through the sidewalk.",
+      "heard": "It falls through your hand, through the floor, through the sidewalk.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.448,
+      "synced_start_s": 9.526
+    },
+    {
+      "line": "04",
+      "role": "scene 3",
+      "expected": "Matter is mostly empty space. To this thing, solid rock is a rumor.",
+      "heard": "Matter is mostly empty space, to this thing solid rock is a rumor.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 4.467,
+      "synced_start_s": 13.424
+    },
+    {
+      "line": "05",
+      "role": "scene 4",
+      "expected": "It loops the planet through the core, and every pass cracks the crust.",
+      "heard": "It loops the planet through the core, and every pass cracks the crust.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 4.049,
+      "synced_start_s": 18.341
+    },
+    {
+      "line": "06",
+      "role": "scene 5",
+      "expected": "And no, it doesn't swallow the Earth in one bite. Real black holes eat slowly: atom by atom, patient, invisible.",
+      "heard": "And no, it doesn't swallow the earth in one bite. Real black holes eat slowly atom by atom. Patient invisible.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 7.967,
+      "synced_start_s": 22.84
+    },
+    {
+      "line": "07",
+      "role": "scene 6",
+      "expected": "But patience wins. One day the ground gives up, and the planet folds itself into a marble.",
+      "heard": "But patience wins, one day the ground gives up and the planet folds itself into a marble.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 5.303,
+      "synced_start_s": 31.257
+    },
+    {
+      "line": "08",
+      "role": "scene 7",
+      "expected": "Check your pocket. The universe already did.",
+      "heard": "Check your pocket, the universe already did.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.612,
+      "synced_start_s": 37.01
+    }
+  ],
+  "summary": {
+    "pass": 9,
+    "warn": 0,
+    "fail": 0
+  }
+}

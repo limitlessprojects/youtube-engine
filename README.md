@@ -19,7 +19,7 @@ youtube-engine/
 ├── docs/           Strategy, architecture, tooling registry, YouTube OAuth guide
 ├── prompts/        System prompts: scriptwriter, harsh critic, VLM inspector, blueprint analyst
 ├── skills/         The 13-skill stack registry (sources + roles + status)
-├── tools/          Executable pipeline: transcribe, blueprint, linter, TTS, upload, daily loop
+├── tools/          Executable pipeline: transcribe (6-path + proxy ladder), blueprint, linter, TTS, render, VLM gate, master, upload, daily loop
 ├── vendor/         Git submodules of the skills/repos we build on (pinned commits)
 ├── config/         Competitor channels + learning queue (video URLs to process next)
 ├── research/       Output: transcripts/ and structural blueprints/ of competitor videos
@@ -83,6 +83,8 @@ GitHub Actions secrets on this repo (encrypted at rest by GitHub):
 | `GOOGLE_CLIENT_ID` | YouTube OAuth client |
 | `GOOGLE_CLIENT_SECRET` | YouTube OAuth client |
 | `YOUTUBE_TOKEN_JSON` | Full OAuth token JSON (upload scope, refresh token) |
+| `YTA_PROXY` (optional) | Explicit proxy for the transcribe chain |
+| `YTDLP_COOKIES` (optional) | Logged-in cookie jar that softens the bot-wall |
 
 Local-only twin lives outside this repo at `~/.secrets/` — `token.json`,
 `client_secret.json` and any key material are gitignored and must never be committed.
