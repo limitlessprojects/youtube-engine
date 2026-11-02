@@ -18,7 +18,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 
-CHECKLIST = """You are the VLM Inspector for a stick-figure YouTube Short (1080x1920 vertical).
+CHECKLIST = """You are the VLM Inspector for a costume-rig YouTube Short (1080x1920 vertical).
 Inspect the rendered frame against the scene intent. You inspect; you never redesign.
 
 Scene intent: narration = "{narration}"
@@ -28,11 +28,17 @@ Composition note (authoritative): {note}
 Checklist:
 1. text_collision: caption words overlapping the character, props, or each other?
    Captions must sit in the bottom-20% zone (y > 1536); characters in the central band.
-2. anchoring: stickman feet on a surface (ground line or platform)? floating = fail.
-3. drift: consistent white stickman style, single amber accent?
+2. anchoring: character feet on a surface (ground, platform, deck) with a contact
+   shadow? floating = fail (except characters deliberately in space/air, e.g. falling).
+3. drift: consistent character design (navy hoodie, cream face/limbs, teal shoes),
+   chunky shapes, palette = deep navy + amber/teal/blue accents?
 4. asset_match: does the frame visibly show what the narration names?
-5. readability: caption readable? enough contrast?
+5. readability: caption readable? enough contrast against the background?
 6. clutter: more than one focal subject?
+7. light: does the frame have a visible light source / glow / depth (no flat void)?
+8. animated counters: a count-up readout may legitimately show an intermediate value
+   mid-scene (e.g. '58% EMPTY' climbing to '99.9999...%'). Only flag it if the FINAL
+   value would be wrong, not for intermediate frames of a counting animation.
 
 Return STRICT JSON only (no prose), schema:
 {{"scene": "{sid}", "verdict": "pass" | "fix",
@@ -42,26 +48,7 @@ bbox in pixels of the 1080x1920 frame. If everything is fine: verdict "pass", is
 
 
 NOTES = {
-    "hook": "stickman looks down at his own jacket pocket, where a small black hole"
-            " (dark void, thin amber ring, faint glow) has appeared",
-    "s0": "stickman inspects the coin-sized hole through a magnifying glass",
-    "s1": "a balance scale compares the tiny hole (left pan) against planet Earth"
-          " (right pan); stickman points up at the scale",
-    "s2": "the FALLING element is the black hole itself: it drops from the open hand"
-          " at the top through labeled rock layers (floor/sidewalk/rock), leaving an"
-          " amber dashed trail; the stickman is a spectator watching from the ledge"
-          " at upper-left — spectator standing is correct",
-    "s3": "an atom diagram (tiny nucleus, electron orbits, vast empty boundary)"
-          " explains why matter is mostly empty space",
-    "s4": "the hole loops the planet on a dashed orbit ellipse through the core;"
-          " amber cracks accumulate on the crust after each pass",
-    "s5": "the hole eats Earth slowly: white atoms trickle one by one along the"
-          " dashed amber path into the hole; stickman watches calmly",
-    "s6": "Earth shrinks with accordion fold lines and collapses into a small"
-          " marble-sized planet with an amber rim; 'shocked' pose = arms thrown up",
-    "s7": "mirror of the hook: stickman smugly shows the pocket is now empty"
-          " ('nothing.' bubble); fade to black at the end",
-}
+    "hook": "night street set (lamp light, buildings, moon); rig character peers into his own hoodie pocket where a small black hole (dark core, amber accretion arcs, photon ring, glow) has appeared; blurred foreground edges for depth",     "s0": "macro insert: a big magnifier over the pocket; the coin-sized hole (accretion arcs) sits inside the lens; '≈ 1 CM' mono tag pops; character curious at left",     "s1": "space: a balance scale compares the tiny hole (left pan) against planet Earth (right pan); nebula depth layers; character points up from a deck",     "s2": "cross-section cutaway: the hole falls from the surface through labeled layers (floor/sidewalk/rock) leaving an amber dashed trail; the character is a spectator standing on the lawn edge at upper-left - standing is correct",     "s3": "Kurzgesagt atom diagram: chunky broken orbit rings (teal/blue/purple), glowing amber nucleus, electron dots; blueprint grid + registration marks; counting readout '99.9999...% EMPTY' (a counting animation); character amazed, eyes glinting cyan from u~0.3",     "s4": "the hole loops the planet on a chunky broken orbit ring whose near-side arc crosses the planet (through the core); jagged amber cracks accumulate per pass; PASS 0x/04 chip; shocked character on a deck",     "s5": "the hole eats Earth slowly: atoms trickle one by one along the dashed amber path (flow chevrons point at the hole); '1 ATOM AT A TIME' tag; calm character; night-side Earth (dark crescent + amber city lights) with dim atmosphere",     "s6": "Earth shrinks with fold chords, amber shockwave rings and compression spokes and collapses into a marble with amber rings; shocked character on a deck",     "s7": "mirror of the hook: character smugly shows the open pocket flap is empty ('NOTHING.' tag); fade to black at the end", }
 
 
 def load_intents(short: Path) -> dict:

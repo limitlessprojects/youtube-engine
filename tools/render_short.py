@@ -80,6 +80,10 @@ def main() -> int:
         t_end = tl[-1]["end"]
         n = int(round((t_end + 0.45) * FPS))   # tail pad: hold black after fade
         jobs = [(min(i / FPS, t_end), frames / f"f{i:04d}.png") for i in range(n)]
+        if "--resume" in sys.argv:
+            before = len(jobs)
+            jobs = [(t, f) for (t, f) in jobs if not (f.exists() and f.stat().st_size > 1000)]
+            print(f"  resume: {before - len(jobs)} frames already on disk, {len(jobs)} to go", flush=True)
     else:
         print(__doc__)
         return 2
@@ -90,6 +94,10 @@ def main() -> int:
         page = browser.new_page(viewport={"width": W, "height": H}, device_scale_factor=1)
         page.goto(url)
         page.wait_for_timeout(350)
+        try:
+            page.wait_for_function("document.fonts.status === 'loaded'", timeout=10000)
+        except Exception:
+            print("  fonts: timeout — falling back to system faces", flush=True)
         for i, (t, path) in enumerate(jobs):
             shot(page, t, path)
             if mode == "--full" and i % 120 == 0:

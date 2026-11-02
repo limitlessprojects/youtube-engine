@@ -2,142 +2,325 @@
   "frames": {
     "hook_u50.png": {
       "scene": "hook",
-      "verdict": "pass",
-      "issues": [],
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "anchoring",
+          "severity": "high",
+          "bbox": [
+            580,
+            570,
+            740,
+            730
+          ],
+          "fix_hint": "Character is floating above the ground surface. Add a contact shadow under the teal shoes and ensure feet touch the street."
+        },
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            620,
+            620,
+            660,
+            650
+          ],
+          "fix_hint": "The black hole in the pocket lacks the specified amber accretion arcs, photon ring, and glow. It appears as a simple dark void."
+        },
+        {
+          "check": "drift",
+          "severity": "low",
+          "bbox": [
+            570,
+            500,
+            750,
+            730
+          ],
+          "fix_hint": "Character design is slightly off-spec: limbs are very thin/stick-like rather than chunky shapes; missing distinct pocket detail on the hoodie."
+        }
+      ],
       "_frame": "hook_u50.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s0_u50.png": {
       "scene": "s0",
       "verdict": "pass",
       "issues": [],
       "_frame": "s0_u50.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s1_u50.png": {
       "scene": "s1",
       "verdict": "pass",
       "issues": [],
       "_frame": "s1_u50.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s2_u50.png": {
       "scene": "s2",
       "verdict": "pass",
       "issues": [],
       "_frame": "s2_u50.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s3_u25.png": {
       "scene": "s3",
-      "verdict": "pass",
-      "issues": [],
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "drift",
+          "severity": "medium",
+          "bbox": [
+            640,
+            735,
+            820,
+            925
+          ],
+          "fix_hint": "Character eyes are missing the specified cyan glint (u~0.3). Add a cyan highlight/reflection to the eyes to match the atom's glow."
+        },
+        {
+          "check": "text_collision",
+          "severity": "low",
+          "bbox": [
+            840,
+            80,
+            900,
+            900
+          ],
+          "fix_hint": "Caption text 'To' on the right edge is very close to the character's bounding box; ensure safe margin."
+        }
+      ],
       "_frame": "s3_u25.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s3_u60.png": {
       "scene": "s3",
-      "verdict": "pass",
-      "issues": [],
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "high",
+          "bbox": [
+            856,
+            84,
+            920,
+            925
+          ],
+          "fix_hint": "Caption text 'Matter is mostly...' overlaps the character's feet and platform. Move caption down or ensure it stays strictly within the bottom 20% zone (y > 1536)."
+        },
+        {
+          "check": "anchoring",
+          "severity": "medium",
+          "bbox": [
+            648,
+            736,
+            826,
+            908
+          ],
+          "fix_hint": "Character appears to be floating slightly above the platform with no visible contact shadow. Ensure feet touch the surface and add a contact shadow."
+        },
+        {
+          "check": "drift",
+          "severity": "low",
+          "bbox": [
+            648,
+            736,
+            826,
+            908
+          ],
+          "fix_hint": "Character design looks slightly thin/elongated compared to the specified 'chunky shapes' style. Verify proportions match the navy hoodie/cream face reference."
+        }
+      ],
       "_frame": "s3_u60.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s3_u90.png": {
       "scene": "s3",
-      "verdict": "pass",
-      "issues": [],
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "high",
+          "bbox": [
+            630,
+            130,
+            700,
+            700
+          ],
+          "fix_hint": "The counting readout '99.9999...% EMPTY' is overlapping the character's body. Move the readout to the left or lower it into the bottom-20% zone (y > 1536) to clear the character."
+        },
+        {
+          "check": "anchoring",
+          "severity": "medium",
+          "bbox": [
+            770,
+            740,
+            860,
+            920
+          ],
+          "fix_hint": "The character appears to be floating slightly above the platform. Ensure feet are in contact with the surface and add a contact shadow."
+        }
+      ],
       "_frame": "s3_u90.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s4_u50.png": {
       "scene": "s4",
       "verdict": "pass",
       "issues": [],
       "_frame": "s4_u50.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s5_u25.png": {
       "scene": "s5",
       "verdict": "pass",
       "issues": [],
       "_frame": "s5_u25.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s5_u60.png": {
       "scene": "s5",
-      "verdict": "pass",
-      "issues": [],
-      "_frame": "s5_u60.png",
-      "_round": "3"
-    },
-    "s5_u90.png": {
-      "scene": "s5",
-      "verdict": "pass",
-      "issues": [],
-      "_frame": "s5_u90.png",
-      "_round": "3"
-    },
-    "s6_u25.png": {
-      "scene": "s6",
       "verdict": "fix",
       "issues": [
         {
           "check": "asset_match",
           "severity": "high",
           "bbox": [
-            280,
-            326,
-            496,
-            714
+            300,
+            410,
+            600,
+            850
           ],
-          "fix_hint": "Earth is too large; it must be shrunk to marble size (approx. 100-150px diameter) with accordion fold lines and an amber rim."
+          "fix_hint": "Earth asset is fully lit/day-side. Change to night-side Earth (dark crescent + amber city lights) per spec."
+        },
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            480,
+            630,
+            560,
+            750
+          ],
+          "fix_hint": "Flow chevrons on the dashed path point away from the black hole (towards Earth). Reverse direction to point at the hole."
+        }
+      ],
+      "_frame": "s5_u60.png",
+      "_round": "1"
+    },
+    "s5_u90.png": {
+      "scene": "s5",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "high",
+          "bbox": [
+            414,
+            412,
+            570,
+            848
+          ],
+          "fix_hint": "Earth is shown as a fully lit blue sphere. Spec requires night-side Earth (dark crescent + amber city lights) to match 'invisible' and 'slow' narration."
+        },
+        {
+          "check": "anchoring",
+          "severity": "medium",
+          "bbox": [
+            628,
+            88,
+            834,
+            258
+          ],
+          "fix_hint": "Character is standing on a small platform in space, but lacks a visible contact shadow beneath the feet."
         },
         {
           "check": "drift",
-          "severity": "medium",
-          "bbox": [
-            280,
-            326,
-            496,
-            714
-          ],
-          "fix_hint": "Ensure the Earth has a single amber accent (rim) rather than multiple orange lines inside the planet body."
-        },
-        {
-          "check": "readability",
           "severity": "low",
           "bbox": [
-            1780,
-            110,
-            1830,
-            870
+            628,
+            118,
+            834,
+            238
           ],
-          "fix_hint": "Caption text 'One day the' is low contrast (grey on black); increase brightness or use white for better readability."
+          "fix_hint": "Character outline/rim light is bright cyan; ensure palette stays consistent with deep navy + teal accents."
+        }
+      ],
+      "_frame": "s5_u90.png",
+      "_round": "1"
+    },
+    "s6_u25.png": {
+      "scene": "s6",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "high",
+          "bbox": [
+            830,
+            100,
+            950,
+            900
+          ],
+          "fix_hint": "Caption text overlaps the character's feet and the deck. Move all caption text into the bottom-20% zone (y > 1536) and ensure the character is positioned in the central band (y < 1536)."
+        },
+        {
+          "check": "anchoring",
+          "severity": "medium",
+          "bbox": [
+            660,
+            80,
+            260,
+            270
+          ],
+          "fix_hint": "Character appears to be standing on a surface but lacks a visible contact shadow to ground them properly."
         }
       ],
       "_frame": "s6_u25.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s6_u60.png": {
       "scene": "s6",
       "verdict": "pass",
       "issues": [],
       "_frame": "s6_u60.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s6_u90.png": {
       "scene": "s6",
       "verdict": "pass",
       "issues": [],
       "_frame": "s6_u90.png",
-      "_round": "3"
+      "_round": "1"
     },
     "s7_u50.png": {
       "scene": "s7",
-      "verdict": "pass",
-      "issues": [],
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "high",
+          "bbox": [
+            620,
+            390,
+            700,
+            480
+          ],
+          "fix_hint": "Character must smugly show an open, empty pocket flap with a 'NOTHING.' tag as per the composition note."
+        },
+        {
+          "check": "anchoring",
+          "severity": "medium",
+          "bbox": [
+            730,
+            370,
+            770,
+            470
+          ],
+          "fix_hint": "Add a contact shadow under the character's feet to ground them on the street surface."
+        }
+      ],
       "_frame": "s7_u50.png",
-      "_round": "3"
+      "_round": "1"
     }
   }
 }
