@@ -101,3 +101,24 @@
 | F–G (assets, render, VLM) | sandbox (Remotion/ffmpeg/Playwright) | free |
 | H (TTS + ASR) | Fish Audio s2.1-pro-free (daily free quota) + platform ASR | free |
 | I–J (upload, log) | local session → OAuth; CI commits logs | free |
+
+## Residential runner (the bot-wall endgame, ledger L-037)
+
+A self-hosted runner on ANY home machine (laptop, mini-PC, NAS) does two things at once:
+jobs start instantly (no hosted-queue lag) and YouTube sees a residential IP — the
+direct paths in transcribe.py stop being blocked, no mirrors needed.
+
+One-time setup on that machine (3 commands + 1):
+
+```bash
+# get a fresh registration token (expires in 1h):
+curl -s -X POST -H "Authorization: Bearer <GH_PAT>" \
+  https://api.github.com/repos/limitlessprojects/youtube-engine/actions/runners/registration-token
+# then on the machine:
+./config.sh --url https://github.com/limitlessprojects/youtube-engine --token <TOKEN> --labels home --unattended
+./svc.sh install && ./svc.sh start        # or just: ./run.sh for a session runner
+```
+
+Then switch the workflow's `runs-on: ubuntu-latest` to `runs-on: [self-hosted, home]`
+when the runner is online; hosted runners remain the fallback (GitHub routes to them
+if the label doesn't match — keep a dual-job or the default label fallback).
