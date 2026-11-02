@@ -1,0 +1,27 @@
+{
+ "id": "8nHBGFKLHZQ",
+ "duration_s": 218.0,
+ "words": 698,
+ "wpm": 192.1,
+ "hook_15s_words": 62,
+ "opener_sentence_words": 18,
+ "sentences": 43,
+ "avg_sentence_words": 16.1,
+ "short_sentence_ratio": 0.16,
+ "cue_word_density_per_min": 7.4,
+ "connector_starts": 4,
+ "estimated_cuts_per_min_proxy": 11.8,
+ "open_loop_markers": [
+  {
+   "t": 157.3,
+   "marker": "which means"
+  }
+ ],
+ "top_bigrams": [
+  {
+   "pair": "black hole",
+   "n": 20
+  }
+ ],
+ "language_note": "invidious-mirror"
+}

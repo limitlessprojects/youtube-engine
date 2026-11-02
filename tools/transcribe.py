@@ -248,7 +248,10 @@ def transcribe(vid: str) -> tuple[list[dict], str]:
         try:
             segs = fn(vid)
         except Blocked as e:
-            raise e
+            # a block on one path (e.g. our IP) does NOT mean the mirrors are
+            # blocked — fall through and let them try (Day-002 fix)
+            errors.append(f"{name}: BLOCKED ({str(e)[:140]})")
+            continue
         except Exception as e:
             errors.append(f"{name}: {type(e).__name__}: {e}")
             continue

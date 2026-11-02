@@ -3,7 +3,6 @@
 # Seeded 2026-11-02 with verified-ID videos from our benchmark channels.
 # NOTE: cloud IPs (incl. GitHub runners) are often bot-blocked by YouTube; failed items
 # are logged and retried the next day. Set YTDLP_COOKIES / YTA_PROXY secrets to unblock.
-https://www.youtube.com/watch?v=8nHBGFKLHZQ
 https://www.youtube.com/watch?v=9tbxDgcv74c
 https://www.youtube.com/watch?v=Flvv__SH44A
 https://www.youtube.com/watch?v=0qgPnXBq7Q8
