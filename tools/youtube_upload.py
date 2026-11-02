@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""youtube_upload.py — publish a finished video via YouTube Data API v3 (requests only).
+
+Usage:
+  python tools/youtube_upload.py --file final.mp4 --title "..." --description "..." \
+      --tags "what if,stickman,science" --privacy public
+
+Credentials:
+  - token JSON via env YOUTUBE_TOKEN_JSON (CI) or --token-file (local; gitignored!)
+  - client id/secret: taken from the token JSON, overridable with
+    GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET envs.
+
+Operator checklist before upload (docs/youtube-oauth.md):
+  [ ] "Altered or Synthetic Content" = YES in Studio after upload
+  [ ] title/thumbnail pay off honestly
+  [ ] cadence respected (Shorts daily, long-form 2x/week) — use Studio scheduling
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import time
+from pathlib import Path
+
+TOKEN_URI = "https://oauth2.googleapis.com/token"
+UPLOAD = "https://www.googleapis.com/upload/youtube/v3/videos"
+
+
+def load_token(a: argparse.Namespace) -> dict:
+    raw = os.environ.get("YOUTUBE_TOKEN_JSON", "").strip()
+    if a.token_file:
+        raw = Path(a.token_file).read_text(encoding="utf-8")
+    if not raw:
+        sys.exit("no token: set YOUTUBE_TOKEN_JSON or pass --token-file")
+    return json.loads(raw)
+
+
+def refresh(tok: dict, client_id: str, client_secret: str) -> dict:
+    import requests
+    r = requests.post(TOKEN_URI, data={
+        "client_id": client_id, "client_secret": client_secret,
+        "refresh_token": tok["refresh_token"], "grant_type": "refresh_token",
+    }, timeout=60)
+    r.raise_for_status()
+    out = dict(tok)
+    out.update(r.json())
+    return out
+
+
+def upload(file: Path, tok_access: str, meta: dict) -> str:
+    import requests
+    size = file.stat().st_size
+    init = requests.post(
+        f"{UPLOAD}?uploadType=resumable&part=snippet,status",
+        headers={
+            "Authorization": f"Bearer {tok_access}",
+            "Content-Type": "application/json; charset=UTF-8",
+            "X-Upload-Content-Length": str(size),
+            "X-Upload-Content-Type": meta["contentType"],
+        },
+        json={"snippet": {
+            "title": meta["title"], "description": meta["description"],
+            "tags": meta["tags"], "categoryId": meta["categoryId"],
+            "defaultLanguage": "en", "defaultAudioLanguage": "en",
+        }, "status": {
+            "privacyStatus": meta["privacy"],
+            "selfDeclaredMadeForKids": False,
+        }},
+        timeout=120,
+    )
+    init.raise_for_status()
+    loc = init.headers.get("Location")
+    if not loc:
+        sys.exit(f"resumable init returned no Location header ({init.status_code})")
+    print(f"[yt] init OK ({size} bytes) — uploading…")
+    with file.open("rb") as f:
+        put = requests.put(loc, data=f, headers={"Content-Type": meta["contentType"]}, timeout=3600)
+    put.raise_for_status()
+    vid = put.json().get("id", "?")
+    return vid
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--file", required=True)
+    ap.add_argument("--title", required=True)
+    ap.add_argument("--description", required=True)
+    ap.add_argument("--tags", default="")
+    ap.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"])
+    ap.add_argument("--category", default="27", help="27=Education, 24=Entertainment, 28=Sci/Tech")
+    ap.add_argument("--token-file")
+    ap.add_argument("--content-type", default="video/mp4")
+    a = ap.parse_args()
+
+    file = Path(a.file)
+    if not file.exists():
+        sys.exit(f"missing video file: {file}")
+    import requests  # noqa: F401  (fail fast if requests missing)
+
+    tok = load_token(a)
+    client_id = os.environ.get("GOOGLE_CLIENT_ID", tok.get("client_id", ""))
+    client_secret = os.environ.get("GOOGLE_CLIENT_SECRET", tok.get("client_secret", ""))
+    if tok.get("refresh_token") and client_id and client_secret:
+        print("[yt] refreshing access token…")
+        tok = refresh(tok, client_id, client_secret)
+    elif not tok.get("token"):
+        sys.exit("token JSON has neither a usable access token nor refresh credentials")
+
+    vid = upload(file, tok["token"], {
+        "title": a.title, "description": a.description,
+        "tags": [t.strip() for t in a.tags.split(",") if t.strip()],
+        "privacy": a.privacy, "categoryId": a.category, "contentType": a.content_type,
+    })
+    print(f"[yt] UPLOADED: https://youtu.be/{vid}")
+    print("[yt] NOW IN STUDIO:")
+    print("     - mark 'Altered or Synthetic Content' = YES (required for AI voice/visuals)")
+    print("     - add to the publish queue per cadence (Shorts daily / long-form 2x week)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,4 @@
+# youtube-engine CI + local runtime deps (kept minimal on purpose — the daily runner
+# must stay fast and LLM-free; heavy render deps (remotion, manim) are NOT installed here)
+requests>=2.31
+youtube-transcript-api>=1.0

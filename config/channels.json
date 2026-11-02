@@ -1,0 +1,33 @@
+{
+  "_comment": "Competitor channels we study via transcripts (never by 'watching'). Blueprint extractor + daily loop consume video IDs from learning_queue.txt; daily agent sessions use yt-dlp search to find outlier candidates and enqueue them.",
+  "channels": [
+    {
+      "handle": "@kurzgesagt",
+      "name": "Kurzgesagt – In a Nutshell",
+      "why": "The ceiling for science-What-If production value. Study pacing, hook density, how abstract concepts get made visual.",
+      "tags": ["science", "what-if", "long-form"]
+    },
+    {
+      "handle": "@AlternateHistoryHub",
+      "name": "AlternateHistoryHub",
+      "why": "The What-If storytelling benchmark: divergence-point structure, domino chains, 3-act escalation.",
+      "tags": ["history", "what-if", "long-form"]
+    },
+    {
+      "handle": "@MinutePhysics",
+      "name": "MinutePhysics",
+      "why": "Hand-drawn minimalism = our stickman aesthetic ancestor. Study how simple visuals carry dense ideas.",
+      "tags": ["science", "stickman-adjacent", "short+long"]
+    },
+    {
+      "handle": "@MinuteEarth",
+      "name": "MinuteEarth",
+      "why": "Fast, dense, captioned minimal animation. Great WPM and cut-density reference for Shorts.",
+      "tags": ["science", "stickman-adjacent", "short-form"]
+    }
+  ],
+  "outlier_rule": {
+    "formula": "Outlier Score = video views / channel average views",
+    "action": "Flag any candidate with score >= 5x; enqueue its transcript for blueprint extraction the same day."
+  }
+}

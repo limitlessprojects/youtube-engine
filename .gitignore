@@ -1,0 +1,36 @@
+# Secrets — NEVER commit
+.secrets/
+token.json
+client_secret.json
+*.pem
+*.key
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node / Remotion builds
+node_modules/
+out/
+dist/
+.remotion/
+
+# Render outputs (big binaries stay out of git)
+output/
+work/
+*.mp4
+*.mov
+*.webm
+!research/**/*.mp4
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Scratch
+*.log
+.queue/

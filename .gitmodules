@@ -1,0 +1,21 @@
+[submodule "vendor/stickman-video-director"]
+	path = vendor/stickman-video-director
+	url = https://github.com/kaomei/stickman-video-director
+[submodule "vendor/what-if-animation"]
+	path = vendor/what-if-animation
+	url = https://github.com/kelano86/what-if-animation
+[submodule "vendor/tool-reel-system"]
+	path = vendor/tool-reel-system
+	url = https://github.com/kelano86/tool-reel-system
+[submodule "vendor/Youtube_transcriber"]
+	path = vendor/Youtube_transcriber
+	url = https://github.com/Rakile/Youtube_transcriber
+[submodule "vendor/skills"]
+	path = vendor/skills
+	url = https://github.com/anthropics/skills
+[submodule "vendor/motionmaxxing"]
+	path = vendor/motionmaxxing
+	url = https://github.com/limitlessprojects/motionmaxxing
+[submodule "vendor/motion-skills"]
+	path = vendor/motion-skills
+	url = https://github.com/limitlessprojects/motion-skills
