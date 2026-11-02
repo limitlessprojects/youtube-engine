@@ -1,0 +1,59 @@
+{
+  "title": "What if a black hole appeared in your pocket?",
+  "format": "short",
+  "hook": {
+    "timestamp_start": 0.0,
+    "narration": "A black hole just appeared in your pocket."
+  },
+  "scenes": [
+    {
+      "timestamp_start": 2.8,
+      "narration": "Coin-sized. Harmless-looking. Completely lying.",
+      "visual": {"pose": "curious", "prop": "coin", "background": "closeup"},
+      "fact_sources": ["premise setup"]
+    },
+    {
+      "timestamp_start": 5.5,
+      "narration": "That little circle weighs about as much as the whole Earth.",
+      "visual": {"pose": "pointing", "prop": "coin_vs_earth", "background": "space"},
+      "fact_sources": ["Schwarzschild radius r_s = 2GM/c^2: a 1 cm-radius black hole has mass ~6.7e24 kg, i.e. roughly one Earth mass (order-of-magnitude)"]
+    },
+    {
+      "timestamp_start": 10.5,
+      "narration": "It falls through your hand, through the floor, through the sidewalk.",
+      "visual": {"pose": "falling", "prop": "floor_layers", "background": "cross_section"},
+      "fact_sources": ["geometry: event horizon radius ~1e-13 m vs atom ~1e-10 m — the hole passes through matter like a ghost, gravity does the damage"]
+    },
+    {
+      "timestamp_start": 15.0,
+      "narration": "Matter is mostly empty space. To this thing, solid rock is a rumor.",
+      "visual": {"pose": "amazed", "prop": "atom", "background": "cross_section"},
+      "fact_sources": ["standard atomic-structure fact: nucleus is ~1/100,000 of the atom radius"]
+    },
+    {
+      "timestamp_start": 20.0,
+      "narration": "It loops the planet through the core, and every pass cracks the crust.",
+      "visual": {"pose": "shocked", "prop": "earth_orbit_line", "background": "globe"},
+      "fact_sources": ["classic gravitation result: an object dropped through Earth oscillates through the core; tidal stresses follow it"]
+    },
+    {
+      "timestamp_start": 24.5,
+      "narration": "And no, it doesn't swallow the Earth in one bite. Real black holes eat slowly: atom by atom, patient, invisible.",
+      "visual": {"pose": "calm", "prop": "atom_trickle", "background": "dark"},
+      "fact_sources": ["micro black-hole accretion is extremely slow (tiny capture cross-section) — CERN LSAG safety review conclusions"]
+    },
+    {
+      "timestamp_start": 32.0,
+      "narration": "But patience wins. One day the ground gives up, and the planet folds itself into a marble.",
+      "visual": {"pose": "shocked", "prop": "earth_marble", "background": "space"},
+      "fact_sources": ["Earth's own Schwarzschild radius is ~8.9 mm — the whole planet compressed to marble size"]
+    },
+    {
+      "timestamp_start": 38.5,
+      "narration": "Check your pocket. The universe already did.",
+      "visual": {"pose": "smug", "prop": "empty_pocket", "background": "street"},
+      "fact_sources": ["loop line"]
+    }
+  ],
+  "loop_line": "Check your pocket. The universe already did."
+}

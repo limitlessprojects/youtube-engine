@@ -9,7 +9,9 @@ Paths, in order (see docs/architecture.md stage B, ledger L-031):
   5. local Whisper via faster-whisper on yt-dlp-fetched audio (best-effort)
 
 Day-002 hardening: 3 -> 5 independent paths. The bot-wall (L-031) only sees our
-IP on paths 1-2; paths 3-4 outsource the risky request to community mirrors.
+IP on paths 1-2; paths 3-4 outsource the risky request to community mirrors
+(17 instances in the default pools — instance health varies by time and by
+requester, so breadth + the daily retry is the design, see ledger L-037).
 
 Output: research/transcripts/<id>.json  (segments: start, duration, text)
         research/transcripts/<id>.txt   (plain text, one segment per line)
@@ -147,6 +149,10 @@ INVIDIOUS_INSTANCES_DEFAULT = [
     "https://iv.ggtyler.dev",
     "https://invidious.privacyredirect.com",
     "https://invidious.f5.si",
+    "https://invidious.jing.rocks",
+    "https://iv.melmac.space",
+    "https://invidious.materialio.us",
+    "https://inv.tux.pizza",
 ]
 PIPED_INSTANCES_DEFAULT = [
     "https://pipedapi.kavin.rocks",
@@ -154,6 +160,8 @@ PIPED_INSTANCES_DEFAULT = [
     "https://api.piped.private.coffee",
     "https://pipedapi.reallyaweso.me",
     "https://pipedapi.ducks.party",
+    "https://pipedapi.leptons.xyz",
+    "https://pipedapi.orangenet.cc",
 ]
 _UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) youtube-engine/0.2"}
 

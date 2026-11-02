@@ -1,0 +1,23 @@
+{
+  "script": "content/short-0001/script.json",
+  "critic_round": 1,
+  "verdict": "pass",
+  "scores": {
+    "hook": 8,
+    "pacing": 9,
+    "predictability": 8,
+    "boredom": 9,
+    "boilerplate": 10,
+    "loop": 9
+  },
+  "mechanical_checks": {
+    "linter": "PASS (0 fails, 0 warns) — 113 counted words, 167.8 WPM, opener 8 words, short-sentence ratio 0.53",
+    "vo_timing": "105 unique words / 2.6 wps = 40.4s VO; with breaths ~42-44s render — inside the 30-60s Short window",
+    "loop_bridge": "line 8 'Check your pocket.' → hook 'A black hole just appeared in your pocket.' — seamless replay shape"
+  },
+  "weakest_scenes": [
+    "scene 4: 'Matter is mostly empty space' is the most familiar beat to science-literate viewers — it earns its 4.5s by the 'solid rock is a rumor' payoff line, but watch retention here first in analytics"
+  ],
+  "rewrite_briefs": [],
+  "notes": "Pass on round 1. The turn (slow accretion instead of instant swallowing) is the credibility anchor and the only beat the audience won't see coming — protect it in any future edit. Fact sources are order-of-magnitude physics (Schwarzschild relation, CERN LSAG accretion conclusion), which the channel's honesty rule requires we keep verifiable."
+}
