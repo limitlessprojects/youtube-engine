@@ -1,0 +1,143 @@
+{
+  "frames": {
+    "hook_u50.png": {
+      "scene": "hook",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "hook_u50.png",
+      "_round": "3"
+    },
+    "s0_u50.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u50.png",
+      "_round": "3"
+    },
+    "s1_u50.png": {
+      "scene": "s1",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s1_u50.png",
+      "_round": "3"
+    },
+    "s2_u50.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s2_u50.png",
+      "_round": "3"
+    },
+    "s3_u25.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s3_u25.png",
+      "_round": "3"
+    },
+    "s3_u60.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s3_u60.png",
+      "_round": "3"
+    },
+    "s3_u90.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s3_u90.png",
+      "_round": "3"
+    },
+    "s4_u50.png": {
+      "scene": "s4",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s4_u50.png",
+      "_round": "3"
+    },
+    "s5_u25.png": {
+      "scene": "s5",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s5_u25.png",
+      "_round": "3"
+    },
+    "s5_u60.png": {
+      "scene": "s5",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s5_u60.png",
+      "_round": "3"
+    },
+    "s5_u90.png": {
+      "scene": "s5",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s5_u90.png",
+      "_round": "3"
+    },
+    "s6_u25.png": {
+      "scene": "s6",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "high",
+          "bbox": [
+            280,
+            326,
+            496,
+            714
+          ],
+          "fix_hint": "Earth is too large; it must be shrunk to marble size (approx. 100-150px diameter) with accordion fold lines and an amber rim."
+        },
+        {
+          "check": "drift",
+          "severity": "medium",
+          "bbox": [
+            280,
+            326,
+            496,
+            714
+          ],
+          "fix_hint": "Ensure the Earth has a single amber accent (rim) rather than multiple orange lines inside the planet body."
+        },
+        {
+          "check": "readability",
+          "severity": "low",
+          "bbox": [
+            1780,
+            110,
+            1830,
+            870
+          ],
+          "fix_hint": "Caption text 'One day the' is low contrast (grey on black); increase brightness or use white for better readability."
+        }
+      ],
+      "_frame": "s6_u25.png",
+      "_round": "3"
+    },
+    "s6_u60.png": {
+      "scene": "s6",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s6_u60.png",
+      "_round": "3"
+    },
+    "s6_u90.png": {
+      "scene": "s6",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s6_u90.png",
+      "_round": "3"
+    },
+    "s7_u50.png": {
+      "scene": "s7",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s7_u50.png",
+      "_round": "3"
+    }
+  }
+}

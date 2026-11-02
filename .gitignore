@@ -42,7 +42,7 @@ research/transcripts/*.txt
 research/proxies/
 content/*/render/frames/
 content/*/render/scenes.built.html
-content/*/gate/
+content/*/gate/*
 content/*/*.mp4
 !content/*/gate/report.json
 content/*/vo/*.wav
