@@ -22,3 +22,4 @@
 | 002 | [`2026-11-02-day002.md`](2026-11-02-day002.md) | Caption mirrors beat the bot-wall (until they rotate); a block on path N is evidence about path N only |
 | 003 | [`2026-11-02-day003.md`](2026-11-02-day003.md) | Measure text, never estimate it; gate animations at end-state; runner-only ladder (matrix legs + proxy pool) |
 | 004 | [`2026-11-03-day004.md`](2026-11-03-day004.md) | The gap was the world, not the character; deterministic frames → resumable renders; gate the animation, not the still |
+| 005 | [`2026-11-03-day005.md`](2026-11-03-day005.md) | The GitHub clone IS the workstation; oEmbed = free dead-ID oracle (ship triage in the loop); POT infra ≠ ticket on a hard-flagged IP |

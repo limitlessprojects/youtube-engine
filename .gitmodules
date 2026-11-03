@@ -19,3 +19,6 @@
 [submodule "vendor/motion-skills"]
 	path = vendor/motion-skills
 	url = https://github.com/limitlessprojects/motion-skills
+[submodule "bgutil-ytdlp-pot-provider"]
+	path = vendor/bgutil-ytdlp-pot-provider
+	url = https://github.com/Brainicism/bgutil-ytdlp-pot-provider.git

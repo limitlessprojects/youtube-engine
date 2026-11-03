@@ -146,6 +146,13 @@ def main() -> int:
 
     try:
         segs, path = TR.transcribe(vid)
+    except TR.DeadID as e:
+        # L-048: dead/private ID (oEmbed 404) — retire it, keep the queue moving.
+        pop_queue(item)
+        append_log(f"- RETIRED: `{vid}` — {e}. Queue item removed (dead IDs never heal).")
+        commit_and_push(f"chore(daily): retired dead id {vid}")
+        print(f"[loop] retired dead id {vid}")
+        return 0
     except TR.Blocked as e:
         append_log(f"- RETRY: `{vid}` blocked by YouTube ({e}). Item kept in queue. "
                    "Mitigations: PROXY_POOL=auto, YTDLP_COOKIES_FILE secret, or local session.")

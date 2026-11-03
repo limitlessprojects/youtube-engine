@@ -307,7 +307,42 @@ class Blocked(Exception):
     pass
 
 
+class DeadID(Blocked):
+    """L-048: the video ID is dead/private (oEmbed 404). Never retryable —
+    the queue item should be retired, not re-attempted tomorrow."""
+    pass
+
+
+def oembed_meta(vid: str) -> dict | None:
+    """L-048: oEmbed liveness + metadata pre-check.
+
+    youtube.com/oembed works from cloud IPs (it is not behind the captions
+    bot-wall) and returns title/author for a LIVE video. A 404 means the ID
+    is dead/private — no proxy ladder will ever fix that, so callers should
+    RETIRE the item instead of retrying it for days (see 9tbxDgcv74c, L-031).
+    Returns {title, author} or None when unreachable/unknown (fail-open).
+    """
+    import urllib.request
+    url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={vid}&format=json"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as r:
+            d = json.loads(r.read().decode("utf-8"))
+            return {"title": d.get("title", "?"), "author": d.get("author_name", "?")}
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            raise DeadID("oEmbed 404 — video is dead/private; retire from queue, do not retry")
+        print(f"[t] oEmbed probe inconclusive: HTTP {e.code}", file=sys.stderr)
+        return None
+    except Exception as e:
+        print(f"[t] oEmbed probe inconclusive: {type(e).__name__}", file=sys.stderr)
+        return None
+
+
 def transcribe(vid: str) -> tuple[list[dict], str]:
+    meta = oembed_meta(vid)  # cheap liveness gate BEFORE burning the 6-path chain
+    if meta:
+        print(f"[t] oEmbed: \"{meta['title']}\" by {meta['author']} (alive)")
     errors: list[str] = []
     for name, fn in (("captions", via_transcript_api), ("ytdlp-subs", via_ytdlp),
                      ("invidious-mirror", via_invidious), ("piped-mirror", via_piped),
@@ -342,6 +377,9 @@ def main() -> int:
         return 0
     try:
         segs, path = transcribe(vid)
+    except DeadID as e:
+        print(f"[t] DEAD ID (not retryable): {e}", file=sys.stderr)
+        return 4  # daily_loop pops + retires the item on this code
     except Blocked as e:
         print(f"[t] RETRYABLE (blocked): {e}", file=sys.stderr)
         return 3
