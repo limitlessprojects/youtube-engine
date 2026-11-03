@@ -107,14 +107,29 @@ def merge_ci_artifacts(artifacts_dir: Path) -> int:
     """Matrix mode: collect attempt artifacts, first success (by priority) wins."""
     items = queue_items()
     if not items:
-        append_log("- queue empty — scout new outliers (config/channels.json rule) and enqueue.")
-        commit_and_push("chore(daily): queue empty note")
+        # L-053: scout via channel RSS feeds (no bot-wall) instead of the
+        # bot-walled yt-dlp search. Enqueue up to 3 niche outliers.
+        try:
+            sys.path.insert(0, str(REPO / "tools"))
+            import rss_scout as RS
+            rows = RS.scout(min_score=2.0)
+            urls = [f"https://www.youtube.com/watch?v={r['id']}"
+                    for r in rows if r["niche"]][:3]
+            if urls:
+                n = RS.enqueue(urls)
+                append_log(f"- RSS scout: {len(rows)} outliers; enqueued {n} niche "
+                           f"candidates ({', '.join(u.rsplit('=', 1)[-1] for u in urls)}).")
+            else:
+                append_log("- RSS scout: no niche outliers above 2x channel average today.")
+        except Exception as e:
+            append_log(f"- RSS scout failed: {type(e).__name__}: {e} — scout manually.")
+        commit_and_push("chore(daily): queue empty — rss scout refill")
         print("[loop] queue empty")
         return 0
     item = items[0]
     vid = TR.video_id(item)
     print(f"[loop] merging CI attempts for {vid} ({len(items)} in queue)")
-    for leg in ("direct", "proxy", "android"):   # priority order
+    for leg in ("direct", "proxy", "android", "mweb", "tv"):   # priority order
         j = artifacts_dir / f"attempt-{leg}" / f"{vid}.json"
         if j.exists():
             data = json.loads(j.read_text(encoding="utf-8"))
@@ -135,8 +150,23 @@ def main() -> int:
 
     items = queue_items()
     if not items:
-        append_log("- queue empty — scout new outliers (config/channels.json rule) and enqueue.")
-        commit_and_push("chore(daily): queue empty note")
+        # L-053: scout via channel RSS feeds (no bot-wall) instead of the
+        # bot-walled yt-dlp search. Enqueue up to 3 niche outliers.
+        try:
+            sys.path.insert(0, str(REPO / "tools"))
+            import rss_scout as RS
+            rows = RS.scout(min_score=2.0)
+            urls = [f"https://www.youtube.com/watch?v={r['id']}"
+                    for r in rows if r["niche"]][:3]
+            if urls:
+                n = RS.enqueue(urls)
+                append_log(f"- RSS scout: {len(rows)} outliers; enqueued {n} niche "
+                           f"candidates ({', '.join(u.rsplit('=', 1)[-1] for u in urls)}).")
+            else:
+                append_log("- RSS scout: no niche outliers above 2x channel average today.")
+        except Exception as e:
+            append_log(f"- RSS scout failed: {type(e).__name__}: {e} — scout manually.")
+        commit_and_push("chore(daily): queue empty — rss scout refill")
         print("[loop] queue empty")
         return 0
 

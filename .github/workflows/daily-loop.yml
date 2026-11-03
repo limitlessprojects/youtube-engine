@@ -6,9 +6,10 @@ name: Daily Learning Loop
 #
 # Bot-wall ladder (docs/architecture.md, L-039) — everything on GitHub-hosted
 # runners, no residential hardware:
-#   rung 3: 3 parallel matrix legs = 3 fresh runner IPs, fail-fast disabled
+#   rung 3: 5 parallel matrix legs = 5 fresh runner IPs, fail-fast disabled
 #   rung 4: proxy leg rotates fresh proxies from GitHub-hosted lists
-#   rung 5: android leg rotates the yt-dlp player client
+#   rung 5: client legs rotate the yt-dlp player client (L-049: client
+#           diversity only helps on FRESH IPs — hard-flagged exits 429 regardless)
 # Blocked days stay green and retry (queue item only pops on success).
 
 on:
@@ -39,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        leg: [direct, proxy, android]
+        leg: [direct, proxy, android, mweb, tv]
     env:
       LEG_STRATEGY: ${{ matrix.leg }}
     steps:
@@ -52,10 +53,8 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Bootstrap (single source of env truth, L-051)
+        run: bash bootstrap.sh --ci
 
       - name: Run one transcription attempt
         env:
@@ -65,7 +64,7 @@ jobs:
           # Ladder strategy per leg:
           PROXY_POOL: ${{ matrix.leg == 'direct' && 'off' || 'auto' }}
           PROXY_POOL_TRIES: "3"
-          YTDLP_PLAYER_CLIENT: ${{ matrix.leg == 'android' && 'android' || '' }}
+          YTDLP_PLAYER_CLIENT: ${{ fromJSON('{"direct":"","proxy":"","android":"android","mweb":"mweb","tv":"tv"}')[matrix.leg] }}
         run: |
           set -x
           if [ -n "$YTDLP_COOKIES" ]; then
@@ -89,8 +88,8 @@ jobs:
           retention-days: 1
 
   merge:
-    # First successful leg (direct > proxy > android priority) becomes the
-    # day's transcript: blueprint, pop queue, log, commit.
+    # First successful leg (direct > proxy > android > mweb > tv priority)
+    # becomes the day's transcript: blueprint, pop queue, log, commit.
     needs: attempt
     if: always()
     runs-on: ubuntu-latest
@@ -107,10 +106,8 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Bootstrap (single source of env truth, L-051)
+        run: bash bootstrap.sh --ci
 
       - name: Download all attempt artifacts
         uses: actions/download-artifact@v4
