@@ -52,24 +52,35 @@ def refresh(tok: dict, client_id: str, client_secret: str) -> dict:
 def upload(file: Path, tok_access: str, meta: dict) -> str:
     import requests
     size = file.stat().st_size
-    init = requests.post(
-        f"{UPLOAD}?uploadType=resumable&part=snippet,status",
-        headers={
-            "Authorization": f"Bearer {tok_access}",
-            "Content-Type": "application/json; charset=UTF-8",
-            "X-Upload-Content-Length": str(size),
-            "X-Upload-Content-Type": meta["contentType"],
-        },
-        json={"snippet": {
-            "title": meta["title"], "description": meta["description"],
-            "tags": meta["tags"], "categoryId": meta["categoryId"],
-            "defaultLanguage": "en", "defaultAudioLanguage": "en",
-        }, "status": {
-            "privacyStatus": meta["privacy"],
-            "selfDeclaredMadeForKids": False,
-        }},
-        timeout=120,
-    )
+
+    def _init(status_extra: dict):
+        status = {"privacyStatus": meta["privacy"], "selfDeclaredMadeForKids": False}
+        status.update(status_extra)
+        return requests.post(
+            f"{UPLOAD}?uploadType=resumable&part=snippet,status",
+            headers={
+                "Authorization": f"Bearer {tok_access}",
+                "Content-Type": "application/json; charset=UTF-8",
+                "X-Upload-Content-Length": str(size),
+                "X-Upload-Content-Type": meta["contentType"],
+            },
+            json={"snippet": {
+                "title": meta["title"], "description": meta["description"],
+                "tags": meta["tags"], "categoryId": meta["categoryId"],
+                "defaultLanguage": "en", "defaultAudioLanguage": "en",
+            }, "status": status},
+            timeout=120,
+        )
+
+    # Altered/synthetic media disclosure (studio policy: AI voice + AI visuals
+    # => disclose YES, docs/youtube-oauth.md checklist). The API supports
+    # status.containsSyntheticMedia; if a given API version rejects the field
+    # we retry once without it and fall back to the manual Studio step.
+    extra = {"containsSyntheticMedia": True} if meta.get("synthetic") else {}
+    init = _init(extra)
+    if init.status_code == 400 and extra:
+        print("[yt] containsSyntheticMedia rejected — retrying without (manual Studio step needed)")
+        init = _init({})
     init.raise_for_status()
     loc = init.headers.get("Location")
     if not loc:
@@ -92,6 +103,8 @@ def main() -> int:
     ap.add_argument("--category", default="27", help="27=Education, 24=Entertainment, 28=Sci/Tech")
     ap.add_argument("--token-file")
     ap.add_argument("--content-type", default="video/mp4")
+    ap.add_argument("--no-synthetic", action="store_true",
+                    help="skip the altered/synthetic disclosure (default: disclose YES per studio policy)")
     a = ap.parse_args()
 
     file = Path(a.file)
@@ -112,11 +125,14 @@ def main() -> int:
         "title": a.title, "description": a.description,
         "tags": [t.strip() for t in a.tags.split(",") if t.strip()],
         "privacy": a.privacy, "categoryId": a.category, "contentType": a.content_type,
+        "synthetic": not a.no_synthetic,
     })
     print(f"[yt] UPLOADED: https://youtu.be/{vid}")
-    print("[yt] NOW IN STUDIO:")
-    print("     - mark 'Altered or Synthetic Content' = YES (required for AI voice/visuals)")
-    print("     - add to the publish queue per cadence (Shorts daily / long-form 2x week)")
+    if not a.no_synthetic:
+        print("[yt] altered/synthetic disclosure: set via API (containsSyntheticMedia=true)")
+    else:
+        print("[yt] NOW IN STUDIO: mark 'Altered or Synthetic Content' = YES")
+    print("[yt] NEXT: record the video id in content/<slug>/published.json + today's ledger")
     return 0
 
 

@@ -1,0 +1,15 @@
+{
+  "video_id": "KKyrNUGZXcU",
+  "url": "https://youtu.be/KKyrNUGZXcU",
+  "title": "What if a black hole appeared in your pocket?",
+  "channel": "Jack Blessed",
+  "handle": "@JackBlessed-u5x",
+  "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
+  "published_at": "2026-11-04T04:55:00Z",
+  "privacy": "public",
+  "category": "27 (Education)",
+  "synthetic_disclosure": "set via API (status.containsSyntheticMedia=true, accepted first try)",
+  "file": "black-hole-pocket-short0001.mp4 (3,117,747 bytes, 40.87s, 1080x1920 h264 + aac, -14 LUFS master)",
+  "source": "content/short-0001 (script.json v1, engine v2 render, VO ASR 9/9, VLM gate passed)",
+  "monitoring": "RSS: youtube.com/feeds/videos.xml?channel_id=UCo_p5nBuNe9KW_W_x90Nitg (feed lags for new channels; oEmbed per-video is the fallback oracle)"
+}
