@@ -1,0 +1,42 @@
+{
+ "id": "Flvv__SH44A",
+ "duration_s": 1285.6,
+ "words": 3645,
+ "wpm": 170.1,
+ "hook_15s_words": 34,
+ "opener_sentence_words": 8,
+ "sentences": 243,
+ "avg_sentence_words": 15.0,
+ "short_sentence_ratio": 0.15,
+ "cue_word_density_per_min": 6.6,
+ "connector_starts": 44,
+ "estimated_cuts_per_min_proxy": 11.3,
+ "open_loop_markers": [
+  {
+   "t": 31.0,
+   "marker": "what if"
+  },
+  {
+   "t": 569.3,
+   "marker": "nobody"
+  },
+  {
+   "t": 803.9,
+   "marker": "what if"
+  },
+  {
+   "t": 839.4,
+   "marker": "what if"
+  },
+  {
+   "t": 997.8,
+   "marker": "until"
+  },
+  {
+   "t": 1237.7,
+   "marker": "what if"
+  }
+ ],
+ "top_bigrams": [],
+ "language_note": "ci-proxy"
+}
