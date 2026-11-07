@@ -74,7 +74,12 @@ jobs:
                       print(f"[{i:02d}] attempt {attempt+1}: HTTP {r.status_code} — retrying")
                       time.sleep(3 * (attempt + 1)); continue
                   r.raise_for_status()
-                  if len(r.content) > 512 and r.content[:3] == b"ID3":
+                  # MP3 = ID3v2 tag OR raw MPEG frame sync (0xFFEx/0xFFFx).
+                  # Fish returns raw frames — the ID3-only check rejected 24
+                  # valid files on the first two runs (day-009).
+                  head = r.content[:2]
+                  is_mp3 = r.content[:3] == b"ID3" or (head[0] == 0xFF and (head[1] & 0xE0) == 0xE0)
+                  if len(r.content) > 512 and is_mp3:
                       out.write_bytes(r.content); ok += 1
                       print(f"[{i:02d}] wrote {len(r.content)//1024} KiB")
                       break
