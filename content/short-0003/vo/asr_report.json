@@ -1,0 +1,103 @@
+{
+  "short": "short-0003",
+  "verified_at": "2026-11-07T20:55:31.273976+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +45%",
+  "gap_s": 0.45,
+  "total_vo_s": 30.6,
+  "timeline_end_s": 33.75,
+  "n_fail": 8,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "hook",
+      "expected": "The sun doesn't turn orange. Your sky just runs out of blue.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.976,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "scene 0",
+      "expected": "Sunlight looks white \u2014 but it's carrying every color at once.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 3.12,
+      "synced_start_s": 3.426
+    },
+    {
+      "line": "02",
+      "role": "scene 1",
+      "expected": "Air is a sieve: molecules fling blue sideways about six times harder than red.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 4.248,
+      "synced_start_s": 6.996
+    },
+    {
+      "line": "03",
+      "role": "scene 2",
+      "expected": "At noon, your beam crosses one patch of air. At sunset? Thirty-eight.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 4.128,
+      "synced_start_s": 11.694
+    },
+    {
+      "line": "04",
+      "role": "scene 3",
+      "expected": "Thirty-eight times the air, and every step bleeds more blue away. What survives the whole trip is orange.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 5.448,
+      "synced_start_s": 16.272
+    },
+    {
+      "line": "05",
+      "role": "scene 4",
+      "expected": "The blue that got thrown out? It never dies \u2014 it becomes the rest of your sky.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 3.792,
+      "synced_start_s": 22.17
+    },
+    {
+      "line": "06",
+      "role": "scene 5",
+      "expected": "Same sun. Same air. Only the angle changed.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.808,
+      "synced_start_s": 26.412
+    },
+    {
+      "line": "07",
+      "role": "scene 6",
+      "expected": "On Mars, dust flips the trick \u2014 blue sunsets. Go watch yours tonight.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 4.08,
+      "synced_start_s": 29.67
+    }
+  ]
+}

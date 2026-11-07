@@ -1,0 +1,119 @@
+{
+  "title": "Why are sunsets orange? (It's not the sun)",
+  "format": "short",
+  "hook": {
+    "timestamp_start": 0.0,
+    "narration": "The sun doesn't turn orange. Your sky just runs out of blue.",
+    "visual": {
+      "pose": "skygawk (shield-eyes at a giant low sun)",
+      "prop": "low sun + orange horizon + kinetic title",
+      "background": "dusk-sky"
+    },
+    "fact_sources": [
+      "premise restatement — Rayleigh path-length physics, no numbers on screen"
+    ],
+    "audio_dur_s": 2.976
+  },
+  "scenes": [
+    {
+      "timestamp_start": 3.43,
+      "narration": "Sunlight looks white — but it's carrying every color at once.",
+      "visual": {
+        "pose": "presenting",
+        "prop": "white beam → rainbow fan through air wedge",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "white light = superposition of the visible spectrum (textbook; fan is schematic)"
+      ],
+      "audio_dur_s": 3.12
+    },
+    {
+      "timestamp_start": 7.0,
+      "narration": "Air is a sieve: molecules fling blue sideways about six times harder than red.",
+      "visual": {
+        "pose": "presenting",
+        "prop": "molecule + blue ricochet vs red drift, 'BLUE ≈ 6×' pop",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "Rayleigh scattering ∝ 1/λ⁴ (Wikipedia, Lord Rayleigh); (700/450)⁴ = 5.86 ≈ 'about six' — computed 2026-11-08"
+      ],
+      "audio_dur_s": 4.248
+    },
+    {
+      "timestamp_start": 11.69,
+      "narration": "At noon, your beam crosses one patch of air. At sunset? Thirty-eight.",
+      "visual": {
+        "pose": "nodding (present)",
+        "prop": "NOON 1×-slab card → SUNSET 38×-slab card, '38×' stamp",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "Air mass 1 at zenith → ≈38 at horizon (Kasten & Young 1989, via Wikipedia 'Air mass (astronomy)')"
+      ],
+      "audio_dur_s": 4.128
+    },
+    {
+      "timestamp_start": 16.27,
+      "narration": "Thirty-eight times the air, and every step bleeds more blue away. What survives the whole trip is orange.",
+      "visual": {
+        "pose": "amazed (lit orange by the arriving beam)",
+        "prop": "long grazing beam in 4 segments white→orange, blue photons peeling off",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "same Rayleigh law + airmass 38; beam color progression schematic (no numeric claim)"
+      ],
+      "audio_dur_s": 5.448
+    },
+    {
+      "timestamp_start": 22.17,
+      "narration": "The blue that got thrown out? It never dies — it becomes the rest of your sky.",
+      "visual": {
+        "pose": "arms up under the dome",
+        "prop": "photons raining up into a glowing blue dome over the orange beam",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "scattered blue light IS the sky's blue (same Rayleigh mechanism; sky opposite the sun stays blue at sunset)"
+      ],
+      "audio_dur_s": 3.792
+    },
+    {
+      "timestamp_start": 26.41,
+      "narration": "Same sun. Same air. Only the angle changed.",
+      "visual": {
+        "pose": "presenting",
+        "prop": "three stamps: SAME SUN / SAME AIR / ONLY THE ANGLE",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "restatement — no new claim"
+      ],
+      "audio_dur_s": 2.808
+    },
+    {
+      "timestamp_start": 29.67,
+      "narration": "On Mars, dust flips the trick — blue sunsets. Go watch yours tonight.",
+      "visual": {
+        "pose": "mars (watching) → skygawk (loop mirror of hook)",
+        "prop": "butterscotch Mars sky + BLUE halo sun → back to our hill",
+        "background": "mars-sky → dusk-sky"
+      },
+      "fact_sources": [
+        "NASA JPL 'Curiosity Rover Views Serene Sundown on Mars' (2015-05-08): dust forward-scatters blue, blue glow stays near the sun"
+      ],
+      "audio_dur_s": 4.08
+    }
+  ],
+  "timeline": {
+    "fps": 30,
+    "total_s": 33.75,
+    "gap_s": 0.45,
+    "voice": "edge-tts en-US-AndrewNeural rate +25% (VO_RATE override, day-009: matches shipped #0002 pacing 207 WPM)",
+    "words": 105,
+    "wpm_measured": 238,
+    "wpm_at_ship_rate": 205
+  }
+}

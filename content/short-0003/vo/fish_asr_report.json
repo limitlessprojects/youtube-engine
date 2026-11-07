@@ -1,0 +1,50 @@
+[
+  {
+    "i": "00",
+    "wer": 0.0,
+    "verdict": "PASS",
+    "heard": "The sun doesn't turn orange, your sky just runs out of blue."
+  },
+  {
+    "i": "01",
+    "wer": 0.0,
+    "verdict": "PASS",
+    "heard": "Sunlight looks white, but it's carrying every color at once."
+  },
+  {
+    "i": "02",
+    "wer": 0.0,
+    "verdict": "PASS",
+    "heard": "Air is a sieve, molecules fling blue sideways about six times harder t"
+  },
+  {
+    "i": "03",
+    "wer": 0.167,
+    "verdict": "WARN",
+    "heard": "At noon, your beam crosses one patch of air. At sunset, thirty eight."
+  },
+  {
+    "i": "04",
+    "wer": 0.111,
+    "verdict": "PASS",
+    "heard": "Thirty eight times the air, and every step bleeds more blue away. What"
+  },
+  {
+    "i": "05",
+    "wer": 0.0,
+    "verdict": "PASS",
+    "heard": "The blue that got thrown out, it never dies; it becomes the rest of yo"
+  },
+  {
+    "i": "06",
+    "wer": 0.0,
+    "verdict": "PASS",
+    "heard": "Same sun, same air; only the angle changed."
+  },
+  {
+    "i": "07",
+    "wer": 0.0,
+    "verdict": "PASS",
+    "heard": "On Mars, dust flips the trick blue sunsets. Go watch yours tonight."
+  }
+]

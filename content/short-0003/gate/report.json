@@ -1,0 +1,180 @@
+{
+  "frames": {
+    "hook_u50.png": {
+      "scene": "hook",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "hook_u50.png",
+      "_round": "1"
+    },
+    "s0_u50.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u50.png",
+      "_round": "1"
+    },
+    "s1_u25.png": {
+      "scene": "s1",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "low",
+          "bbox": [
+            1540,
+            90,
+            1660,
+            320
+          ],
+          "fix_hint": "Caption word 'Air' sits close to/overlapping the hero's feet zone; nudge caption baseline down or hero up a few px for clean separation."
+        }
+      ],
+      "_frame": "s1_u25.png",
+      "_round": "1"
+    },
+    "s1_u60.png": {
+      "scene": "s1",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "low",
+          "bbox": [
+            1540,
+            90,
+            1640,
+            380
+          ],
+          "fix_hint": "Caption line 1 ('Air is a sieve...') sits very close to / slightly under the hero's feet at bottom-left; nudge caption down or hero up a few px for clean separation."
+        }
+      ],
+      "_frame": "s1_u60.png",
+      "_round": "1"
+    },
+    "s1_u90.png": {
+      "scene": "s1",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s1_u90.png",
+      "_round": "1"
+    },
+    "s2_u25.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "readability",
+          "severity": "medium",
+          "bbox": [
+            1085,
+            280,
+            1130,
+            800
+          ],
+          "fix_hint": "'1 patch of air \u00b7 1\u00d7' sub-caption is very low-contrast (dim gray on dark slab); brighten to cream/amber for legibility"
+        }
+      ],
+      "_frame": "s2_u25.png",
+      "_round": "1"
+    },
+    "s2_u60.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s2_u60.png",
+      "_round": "1"
+    },
+    "s2_u90.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "low",
+          "bbox": [
+            1105,
+            230,
+            1165,
+            860
+          ],
+          "fix_hint": "'the air it fights through' caption sits at y~1130, outside the bottom-20% caption band (y>1536) and slightly over the dusk treeline; it does not collide with the hero, but per composition note it should sit in the caption band below y=1536."
+        }
+      ],
+      "_frame": "s2_u90.png",
+      "_round": "1"
+    },
+    "s3_u25.png": {
+      "scene": "s3",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "high",
+          "bbox": [
+            760,
+            600,
+            830,
+            800
+          ],
+          "fix_hint": "Beam draws only 3 visible segments (white\u2192pale yellow\u2192amber) and stops at x~770, falling short of the hero at x~1000; add the 4th orange segment so the beam arrives at the character"
+        },
+        {
+          "check": "light",
+          "severity": "medium",
+          "bbox": [
+            850,
+            900,
+            1300,
+            1050
+          ],
+          "fix_hint": "Hero is not visibly lit orange by the arriving beam \u2014 add warm orange rim/screen-glow on his beam-facing side per spec"
+        }
+      ],
+      "_frame": "s3_u25.png",
+      "_round": "1"
+    },
+    "s3_u60.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s3_u60.png",
+      "_round": "1"
+    },
+    "s3_u90.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s3_u90.png",
+      "_round": "1"
+    },
+    "s4_u50.png": {
+      "scene": "s4",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s4_u50.png",
+      "_round": "1"
+    },
+    "s5_u50.png": {
+      "scene": "s5",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s5_u50.png",
+      "_round": "1"
+    },
+    "s6_u50.png": {
+      "scene": "s6",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s6_u50.png",
+      "_round": "1"
+    },
+    "s4_u90.png": {
+      "scene": "s4",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s4_u90.png",
+      "_round": "1"
+    }
+  }
+}

@@ -59,6 +59,16 @@ NOTES = {
 }
 
 
+def load_notes(short: Path) -> dict:
+    """Per-short scene notes (gate/notes.json) override the built-in #0002 set
+    (day-009: hardcoded #0002 notes made the gate flag short-0003's frames
+    against ANOTHER VIDEO's design — the verifier must know the intent)."""
+    f = short / "gate" / "notes.json"
+    if f.exists():
+        return json.loads(f.read_text())["notes"]
+    return NOTES
+
+
 def load_intents(short: Path) -> dict:
     script = json.loads((short / "script.json").read_text())
     intents = {"hook": {"narration": script["hook"]["narration"],
@@ -95,6 +105,7 @@ def main() -> int:
     short = REPO / "content" / slug
     gate = short / "gate"
     intents = load_intents(short)
+    NOTES_LOCAL = load_notes(short)
     only = None
     if "--scene" in sys.argv:
         only = sys.argv[sys.argv.index("--scene") + 1]
@@ -114,7 +125,7 @@ def main() -> int:
         prompt = CHECKLIST.format(narration=intent.get("narration", "?"),
                                   pose=intent.get("pose"), prop=intent.get("prop"),
                                   background=intent.get("background"), sid=sid,
-                                  note=NOTES.get(sid, "(none)"))
+                                  note=NOTES_LOCAL.get(sid, "(none)"))
         with tempfile.TemporaryDirectory() as td:
             out = Path(td) / "v.json"
             verdict = None
