@@ -366,5 +366,97 @@
    "api_reachable": false,
    "verdict": "ALIVE(html-only)"
   }
+ ],
+ [
+  {
+   "name": "y2mate.com",
+   "ts": "2026-11-07T01:30:07Z",
+   "l1_home": "ERR:ConnectionError",
+   "alive": false,
+   "l2_api": "ERR:ConnectionError",
+   "api_reachable": false,
+   "verdict": "DEAD"
+  },
+  {
+   "name": "yt1s.com",
+   "ts": "2026-11-07T01:30:07Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "200/html (73427b)",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  },
+  {
+   "name": "yt5s.io",
+   "ts": "2026-11-07T01:30:07Z",
+   "l1_home": "200/challenge",
+   "alive": false,
+   "l2_api": "404/json (0b)",
+   "api_reachable": false,
+   "verdict": "DEAD"
+  },
+  {
+   "name": "cnvmp3.com",
+   "ts": "2026-11-07T01:30:08Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "404/html (14b)",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  },
+  {
+   "name": "clipconverter.cc",
+   "ts": "2026-11-07T01:30:09Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "ERR:ReadTimeout",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  },
+  {
+   "name": "onlinevideoconverter.com",
+   "ts": "2026-11-07T01:30:25Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "skip(JS-signed API)",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  },
+  {
+   "name": "9xbuddy.com",
+   "ts": "2026-11-07T01:30:25Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "404/html (449b)",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  },
+  {
+   "name": "savefrom.net",
+   "ts": "2026-11-07T01:30:26Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "skip(JS-signed API)",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  },
+  {
+   "name": "ssyoutube.com",
+   "ts": "2026-11-07T01:30:28Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "skip(JS-signed API)",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  },
+  {
+   "name": "y2mate.nu",
+   "ts": "2026-11-07T01:30:28Z",
+   "l1_home": "200",
+   "alive": true,
+   "l2_api": "skip(JS-signed API)",
+   "api_reachable": false,
+   "verdict": "ALIVE(html-only)"
+  }
  ]
 ]
