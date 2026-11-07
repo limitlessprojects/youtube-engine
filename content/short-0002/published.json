@@ -1,0 +1,15 @@
+{
+  "video_id": "CZbJmmeyUc4",
+  "url": "https://youtu.be/CZbJmmeyUc4",
+  "title": "Why do 10,000 birds never crash mid-air?",
+  "channel": "Jack Blessed",
+  "handle": "@JackBlessed-u5x",
+  "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
+  "published_at": "2026-11-08T20:47:00Z",
+  "privacy": "public",
+  "category": "27 (Education)",
+  "synthetic_disclosure": "set via API (status.containsSyntheticMedia=true, first try)",
+  "file": "short-0002.mp4 (8,525,985 bytes, 33.33s, 1080x1920 h264 + aac, -15.6 LUFS master, synth sound design)",
+  "source": "content/short-0002 (script.json v1, engine v3 render — first v3 video, VO edge-tts 178.8 WPM, VLM autopsy 3.5->8/10, gate 17/23 pass + pixel-arbitrated residuals)",
+  "monitoring": "RSS feed + oEmbed per-video oracle; first-frame VLM autopsy vs the 4->7.5/10 pre-publish trajectory"
+}

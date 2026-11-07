@@ -46,6 +46,9 @@ def refresh(tok: dict, client_id: str, client_secret: str) -> dict:
     r.raise_for_status()
     out = dict(tok)
     out.update(r.json())
+    # the refresh response calls it access_token; everything downstream
+    # reads ["token"] — bridge it or we ship the STALE token (day-008 bug)
+    out["token"] = out["access_token"]
     return out
 
 

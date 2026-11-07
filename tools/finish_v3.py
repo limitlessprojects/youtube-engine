@@ -27,10 +27,11 @@ SR = 48000
 FPS = 30
 I, TP, LRA = -14.0, -1.5, 11
 
-def run(cmd, **kw):
-    r = subprocess.run(cmd, capture_output=True, text=True, **kw)
+def run(cmd, binary=False, timeout=120):
+    r = subprocess.run(cmd, capture_output=True, text=not binary, timeout=timeout)
     if r.returncode != 0:
-        raise RuntimeError(f"cmd failed: {' '.join(cmd[:6])}...\n{r.stderr[-800:]}")
+        err = r.stderr if isinstance(r.stderr, str) else (r.stderr or b"")[-800:].decode("utf-8", "ignore")
+        raise RuntimeError(f"cmd failed: {' '.join(cmd[:6])}...\n{err}")
     return r
 
 # ---------- synthesized sound design ----------
@@ -118,9 +119,9 @@ def blip(seed=13):
 
 # ---------- assembly ----------
 def load_vo(path):
-    """decode any audio to mono float via ffmpeg."""
+    """decode any audio to mono float via ffmpeg (binary pipe)."""
     r = run(["ffmpeg", "-v", "error", "-i", str(path), "-f", "f32le", "-ac", "1",
-             "-ar", str(SR), "-"], timeout=120)
+             "-ar", str(SR), "-"], binary=True)
     return np.frombuffer(r.stdout, dtype=np.float32).astype(np.float64)
 
 def main() -> int:
