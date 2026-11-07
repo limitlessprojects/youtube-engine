@@ -99,3 +99,23 @@
 A channel with 20+ live videos, a repeatable v3 pipeline that one agent
 session runs in under an hour, one proven outlier formula, and a ledger
 that any future agent (or human) can read as the operating manual.
+
+## Day-009 amendment (nightly session, first scheduled run)
+
+1. **Scheduler confirmed live** (cron 512816 fired 23:45 EAT on the dot). The
+   nightly session IS the engine; day numbers advance with sessions (day 009
+   done). If a nightly is ever missed, the next session runs two Shorts back
+   to back — cadence debt is paid, never forgiven silently.
+2. **VO policy (Phase A):** edge-tts remains default, with per-script
+   `VO_RATE` (0003 needed +25%, not +45% — pacing is text-dependent; match
+   200-210 WPM vs the shipped #0002). Fish s2.1-pro-free proved end-to-end
+   via CI (8/8 files, ASR WER 0.035) but default pacing is 161 WPM — retry
+   with a rate/speed parameter after the daily credit rollover, re-A/B on
+   #0004. Decision rule stays: ASR WER first, pacing band as tiebreaker.
+3. **Gate notes are scene spec:** every new short writes `gate/notes.json`
+   BEFORE the first keyframe render (day-009: stale #0002 notes caused 5
+   false fails). Gate budget unchanged: max 2 re-render rounds + pixel
+   arbitration; end-states pass, mid-states documented.
+4. **Stall watch:** #0001 at 195 views/4 days. If #0002 and #0003 both sit
+   <100 views at 48h old, run the formula-rotation review (Phase B rule)
+   early — data beats dread.

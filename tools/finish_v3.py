@@ -154,25 +154,41 @@ def main() -> int:
     b *= (10 ** (-8 / 20)) + (1 - 10 ** (-8 / 20)) * gain
     mix += b
 
-    # ---- SFX events (word-timed from the script) ----
-    sfx = []
-    # riser into the s3 insight (ends at s3 start)
-    s3 = script["scenes"][3]["timestamp_start"]
-    sfx.append((s3 - 1.3, riser(), 0.8))
-    # whoosh at the s4 wavefront sweep start ("bends", ~0.9s in)
-    s4 = script["scenes"][4]["timestamp_start"]
-    sfx.append((s4 + 0.85, whoosh(seed=3), 0.9))
-    # whoosh at the s6 flyby ("the birds solved it", ~1.1s in)
-    sfx.append((script["scenes"][6]["timestamp_start"] + 1.0, whoosh(seed=4, f_lo=400, f_hi=2000), 0.85))
-    # near-miss tick at the s0 spark ("almost never hit" ~2.4s in)
-    sfx.append((script["scenes"][0]["timestamp_start"] + 2.35, blip(), 1.0))
-    # stamp thumps: s1 cards, s2 beats, s3 seven-pop, s5 beats
-    sfx.append((script["scenes"][1]["timestamp_start"] + 2.3, thump(2), 0.8))
-    for k in range(1, 4):
-        sfx.append((script["scenes"][2]["timestamp_start"] + [0.66, 1.32, 2.31][k - 1] + 0.05, thump(3 + k), 0.6))
-    sfx.append((script["scenes"][3]["timestamp_start"] + 3.8, thump(9), 0.9))
-    for k in range(2):
-        sfx.append((script["scenes"][5]["timestamp_start"] + [0.64, 1.28][k] + 0.05, thump(11 + k), 0.6))
+    # ---- SFX events: per-short table in script.json ("sfx"), else the
+    # short-0002 legacy table (kept as fallback). Kinds: riser/whoosh/thump/blip.
+    sc = script["scenes"]
+    if "sfx" in script:
+        sfx = []
+        for e in script["sfx"]:
+            k2 = e["kind"]
+            if k2 == "riser":
+                y = riser()
+            elif k2 == "whoosh":
+                y = whoosh(seed=e.get("seed", 3), f_lo=e.get("f_lo", 900), f_hi=e.get("f_hi", 3800))
+            elif k2 == "thump":
+                y = thump(e.get("seed", 5))
+            else:
+                y = blip()
+            sfx.append((e["at"], y, e.get("gain", 0.8)))
+    else:
+        sfx = []
+        # riser into the s3 insight (ends at s3 start)
+        s3 = sc[3]["timestamp_start"]
+        sfx.append((s3 - 1.3, riser(), 0.8))
+        # whoosh at the s4 wavefront sweep start ("bends", ~0.9s in)
+        s4 = sc[4]["timestamp_start"]
+        sfx.append((s4 + 0.85, whoosh(seed=3), 0.9))
+        # whoosh at the s6 flyby ("the birds solved it", ~1.1s in)
+        sfx.append((sc[6]["timestamp_start"] + 1.0, whoosh(seed=4, f_lo=400, f_hi=2000), 0.85))
+        # near-miss tick at the s0 spark ("almost never hit" ~2.4s in)
+        sfx.append((sc[0]["timestamp_start"] + 2.35, blip(), 1.0))
+        # stamp thumps: s1 cards, s2 beats, s3 seven-pop, s5 beats
+        sfx.append((sc[1]["timestamp_start"] + 2.3, thump(2), 0.8))
+        for k in range(1, 4):
+            sfx.append((sc[2]["timestamp_start"] + [0.66, 1.32, 2.31][k - 1] + 0.05, thump(3 + k), 0.6))
+        sfx.append((sc[3]["timestamp_start"] + 3.8, thump(9), 0.9))
+        for k in range(2):
+            sfx.append((sc[5]["timestamp_start"] + [0.64, 1.28][k] + 0.05, thump(11 + k), 0.6))
     for at, y, g in sfx:
         a = int(at * SR)
         seg = y[: N - a] * g

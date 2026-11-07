@@ -107,6 +107,20 @@
       "audio_dur_s": 4.08
     }
   ],
+  "sfx": [
+    { "at": 9.05,  "kind": "blip",   "gain": 0.9 },
+    { "at": 9.5,   "kind": "thump",  "seed": 5,  "gain": 0.6 },
+    { "at": 11.79, "kind": "thump",  "seed": 2,  "gain": 0.7 },
+    { "at": 14.97, "kind": "riser",  "gain": 0.8 },
+    { "at": 14.99, "kind": "thump",  "seed": 9,  "gain": 0.9 },
+    { "at": 16.6,  "kind": "whoosh", "seed": 3,  "gain": 0.85 },
+    { "at": 22.67, "kind": "whoosh", "seed": 7,  "f_lo": 900, "f_hi": 3800, "gain": 0.6 },
+    { "at": 24.52, "kind": "thump",  "seed": 7,  "gain": 0.7 },
+    { "at": 26.46, "kind": "thump",  "seed": 11, "gain": 0.6 },
+    { "at": 27.36, "kind": "thump",  "seed": 12, "gain": 0.6 },
+    { "at": 28.26, "kind": "thump",  "seed": 13, "gain": 0.6 },
+    { "at": 32.2,  "kind": "whoosh", "seed": 4,  "f_lo": 400, "f_hi": 2000, "gain": 0.85 }
+  ],
   "timeline": {
     "fps": 30,
     "total_s": 33.75,
