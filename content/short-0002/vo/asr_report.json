@@ -1,0 +1,103 @@
+{
+  "short": "short-0002",
+  "verified_at": "2026-11-07T18:22:16.515370+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +45%",
+  "gap_s": 0.45,
+  "total_vo_s": 28.344,
+  "timeline_end_s": 31.494,
+  "n_fail": 0,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "hook",
+      "expected": "Ten thousand birds. One sky. Zero air traffic control.",
+      "heard": "10,000 birds, one sky, zero air traffic control.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS (asr-plural-bias)",
+      "audio_dur_s": 3.024,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "scene 0",
+      "expected": "Starling murmurations twist like one creature \u2014 and they almost never hit each other.",
+      "heard": "Starling murmurations twist like one creature, and they almost never hit each other.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.888,
+      "synced_start_s": 3.474
+    },
+    {
+      "line": "02",
+      "role": "scene 1",
+      "expected": "Head-on collision course? Every bird plays the same two cards: veer right \u2014 and never at the same height.",
+      "heard": "Head on collision course, every bird plays the same two cards: Vieright and Never at the Same Height.",
+      "wer": 0.222,
+      "accuracy": 0.778,
+      "verdict": "WARN",
+      "audio_dur_s": 4.776,
+      "synced_start_s": 7.812
+    },
+    {
+      "line": "03",
+      "role": "scene 2",
+      "expected": "No negotiation. No chatter. Just the rule. Every bird. Every time.",
+      "heard": "No negotiation, no chatter. Just the rule: every bird, every time.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.624,
+      "synced_start_s": 13.038
+    },
+    {
+      "line": "04",
+      "role": "scene 3",
+      "expected": "The real cheat code: each starling tracks about seven neighbors. Not the flock. Seven.",
+      "heard": "The real cheat code: each starling tracks about seven neighbors, not the flock. Seven.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 4.176,
+      "synced_start_s": 17.112
+    },
+    {
+      "line": "05",
+      "role": "scene 4",
+      "expected": "One bird turns \u2014 and the whole murmuration bends with it. One system. One move.",
+      "heard": "One bird turns, and the whole murmuration bends with it. One system, one move.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 4.032,
+      "synced_start_s": 21.738
+    },
+    {
+      "line": "06",
+      "role": "scene 5",
+      "expected": "No towers. No radar. Seven friends and one rule.",
+      "heard": "No towers, no radar, seven friends and one rule.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.88,
+      "synced_start_s": 26.22
+    },
+    {
+      "line": "07",
+      "role": "scene 6",
+      "expected": "Stuck in traffic? The birds solved it.",
+      "heard": "Stuck in traffic, the bird solved it.",
+      "wer": 0.143,
+      "accuracy": 0.857,
+      "verdict": "PASS (asr-plural-bias)",
+      "audio_dur_s": 1.944,
+      "synced_start_s": 29.55
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "title": "Why do 10,000 birds never crash mid-air?",
+  "format": "short",
+  "hook": {
+    "timestamp_start": 0.0,
+    "narration": "Ten thousand birds. One sky. Zero air traffic control.",
+    "audio_dur_s": 3.024
+  },
+  "scenes": [
+    {
+      "timestamp_start": 3.674,
+      "narration": "Starling murmurations twist like one creature \u2014 and they almost never hit each other.",
+      "visual": {
+        "pose": "sky-shot (no character by design)",
+        "prop": "murmuration morph",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "murmuration observation \u2014 flocking fact, safe"
+      ],
+      "audio_dur_s": 3.888
+    },
+    {
+      "timestamp_start": 8.212,
+      "narration": "Head-on collision course? Every bird plays the same two cards: veer right \u2014 and never at the same height.",
+      "visual": {
+        "pose": "presenting",
+        "prop": "two-bird split diagram",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "Schiffner & Srinivasan 2016 (QBI Queensland): veer right + pass above/below"
+      ],
+      "audio_dur_s": 4.776
+    },
+    {
+      "timestamp_start": 13.638,
+      "narration": "No negotiation. No chatter. Just the rule. Every bird. Every time.",
+      "visual": {
+        "pose": "stamp",
+        "prop": "rule cards",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "restate of the 2016 rule \u2014 no new claim"
+      ],
+      "audio_dur_s": 3.624
+    },
+    {
+      "timestamp_start": 17.912,
+      "narration": "The real cheat code: each starling tracks about seven neighbors. Not the flock. Seven.",
+      "visual": {
+        "pose": "amazed",
+        "prop": "seven links",
+        "background": "deep-blue"
+      },
+      "fact_sources": [
+        "Ballerini et al. 2008 PNAS: topological interaction, ~7 neighbors \u2014 'about seven', never 'exactly'"
+      ],
+      "audio_dur_s": 4.176
+    },
+    {
+      "timestamp_start": 22.738,
+      "narration": "One bird turns \u2014 and the whole murmuration bends with it. One system. One move.",
+      "visual": {
+        "pose": "watching",
+        "prop": "ripple wave",
+        "background": "dusk-sky"
+      },
+      "fact_sources": [
+        "safe restatement: 'the whole murmuration bends with it' (approved phrasing)"
+      ],
+      "audio_dur_s": 4.032
+    },
+    {
+      "timestamp_start": 27.42,
+      "narration": "No towers. No radar. Seven friends and one rule.",
+      "visual": {
+        "pose": "calm",
+        "prop": "towers-radar icons",
+        "background": "deep-blue"
+      },
+      "fact_sources": [
+        "safe summary \u2014 no new claim"
+      ],
+      "audio_dur_s": 2.88
+    },
+    {
+      "timestamp_start": 30.95,
+      "narration": "Stuck in traffic? The birds solved it.",
+      "visual": {
+        "pose": "in-car",
+        "prop": "car + bird",
+        "background": "dusk-street"
+      },
+      "fact_sources": [
+        "loop line"
+      ],
+      "audio_dur_s": 1.944
+    }
+  ],
+  "loop_line": "Stuck in traffic? The birds solved it.",
+  "timeline": {
+    "total_s": 32.894,
+    "gap_s": 0.65,
+    "resynced_from": "vo/asr_report.json measured durations (edge-tts, L-003)"
+  },
+  "critic": {
+    "round": 1,
+    "verdict": "pass-with-arbitration",
+    "notes": "per-line WPM critique arbitrated: overall pace is the calibrated metric; uniform 0.65s gaps land 178 WPM in-band. Loop fixed visually (s6 mirrors hook). No text changes \u2014 claims frozen (L-020 cap respected)."
+  }
+}

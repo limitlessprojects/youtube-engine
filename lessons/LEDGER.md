@@ -25,3 +25,4 @@
 | 005 | [`2026-11-03-day005.md`](2026-11-03-day005.md) | The GitHub clone IS the workstation; oEmbed = free dead-ID oracle (ship triage in the loop); POT infra ≠ ticket on a hard-flagged IP |
 | 006 | [`2026-11-04-day006.md`](2026-11-04-day006.md) | Press publish (credentials ≠ a channel); wake the model when the slot is free (04:35 EAT); y2mate class = sealed front-ends (radar, never production) |
 | 007 | [`2026-11-07-day007.md`](2026-11-07-day007.md) | Credentials need durable mirrors (upload/); VLM-autopsy your own frames; outlier formulas match execution ceiling; CI heartbeat survives agent death |
+| 008 | [`2026-11-08-day008.md`](2026-11-08-day008.md) | Autopsy the sheet, then gate the frame (3.5→8/10); lit subjects on dark grounds (L-063); pixel-probe every spatial claim (L-064); beat-timed probes for fast cuts (L-065); control-test the verifier (L-066) |

@@ -1,0 +1,95 @@
+name: Fish VO Generation
+
+# Generates narration for a short's vo_lines.json using the Fish Audio
+# s2.1-pro-free daily credits (CI secret FISH_AUDIO_KEY — the local key
+# died in recycle #4; this keeps the preferred voice available, L-058).
+# Triggered manually (or by the nightly session) with the slug.
+# Result lands in content/<slug>/vo/fish/NN.mp3 + a commit.
+# The nightly session then picks the better voice (Fish vs edge-tts)
+# by ASR verify before rendering.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "content slug, e.g. short-0003"
+        required: true
+  workflow_call:
+    inputs:
+      slug:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vo-gen
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install requests
+
+      - name: Generate VO lines (Fish s2.1-pro-free)
+        env:
+          FISH_AUDIO_KEY: ${{ secrets.FISH_AUDIO_KEY }}
+          SLUG: ${{ inputs.slug }}
+        run: |
+          set -e
+          mkdir -p "content/$SLUG/vo/fish"
+          python - <<'EOF'
+          import json, os, sys, time
+          from pathlib import Path
+          import requests
+          slug = os.environ["SLUG"]
+          key = os.environ["FISH_AUDIO_KEY"]
+          lines = json.loads(Path(f"content/{slug}/vo_lines.json").read_text())["lines"]
+          api = "https://api.fish.audio/v1/tts"
+          hdr = {"Authorization": f"Bearer {key}", "Content-Type": "application/json",
+                 "model": "s2.1-pro-free"}
+          ref = "802e3bc2b27e49c2995d23ef70e6ac89"  # Energetic Male (L-005)
+          ok = 0
+          for i, ln in enumerate(lines):
+              out = Path(f"content/{slug}/vo/fish/{i:02d}.mp3")
+              if out.exists() and out.stat().st_size > 512:
+                  ok += 1; continue
+              body = {"text": ln["narration"].replace(" — ", ", "), "format": "mp3",
+                      "reference_id": ref}
+              for attempt in range(3):
+                  r = requests.post(api, headers=hdr, json=body, timeout=120)
+                  if r.status_code in (402, 429):
+                      print(f"[{i:02d}] quota/limit — stopping (daily credits spent)")
+                      sys.exit(0 if ok else 1)
+                  if r.status_code >= 500:
+                      time.sleep(3 * (attempt + 1)); continue
+                  r.raise_for_status()
+                  if len(r.content) > 512 and r.content[:3] == b"ID3":
+                      out.write_bytes(r.content); ok += 1
+                      print(f"[{i:02d}] wrote {len(r.content)//1024} KiB")
+                      break
+              time.sleep(1)
+          print(f"generated {ok}/{len(lines)} lines")
+          EOF
+
+      - name: Commit VO
+        run: |
+          SLUG="${{ inputs.slug }}"
+          git config user.name "studio-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add "content/$SLUG/vo/fish" || true
+          if git diff --cached --quiet; then
+            echo "nothing new to commit"
+          else
+            git commit -m "vo($SLUG): fish s2.1-pro-free narration"
+            git push
+          fi

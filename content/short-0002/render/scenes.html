@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#0B1B4A;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0002 v3 — "Why do 10,000 birds never crash mid-air?"
+   First video on ENGINE V3 (docs/engine-v3-spec.md):
+   · v3#1 first frame = the premise (sky FULL of birds at t=0)
+   · v3#2 sound design lives in the mix (tools/finish_v3.py)
+   · v3#3 color script: dusk gradient world, one accent/scene
+     (amber everywhere; teal reserved for the "seven" insight)
+   · v3#4 cut rate 1-2s: sub-beat stamps inside scenes,
+     everything flaps/drifts/breathes — nothing static
+   · v3#5 caption craft: keyword pops (V2.caption + EMPHASIS)
+   · v3#6 character identity: kip + dusk-orange scarf (outdoors)
+   · v3#7 pacing: 178.8 WPM measured (vo/asr_report.json)
+   Deterministic: every frame a pure function of t (L-043).
+   Timeline injected by tools/render_short.py (__TIMELINE__).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+
+/* ---------- dusk palette (this short's world tokens, L-004) ---------- */
+const DUSK = {
+  skyTop: "#0B1B4A", skyMid: "#1E3A7A", skyLow: "#7A4A8C",
+  horizon: "#FF8A3D", horizon2: "#FFB054", sun: "#FFD9A0",
+  sil: "#10182E", sil2: "#0C1226", linkGlow: "#2FD4C5",
+};
+
+/* ---------- poses (rig-native fields) ---------- */
+const POSES = {
+  skygawk:  { tilt: -4, headTilt: -18, look: 0.15, expr: "shock",
+              armL: { a: 24, b: -30 }, armR: { a: 150, b: -96 }, handR: "open",
+              legL: { a: -13, b: 4 } },
+  present:  { tilt: 2, yaw: 0.3, look: 0.4, headTilt: -6,
+              armL: { a: 18, b: -14 }, armR: { a: 138, b: -10 }, handR: "point" },
+  nod:      { tilt: 3, yaw: 0.25, look: 0.3, armL: { a: 26, b: -20 }, armR: { a: 30, b: -22 } },
+  amazed:   { tilt: -3, look: 0, armL: { a: 150, b: -100 }, armR: { a: 146, b: -100 }, expr: "shock" },
+  lean:     { tilt: 6, yaw: 0.45, look: 0.5, headTilt: -6,
+              armL: { a: 30, b: -26 }, armR: { a: 34, b: -28 }, expr: "neutral" },
+  calm:     { tilt: 2, yaw: 0.3, armL: { a: 34, b: -74 }, armR: { a: 30, b: -78 }, expr: "neutral" },
+  driving:  { tilt: 2, headTilt: 3, look: 0.2, expr: "tired",
+              armL: { a: 74, b: -60 }, armR: { a: 106, b: -64 } },
+};
+const idleBlink = (t, off) => (((t + (off || 0)) % 132) < 3 ? 1 : 0);
+const pose = (name, t, x, y, scale, extra) => Object.assign({}, V2.basePose, POSES[name] || {},
+  { x, y: y + Math.sin(t / 34) * 3, scale, blink: idleBlink(t, 40) }, extra || {});
+
+/* ---------- the dusk scarf (v3#6 identity prop; drawn over the rig) ---------- */
+function scarf(x, y, scale, t, parent) {
+  const w = Math.sin(t / 5.5) * 8;
+  const g = V2.el("g", {}, parent);
+  V2.el("path", { d: `M ${x - 30 * scale} ${y - 118 * scale} q 30 ${14 * scale} 60 0 l 0 ${16 * scale} q -30 ${12 * scale} -60 0 z`,
+    fill: DUSK.horizon, stroke: "#121019", "stroke-width": 4 }, g);
+  V2.el("path", { d: `M ${x + 26 * scale} ${y - 108 * scale} q ${34 + w} ${10 * scale} ${20 + w * 1.4} ${54 * scale} q ${-14 - w * 0.4} ${-8 * scale} ${-26} ${-20 * scale} z`,
+    fill: DUSK.horizon2, stroke: "#121019", "stroke-width": 4, "stroke-linejoin": "round" }, g);
+}
+
+/* ---------- the dusk world (sky, sun, stars, treeline, ground) ---------- */
+function duskDefs() {
+  const d = V2.el("defs", {}, V2.root);
+  const g = V2.el("linearGradient", { id: "dzSky", x1: 0, y1: 0, x2: 0, y2: 1 }, d);
+  [["0%", DUSK.skyTop], ["44%", DUSK.skyMid], ["72%", DUSK.skyLow], ["86%", DUSK.horizon], ["100%", DUSK.horizon2]]
+    .forEach(([o, c]) => V2.el("stop", { offset: o, "stop-color": c }, g));
+  const rg = V2.el("radialGradient", { id: "dzSun" }, d);
+  [["0%", DUSK.sun, 1], ["30%", DUSK.horizon2, 0.6], ["100%", DUSK.horizon, 0]]
+    .forEach(([o, c, op]) => V2.el("stop", { offset: o, "stop-color": c, "stop-opacity": op }, rg));
+  const hb = V2.el("linearGradient", { id: "dzHband", x1: 0, y1: 0, x2: 0, y2: 1 }, d);
+  [["0%", DUSK.horizon, 0], ["100%", DUSK.horizon2, 0.55]].forEach(([o, c, op]) =>
+    V2.el("stop", { offset: o, "stop-color": c, "stop-opacity": op }, hb));
+}
+function duskSky(t, cam, opts) {
+  const o = opts || {};
+  V2.el("rect", { x: -260, y: -260, width: 1600, height: 2440, fill: "url(#dzSky)" }, cam);
+  /* sun low near horizon */
+  const sx = o.sunX === undefined ? 780 : o.sunX, sy = o.sunY === undefined ? 1130 : o.sunY;
+  V2.el("circle", { cx: sx, cy: sy, r: 640, fill: "url(#dzSun)", opacity: 0.48, style: "mix-blend-mode:screen" }, cam);
+  V2.el("circle", { cx: sx, cy: sy, r: 150, fill: "url(#dzSun)", opacity: 0.6, style: "mix-blend-mode:screen" }, cam);
+  /* the dusk band: warm light pooling along the horizon */
+  V2.el("rect", { x: -260, y: 980, width: 1600, height: 300, fill: "url(#dzHband)", opacity: 0.4, style: "mix-blend-mode:screen" }, cam);
+  /* stars up top */
+  V2.stars(t, 5, { x: -60, y: 0, w: 1200, h: 640 }, 46, 0.8, cam);
+  /* drifting cloud strips catch the dusk light */
+  for (let i = 0; i < 4; i++) {
+    const cy = 300 + i * 150 + V2.rnd(9, i) * 60;
+    const cx = ((t * (5 + i * 2) + V2.rnd(4, i) * 900) % 1500) - 210;
+    V2.el("ellipse", { cx, cy, rx: 200 + V2.rnd(6, i) * 160, ry: 16 + V2.rnd(3, i) * 12,
+      fill: i % 2 ? "#5A3E78" : "#8A5A8C", opacity: 0.32 }, cam);
+  }
+  /* treeline + hills silhouettes at the horizon */
+  const tl = V2.el("g", {}, cam);
+  for (let i = 0; i < 26; i++) {
+    const hx = -80 + i * 52 + V2.rnd(11, i) * 18;
+    const hh = 60 + V2.rnd(12, i) * 90;
+    V2.el("path", { d: `M ${hx} 1210 L ${hx + 15} ${1210 - hh} L ${hx + 30} 1210 Z`, fill: DUSK.sil, opacity: 0.9 }, tl);
+  }
+  V2.el("path", { d: "M -80 1200 Q 200 1050 470 1180 Q 700 1290 900 1140 Q 1020 1060 1160 1170 L 1160 1350 L -80 1350 Z",
+    fill: DUSK.sil2 }, tl);
+  /* the ground: dark field the hero stands on */
+  V2.el("rect", { x: -260, y: 1290, width: 1600, height: 900, fill: DUSK.sil2 }, cam);
+  V2.el("rect", { x: -260, y: 1286, width: 1600, height: 10, rx: 5, fill: DUSK.horizon, opacity: 0.4 }, cam);
+  for (let i = 0; i < 30; i++) {
+    const gx = -100 + i * 44 + V2.rnd(21, i) * 20, gy = 1330 + V2.rnd(22, i) * 480;
+    V2.el("path", { d: `M ${gx} ${gy} q 5 -14 10 0`, stroke: "#1A2440", "stroke-width": 3, fill: "none", opacity: 0.7 }, cam);
+  }
+}
+
+/* ---------- ground patch: a lit pool so contact shadows READ on dark ground
+   (gate round-1 fix: black shadow on near-black field = invisible) ---------- */
+function groundPatch(x, hipsY, scale, parent) {
+  const fy = hipsY + 140 * scale + 6;
+  V2.el("ellipse", { cx: x, cy: fy + 8, rx: 120 * scale, ry: 26 * scale, fill: "#1E2A4E", opacity: 0.9 }, parent);
+  V2.el("ellipse", { cx: x, cy: fy, rx: 86 * scale, ry: 17 * scale, fill: "#2B3A66", opacity: 0.95 }, parent);
+}
+
+/* ---------- birds ---------- */
+/* small silhouette bird, wings flap; heading in radians */
+function bird(x, y, s, ang, t, ph, parent, opts) {
+  const o = opts || {};
+  const flap = Math.sin(t * 11 + ph);
+  const g = V2.el("g", { transform: `translate(${x} ${y}) rotate(${(ang * 180) / Math.PI})`, opacity: o.opacity === undefined ? 1 : o.opacity }, parent);
+  const col = o.color || DUSK.sil;
+  const wing = (dir) => V2.el("path", {
+    d: `M 0 ${-s * 0.1} Q ${dir * s * 0.9} ${-s * (0.55 + 0.5 * flap)} ${dir * s * 1.5} ${-s * (0.35 + 0.45 * flap)}`,
+    stroke: col, "stroke-width": Math.max(2, s * 0.34), fill: "none", "stroke-linecap": "round" }, g);
+  wing(-1); wing(1);
+  V2.el("ellipse", { cx: s * 0.1, cy: 0, rx: s * 0.78, ry: s * 0.4, fill: col }, g);
+  V2.el("path", { d: `M ${-s * 0.6} 0 l ${-s * 0.42} ${-s * 0.18} l 0 ${s * 0.36} z`, fill: col }, g);
+  V2.el("circle", { cx: s * 0.68, cy: -s * 0.14, r: s * 0.16, fill: col }, g);
+  if (s > 20) { /* feature birds get a beak + warm rim + eye */
+    V2.el("path", { d: `M ${s * 0.8} ${-s * 0.12} l ${s * 0.34} ${s * 0.06} l ${-s * 0.34} ${s * 0.1} z`, fill: DUSK.horizon2 }, g);
+    V2.el("ellipse", { cx: s * 0.1, cy: 0, rx: s * 0.82, ry: s * 0.44, fill: "none", stroke: DUSK.horizon, "stroke-width": 4, opacity: 0.75 }, g);
+    V2.el("circle", { cx: s * 0.68, cy: -s * 0.16, r: s * 0.07, fill: "#12101F" }, g);
+  }
+  return g;
+}
+/* deterministic murmuration: pure function of (t, i). Center wanders
+   on incommensurate sines (sharp organic turns); birds orbit + jitter. */
+function flockPos(i, t, seed, spread) {
+  const cx = 560 + 210 * Math.sin(t / 3.1 + seed) + 120 * Math.sin(t / 1.7 + seed * 2.3);
+  const cy = 700 + 120 * Math.sin(t / 2.3 + seed * 1.4) + 70 * Math.sin(t / 1.13 + seed);
+  const r = spread * (0.3 + 0.7 * V2.rnd(seed + 40, i));
+  const dir = V2.rnd(seed + 80, i) > 0.18 ? 1 : -1;
+  const w = 0.55 + V2.rnd(seed + 120, i) * 0.5;
+  const a = t * w * dir + V2.rnd(seed + 160, i) * 6.28;
+  const sq = 0.62; /* vertical squash: wide ribbon mass */
+  const jit = 26 + 20 * V2.rnd(seed + 200, i);
+  const x = cx + Math.cos(a) * r + Math.sin(t / 0.9 + i * 1.7) * jit * 0.4;
+  const y = cy + Math.sin(a) * r * sq + Math.cos(t / 0.7 + i * 2.1) * jit * 0.3;
+  return { x, y, cx, cy };
+}
+function murmuration(t, n, seed, spread, cam, opts) {
+  const o = opts || {};
+  /* soft mass haze under the birds (reads as one creature) */
+  const p0 = flockPos(0, t, seed, spread);
+  V2.el("ellipse", { cx: p0.cx, cy: p0.cy, rx: spread * 1.15, ry: spread * 0.62,
+    fill: DUSK.sil, opacity: 0.13, filter: "url(#vBlur16)" }, cam);
+  for (let i = 0; i < n; i++) {
+    const p = flockPos(i, t, seed, spread);
+    const q = flockPos(i, t + 0.06, seed, spread);
+    const ang = Math.atan2(q.y - p.y, q.x - p.x);
+    const s = (o.s || 9) * (0.75 + V2.rnd(seed + 300, i) * 0.5);
+    const straggler = i % 13 === 0;
+    const px = straggler ? p.x + Math.sin(i * 3.1) * spread * 0.45 : p.x;
+    const py = straggler ? p.y + Math.cos(i * 2.3) * spread * 0.3 : p.y;
+    bird(px, py, s, ang, t, V2.rnd(seed + 400, i) * 6.28, cam,
+      { opacity: o.opacity === undefined ? 1 : o.opacity });
+  }
+}
+
+/* ---------- diagram furniture: stamp cards (v3#4 fast cuts) ---------- */
+/* the stage panel: Kurzgesagt-style dark rounded panel that anchors a
+   diagram beat (fix for the day-008 autopsy: 'floating in empty sky') */
+function stagePanel(cam, opts) {
+  const o = Object.assign({ x: 90, y: 360, w: 900, h: 700, op: 0.62 }, opts || {});
+  const g = V2.el("g", {}, cam);
+  V2.el("rect", { x: o.x - 24, y: o.y - 24, width: o.w + 48, height: o.h + 48, rx: 54,
+    fill: "#0A0F26", opacity: o.op }, g);
+  V2.el("rect", { x: o.x, y: o.y, width: o.w, height: o.h, rx: 40,
+    fill: "#101832", stroke: "#2A3560", "stroke-width": 4, opacity: 0.92 }, g);
+  V2.el("rect", { x: o.x + 14, y: o.y + 14, width: o.w - 28, height: o.h - 28, rx: 30,
+    fill: "none", stroke: "#3A4878", "stroke-width": 2, opacity: 0.55 }, g);
+  /* corner registration ticks */
+  [[o.x + 26, o.y + 26, 1, 1], [o.x + o.w - 26, o.y + 26, -1, 1],
+   [o.x + 26, o.y + o.h - 26, 1, -1], [o.x + o.w - 26, o.y + o.h - 26, -1, -1]]
+    .forEach(([tx, ty, dx, dy]) =>
+      V2.el("path", { d: `M ${tx + dx * 26} ${ty} L ${tx} ${ty} L ${tx} ${ty + dy * 26}`,
+        stroke: "#59639A", "stroke-width": 4, fill: "none", opacity: 0.7 }, g));
+  return g;
+}
+function stampCard(x, y, k, t0, icon, label, parent, accent, size) {
+  /* k: 0..1 pop-in progress; anticipation + backOut settle;
+     size: card box size in px (default 300) — scales icons too */
+  const S = (size || 300) / 300;
+  const pop = V2.backOut(V2.clamp01(k));
+  const w = 300, h = 300;
+  const g = V2.el("g", { transform: `translate(${x} ${y}) scale(${(0.5 + 0.5 * pop) * S}) translate(${-x} ${-y})`, opacity: Math.min(1, k * 3) }, parent);
+  V2.glow(x, y, w * 1.25, accent === P.teal ? "Teal" : "Warm", 0.34, g);
+  V2.el("rect", { x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 34, fill: "#141B38", stroke: "#2A3560", "stroke-width": 5 }, g);
+  V2.el("rect", { x: x - w / 2 + 12, y: y - h / 2 + 12, width: w - 24, height: h - 24, rx: 24, fill: "none", stroke: "#3A4878", "stroke-width": 2, opacity: 0.7 }, g);
+  icon(g);
+  if (label) V2.tag(x, y + h / 2 + 6, Math.max(0, k - 0.15) * 24, label, null, 18, g, accent || DUSK.horizon2);
+  return g;
+}
+function xStrike(x, y, k, parent) {
+  const p = V2.clamp01(k);
+  V2.el("circle", { cx: x, cy: y, r: 116 + 26 * (1 - p), fill: "#FF5A4A", opacity: 0.13 * p, style: "mix-blend-mode:screen" }, parent);
+  V2.el("path", { d: `M ${x - 34} ${y - 34} L ${x + 34} ${y + 34} M ${x + 34} ${y - 34} L ${x - 34} ${y + 34}`,
+    stroke: "#FF5A4A", "stroke-width": 14, "stroke-linecap": "round", opacity: 0.95 * p }, parent);
+}
+
+/* ============================================================
+   SCENES (u = local progress, t = global time)
+   ============================================================ */
+const SCENES = {
+
+  /* HOOK — the premise at t=0: a dusk sky FULL of birds. Hero gawks. */
+  hook(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 980, V2.kf(t, [[0, 1.0], [110, 1.07]])) });
+    duskSky(t, cam);
+    murmuration(t, 200, 3, 360, cam, { s: 8 });
+    /* a second, higher sheet of stragglers — the sky is FULL */
+    for (let i = 0; i < 36; i++) {
+      const x = ((V2.rnd(31, i) * 1240 + t * (26 + V2.rnd(33, i) * 22)) % 1240) - 80;
+      const y = 100 + V2.rnd(35, i) * 460 + Math.sin(t / 1.3 + i) * 18;
+      bird(x, y, 6 + V2.rnd(37, i) * 4, Math.sin(t / 4 + i) * 0.24, t, i, cam);
+    }
+    /* hero small on the field, shield-eyes gawking up (spec: small, bottom-left) */
+    const px = 240, py = 1395;
+    groundPatch(px, py, 0.85, cam);
+    scarf(px, py, 0.85, t, cam);
+    V2.Hero(pose("skygawk", t, px, py, 0.85), null, "vRimR", 1, cam);
+    /* one bird swoops LOW over the hero (near-ground whoosh) */
+    const bx = -60 + u * 1250, by = 1240 + Math.sin(u * 5.2) * 60;
+    bird(bx, by, 14, 0.1 + Math.sin(u * 5.2) * 0.2, t, 2, cam);
+  },
+
+  /* S0 — the murmuration twists like ONE creature. near-miss spark. */
+  s0(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(560, 880, V2.kf(t, [[0, 1.0], [150, 1.07]])) });
+    duskSky(t, cam, { sunX: 300, sunY: 1160 });
+    murmuration(t, 150, 11, 340, cam, { s: 9 });
+    /* the near-miss: two birds cross CLOSE at "almost never hit" (~u .55) */
+    const k = V2.clamp01((u - 0.5) / 0.12);
+    if (k > 0) {
+      const ax = 760 - u * 900, ay = 620 + Math.sin(u * 7) * 40;
+      const bx2 = 320 + u * 760, by2 = 760 - Math.sin(u * 6) * 30;
+      bird(ax, ay, 12, Math.PI - 0.2, t, 1, cam);
+      bird(bx2, by2, 12, 0.2, t, 5, cam);
+      if (k < 1) { /* amber spark + whoosh ticks at closest pass */
+        const mx = (ax + bx2) / 2, my = (ay + by2) / 2;
+        V2.sparkle(mx, my, t * 8 % 26, 0.8, "#FFD9A0", cam);
+        [[-1, -0.4], [1, 0.4]].forEach(([sx, sy]) =>
+          V2.el("line", { x1: mx + sx * 26, y1: my + sy * 26, x2: mx + sx * 54, y2: my + sy * 54,
+            stroke: P.amber, "stroke-width": 4, "stroke-linecap": "round", opacity: 0.8 }, cam));
+      }
+    }
+  },
+
+  /* S1 — head-on course → the two cards → veer right + altitude split. */
+  s1(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.0], [160, 1.06]])) });
+    duskSky(t, cam, { sunX: 940, sunY: 1250 });
+    stagePanel(cam, { x: 90, y: 400, w: 900, h: 620 });
+    const tau = t - TL[2].start; /* local seconds (audio-timed beats) */
+    /* faint horizon line the altitude split will reference */
+    V2.el("line", { x1: 160, y1: 800, x2: 920, y2: 800, stroke: "#8A93B8", "stroke-width": 3,
+      "stroke-dasharray": "2 22", opacity: 0.5 }, cam);
+    /* the impact-point telegraph: projected collision pulses with danger */
+    if (tau < 2.55) {
+      const pulse = 0.55 + 0.45 * Math.sin(t * 9);
+      V2.el("circle", { cx: 540, cy: 730, r: 34 + 10 * pulse, fill: "none", stroke: "#FF5A4A",
+        "stroke-width": 5, opacity: 0.85 * pulse }, cam);
+      V2.el("path", { d: "M 526 716 L 554 744 M 554 716 L 526 744", stroke: "#FF5A4A",
+        "stroke-width": 9, "stroke-linecap": "round", opacity: 0.9 }, cam);
+      V2.el("circle", { cx: 540, cy: 730, r: 60, fill: "#FF5A4A", opacity: 0.14 * pulse, style: "mix-blend-mode:screen" }, cam);
+    }
+    /* two feature birds close head-on 0→2.3s, then the fork.
+       Top-down chirality: each bird's RIGHT — left bird (heading east)
+       breaks down-right; right bird (heading west) breaks up-left. */
+    const closing = V2.clamp01(tau / 2.3);
+    const veer = V2.easeInOut(V2.clamp01((tau - 2.55) / 0.7));
+    const alt = V2.easeInOut(V2.clamp01((tau - 3.3) / 0.7));
+    const lx0 = 200 + closing * 300, rx0 = 880 - closing * 300;
+    const fork = 150 * veer;
+    /* speed lines behind each closing bird (motion + tension) */
+    if (tau < 2.6) {
+      for (let k = 0; k < 3; k++) {
+        V2.el("line", { x1: lx0 - 120 - k * 44, y1: 730 - k * 12, x2: lx0 - 54, y2: 730 - k * 12,
+          stroke: "#8A93B8", "stroke-width": 5, "stroke-linecap": "round", opacity: 0.5 - k * 0.13 }, cam);
+        V2.el("line", { x1: rx0 + 54, y1: 730 - k * 12, x2: rx0 + 120 + k * 44, y2: 730 - k * 12,
+          stroke: "#8A93B8", "stroke-width": 5, "stroke-linecap": "round", opacity: 0.5 - k * 0.13 }, cam);
+      }
+    }
+    /* trajectories: dashed amber, forking apart at the veer */
+    const lTrail = `M 200 730 L ${lx0} 730 Q ${lx0 + 70} ${730 + fork} ${lx0 + 160} ${730 + fork + 130 * alt}`;
+    const rTrail = `M 880 730 L ${rx0} 730 Q ${rx0 - 70} ${730 - fork} ${rx0 - 160} ${730 - fork - 130 * alt}`;
+    [lTrail, rTrail].forEach((d) =>
+      V2.el("path", { d, fill: "none", stroke: P.amber, "stroke-width": 6, "stroke-dasharray": "7 22", opacity: 0.7 }, cam));
+    bird(lx0 + 160 * veer, 730 + fork + 130 * alt, 54, 0.25 * veer + 0.35 * alt, t, 1, cam, { color: P.cream });
+    bird(rx0 - 160 * veer, 730 - fork - 130 * alt, 54, Math.PI + 0.25 * veer + 0.35 * alt, t, 4, cam, { color: P.cream });
+    /* "VEER RIGHT" tag on the fork moment (kept clear of cards + hero) */
+    if (tau > 2.6) V2.tag(800, 450, (tau - 2.6) * 14, "VEER RIGHT", null, 16, cam);
+    if (tau > 3.35) V2.tag(700, 1300, (tau - 3.35) * 14, "NEVER THE SAME HEIGHT", null, 13, cam, P.teal);
+    /* the two cards stamp in on "the same two cards" (~2.3s) */
+    const cardK = V2.clamp01((tau - 2.25) / 0.35);
+    if (cardK > 0) {
+      stampCard(300, 980, cardK, tau, (g) => {
+        V2.el("path", { d: "M 220 1030 Q 300 940 380 1030", stroke: P.amber, "stroke-width": 14, fill: "none", "stroke-linecap": "round" }, g);
+        V2.el("path", { d: "M 380 1030 l -26 -4 l 8 26 z", fill: P.amber }, g);
+      }, "CARD 1 · VEER", cam);
+      stampCard(780, 980, V2.clamp01(cardK * 1.6 - 0.3), tau, (g) => {
+        V2.el("path", { d: "M 730 1040 l 0 -120 M 706 944 l 24 -28 l 24 28 M 830 920 l 0 120 M 806 1016 l 24 28 l 24 -28",
+          stroke: P.teal, "stroke-width": 12, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, g);
+      }, "CARD 2 · ALTITUDE", cam, P.teal);
+    }
+    /* hero presents the diagram from below-left */
+    groundPatch(185, 1395, 0.95, cam);
+    scarf(185, 1395, 0.95, t, cam);
+    V2.Hero(pose("present", t, 185, 1395, 0.95), null, "vRimR", 1, cam);
+  },
+
+  /* S2 — no negotiation / no chatter / the rule / every bird. 4 fast stamps. */
+  s2(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.0], [128, 1.05]])) });
+    duskSky(t, cam, { sunX: 620, sunY: 1230 });
+    stagePanel(cam, { x: 150, y: 480, w: 780, h: 560 });
+    const tau = t - TL[3].start; /* audio: No negotiation. No chatter. Just the rule. Every bird every time. */
+    const cuts = [0, 0.66, 1.32, 2.31]; /* word-timed (measured 0.33s/word) */
+    const seg = cuts.filter((c) => tau >= c).length - 1; /* 0..3 */
+    const segT = tau - cuts[seg];
+    if (seg === 0) { /* chat bubbles struck through */
+      stampCard(540, 760, V2.clamp01(segT / 0.3), tau, (g) => {
+        V2.el("path", { d: "M 440 700 h 200 a 26 26 0 0 1 26 26 v 70 a 26 26 0 0 1 -26 26 h -128 l -34 34 v -34 h -38 a 26 26 0 0 1 -26 -26 v -70 a 26 26 0 0 1 26 -26 z",
+          fill: "#232845", stroke: "#59639A", "stroke-width": 5 }, g);
+        [[478, 762], [520, 762], [562, 762]].forEach(([cx, cy]) => V2.el("circle", { cx, cy, r: 9, fill: "#8A93B8" }, g));
+      }, "NO NEGOTIATION", cam, null, 380);
+      xStrike(540, 760, V2.clamp01((segT - 0.12) / 0.16), cam);
+    } else if (seg === 1) { /* sound waves struck through */
+      stampCard(540, 760, V2.clamp01(segT / 0.3), tau, (g) => {
+        for (let i = 0; i < 3; i++)
+          V2.el("path", { d: `M ${470 + i * 40} 690 q 26 30 0 90`, stroke: "#8FD3FF", "stroke-width": 10, fill: "none", "stroke-linecap": "round" }, g);
+        V2.el("path", { d: "M 450 735 l -18 22 l -18 -22 M 450 775 l -18 22 l -18 -22", stroke: "#59639A", "stroke-width": 8, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, g);
+      }, "NO CHATTER", cam, null, 380);
+      xStrike(540, 760, V2.clamp01((segT - 0.12) / 0.16), cam);
+    } else if (seg === 2) { /* THE RULE — biggest card */
+      stampCard(540, 720, V2.clamp01(segT / 0.3), tau, (g) => {
+        V2.el("rect", { x: 470, y: 640, width: 140, height: 190, rx: 16, fill: "#F6EFE3", stroke: "#121019", "stroke-width": 5 }, g);
+        V2.el("path", { d: "M 500 700 h 80 M 500 740 h 80 M 500 780 h 48", stroke: "#3D4A78", "stroke-width": 10, "stroke-linecap": "round" }, g);
+        V2.el("circle", { cx: 540, cy: 660, r: 9, fill: "#FF5A4A" }, g);
+      }, "JUST THE RULE", cam, null, 400);
+    } else { /* a row of birds, every one checked */
+      const g2 = V2.el("g", {}, cam);
+      V2.glow(540, 720, 330, "Warm", 0.3, g2);
+      for (let i = 0; i < 6; i++) {
+        const bx = 250 + i * 116, by = 700 + Math.sin(i * 1.9) * 36;
+        bird(bx, by, 17, Math.sin(i) * 0.2, t, i, g2, { color: "#B9C4D6" });
+        const ck = V2.clamp01((segT - 0.1 - i * 0.07) / 0.22);
+        if (ck > 0) V2.el("path", { d: `M ${bx + 20} ${by - 26} l 10 10 l 20 -24`,
+          stroke: P.teal, "stroke-width": 8, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round", opacity: ck }, g2);
+      }
+      if (segT > 0.55) V2.tag(540, 900, (segT - 0.55) * 20, "EVERY BIRD. EVERY TIME.", null, 18, cam);
+    }
+    /* hero nods along, mid-right, clear of captions */
+    groundPatch(830, 1395, 0.9, cam);
+    scarf(830, 1395, 0.9, t, cam);
+    V2.Hero(pose("nod", t, 830, 1395, 0.9, { headTilt: -6 + 5 * Math.sin(t / 2.2) }), null, "vRimR", 1, cam);
+  },
+
+  /* S3 — THE diagram: one starling, SEVEN glowing links. teal insight. */
+  s3(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 860, V2.kf(t, [[0, 1.0], [144, 1.06]])) });
+    duskSky(t, cam, { sunX: 200, sunY: 1230 });
+    /* dim background flock: the thing NOT being tracked */
+    murmuration(t, 60, 51, 420, cam, { s: 6, opacity: 0.35 });
+    stagePanel(cam, { x: 150, y: 440, w: 780, h: 580, op: 0.5 });
+    const cx = 540, cy = 720;
+    /* seven neighbors ring in, links draw on (word-timed: "seven neighbors" ~2.4s) */
+    const N = 7;
+    for (let k = 0; k < N; k++) {
+      const a = -Math.PI / 2 + (k * 2 * Math.PI) / N + 0.18;
+      const rx = cx + Math.cos(a) * 235, ry = cy + Math.sin(a) * 175;
+      const kB = V2.clamp01((t - TL[4].start - 0.7 - k * 0.14) / 0.4);
+      if (kB <= 0) continue;
+      /* link: glowing teal line, draw-on */
+      V2.el("line", { x1: cx, y1: cy, x2: rx, y2: ry, stroke: P.teal, "stroke-width": 3,
+        opacity: 0.22 * kB }, cam);
+      V2.el("line", { x1: cx + (rx - cx) * (1 - kB), y1: cy + (ry - cy) * (1 - kB), x2: rx, y2: ry,
+        stroke: DUSK.linkGlow, "stroke-width": 6, "stroke-linecap": "round",
+        opacity: 0.85, style: "filter: drop-shadow(0 0 8px rgba(47,212,197,0.8))" }, cam);
+      bird(rx, ry + Math.sin(t / 3 + k) * 8, 16, a + Math.PI / 2 + Math.sin(t / 5 + k) * 0.2, t, k, cam, { color: "#B9C4D6" });
+      if (kB > 0.9) V2.sparkle(rx, ry, (t * 4 + k * 9) % 30, 0.6, "#7DF0E4", cam);
+    }
+    /* the hero bird: LIT (cream + strong amber rim) so it reads on the dark panel */
+    V2.glow(cx, cy, 230, "Teal", 0.34, cam);
+    V2.glow(cx, cy + 30, 190, "Warm", 0.22, cam);
+    bird(cx, cy + Math.sin(t / 3.2) * 6, 46, -Math.PI / 2, t, 0, cam, { color: P.cream });
+    /* "NOT THE FLOCK" struck, then SEVEN. pops (word 13 ~3.9s local) */
+    const tau = t - TL[4].start;
+    if (tau > 3.05) {
+      const k = V2.clamp01((tau - 3.05) / 0.3);
+      V2.el("rect", { x: 350, y: 1070, width: 380, height: 64, rx: 18, fill: "#0A0F26", opacity: 0.72 }, cam);
+      V2.txt(540, 1110, "NOT THE FLOCK", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 40, fill: "#A8B2D4", opacity: k }, cam);
+      V2.el("line", { x1: 385, y1: 1098, x2: 385 + 310 * k, y2: 1098 + 11 * k, stroke: "#FF5A4A",
+        "stroke-width": 8, "stroke-linecap": "round", opacity: 0.95 }, cam);
+    }
+    if (tau > 3.75) {
+      const k = V2.backOut(V2.clamp01((tau - 3.75) / 0.32));
+      V2.glow(540, 1255, 260 * k, "Teal", 0.45, cam);
+      V2.txt(540, 1280 + (1 - k) * 40, "SEVEN.", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 118 * (0.6 + 0.4 * k), fill: "#073A38",
+        style: "filter: drop-shadow(0 2px 0 #7DF0E4) drop-shadow(0 6px 22px rgba(0,0,0,0.85)) drop-shadow(0 0 38px rgba(47,212,197,0.55))" }, cam);
+      V2.txt(540, 1280 + (1 - k) * 40, "SEVEN.", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 118 * (0.6 + 0.4 * k), fill: "#EAFFFD",
+        style: "filter: drop-shadow(0 5px 16px rgba(0,0,0,0.8))" }, cam);
+    }
+    /* hero amazed with cyan glint, mid-left */
+    groundPatch(230, 1395, 0.92, cam);
+    scarf(230, 1395, 0.92, t, cam);
+    V2.Hero(pose("amazed", t, 230, 1395, 0.92, { glint: u > 0.3 ? 0.85 : 0 }), null, "vRimTealR", 1, cam);
+  },
+
+  /* S4 — one bird turns: the wavefront bends the whole flock. */
+  s4(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 880, V2.kf(t, [[0, 1.0], [141, 1.05]])) });
+    duskSky(t, cam, { sunX: 840, sunY: 1150 });
+    const tau = t - TL[5].start; /* "One bird turns" 0-0.86 / "bends" 1.15-2.6 / stamps 2.88+ */
+    /* the flock as a flowing band of birds; wavefront sweeps left→right */
+    const front = V2.easeInOut(V2.clamp01((tau - 0.75) / 1.7)); /* 0.75→2.45s */
+    const rows = 4, per = 13;
+    const fxFront = 120 + 840 * front;
+    for (let r = 0; r < rows; r++) {
+      for (let i = 0; i < per; i++) {
+        const fx = 120 + (i / (per - 1)) * 840 + Math.sin(r * 2.1 + i * 0.7) * 34;
+        const fy = 480 + r * 130 + Math.sin(i * 1.3 + r) * 40 + Math.sin(t / 3 + i) * 6;
+        const turned = V2.clamp01((fxFront - fx) / 90);
+        const ang = -0.15 + turned * 0.9; /* birds tip as the wave passes */
+        const flash = Math.max(0, 1 - Math.abs((fx - fxFront) / 80));
+        const s = 17 + V2.rnd(61, r * per + i) * 4;
+        bird(fx, fy, s, ang, t, r * 3 + i, cam, { opacity: 0.92 });
+        if (flash > 0.02) V2.el("circle", { cx: fx, cy: fy, r: s * 1.8, fill: P.amber, opacity: 0.5 * flash, style: "mix-blend-mode:screen" }, cam);
+      }
+    }
+    /* the wavefront ITSELF: a glowing amber arc sweeping through the band.
+       Flat-bright through the sweep (sin envelope faded too early — gate r3). */
+    if (front > 0 && front < 1) {
+      const arcGlow = Math.min(1, front * 5) * Math.min(1, (1 - front) * 4);
+      V2.el("ellipse", { cx: fxFront + 16, cy: 710, rx: 90, ry: 330, fill: P.amber,
+        opacity: 0.16 * arcGlow, filter: "url(#vBlur16)", style: "mix-blend-mode:screen" }, cam);
+      V2.el("path", { d: `M ${fxFront - 46} 400 Q ${fxFront + 60} 710 ${fxFront - 46} 1020`,
+        fill: "none", stroke: P.amber, "stroke-width": 22, "stroke-linecap": "round",
+        opacity: 0.8 * arcGlow, style: "filter: drop-shadow(0 0 18px rgba(255,176,84,0.95))" }, cam);
+      V2.el("path", { d: `M ${fxFront - 46} 400 Q ${fxFront + 60} 710 ${fxFront - 46} 1020`,
+        fill: "none", stroke: "#FFF6E0", "stroke-width": 7, "stroke-linecap": "round",
+        opacity: 0.95 * arcGlow }, cam);
+    }
+    /* the bend arrow: curved amber arrow following the front */
+    if (tau > 0.9 && tau < 2.7) {
+      const bk = V2.clamp01((tau - 0.9) / 1.5);
+      V2.el("path", { d: `M 240 1090 Q ${240 + 600 * bk} ${1010 - 70 * bk} ${240 + 620 * bk} 1090`,
+        fill: "none", stroke: P.amber, "stroke-width": 8, "stroke-dasharray": "14 12", opacity: 0.8 }, cam);
+      if (bk > 0.97) V2.el("path", { d: `M ${240 + 620 * bk} 1090 l -30 -6 l 10 30 z`, fill: P.amber, opacity: 0.9 }, cam);
+    }
+    /* the origin bird: LIT protagonist, first to turn, pulse rings */
+    const ox = 140, oy = 560;
+    bird(ox, oy - 26, 28, 0.75, t, 1, cam, { color: P.cream });
+    if (tau < 1.1) V2.focusRings(ox, oy - 26, tau * 46, P.amber, cam);
+    /* "One system. One move." stamps */
+    if (tau > 2.95) {
+      stampCard(390, 1300, V2.clamp01((tau - 2.95) / 0.3), tau, (g) => {
+        V2.txt(390, 1322, "1", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 96, fill: P.amber }, g);
+      }, "SYSTEM", cam);
+      stampCard(690, 1300, V2.clamp01((tau - 3.12) / 0.3), tau, (g) => {
+        V2.txt(690, 1322, "1", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 96, fill: P.amber }, g);
+      }, "MOVE", cam);
+    }
+    /* hero leans in, mid-right, watching the physics — extra-dark contact
+       shadow (the dusk band glow behind washes out the standard one) */
+    groundPatch(846, 1395, 0.9, cam);
+    V2.el("ellipse", { cx: 846, cy: 1395 + 126 + 10, rx: 96, ry: 14, fill: "#000", opacity: 0.4 }, cam);
+    scarf(846, 1395, 0.9, t, cam);
+    V2.Hero(pose("lean", t, 846, 1395, 0.9, { headTilt: -8 }), null, "vRimR", 1, cam);
+  },
+
+  /* S5 — no towers, no radar, seven friends + one rule. 3 beats. */
+  s5(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 920, 1.02) });
+    duskSky(t, cam, { sunX: 460, sunY: 1230 });
+    stagePanel(cam, { x: 150, y: 480, w: 780, h: 560 });
+    const tau = t - TL[6].start; /* 0-0.64 towers / 0.64-1.28 radar / 1.28+ seven+rule */
+    if (tau < 1.28) {
+      const isTower = tau < 0.64, segT = isTower ? tau : tau - 0.64;
+      stampCard(540, 720, V2.clamp01(segT / 0.28), tau, (g) => {
+        if (isTower) { /* control tower */
+          V2.el("path", { d: "M 470 830 L 500 660 h 80 l 30 170 z", fill: "#3A4468", stroke: "#59639A", "stroke-width": 5 }, g);
+          V2.el("rect", { x: 488, y: 610, width: 84, height: 52, rx: 10, fill: "#232845", stroke: "#59639A", "stroke-width": 5 }, g);
+          [[505, 636], [530, 636], [555, 636]].forEach(([cx, cy]) => V2.el("circle", { cx, cy, r: 7, fill: "#FFD9A0" }, g));
+          V2.el("line", { x1: 540, y1: 560, x2: 540, y2: 596, stroke: "#59639A", "stroke-width": 6 }, g);
+          V2.el("circle", { cx: 540, cy: 552, r: 9, fill: "#FF5A4A" }, g);
+        } else { /* radar dish */
+          V2.el("path", { d: "M 480 800 l 60 -40 M 600 800 l -60 -40 M 540 762 v -60", stroke: "#59639A", "stroke-width": 8, "stroke-linecap": "round" }, g);
+          V2.el("path", { d: "M 470 760 a 84 84 0 0 1 140 0 z", fill: "#3A4468", stroke: "#59639A", "stroke-width": 5 }, g);
+          V2.el("circle", { cx: 540, cy: 740, r: 10, fill: "#8FD3FF" }, g);
+          for (let i = 1; i <= 2; i++) V2.el("path", { d: `M 620 ${740 - i * 26} q 40 ${i * 13} 0 ${i * 26}`, stroke: "#8FD3FF",
+            "stroke-width": 7, fill: "none", "stroke-linecap": "round", opacity: 0.75 }, g);
+        }
+      }, isTower ? "NO TOWERS" : "NO RADAR", cam);
+      xStrike(540, 720, V2.clamp01((segT - 0.1) / 0.16), cam);
+    } else {
+      const segT = tau - 1.28;
+      /* seven friends: seven birds bunched in a warm glow, ring-anchored */
+      const g2 = V2.el("g", {}, cam);
+      V2.glow(430, 720, 340, "Warm", 0.42, g2);
+      V2.el("circle", { cx: 430, cy: 720, r: 168, fill: "none", stroke: DUSK.horizon, "stroke-width": 5, opacity: 0.6, "stroke-dasharray": "4 14" }, g2);
+      for (let k = 0; k < 7; k++) {
+        const a = -Math.PI / 2 + (k * 2 * Math.PI) / 7 + t * 0.1;
+        bird(430 + Math.cos(a) * 120, 720 + Math.sin(a) * 88, 19, a + Math.PI / 2, t, k, g2, { color: P.cream });
+      }
+      if (segT > 0.25) V2.tag(430, 950, (segT - 0.25) * 20, "SEVEN FRIENDS", null, 16, cam);
+      /* one rule card, glowing, right */
+      stampCard(760, 720, V2.clamp01((segT - 0.3) / 0.3), tau, (g) => {
+        V2.el("rect", { x: 700, y: 640, width: 120, height: 160, rx: 14, fill: "#F6EFE3", stroke: "#121019", "stroke-width": 5 }, g);
+        V2.el("path", { d: "M 726 690 h 68 M 726 726 h 68 M 726 762 h 40", stroke: "#3D4A78", "stroke-width": 9, "stroke-linecap": "round" }, g);
+      }, "ONE RULE", cam);
+      /* leader line: the hero anchors the payoff (autopsy fix) */
+      if (segT > 0.2) {
+        const lk = V2.clamp01((segT - 0.2) / 0.4);
+        V2.el("line", { x1: 330, y1: 1300, x2: 330 + (430 - 330) * lk, y2: 1300 + (890 - 1300) * lk,
+          stroke: P.amber, "stroke-width": 4, "stroke-dasharray": "6 14", opacity: 0.7 }, cam);
+      }
+    }
+    /* hero points up at the payoff, mid-left */
+    groundPatch(250, 1395, 0.92, cam);
+    scarf(250, 1395, 0.92, t, cam);
+    V2.Hero(pose("present", t, 250, 1395, 0.92), null, "vRimR", 1, cam);
+  },
+
+  /* S6 — stuck in traffic. the birds solved it. MIRRORS the hook (loop). */
+  s6(u, t) {
+    /* camera starts on the street, tilts UP into the bird-filled sky */
+    const tiltUp = V2.easeInOut(V2.clamp01((u - 0.42) / 0.5));
+    const cam = V2.el("g", { transform: V2.cam(540, 1200 + tiltUp * -220, V2.kf(t, [[0, 1.0], [58, 1.1]])) });
+    duskSky(t, cam, { sunX: 760, sunY: 1150 });
+    /* a power line crosses the frame — three birds perch on it, unbothered */
+    V2.el("path", { d: "M -80 700 Q 540 790 1160 700", fill: "none", stroke: "#0B0F22", "stroke-width": 7 }, cam);
+    for (let i = 0; i < 3; i++) {
+      const px2 = 330 + i * 210;
+      const py2 = 748 + Math.sin((px2 + 80) / 1240 * Math.PI) * 0 + 8 * Math.sin(i);
+      /* perched: body upright, no flap */
+      const g3 = V2.el("g", { transform: `translate(${px2} ${py2 - 10}) rotate(${Math.sin(t / 2 + i) * 3})` }, cam);
+      V2.el("path", { d: "M 0 0 q -10 -16 2 -22 q 12 -6 16 6 q 8 2 6 10 z", fill: DUSK.sil }, g3);
+      V2.el("path", { d: "M 2 -16 q 10 -12 20 -6", stroke: DUSK.sil, "stroke-width": 4, fill: "none", "stroke-linecap": "round" }, g3);
+    }
+    /* the jam: cars on the ground, brake lights, exhaust */
+    const car = (x, y, s, col, brake, parent) => {
+      const g = V2.el("g", { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+      V2.el("ellipse", { cx: 0, cy: 54, rx: 150, ry: 16, fill: "#000", opacity: 0.55 }, g);
+      V2.el("path", { d: "M -150 40 q 10 -60 60 -66 l 30 -44 q 90 -18 180 0 l 30 44 q 50 6 60 66 l -8 18 h -344 z",
+        fill: col, stroke: "#0B0F22", "stroke-width": 6, "stroke-linejoin": "round" }, g);
+      V2.el("path", { d: "M -60 -66 l 26 -40 q 70 -14 140 0 l 24 40 z", fill: "#1B2547", stroke: "#0B0F22", "stroke-width": 5 }, g);
+      V2.el("rect", { x: 44, y: -62, width: 76, height: 52, rx: 8, fill: "#0A0F26" }, g);
+      [[-138, 8], [138, 8]].forEach(([lx, ly]) => {
+        V2.el("rect", { x: lx - 16, y: ly - 12, width: 32, height: 16, rx: 5, fill: brake ? "#FF5A4A" : "#8A2A22" }, g);
+        if (brake) V2.el("circle", { cx: lx, cy: ly - 4, r: 26, fill: "#FF5A4A", opacity: 0.3, style: "mix-blend-mode:screen" }, g);
+      });
+      return g;
+    };
+    car(300, 1330, 0.92, "#2E4468", true, cam);
+    car(660, 1360, 0.98, "#5A3550", true, cam);
+    /* hero's car — foreground, big; hero at the wheel seen through the window */
+    car(760, 1480, 1.34, "#3D4A78", true, cam);
+    const clipId = V2.uid("win");
+    const cd = V2.el("clipPath", { id: clipId }, V2.el("defs", {}, cam));
+    /* window opening in world coords (car at 760,1480 s=1.34: local 44..120 x, -62..-10 y) */
+    V2.el("rect", { x: 760 + 46 * 1.34, y: 1480 - 60 * 1.34, width: 72 * 1.34, height: 50 * 1.34, rx: 8 }, cd);
+    const heroG = V2.el("g", { "clip-path": `url(#${clipId})` }, cam);
+    scarf(760 + 82 * 1.34, 1480 - 16 * 1.34, 0.56, t, heroG);
+    V2.Hero(pose("driving", t, 760 + 82 * 1.34, 1480 - 16 * 1.34, 0.56), null, "vRimR", 0, heroG);
+    /* exhaust puffs from the lead car */
+    for (let i = 0; i < 3; i++) {
+      const pu = (t * 0.4 + i * 0.33) % 1;
+      V2.el("circle", { cx: 360 + pu * 70, cy: 1320 - pu * 52, r: 10 + pu * 20, fill: "#8A93B8", opacity: 0.48 * (1 - pu) }, cam);
+    }
+    /* the bird: arrow-straight, clean, flies past and UP into the flock */
+    const bx = -40 + u * 1160, by = 980 - tiltUp * 160 + Math.sin(u * 9) * 10;
+    bird(bx, by, 24, -0.12, t, 2, cam);
+    /* the flock it rejoins: sky fills as we tilt up (loop mirror of hook) */
+    if (tiltUp > 0.05) {
+      murmuration(t, 120, 3, 320, cam, { s: 8, opacity: 0.35 + 0.65 * tiltUp });
+      for (let i = 0; i < 18; i++) {
+        const x = ((V2.rnd(31, i) * 1240 + t * (26 + V2.rnd(33, i) * 22)) % 1240) - 80;
+        const y = 140 + V2.rnd(35, i) * 340;
+        bird(x, y, 6 + V2.rnd(37, i) * 4, Math.sin(t / 4 + i) * 0.24, t, i, cam,
+          { opacity: 0.35 + 0.65 * tiltUp });
+      }
+    }
+    /* no fade-out: the loop cuts straight back into the hook frame */
+  },
+};
+
+const EMPHASIS = {
+  hook: ["thousand", "zero"],
+  s0: ["one", "creature"],
+  s1: ["right", "height", "two"],
+  s2: ["rule"],
+  s3: ["seven", "flock"],
+  s4: ["one", "bends"],
+  s5: ["seven", "rule"],
+  s6: ["solved"],
+};
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  duskDefs();
+  V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: DUSK.skyTop });
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++)
+    if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx];
+  const u = V2.clamp01((t - sc.start) / (sc.end - sc.start));
+  (SCENES[sc.id] || SCENES.hook)(u, t);
+  V2.grade(t);
+  V2.caption(sc.narration, u, EMPHASIS[sc.id]);
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+{
+  "frames": {
+    "hook_u50.png": {
+      "scene": "hook",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            250,
+            100,
+            750,
+            1080
+          ],
+          "fix_hint": "Narration says 'ten thousand birds, one sky' but flock density is sparse; intent requires a dense swirling murmuration mass plus a higher sheet of stragglers filling the sky. Increase bird count and add the upper scattered layer."
+        },
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            1250,
+            100,
+            1600,
+            600
+          ],
+          "fix_hint": "No bird swoops low over the hero; add one low-flying bird crossing just above him to complete the beat."
+        },
+        {
+          "check": "drift",
+          "severity": "low",
+          "bbox": [
+            1150,
+            150,
+            1600,
+            400
+          ],
+          "fix_hint": "Hero gaze reads forward/level, not tilted back gawking up; tilt head back and raise eyes toward the flock."
+        }
+      ],
+      "_frame": "hook_u50.png",
+      "_round": "3"
+    },
+    "s0_u25.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u25.png",
+      "_round": "3"
+    },
+    "s0_u58.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u58.png",
+      "_round": "3"
+    },
+    "s0_u60.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u60.png",
+      "_round": "3"
+    },
+    "s0_u90.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u90.png",
+      "_round": "3"
+    },
+    "s1_u25.png": {
+      "scene": "s1",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "medium",
+          "bbox": [
+            1540,
+            60,
+            1740,
+            950
+          ],
+          "fix_hint": "Caption line 'Head-on collision course? Every' overlaps the hero's legs/shoes in the bottom-left. Nudge caption block lower or shift hero right so text clears the character."
+        }
+      ],
+      "_frame": "s1_u25.png",
+      "_round": "3"
+    },
+    "s1_u46.png": {
+      "scene": "s1",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s1_u46.png",
+      "_round": "3"
+    },
+    "s1_u60.png": {
+      "scene": "s1",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "medium",
+          "bbox": [
+            1560,
+            60,
+            1660,
+            420
+          ],
+          "fix_hint": "Caption first line ('Head-on...') overlaps the hero's feet/lower body in the bottom-left. Raise the caption baseline or shift hero up so captions sit fully in the bottom-20% zone without touching the character."
+        },
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            960,
+            560,
+            1250,
+            1000
+          ],
+          "fix_hint": "Tag 'NEVER THE SAME HEIGHT' is absent; if this frame is after the late tag beat it should be visible near the right bird. If this is a pre-pop frame it is legitimate."
+        }
+      ],
+      "_frame": "s1_u60.png",
+      "_round": "3"
+    },
+    "s1_u90.png": {
+      "scene": "s1",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            930,
+            610,
+            1180,
+            920
+          ],
+          "fix_hint": "Second feature bird is partially occluded by CARD 2 panel; only a small cream sliver shows at the end of the descending trail. Shift the bird above/behind-free of the card or move the card so both cream-bodied birds are clearly visible at their trail ends."
+        },
+        {
+          "check": "clutter",
+          "severity": "low",
+          "bbox": [
+            890,
+            600,
+            1220,
+            1230
+          ],
+          "fix_hint": "CARD 2 panel overlaps the collision-avoidance trail and bird, muddying the diagram focal point; nudge card down/right for cleaner separation."
+        }
+      ],
+      "_frame": "s1_u90.png",
+      "_round": "3"
+    },
+    "s2_u08.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s2_u08.png",
+      "_round": "3"
+    },
+    "s2_u23.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s2_u23.png",
+      "_round": "3"
+    },
+    "s2_u42.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s2_u42.png",
+      "_round": "3"
+    },
+    "s2_u50.png": {
+      "scene": "s2",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s2_u50.png",
+      "_round": "3"
+    },
+    "s3_u25.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            620,
+            520,
+            1010,
+            770
+          ],
+          "fix_hint": "Only 4 of 7 teal links are drawn on this frame; legitimate if mid-animation. Gate end-state at u60+ to confirm all seven links complete with all seven blue-gray birds present."
+        }
+      ],
+      "_frame": "s3_u25.png",
+      "_round": "3"
+    },
+    "s3_u60.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s3_u60.png",
+      "_round": "3"
+    },
+    "s3_u90.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "anchoring",
+          "severity": "low",
+          "bbox": [
+            1440,
+            100,
+            1560,
+            360
+          ],
+          "fix_hint": "Hero contact shadow under feet is very faint; slightly strengthen for a clearer ground contact, optional."
+        }
+      ],
+      "_frame": "s3_u90.png",
+      "_round": "3"
+    },
+    "s4_u25.png": {
+      "scene": "s4",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "high",
+          "bbox": [
+            1560,
+            760,
+            1650,
+            940
+          ],
+          "fix_hint": "Caption word 'whole' overlaps the hero's feet/contact shadow; hero's legs extend below y~1536 into the caption band \u2014 lift the hero so feet end at y~1520 and keep captions clear of the character"
+        },
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            450,
+            90,
+            1100,
+            1120
+          ],
+          "fix_hint": "Ripple wavefront arc renders as a near-vertical curve hugging the left edge rather than a left\u2192right sweeping arc through the flock; reorient the amber wavefront across the band"
+        }
+      ],
+      "_frame": "s4_u25.png",
+      "_round": "4"
+    },
+    "s4_u60.png": {
+      "scene": "s4",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "medium",
+          "bbox": [
+            1550,
+            760,
+            1650,
+            950
+          ],
+          "fix_hint": "First caption line overlaps the hero's lower legs/feet zone (hero extends past y~1520 near x~800-900). Raise hero or push caption band fully below y~1620."
+        },
+        {
+          "check": "anchoring",
+          "severity": "low",
+          "bbox": [
+            1480,
+            780,
+            1610,
+            930
+          ],
+          "fix_hint": "No visible contact shadow under the hero's feet on the ground band; add a soft ellipse shadow to anchor him."
+        }
+      ],
+      "_frame": "s4_u60.png",
+      "_round": "4"
+    },
+    "s4_u90.png": {
+      "scene": "s4",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "low",
+          "bbox": [
+            1560,
+            780,
+            1650,
+            940
+          ],
+          "fix_hint": "Hero's feet/legs slightly brush the first caption line near x~830; nudge hero up ~30px or start caption a bit lower."
+        },
+        {
+          "check": "anchoring",
+          "severity": "low",
+          "bbox": [
+            1480,
+            780,
+            1620,
+            940
+          ],
+          "fix_hint": "Contact shadow under hero feet is very faint against the dusk ground; add a soft dark ellipse to firm up the ground contact."
+        }
+      ],
+      "_frame": "s4_u90.png",
+      "_round": "4"
+    },
+    "s5_u09.png": {
+      "scene": "s5",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s5_u09.png",
+      "_round": "3"
+    },
+    "s5_u27.png": {
+      "scene": "s5",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s5_u27.png",
+      "_round": "3"
+    },
+    "s5_u50.png": {
+      "scene": "s5",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s5_u50.png",
+      "_round": "3"
+    },
+    "s6_u50.png": {
+      "scene": "s6",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s6_u50.png",
+      "_round": "3"
+    }
+  }
+}
