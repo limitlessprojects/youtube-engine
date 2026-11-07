@@ -1,0 +1,12 @@
+{
+  "lines": [
+    { "role": "hook", "narration": "The sun doesn't turn orange. Your sky just runs out of blue." },
+    { "role": "scene 0", "narration": "Sunlight looks white — but it's carrying every color at once." },
+    { "role": "scene 1", "narration": "Air is a sieve: molecules fling blue sideways about six times harder than red." },
+    { "role": "scene 2", "narration": "At noon, your beam crosses one patch of air. At sunset? Thirty-eight." },
+    { "role": "scene 3", "narration": "Thirty-eight times the air, and every step bleeds more blue away. What survives the whole trip is orange." },
+    { "role": "scene 4", "narration": "The blue that got thrown out? It never dies — it becomes the rest of your sky." },
+    { "role": "scene 5", "narration": "Same sun. Same air. Only the angle changed." },
+    { "role": "scene 6", "narration": "On Mars, dust flips the trick — blue sunsets. Go watch yours tonight." }
+  ]
+}
