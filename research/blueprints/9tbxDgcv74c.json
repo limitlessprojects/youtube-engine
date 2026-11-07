@@ -1,0 +1,31 @@
+{
+ "id": "9tbxDgcv74c",
+ "duration_s": 362.0,
+ "words": 913,
+ "wpm": 151.3,
+ "hook_15s_words": 33,
+ "opener_sentence_words": 18,
+ "sentences": 57,
+ "avg_sentence_words": 16.1,
+ "short_sentence_ratio": 0.12,
+ "cue_word_density_per_min": 3.3,
+ "connector_starts": 9,
+ "estimated_cuts_per_min_proxy": 9.4,
+ "open_loop_markers": [
+  {
+   "t": 178.2,
+   "marker": "until"
+  },
+  {
+   "t": 189.8,
+   "marker": "until"
+  }
+ ],
+ "top_bigrams": [
+  {
+   "pair": "mariana trench",
+   "n": 5
+  }
+ ],
+ "language_note": "ci-proxy"
+}

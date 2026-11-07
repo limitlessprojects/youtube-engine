@@ -2,5 +2,4 @@
 # (one video per day; the line is removed after processing)
 # Seeded 2026-11-02 with verified-ID videos from our benchmark channels.
 # NOTE: cloud IPs (incl. GitHub runners) are often bot-blocked by YouTube; failed items
-https://www.youtube.com/watch?v=9tbxDgcv74c
 # are logged and retried the next day. Set YTDLP_COOKIES / YTA_PROXY secrets to unblock.
