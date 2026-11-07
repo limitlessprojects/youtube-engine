@@ -1,0 +1,505 @@
+{
+ "ts": "2026-11-07T17:40:30Z",
+ "channels": {
+  "kurzgesagt": {
+   "median_views": 3004857,
+   "videos": [
+    {
+     "videoId": "ujkD4SxPKOI",
+     "title": "AI Just Crossed the Terrifying Line - Now What?",
+     "published": "2026-10-05",
+     "views": 23713117,
+     "desc": "In July of 2026, 700 AI agents hacked the infrastructure of Hugging Face in order to solve a task. This task was designed to be impossible t",
+     "outlier": 7.9
+    },
+    {
+     "videoId": "0NY2gAftzJE",
+     "title": "This Woman Cured Her Cancer with an Insane Method",
+     "published": "2026-09-15",
+     "views": 21391711,
+     "desc": "\ud83c\udf0f Upgrade your online protection with an all-in-one security app! Get an exclusive NordVPN deal + 4 months extra here: https://NordVPN.com/K",
+     "outlier": 7.1
+    },
+    {
+     "videoId": "_y9JuojAIg0",
+     "title": "We Finally Know More About Humanity\u2019s First Civilization",
+     "published": "2026-10-08",
+     "views": 11891846,
+     "desc": "IT\u2019S HERE! The 12,027 Calendar just dropped on the kurzgesagt shop: https://shop.kgs.link/calendar27, and we\u2019re so excited for you to see it",
+     "outlier": 4.0
+    },
+    {
+     "videoId": "QW_jlUn4gA8",
+     "title": "This Is What a Godlike Civilization Would Look Like",
+     "published": "2026-09-22",
+     "views": 9511515,
+     "desc": "Want to restore the planet\u2019s ecosystems and see your impact in monthly videos? The first 100 people to join Planet Wild with the code KURZGE",
+     "outlier": 3.2
+    },
+    {
+     "videoId": "5_Fayfx2NUM",
+     "title": "How I Survived Late-Stage Cancer (A Fun Story)",
+     "published": "2026-10-27",
+     "views": 7756190,
+     "desc": "Discover Odoo \ud83d\udc49 https://www.odoo.com/r/EgUR\nThe first app is free for life. Thanks to Odoo for sponsoring this video!\n\nSupport another year ",
+     "outlier": 2.6
+    },
+    {
+     "videoId": "PXbVn-f_wuM",
+     "title": "You Will Only Like Half of This Video",
+     "published": "2026-10-20",
+     "views": 5757963,
+     "desc": "Want to support our craft and save our asses? This is the best way: https://shop.kgs.link/Calendar27\nOur 12,027 Human Era Calendar is out no",
+     "outlier": 1.9
+    },
+    {
+     "videoId": "tZ8i1RxGSYM",
+     "title": "Can Earth Run Out of Water?",
+     "published": "2026-08-31",
+     "views": 4135883,
+     "desc": "We\u2019re using freshwater faster than nature can replace it, draining some sources beyond recovery. But avoiding water bankruptcy may be surpri",
+     "outlier": 1.4
+    },
+    {
+     "videoId": "hiIIGMeMEuE",
+     "title": "What If You Never Slept?",
+     "published": "2026-09-03",
+     "views": 3004857,
+     "desc": "Imagine never having to sleep again. To make it work, we\u2019d need to reset and change a few things and in the end, you might not be human anym",
+     "outlier": 1.0
+    },
+    {
+     "videoId": "oNTaHYXQ4MM",
+     "title": "Humans Can Regrow an Organ",
+     "published": "2026-09-26",
+     "views": 1568348,
+     "desc": "Every month, the uterus builds an entire new layer of tissue, prepares it for a possible pregnancy, then starts all over again. Billions of ",
+     "outlier": 0.5
+    },
+    {
+     "videoId": "EqkRVbaBxtg",
+     "title": "What If Gravity Was 10% Stronger?",
+     "published": "2026-08-29",
+     "views": 1479647,
+     "desc": "Just 10% more gravity doesn\u2019t sound too bad. Until satellites fall from the sky, bridges collapse, planes struggle to fly and earthquakes sh",
+     "outlier": 0.5
+    },
+    {
+     "videoId": "b1EMX3wyqCY",
+     "title": "Your Brain on Magic Mushrooms",
+     "published": "2026-09-28",
+     "views": 1349281,
+     "desc": "Magic mushrooms temporarily change how different parts of your brain communicate, loosening the filters that construct your everyday reality",
+     "outlier": 0.4
+    },
+    {
+     "videoId": "NIifnIP_NnQ",
+     "title": "How ADHD Medication Works",
+     "published": "2026-09-05",
+     "views": 997856,
+     "desc": "ADHD medication doesn\u2019t simply give your brain more dopamine. It changes how dopamine signals are processed, making it easier to resist imme",
+     "outlier": 0.3
+    },
+    {
+     "videoId": "35No369rmq0",
+     "title": "What If We Cool Down the Sun?",
+     "published": "2026-10-24",
+     "views": 986656,
+     "desc": "The sunlight and the heat coming from Sun are essential for nearly all of life on Earth. So, what would happen if we cool down our star by 3",
+     "outlier": 0.3
+    },
+    {
+     "videoId": "KBfIo9sZbC4",
+     "title": "How Does Ketamine Work?",
+     "published": "2026-10-29",
+     "views": 881116,
+     "desc": "Ketamine is often used in medicine as one of medicine's safest painkillers, but without safeguards, it can be very dangerous. So, what exact",
+     "outlier": 0.3
+    },
+    {
+     "videoId": "RQprZZJIb6Y",
+     "title": "Your Skeleton Is Electric",
+     "published": "2026-09-24",
+     "views": 543905,
+     "desc": "Every step you take creates tiny electrical signals inside your bones. You\u2019ll never charge your phone with them, but they may help tell your",
+     "outlier": 0.2
+    }
+   ]
+  },
+  "AlternateHistoryHub": {
+   "median_views": 868509,
+   "videos": [
+    {
+     "videoId": "RUCU-4M-Qmg",
+     "title": "The Dumbest Alternate History Scenarios",
+     "published": "2026-01-24",
+     "views": 2147875,
+     "desc": "Not all alternate history scenarios are created equal. Some are grounded in realistic contingencies, while others are pure wishful thinking ",
+     "outlier": 2.5
+    },
+    {
+     "videoId": "Flvv__SH44A",
+     "title": "What If This Cursed Map Was Real?",
+     "published": "2026-10-03",
+     "views": 1646600,
+     "desc": "Join Warhammer 40,000: Tacticus using my link https://play.tacticusgame.com/AlternateHistoryHubxTacticus and enter code HUBACTICUS to conque",
+     "outlier": 1.9
+    },
+    {
+     "videoId": "0_4J-hn9lAc",
+     "title": "Only Way Germany Wins: The Dunkirk Timeline (Complete Series)",
+     "published": "2025-06-12",
+     "views": 1473876,
+     "desc": "Check out War Thunder now! Use my links to sign up and get a massive, free bonus pack for PC and consoles: https://wtplay.link/alternatehist",
+     "outlier": 1.7
+    },
+    {
+     "videoId": "Q3zVrZhxCak",
+     "title": "The Napoleonic Victory Timeline",
+     "published": "2025-11-20",
+     "views": 1326688,
+     "desc": "October 1805. Trafalgar. The Royal Navy sinks. Britain kneels. One victory rewrites centuries. No exile. No end. Just Napoleon\u2019s world\u2014forev",
+     "outlier": 1.5
+    },
+    {
+     "videoId": "DnAziIOcsTc",
+     "title": "What if the Death of Stalin Destroyed the Soviet Union?",
+     "published": "2025-05-15",
+     "views": 1307742,
+     "desc": "Go to https://ground.news/alternate to stay fully informed and have a data-driven way to read the news. Save 40% for unlimited access on the",
+     "outlier": 1.5
+    },
+    {
+     "videoId": "O9tOK2eMNW4",
+     "title": "What if the Mediterranean Sea Was In the Center of America?",
+     "published": "2025-07-11",
+     "views": 1277444,
+     "desc": "Thanks to Storyblocks for sponsoring this video! Download unlimited stock media at one set price with Storyblocks: https://storyblocks.com/A",
+     "outlier": 1.5
+    },
+    {
+     "videoId": "25owAkLQFag",
+     "title": "What If China Invaded the Soviet Union?",
+     "published": "2025-12-18",
+     "views": 919545,
+     "desc": "Go to https://groundnews.com/alternate to see how history influences politics and stay better informed. Get 40% off their unlimited access V",
+     "outlier": 1.1
+    },
+    {
+     "videoId": "5sw2-E1s_Yo",
+     "title": "What if the East Falls and West Survives?",
+     "published": "2025-09-25",
+     "views": 868509,
+     "desc": "Stop leaving yourself vulnerable to Goths and data breaches. Go to my sponsor https://aura.com/alternatehistoryhub to get a 14-day free tria",
+     "outlier": 1.0
+    },
+    {
+     "videoId": "Fhzogaq4Yvw",
+     "title": "What if Charlemagne Restored Rome?",
+     "published": "2025-03-31",
+     "views": 838440,
+     "desc": "Get your own Manta SOUND Sleep mask here: https://tinyurl.com/3c3vudc5 and use code \"AlternateHistoryHub\" to receive 10% off your order!\n\nCh",
+     "outlier": 1.0
+    },
+    {
+     "videoId": "IUsQXHZFTug",
+     "title": "The Fantasy Series That's Literally Just World War II",
+     "published": "2025-03-22",
+     "views": 765519,
+     "desc": "Go to https://piavpn.com/AlternateHistoryHub to get 83% off Private Internet Access with 4 months free!\n\nYes this is another Turtledove vide",
+     "outlier": 0.9
+    },
+    {
+     "videoId": "rds75p7LELk",
+     "title": "What If China Broke Apart?",
+     "published": "2026-03-21",
+     "views": 758038,
+     "desc": "Go to http://buyraycon.com/ALTERNATEHISTORYOPEN to get 20% off. Thanks to Raycon for sponsoring!\n\nEurope exploited China for all it had, giv",
+     "outlier": 0.9
+    },
+    {
+     "videoId": "jvyAygxYOgY",
+     "title": "What if Lincoln Was Shot......Earlier?",
+     "published": "2025-07-19",
+     "views": 660385,
+     "desc": "Decide the fate of your own alternate timeline by jumping into the epic online naval battles in World of Warships: Legends for FREE!  https:",
+     "outlier": 0.8
+    },
+    {
+     "videoId": "IOmoi1OzOSk",
+     "title": "The Only Way Germany Could've Won: War for the Atlantic",
+     "published": "2025-04-24",
+     "views": 646488,
+     "desc": "Decide the fate of your own alternate timeline by jumping into the epic online naval battles in World of Warships: Legends for FREE!  https:",
+     "outlier": 0.7
+    },
+    {
+     "videoId": "ojMOInYfFIk",
+     "title": "What if the Mongols Conquered Japan?",
+     "published": "2025-09-06",
+     "views": 605661,
+     "desc": "We\u2019ve all seen Mongols and samurai duke it out in video games, but could a Mongol victory have been the ultimate \u2018winning the Super Bowl and",
+     "outlier": 0.7
+    },
+    {
+     "videoId": "2GsDQgTEnFk",
+     "title": "The Battle Songs of America: 250 Years of Patriotic Bops",
+     "published": "2026-07-02",
+     "views": 473387,
+     "desc": "America. It's been a wild ride. Lot of songs along the way. But what are the stories behind, or around, those songs? Honestly this is just a",
+     "outlier": 0.5
+    }
+   ]
+  },
+  "MinutePhysics": {
+   "median_views": 381027,
+   "videos": [
+    {
+     "videoId": "sYdXa_yp0fc",
+     "title": "Strings Don't Vibrate The Way You Think",
+     "published": "2026-07-29",
+     "views": 1391936,
+     "desc": "Check out Acoustics Today at https://acousticstoday.org, the ASA\u2019s magazine featuring accessible articles about the latest discoveries and i",
+     "outlier": 3.7
+    },
+    {
+     "videoId": "31kyER-8dak",
+     "title": "What if you try to sandwich a cube between two portals?",
+     "published": "2026-10-10",
+     "views": 878062,
+     "desc": "Full Video: https://www.youtube.com/watch?v=zDAE9A_1NA4\n\nWhat if you try to sandwich a cube between two portals?\nDoes the cube disappear?\nDo",
+     "outlier": 2.3
+    },
+    {
+     "videoId": "QXXqSh5qAuA",
+     "title": "What if We Can't Detect Dark Matter?",
+     "published": "2026-10-29",
+     "views": 656446,
+     "desc": "50x50: Science Across America is a national series uncovering exceptional science in all 50 states. It is a production of the Independent Me",
+     "outlier": 1.7
+    },
+    {
+     "videoId": "R2G8Xy6hiyg",
+     "title": "This Orbit is the WORST",
+     "published": "2026-06-30",
+     "views": 532552,
+     "desc": "Start with the free Future of AI course\u20142 hours, no technical background needed, completely free. You can begin understanding AI and how it ",
+     "outlier": 1.4
+    },
+    {
+     "videoId": "sEQvDbyFNbo",
+     "title": "Why Driving Backwards Is So Hard",
+     "published": "2026-05-22",
+     "views": 479871,
+     "desc": "Full video: https://www.youtube.com/watch?v=iFwfexZstO4\nThe difficulty of driving backwards has almost nothing to do with the direction you\u2019",
+     "outlier": 1.3
+    },
+    {
+     "videoId": "4YvnVJRlQQs",
+     "title": "The Wavy Window Paradox",
+     "published": "2026-08-19",
+     "views": 418783,
+     "desc": "Get your very own Garlic Plushie now, while you still can: https://www.makeship.com/products/garlic-plushie\n\nWe look through windows every s",
+     "outlier": 1.1
+    },
+    {
+     "videoId": "dLtRtdg67PU",
+     "title": "Two Paradoxes of Space Navigation",
+     "published": "2026-06-04",
+     "views": 392868,
+     "desc": "Anker\u2019s new PowerIQ 5.0 intelligent chargers are smaller and more efficient: https://shop.anker.com/Xk2OAQ | https://ankerfast.club/wt97e2 #",
+     "outlier": 1.0
+    },
+    {
+     "videoId": "8wDha-G35KA",
+     "title": "Is Perfect Prediction Possible?",
+     "published": "2026-04-15",
+     "views": 381027,
+     "desc": "A response to Veritasium's video on Newcomb's Paradox. See my full conversation with Derek over on the MinutePhysics patreon: https://www.pa",
+     "outlier": 1.0
+    },
+    {
+     "videoId": "TM8JhXsPYTo",
+     "title": "There Is No 4th Dimension",
+     "published": "2026-06-25",
+     "views": 365496,
+     "desc": "Full video: https://www.youtube.com/watch?v=M9sbdrPVfOQ\nI'd like to clear up a misconception: there is no fourth dimension.\nAs a matter of f",
+     "outlier": 1.0
+    },
+    {
+     "videoId": "qKMVnR4U33U",
+     "title": "What is the farthest on earth you can get from ANYTHING",
+     "published": "2026-04-11",
+     "views": 311996,
+     "desc": "Full video: https://www.youtube.com/watch?v=IM630Z8lho8\n\nMinute Physics provides an energetic and entertaining view of old and new problems ",
+     "outlier": 0.8
+    },
+    {
+     "videoId": "PTO0s8YQ49o",
+     "title": "The Magic of Thorium Nuclear Reactors",
+     "published": "2026-05-12",
+     "views": 254811,
+     "desc": "See Copenhagen Atomic's progress towards real commercial Thorium energy here: https://www.copenhagenatomics.com\n\nThis video looks at how tho",
+     "outlier": 0.7
+    },
+    {
+     "videoId": "i45dfK7wYvA",
+     "title": "Schr\u00f6dinger\u2019s Cat (from the cat's perspective)",
+     "published": "2026-03-21",
+     "views": 205563,
+     "desc": "Full video: https://www.youtube.com/watch?v=IOYyCHGWJq4\nI'm sure you've heard some version of this famous thought experiment: you put a cat ",
+     "outlier": 0.5
+    },
+    {
+     "videoId": "bU9xvXyWrdk",
+     "title": "How long is a day on the sun?",
+     "published": "2026-08-11",
+     "views": 201457,
+     "desc": "How long is a day on the sun? At first might seem like a stupid question.\nA day is how long it takes the sun to come back overhead.\nDoesn\u2019t ",
+     "outlier": 0.5
+    },
+    {
+     "videoId": "XYfv0T2k4h8",
+     "title": "Why some flames are blue and others are red?",
+     "published": "2026-07-16",
+     "views": 129125,
+     "desc": "Full video: https://www.youtube.com/watch?v=1pfqIcSydgE\nChemistry may tell us the recipe for combustion, but the light show is all physics.\n",
+     "outlier": 0.3
+    },
+    {
+     "videoId": "YBKuWCA5pug",
+     "title": "Why do hot objects glow?",
+     "published": "2026-10-24",
+     "views": 95347,
+     "desc": "Full video: https://www.youtube.com/watch?v=1pfqIcSydgE\nA process called \"blackbody radiation\" makes all objects glow with light of a color ",
+     "outlier": 0.3
+    }
+   ]
+  },
+  "MinuteEarth": {
+   "median_views": 49951,
+   "videos": [
+    {
+     "videoId": "x-vpfrs7RIs",
+     "title": "Why Don't Birds Cause MORE Crashes?",
+     "published": "2026-09-21",
+     "views": 433659,
+     "desc": "Way back at the dawn of aviation, during a public flight exhibition of all things, a gull jammed a plane\u2019s controls, crashing the plane and ",
+     "outlier": 8.7
+    },
+    {
+     "videoId": "jsAFbi4HgFg",
+     "title": "The Sea Turtle Cheat Code",
+     "published": "2026-10-08",
+     "views": 407998,
+     "desc": "Check out the WWF's Living Planet Report 2026 here: https://wwf.to/LPR2026\n\nOver the past few decades, the number of green sea turtles has r",
+     "outlier": 8.2
+    },
+    {
+     "videoId": "0AfM2Jitsps",
+     "title": "Why The Black Plague Isn't Over",
+     "published": "2026-09-04",
+     "views": 285704,
+     "desc": "The black plague is one of the deadliest diseases humans have ever faced; it killed as many as 50 million people \u2013 including about a third o",
+     "outlier": 5.7
+    },
+    {
+     "videoId": "kIXkIBWo6vE",
+     "title": "Four Places We Might Find Aliens",
+     "published": "2026-10-15",
+     "views": 257274,
+     "desc": "We don\u2019t actually know if aliens exist. But if they do, their cells probably have a special type of membrane. And that knowledge alone tells",
+     "outlier": 5.2
+    },
+    {
+     "videoId": "u8zr-9CUgzg",
+     "title": "What's The Fewest People That Could Repopulate Earth?",
+     "published": "2026-10-02",
+     "views": 197318,
+     "desc": "It's an interesting thought experiment, but PLEASE don't cause an apocalypse!",
+     "outlier": 4.0
+    },
+    {
+     "videoId": "744fHerowJ4",
+     "title": "Why Do We Even Need A Clock This Accurate?",
+     "published": "2026-11-05",
+     "views": 185018,
+     "desc": "50x50: Science Across America is a national series uncovering exceptional science in all 50 states. It is a production of the Independent Me",
+     "outlier": 3.7
+    },
+    {
+     "videoId": "9PJvV5PYDm0",
+     "title": "Why Are Some Sunsets SO MUCH Better Than Others?",
+     "published": "2026-10-22",
+     "views": 164255,
+     "desc": "In most places on Earth, the sun is guaranteed to set every evening, but not all sunsets are the same. From gases and clouds to pollution an",
+     "outlier": 3.3
+    },
+    {
+     "videoId": "fUBRGTKInbI",
+     "title": "Yes, mosquitoes ARE out to get you.",
+     "published": "2026-10-16",
+     "views": 49951,
+     "desc": "Yes, mosquitoes are out to get you. But it's not about your blood type...",
+     "outlier": 1.0
+    },
+    {
+     "videoId": "Tl-5u1AHQjo",
+     "title": "Kate's National Geographic Journeys safari experience!",
+     "published": "2026-10-23",
+     "views": 43906,
+     "desc": "What do you get when you bring together a motley crew of NatGeo filmmakers, content creators, journalist, photographers, and educators, and ",
+     "outlier": 0.9
+    },
+    {
+     "videoId": "nQ8NFMGXNV8",
+     "title": "The black death sucks for fleas, too #plague #fleas",
+     "published": "2026-09-25",
+     "views": 43102,
+     "desc": "Why do fleas actually go around biting everyone when they have the plague? It's pretty gross \ud83e\udd2e",
+     "outlier": 0.9
+    },
+    {
+     "videoId": "VeqBns83NLQ",
+     "title": "You've never seen a beetle do THIS!",
+     "published": "2026-10-05",
+     "views": 39768,
+     "desc": "Sponsored by @natgeotv. \u201cAfrica Earth\u2019s Wild Home\u201d is now streaming on @Disneyplus and @Hulu #ad #AfricaEarthsWildHome #natgeo",
+     "outlier": 0.8
+    },
+    {
+     "videoId": "1bjkZYmQefA",
+     "title": "How to Tame Your Pet AI Dragon",
+     "published": "2026-10-26",
+     "views": 30075,
+     "desc": "Join the movement to keep humans in control of AI. Head on over to teamhuman.org and sign their petition. Every signature will be hand-deliv",
+     "outlier": 0.6
+    },
+    {
+     "videoId": "TzHYW7-Na_U",
+     "title": "How to become a mosquito magnet!",
+     "published": "2026-10-23",
+     "views": 27712,
+     "desc": "Which is totally a thing people want. Right?",
+     "outlier": 0.6
+    },
+    {
+     "videoId": "IaFKzNTA5_A",
+     "title": "10 things Kate learned on safari!",
+     "published": "2026-10-09",
+     "views": 20157,
+     "desc": "We're grateful to @NatGeoExpeditions and @gadventures for this amazing experience #ad #natgeojourneys",
+     "outlier": 0.4
+    },
+    {
+     "videoId": "EVGE1Mu9PTQ",
+     "title": "What makes some sunsets so spectacular?",
+     "published": "2026-10-28",
+     "views": 17624,
+     "desc": "A few ingredients can make an evening sky sensational \ud83c\udf05",
+     "outlier": 0.4
+    }
+   ]
+  }
+ }
+}

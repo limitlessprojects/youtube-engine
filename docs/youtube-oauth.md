@@ -19,14 +19,12 @@
   - local sandbox secrets dir (gitignored path, outside any repo)
   - GitHub Actions secret `YOUTUBE_TOKEN_JSON` (encrypted at rest by GitHub)
 
-## ⏰ Time bomb (boss action needed)
+## ⏰ Time bomb — DEFUSED (2026-11-07)
 
-Testing-mode OAuth apps issue refresh tokens that **expire after 7 days**
-(Google policy). Our token was authorized 2026-11-02 → likely dies ~2026-11-09.
-Fix (Google Cloud Console, nura-health project, needs the boss): OAuth consent
-screen → **Publish app** (production status). youtube.upload is a sensitive
-scope; verification may take days — until then, expect a re-auth every 7 days,
-or upload via CI within each 7-day window.
+Boss published the OAuth app to production. Refresh verified immediately after
+(publishing preserved the existing refresh token) — the upload credential is
+now long-lived. `YOUTUBE_TOKEN_JSON` GitHub secret updated with the fresh
+token the same day.
 
 ## Secrets map (GitHub Actions secrets on this repo)
 

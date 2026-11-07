@@ -14,8 +14,8 @@ name: Daily Learning Loop
 
 on:
   schedule:
-    - cron: "30 0 * * *"  # 00:30 UTC daily (03:30 EAT) — reviewed by the
-                          # 04:35 EAT agent session (platform cron 501585)
+    - cron: "0 20 * * *"  # 20:00 UTC daily (23:00 EAT) — reviewed 45 min later
+                          # by the 23:45 EAT agent session (platform cron 512606)
   workflow_dispatch:
     inputs:
       force:
