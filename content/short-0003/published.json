@@ -1,0 +1,15 @@
+{
+  "video_id": "DeaEvEduh88",
+  "url": "https://youtu.be/DeaEvEduh88",
+  "title": "Why are sunsets orange? (It's not the sun)",
+  "channel": "Jack Blessed",
+  "handle": "@JackBlessed-u5x",
+  "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
+  "published_at": "2026-11-07T22:40:00Z",
+  "privacy": "public",
+  "category": "27 (Education)",
+  "synthetic_disclosure": "set via API (containsSyntheticMedia=true, first try)",
+  "file": "short-0003.mp4 (6,140,809 bytes, 34.2s, 1080x1920 h264 + aac, -15.25 LUFS master, synth sound design w/ per-short sfx table)",
+  "source": "content/short-0003 (script.json v1, engine v3 render #2 — VO edge-tts +25% VO_RATE 205 WPM after Fish A/B tied on WER 0.035 but lost on pacing 161 WPM; gate 14/15 pass across 3 rounds w/ per-short notes.json; pixel-probe arbitration; facts: Rayleigh 1/λ⁴, airmass 38 Kasten&Young 1989, Mars blue sunsets NASA JPL 2015)",
+  "monitoring": "RSS feed + views_tracker nightly; thumbnail: auto (custom thumb blocked — channel needs phone verification, boss action item)"
+}

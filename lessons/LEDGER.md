@@ -26,4 +26,4 @@
 | 006 | [`2026-11-04-day006.md`](2026-11-04-day006.md) | Press publish (credentials ≠ a channel); wake the model when the slot is free (04:35 EAT); y2mate class = sealed front-ends (radar, never production) |
 | 007 | [`2026-11-07-day007.md`](2026-11-07-day007.md) | Credentials need durable mirrors (upload/); VLM-autopsy your own frames; outlier formulas match execution ceiling; CI heartbeat survives agent death |
 | 008 | [`2026-11-08-day008.md`](2026-11-08-day008.md) | Autopsy the sheet, then gate the frame (3.5→8/10); lit subjects on dark grounds (L-063); pixel-probe every spatial claim (L-064); beat-timed probes for fast cuts (L-065); control-test the verifier (L-066) |
-| 009 | [`2026-11-08-day009.md`](2026-11-08-day009.md) | Scheduler fired on time; Fish CI needed 3 runs (valid MP3s rejected by ID3-only check); gate notes must live with the artifact; VO pacing is text-dependent — VO_RATE override |
+| 009 | [`2026-11-08-day009.md`](2026-11-08-day009.md) | #0003 LIVE (DeaEvEduh88); Fish CI: valid MP3s rejected by ID3-only check (L-069); gate notes live with the artifact (L-070); VO pacing text-dependent; pipe-encode beats demuxer storm (L-072) |
