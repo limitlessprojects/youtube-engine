@@ -39,3 +39,8 @@
 - Sound design: airy music bed + flock-whoosh SFX at beat 5.
 - Accent color: dusk orange on deep-blue gradient (sunset murmuration).
 - Captions: keyword pops on "Seven", "one rule", "right".
+- **VO (validated day 007, keyless)**: edge-tts `en-US-AndrewNeural` @
+  `+45%` — hook measured 3.02s ≈ 179 WPM, on target. No Fish key needed
+  (local key lost in recycle #4; CI secret intact for when we want it).
+  Measure every line, set real `timestamp_start` values (L-003: measure,
+  never estimate).
