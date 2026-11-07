@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -27,7 +28,10 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 VOICE = "en-US-AndrewNeural"
-RATE = "+45%"
+# Rate override (day-009): text-dependent speed made +45% run 238 WPM on
+# short-0003 vs the shipped #0002 at 207 (same measure) — scripts set
+# VO_RATE to match the 200-210 band; default stays the day-007 value.
+RATE = os.environ.get("VO_RATE", "+45%")
 GAP_S = 0.45
 PASS_WER, WARN_WER = 0.15, 0.30
 
