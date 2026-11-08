@@ -1,0 +1,16 @@
+{
+  "_comment": "Scene intent for the vlm_gate — RECONSTRUCTED 2026-11-09 (consolidation session): the original was lost with the recycle (BUG-1, docs/_audit/inventory.md). Source of truth: the scene comment blocks in render/scenes.html + script.json narration. Rules G2/L-070.",
+  "notes": {
+    "hook": "Shore world, day variant. The kinetic title IS the caption (one text system — no pill). Hero big on the shore rock bottom-right, gawking up, orange scarf, breath bob. Sun rays sweep the mid-band, drifting photon motes, mirror shimmer line at the waterline (the myth, visually). Question-first hook names the topic (rule S3).",
+    "s0": "Mirror-symmetry sky/sea shimmer — the seduction of the wrong answer. A crack splits the symmetry as the narration lands 'It's wrong.' Sun rays + motes fill upper sky (no dead zone BY DESIGN).",
+    "s1": "SAHARA: desert dunes, NO sea anywhere — the counterexample. Far ridge fills the mid void as a depth layer. Hero mid-stride on the dune crest. The SAHARA stamp is the text system (no caption pill).",
+    "s2": "Same azure sky over the dunes — the SAME BLUE. stamp IS the text. Deliberately mirrors s1's composition (that's the point: same sky, no sea).",
+    "s3": "The turn to the real mechanism: saturation sweep — base sky deepens left→right into a deep dome; sunlight enters the story. Hero centered on ground patch. No sea in this scene BY DESIGN.",
+    "s4": "The molecule diagram on a dark stage panel: A MOLECULE OF AIR label, THICK (18px) white sun beam (contrast fix), red photon enters. BLUE photon ricochets wildly — the ricochet END-STATE PERSISTS through scene end (rule C8; it must not animate out). Early frames legitimately show the beam still drawing.",
+    "s5": "AIR molecule center with tag; BLUE photon in wild ricochet (end-state persists). 12 tiny blue lamp patches pop in sequence — the payoff visual (every patch of sky a lamp). 'EVERY PATCH: A LAMP' header is the text system. The caption pill 'blue lamp' sits low — hero feet stay clear of the band.",
+    "s6": "Two swatches: AWAY from the sun (saturated deep blue) vs TOWARD (washed pale) — the comparison diagram. Swatches breathe in (ease-in/hold/ease-out, rule C5). Swatch labels are the text system.",
+    "s7": "The verdict beat: the mirror fades OUT but the 'NOT A MIRROR — A LAMP' strike verdict PERSISTS after it (rule C8 fix — the verdict outlives what it strikes; do not flag the mirror's absence late in the scene).",
+    "s8": "Cut-open ocean: water surface + depth gradient; red photons sink and fade with depth (fading WITH depth is correct), blue photons scatter back toward the surface. 'eats red / keeps blue' keyword pill (the EMPHASIS caption).",
+    "s9": "The closer/loop: sky and sea side by side, matched — mirrors the hook composition (loop position). Hero looks up one last time. No new entities (rule S4: one spine, one closer)."
+  }
+}

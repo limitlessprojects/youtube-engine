@@ -109,9 +109,10 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 ## Evidence-coverage summary
 
 - 46 rules total. Tool-enforced (linter / A1–A5 / vo_pipeline / gate dims /
-  upload / preflight): 24. Process-only: 22 — of which preflight newly covers
-  S7 and G2 (presence checks), leaving 20 genuinely human/agent discipline
-  (marked "process" above).
+  upload / preflight): 28 — preflight (`tools/preflight.py`, self-tested per
+  L-066) newly covers S7, G2, the C1 keyword cap, the S1 scan and a C6
+  Math.random guard. Process-only: 18 — human/agent discipline marked
+  "process" above.
 - Every rule cites at least one ledger lesson or measured report. No rule is
   asserted from opinion. UNVERIFIED items: none at rule level (parameters
   carry the few UNVERIFIED notes — see `docs/parameters.md`).
