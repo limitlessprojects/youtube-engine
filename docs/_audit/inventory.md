@@ -139,3 +139,25 @@ Honest gaps (things a cold agent cannot get from this repo even after my
 reading): the exact content of lost `docs/visual-craft.md` (BUG-2), the
 r1–r3 ultracritic round reports of #0004 (BUG-1), and #0003's gate PNGs
 (gitignored by design, re-renderable deterministically — acceptable loss).
+
+## Session close-out (2026-11-09, consolidation)
+
+Final verified tallies (authoritative — one commit message in this session's
+history says "40 / 73%", which was an arithmetic slip; the generated file
+`docs/rules.md` §Evidence-coverage is the counted truth):
+
+- **55 hard rules** extracted with evidence (S10 V6 C12 A4 R4 G8 P4 Q7).
+- **38 (69%) enforced by code** (linter, A1–A5, vo_pipeline, gate dims,
+  youtube_upload, render/finish artifacts, and the new preflight).
+- **17 process-only** (documented discipline, marked in rules.md).
+- Cold-start quiz: **15/15 answerable** from active docs; dry-run found 9 doc
+  bugs → all fixed same session (commit 5cae975 + e2aa28a).
+- Files: 220 → 244 tracked (net +24: 8 playbook files, 5 skill templates,
+  preflight, reconstructed notes.json, audit; history moved not deleted).
+- Active docs: 23 files, largest 154 lines (cap ~300 respected).
+- UNVERIFIED (carried in parameters.md): Fish silence padding; per-short
+  render wall-clock vs the 40-min Day-014 target; hook_impact poster-bias
+  rubric revision (proposed, NOT applied — thresholds frozen this session).
+- Open items for the boss: channel phone-verify (thumbnails.set 403);
+  ultracritic r1–r4 reports of short-0004 are unrecoverable (BUG-1 loss —
+  pre-registered; future rounds are durable via the .gitignore fix).
