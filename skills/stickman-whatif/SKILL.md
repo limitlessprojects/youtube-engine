@@ -84,7 +84,8 @@ python3 tools/ultracritic.py <slug> --round 1
 
 # 7. Publish + record (docs/playbook/publish.md):
 python3 tools/youtube_upload.py --file content/<slug>/<slug>.mp4 --title "…" \
-  --description "…" --tags "what if,stickman,science" --privacy public --token-file ~/.secrets/token.json
+  --description "…" --tags "what if,stickman,science" --privacy public \
+  --token-file /home/z/my-project/.secrets/token.json
 #    write content/<slug>/published.json; ledger line in docs/lessons.md;
 #    logs/<date>.md; commit + push (rule R3).
 ```
