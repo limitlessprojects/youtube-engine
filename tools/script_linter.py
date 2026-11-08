@@ -25,8 +25,8 @@ BANNED = [
 ]
 GREETING = re.compile(r"^(hi|hey|hello|yo|welcome|what's up|ladies and gentlemen)\b", re.I)
 DISCLAIMER = re.compile(r"(theoretical|hypothetical) (scenario|exercise|thought experiment)", re.I)
-WPM_BAND = {"short": (150, 180), "long": (155, 175)}
-FISH_WPS = 2.6  # measured: Fish Audio s2.1-pro-free "Energetic Male"
+WPM_BAND = {"short": (185, 215), "long": (155, 175)}  # day-010: shorts class = edge-tts +25% (L-075)
+FISH_WPS = 2.6  # measured: Fish Audio s2.1-pro-free "Energetic Male" (needs rate knob)
 
 
 def narration_from(payload: str) -> tuple[str, list[str]]:
@@ -82,6 +82,42 @@ def lint(text: str, fmt: str, duration_s: float | None) -> dict:
     short_ratio = (sum(1 for s in sents if len(s.split()) <= 6) / len(sents)) if sents else 0
     if sents and short_ratio < 0.15:
         warns.append(f"rhythm flat: only {short_ratio:.0%} short sentences (mix 3-word punches in)")
+
+    # ---- boss-directive structure rules (2026-11-08, enforced at script time) ----
+    try:
+        data = json.loads(text) if text.strip().startswith("{") else None
+    except json.JSONDecodeError:
+        data = None
+    if isinstance(data, dict) and data.get("scenes") and data.get("hook", {}).get("narration"):
+        hook = data["hook"]["narration"]
+        scenes = data["scenes"]
+        # L-073: orient — topic noun from the title must appear in the hook
+        title = data.get("title", "")
+        title_nouns = [w for w in re.findall(r"[A-Za-z]{4,}", title)
+                       if w.lower() not in {"what", "when", "where", "which", "your", "never"}]
+        if title_nouns and not any(n.lower() in hook.lower() for n in title_nouns):
+            fails.append(f"L-073 orientation: hook never names the topic {title_nouns[:4]}")
+        # L-075: pacing — scene durations from timestamps if present
+        starts = [data["hook"].get("timestamp_start", 0.0)] + [s.get("timestamp_start") for s in scenes]
+        if all(isinstance(x, (int, float)) for x in starts) and len(starts) > 2:
+            total = data.get("timeline", {}).get("total_s") or (starts[-1] + 3)
+            ends = starts[1:] + [total]
+            durs = [e - s for s, e in zip(starts, ends) if e > s]
+            if durs:
+                if sum(durs) / len(durs) > 3.2:
+                    fails.append(f"L-075 pacing: mean scene {sum(durs)/len(durs):.2f}s > 3.2s")
+                if max(durs) > 4.2:
+                    fails.append(f"L-075 pacing: max scene {max(durs):.2f}s > 4.2s")
+                if len(durs) < 10:
+                    warns.append(f"L-075 cut density: {len(durs)} scenes — target ≥ 12 visual events/35s")
+        # L-077: spine — no new capitalized entity only in the last 2 scenes
+        early = " ".join([hook] + [s.get("narration", "") for s in scenes[:-2]])
+        early_caps = set(re.findall(r"\b[A-Z][a-z]{2,}\b", early))
+        for s in scenes[-2:]:
+            new = [c for c in re.findall(r"\b[A-Z][a-z]{2,}\b", s.get("narration", ""))
+                   if c not in early_caps and c not in {"The", "And", "But", "Same", "Only", "Your"}]
+            if new:
+                warns.append(f"L-077 spine: new entity {new} only in the closer — tangent?")
 
     return {
         "verdict": "FAIL" if fails else "PASS",

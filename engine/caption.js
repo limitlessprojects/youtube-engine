@@ -1,54 +1,69 @@
 /* ============================================================
-   visuals v2 — caption.js
-   Bottom-band captions: Bricolage Grotesque 800, cream, amber
-   emphasis, word-pop on the voice, measured wrap (max 3 lines),
-   soft shadow so it reads over busy backgrounds.
+   visuals v2 — caption.js  (v2.1, L-073/L-076: keyword captions)
+
+   The caption band shows ONLY the scene's 2–4 KEYWORDS (the
+   EMPHASIS list), big, popping in sequence as the voice hits
+   them. Full-sentence karaoke subtitles are BANNED (boss
+   directive 2026-11-08: "too many words on screen" — the
+   published #0003 carried up to 22 words/frame and scored
+   text_discipline 2.8/10 on the ultracritic rubric).
+
+   Contract:
+   V2.caption(text, u, emWords, opts)
+     · emWords — the keyword list (≤5). THESE are the caption.
+     · text   — full narration line, used ONLY for word-timing
+       of the pops (index of keyword inside the line).
+     · opts.size — base font px (default 74)
+     · opts.y    — band center (default 1700)
+   Fallback: if emWords is empty, renders the first 4 words of
+   the line — never the whole sentence.
    ============================================================ */
 V2._meas = null;
 V2.caption = (text, u, emWords, opts) => {
   const o = opts || {};
   if (!V2._meas) V2._meas = document.createElement("canvas").getContext("2d");
-  const words = text.split(/\s+/);
-  const em = new Set((emWords || []).map((w) => w.toLowerCase()));
+
+  const line = (text || "").split(/\s+/).filter(Boolean);
+  const clean = (w) => w.toLowerCase().replace(/[^a-z0-9-]/g, "");
+  const lineIdx = new Map();
+  line.forEach((w, i) => { if (!lineIdx.has(clean(w))) lineIdx.set(clean(w), i); });
+
+  // keywords: strip punctuation, keep ≤5, dedupe, keep line order
+  let kws = (emWords || []).map((w) => String(w)).filter(Boolean);
+  const seen = new Set();
+  kws = kws
+    .map((w) => clean(w))
+    .filter((w) => w && !seen.has(w) && seen.size < 5 && seen.add(w))
+    .sort((a, b) => (lineIdx.get(a) ?? 99) - (lineIdx.get(b) ?? 99));
+  if (!kws.length) kws = line.slice(0, 4).map(clean).filter(Boolean).slice(0, 4);
+
+  const size = o.size || 74;
   const fontOf = (s) => `800 ${s}px 'Bricolage Grotesque', 'DejaVu Sans', sans-serif`;
-  const wOf = (w, s) => { V2._meas.font = fontOf(s); return Math.max(12, V2._meas.measureText(w).width); };
-  let size = 58, lines = null, widths = null, spaceW = 0;
-  for (; size >= 38; size -= 4) {
-    V2._meas.font = fontOf(size);
-    spaceW = V2._meas.measureText(" ").width;
-    widths = words.map((w) => wOf(w, size));
-    lines = [[]]; let wpx = 0;
-    for (let i = 0; i < words.length; i++) {
-      const add = widths[i] + (lines[lines.length - 1].length ? spaceW : 0);
-      if (wpx + add > 930 && lines[lines.length - 1].length) { lines.push([]); wpx = 0; }
-      lines[lines.length - 1].push(i);
-      wpx += widths[i] + (lines[lines.length - 1].length > 1 ? spaceW : 0);
-    }
-    if (lines.length <= 3) break;
-  }
-  const lineH = size + 20;
-  const shown = Math.floor(V2.easeOut(V2.clamp01(u / 0.6)) * words.length + 0.5001);
+  const wOf = (w) => { V2._meas.font = fontOf(size); return Math.max(30, V2._meas.measureText(w).width); };
+
   const g = V2.el("g", {});
-  const baseY = (o.y || 1700) - (lines.length - 1) * lineH / 2;
-  lines.forEach((ln, li) => {
-    const total = ln.reduce((a, i) => a + widths[i], 0) + spaceW * (ln.length - 1);
-    let x = 540 - total / 2;
-    const y = baseY + li * lineH;
-    ln.forEach((i) => {
-      if (i < shown) {
-        const clean = words[i].toLowerCase().replace(/[^a-z-]/g, "");
-        const isEm = em.has(clean);
-        const pop = Math.max(0.72, Math.min(1, (u * words.length - i) * 0.6 + 0.4));
-        const el = V2.txt(x, y, words[i], {
-          "font-family": V2.UI_DISPLAY, "font-weight": 800, "font-size": size,
-          fill: isEm ? V2.P.amber : V2.P.cream, opacity: pop,
-          style: `filter: drop-shadow(0 3px 10px rgba(0,0,0,0.9)) drop-shadow(0 0 26px rgba(0,0,0,0.55))`,
-          transform: `translate(${x} ${y}) scale(${pop}) translate(${-x} ${-y})`,
-        }, g);
-        el.setAttribute("paint-order", "stroke");
-      }
-      x += widths[i] + spaceW;
-    });
+  const n = kws.length;
+  const spaceW = 42;
+  const total = kws.reduce((a, w) => a + wOf(w), 0) + spaceW * (n - 1);
+  let x = 540 - total / 2;
+  const y = o.y || 1700;
+
+  kws.forEach((w, i) => {
+    // pop timing: keyword i appears as the voice reaches it —
+    // spread across the first 60% of the scene, staggered
+    const at = n === 1 ? 0 : (i / n) * 0.55;
+    const k = V2.backOut(V2.clamp01((u - at) / 0.12));
+    if (k > 0.01) {
+      const el = V2.txt(x + wOf(w) / 2, y, w, {
+        "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": size, fill: V2.P.cream,
+        opacity: 0.96 * k,
+        style: `filter: drop-shadow(0 4px 12px rgba(0,0,0,0.92)) drop-shadow(0 0 30px rgba(0,0,0,0.5))`,
+        transform: `translate(${x + wOf(w) / 2} ${y}) scale(${0.6 + 0.4 * k}) translate(${-(x + wOf(w) / 2)} ${-y})`,
+      }, g);
+      el.setAttribute("paint-order", "stroke");
+    }
+    x += wOf(w) + spaceW;
   });
   return g;
 };

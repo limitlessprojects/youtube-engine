@@ -55,7 +55,9 @@ def bed(total):
     kern = np.ones(480) / 480
     air = np.convolve(air, kern, mode="same")
     out += 0.16 * air / (np.abs(air).max() + 1e-9) * (np.abs(out).max())
-    # soft waveshape + normalize to a low bed level
+    # soft waveshape + normalize to an AUDIBLE-but-polite bed level
+    # (L-074: 0.062 peak ≈ -24 dBFS was inaudible under VO — boss heard
+    # "no bed at all"; autopsy confirmed. 0.16 peak ≈ -16 dBFS pre-duck.)
     out = np.tanh(1.6 * out)
     out /= np.abs(out).max() + 1e-9
     # fades: in 0.8s, out last 1.2s, and dip the very end to silence
@@ -63,7 +65,7 @@ def bed(total):
     env = np.ones(n)
     env[:fi] = np.linspace(0, 1, fi)
     env[-fo:] = np.linspace(1, 0.0, fo)
-    out *= env * 0.062
+    out *= env * 0.16
     return out
 
 def whoosh(dur=0.7, seed=3, f_lo=300, f_hi=1600):
@@ -144,14 +146,18 @@ def main() -> int:
         mix[a:a + len(y)] += y[: N - a]
         vo_spans.append((start, start + dur))
 
-    # ---- bed with ducking (-8 dB under VO, 150 ms ramps) ----
+    # ---- bed with CORRECT ducking (L-074: the old formula was inverted —
+    # gain=1 during VO made the multiplier 1.0, so the pad was LOUDEST under
+    # the voice and -8 dB in the gaps. Duck = LOW during VO, FULL in gaps.)
+    # gain = 1 inside VO spans (with 150 ms ramps) → bed scaled to -9 dB there.
     b = bed(total)
     t = np.arange(N) / SR
     gain = np.zeros(N)
     GAP = 0.15
     for s, e in vo_spans:
         gain = np.maximum(gain, np.clip((t - (s - GAP)) / GAP, 0, 1) * np.clip(((e + GAP) - t) / GAP, 0, 1))
-    b *= (10 ** (-8 / 20)) + (1 - 10 ** (-8 / 20)) * gain
+    DUCK_DB = -9
+    b *= 1.0 + ((10 ** (DUCK_DB / 20)) - 1.0) * gain
     mix += b
 
     # ---- SFX events: per-short table in script.json ("sfx"), else the

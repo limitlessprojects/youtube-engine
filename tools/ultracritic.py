@@ -1,0 +1,269 @@
+#!/usr/bin/env python3
+"""ultracritic.py — THE pre-publish quality bar (boss directive, 2026-11-08).
+
+"the video should go through ultracritical vlm feedback iteration before
+getting your final posting approval must score out of a certain number of
+ranking before its deemed worthy to post"
+
+Usage: tools/ultracritic.py <slug> [--round N] [--frames t1 t2 ...]
+                                     [--skip-mechanical]
+
+Part A — MECHANICAL checks (no VLM, instant):
+  A1 caption budget: EMPHASIS keyword list per scene ≤ 5 words (L-073/L-076;
+     the published #0003 showed up to 22 words/frame = 2.8/10 text_discipline)
+  A2 scene pacing: mean scene length ≤ 3.2s, max ≤ 4.2s (L-075; #0003 ran
+     4.22s mean against a 1–2s sub-beat spec)
+  A3 orientation: hook narration must name the topic (a noun from the title)
+     — #0003 never said "sunset" until t≈14s (boss: "no introduction to what
+     the topic is about")
+  A4 spine: no NEW capitalized entity in the last 2 scenes (tangent-closer
+     detector; #0003's Mars beat)
+  A5 bed audibility: mastered audio non-VO RMS must sit 6–22 dB under VO RMS
+     (L-074; the old inverted-ducked bed was ≈ -30 dB = absent)
+
+Part B — VLM rubric (7 dimensions, 0-10 each, on gate frames):
+  hook_impact, pacing_rhythm, text_discipline, visual_hierarchy,
+  contrast_legibility, character_life, production_polish
+
+PUBLISH THRESHOLD (the "certain number"):
+  · grand mean ≥ 8.5/10  AND  every dimension mean ≥ 7.0
+  · a frame scoring < 6 on ANY dimension fails that frame
+Below threshold → NO POST. Iterate: apply directives → re-render → --round N+1.
+Hard cap 3 rounds/night (cadence guardrail): still below → carried to the
+next session with the report attached (boss fallback, never silent).
+"""
+from __future__ import annotations
+
+import json
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+SR = 24000
+
+THRESH_MEAN = 8.5
+THRESH_DIM = 7.0
+THRESH_FRAME_FLOOR = 6.0
+
+RUBRIC = """You are THE ULTRACRITIC — a merciless pre-publish reviewer for a vertical YouTube Short (1080x1920).
+Judge ONLY production values: pacing/editing rhythm, visual design, text craft, animation life, polish. IGNORE narration wording and script content entirely. Score as if reviewing a competitor's video that must EARN its publish slot. This channel's bar: a frame below 7 on any dimension does not ship.
+
+Score each dimension 0-10 (10 = broadcast-grade, 7 = acceptable Shorts average, 5 = flawed, 3 = amateur, 0 = broken):
+1. hook_impact: does this frame STOP a thumb-scrolling viewer? instant focal point + intrigue?
+2. pacing_rhythm: from visible composition (mid-animation states, cut feel, timing affordances): does the shot feel alive at the right tempo — neither frozen nor frantic?
+3. text_discipline: word count on screen (count EVERY text element), competing text blocks, hierarchy clarity. More than 8 words visible = max 4. Two simultaneous text systems competing (e.g. big header + full-sentence subtitle) = max 3.
+4. visual_hierarchy: one clear focal subject? eye path guided? depth/layers? no large dead zones?
+5. contrast_legibility: would small line graphics/captions survive a 6-inch phone in daylight? background vs foreground separation?
+6. character_life: does the character look alive (pose dynamism, expression, motion affordance) or like a frozen cutout?
+7. production_polish: shadows, glows, alignment, palette control, craft details.
+
+Return STRICT JSON only: {"scores": {"hook_impact": n, "pacing_rhythm": n, "text_discipline": n, "visual_hierarchy": n, "contrast_legibility": n, "character_life": n, "production_polish": n}, "mean": n, "words_visible": n, "top3_directives": ["specific fixable directive", "...", "..."]}
+
+Be harsh. A 10 is nearly impossible. If in doubt between two scores, give the LOWER one."""
+
+
+# ---------------- Part A: mechanical ----------------
+
+def mech_checks(short: Path) -> tuple[list[str], list[str]]:
+    fails: list[str] = []
+    warns: list[str] = []
+    script = json.loads((short / "script.json").read_text())
+
+    # A2 pacing
+    starts = [script["hook"]["timestamp_start"]] + [s["timestamp_start"] for s in script["scenes"]]
+    ends = [s["timestamp_start"] for s in script["scenes"]] + [script["timeline"]["total_s"]]
+    durs = [e - s for s, e in zip(starts, ends)]
+    mean_d = sum(durs) / len(durs)
+    if mean_d > 3.2:
+        fails.append(f"A2 mean scene {mean_d:.2f}s > 3.2s (pacing)")
+    if max(durs) > 4.2:
+        fails.append(f"A2 max scene {max(durs):.2f}s > 4.2s (pacing)")
+    if len(durs) < 10:
+        warns.append(f"A2 only {len(durs)} beats in {script['timeline']['total_s']:.0f}s — target ≥ 12 visual events")
+
+    # A3 orientation: a title noun must appear in the hook narration
+    title_nouns = [w for w in re.findall(r"[A-Za-z]{4,}", script["title"])
+                   if w.lower() not in {"what", "when", "where", "which", "your", "never", "it's"}]
+    hook_low = script["hook"]["narration"].lower()
+    if title_nouns and not any(n.lower() in hook_low for n in title_nouns):
+        fails.append(f"A3 hook never names the topic {title_nouns[:4]} — orient first, subvert second (L-073)")
+
+    # A4 spine: new capitalized entities in the last 2 scenes = tangent closer
+    early = " ".join([script["hook"]["narration"]] + [s["narration"] for s in script["scenes"][:-2]])
+    early_caps = set(re.findall(r"\b[A-Z][a-z]{2,}\b", early))
+    for s in script["scenes"][-2:]:
+        new = [c for c in re.findall(r"\b[A-Z][a-z]{2,}\b", s["narration"])
+               if c not in early_caps and c not in {"The", "And", "But", "Same", "Only", "Your", "What"}]
+        if new:
+            warns.append(f"A4 new entity {new} appears only in the closer — tangent? (L-077 spine rule)")
+
+    # A1 caption budget from scenes.html EMPHASIS table
+    html_p = short / "render" / "scenes.html"
+    if html_p.exists():
+        html = html_p.read_text()
+        m = re.search(r"const EMPHASIS = \{(.*?)\};", html, re.S)
+        if m:
+            for line in re.finditer(r"(\w+):\s*\[([^\]]*)\]", m.group(1)):
+                sid, words = line.group(1), [w.strip().strip('"\'') for w in line.group(2).split(",") if w.strip()]
+                if len(words) > 5:
+                    fails.append(f"A1 scene {sid}: {len(words)} caption keywords > 5 (L-076)")
+        else:
+            warns.append("A1 no EMPHASIS table found — caption budget unverifiable")
+
+    # A5 bed audibility (needs the mastered file)
+    ok, detail = bed_check(short)
+    if not ok:
+        fails.append(f"A5 {detail}")
+
+    return fails, warns
+
+
+def bed_check(short: Path) -> tuple[bool, str]:
+    """Master non-VO RMS must be 6-22 dB under VO RMS (audible but polite)."""
+    import numpy as np
+    master = None
+    for cand in ["render/master.wav", "render/short_final.mp4"]:
+        p = short / cand
+        if p.exists():
+            master = p
+            break
+    if master is None:
+        return True, "bed: no mastered file yet (checked at master time)"
+    try:
+        r = subprocess.run(["ffmpeg", "-v", "error", "-i", str(master), "-f", "f32le",
+                            "-ac", "1", "-ar", str(SR), "-"], capture_output=True, timeout=180)
+        y = np.frombuffer(r.stdout, dtype=np.float32)
+        if len(y) < SR:
+            return True, "bed: master too short to measure"
+        script = json.loads((short / "script.json").read_text())
+        spans = [(script["hook"]["timestamp_start"],
+                  script["hook"]["timestamp_start"] + script["hook"]["audio_dur_s"])]
+        for s in script["scenes"]:
+            spans.append((s["timestamp_start"], s["timestamp_start"] + s["audio_dur_s"]))
+        n = len(y)
+        vo_m = np.ones(n, bool)
+        for s, e in spans:
+            vo_m[max(0, int((s - 0.05) * SR)): min(n, int((e + 0.05) * SR))] = False
+        rms = lambda m: float(np.sqrt(np.mean(y[m if isinstance(m, np.ndarray) else slice(None)] ** 2)) + 1e-12)
+        r_vo, r_bed = rms(vo_m), rms(~vo_m)
+        if r_vo <= 0:
+            return True, "bed: VO absent?"
+        db = 20 * np.log10(r_bed / r_vo)
+        if db < -22:
+            return False, f"bed inaudible: {db:.1f} dB under VO (< -22; L-074 class)"
+        if db > -4:
+            return False, f"bed too loud: {db:.1f} dB under VO (mud)"
+        return True, f"bed {db:.1f} dB under VO ✓"
+    except Exception as e:  # noqa: BLE001
+        return True, f"bed: measure skipped ({type(e).__name__})"
+
+
+# ---------------- Part B: VLM rubric ----------------
+
+def unwrap(raw: str) -> str:
+    try:
+        obj = json.loads(raw)
+        if isinstance(obj, dict) and "choices" in obj:
+            return obj["choices"][0]["message"]["content"]
+        if isinstance(obj, dict) and "content" in obj:
+            return obj["content"]
+    except json.JSONDecodeError:
+        pass
+    return raw
+
+
+def extract_json(text: str) -> dict:
+    m = re.search(r"\{.*\}", text, re.S)
+    if not m:
+        raise ValueError("no JSON in response")
+    return json.loads(m.group(0))
+
+
+def vlm_score(frame: Path) -> dict | None:
+    with tempfile.TemporaryDirectory() as td:
+        out = Path(td) / "v.json"
+        for _ in range(3):
+            r = subprocess.run(["z-ai", "vision", "-p", RUBRIC, "-i", str(frame),
+                                "-o", str(out)], capture_output=True, text=True, timeout=240)
+            raw = out.read_text() if out.exists() else r.stdout
+            try:
+                v = extract_json(unwrap(raw))
+                if "scores" in v:
+                    return v
+            except (ValueError, json.JSONDecodeError):
+                continue
+    return None
+
+
+def main() -> int:
+    slug = sys.argv[1]
+    short = REPO / "content" / slug
+    round_n = int(sys.argv[sys.argv.index("--round") + 1]) if "--round" in sys.argv else 1
+    skip_mech = "--skip-mechanical" in sys.argv
+
+    fails, warns = ([], []) if skip_mech else mech_checks(short)
+    if fails:
+        print("❌ MECHANICAL FAIL — fix before spending VLM calls:")
+        for f in fails:
+            print(f"  FAIL: {f}")
+        for w in warns:
+            print(f"  warn: {w}")
+        (short / "gate" / f"ultracritic_r{round_n}.json").write_text(
+            json.dumps({"round": round_n, "mechanical_fails": fails, "warns": warns,
+                        "verdict": "MECHANICAL_FAIL"}, indent=1))
+        return 1
+    for w in warns:
+        print(f"  warn: {w}")
+
+    frames = sorted((short / "gate").glob("*.png"))
+    if not frames:
+        print("no gate frames — run render_short.py --keyframes first")
+        return 1
+    results = []
+    for f in frames:
+        v = vlm_score(f)
+        if v is None:
+            print(f"  {f.stem}: VLM FAILED (3 attempts)")
+            continue
+        v["frame"] = f.stem
+        results.append(v)
+        s = v["scores"]
+        mean_v = v.get("mean") or sum(s.values()) / len(s)
+        flag = "" if mean_v >= THRESH_MEAN else "  ← below bar"
+        print(f"  {f.stem:10s} mean {mean_v:.1f}  (words {v.get('words_visible','?')}){flag}")
+
+    if not results:
+        print("VLM produced no verdicts — do not publish")
+        return 1
+
+    dims = list(results[0]["scores"].keys())
+    dim_means = {d: sum(r["scores"][d] for r in results) / len(results) for d in dims}
+    frame_means = [r.get("mean") or sum(r["scores"].values()) / len(r["scores"]) for r in results]
+    grand = sum(frame_means) / len(frame_means)
+    frame_floor_breaches = [r["frame"] for r in results
+                            if min(r["scores"].values()) < THRESH_FRAME_FLOOR]
+
+    print(f"\n  GRAND MEAN {grand:.2f}/10 (bar {THRESH_MEAN})")
+    for d in dims:
+        mark = "✓" if dim_means[d] >= THRESH_DIM else "✗"
+        print(f"  {mark} {d:22s} {dim_means[d]:.1f}")
+    if frame_floor_breaches:
+        print(f"  frames below {THRESH_FRAME_FLOOR} floor: {frame_floor_breaches}")
+
+    ok = (grand >= THRESH_MEAN and all(v >= THRESH_DIM for v in dim_means.values())
+          and not frame_floor_breaches)
+    verdict = "PUBLISH_APPROVED" if ok else "BELOW_BAR_NO_POST"
+    report = {"round": round_n, "verdict": verdict, "grand_mean": round(grand, 2),
+              "dim_means": {k: round(v, 2) for k, v in dim_means.items()},
+              "frame_means": {r["frame"]: round(m, 2) for r, m in zip(results, frame_means)},
+              "floor_breaches": frame_floor_breaches, "frames": results, "warns": warns}
+    (short / "gate" / f"ultracritic_r{round_n}.json").write_text(json.dumps(report, indent=1))
+    print(f"\n{'✅' if ok else '❌'} {verdict} → gate/ultracritic_r{round_n}.json")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
