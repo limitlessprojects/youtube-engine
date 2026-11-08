@@ -1,0 +1,309 @@
+{
+  "frames": {
+    "hook_u50.png": {
+      "scene": "hook",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            1080,
+            650,
+            1560,
+            1050
+          ],
+          "fix_hint": "Hero stands on flat sand instead of a shore rock per composition note; add a rock platform under feet for fidelity."
+        },
+        {
+          "check": "readability",
+          "severity": "low",
+          "bbox": [
+            740,
+            340,
+            830,
+            740
+          ],
+          "fix_hint": "'THE OCEAN?' pale-blue text on mid-blue sky is slightly low-contrast; add subtle shadow/stroke."
+        }
+      ],
+      "_frame": "hook_u50.png",
+      "_round": "3"
+    },
+    "s0_u50.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u50.png",
+      "_round": "3"
+    },
+    "s1_u50.png": {
+      "scene": "s1",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            360,
+            340,
+            720,
+            660
+          ],
+          "fix_hint": "Scarf not visible; spec calls for orange scarf whipping in the wind on the hero."
+        },
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            1100,
+            0,
+            1920,
+            1080
+          ],
+          "fix_hint": "Heat shimmer not evident; dune crest shading is soft \u2014 consider stronger rim shading per spec."
+        },
+        {
+          "check": "readability",
+          "severity": "low",
+          "bbox": [
+            400,
+            190,
+            660,
+            890
+          ],
+          "fix_hint": "Stamp panel sits in upper sky area, readable, but ensure it 'pops and holds' with ease-in; verify no snap in motion."
+        }
+      ],
+      "_frame": "s1_u50.png",
+      "_round": "3"
+    },
+    "s2_u50.png": {
+      "scene": "s2",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "pose",
+          "severity": "medium",
+          "bbox": [
+            560,
+            620,
+            1550,
+            750
+          ],
+          "fix_hint": "Spec calls for open palm UP presenting the dome; frame shows closed fist raised high. Rotate wrist/hand to open palm-up gesture."
+        },
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            520,
+            320,
+            740,
+            760
+          ],
+          "fix_hint": "Narration references 'its sky' but hero gestures at nothing overhead; ensure palm-up gesture is oriented toward the sky/dome region above."
+        }
+      ],
+      "_frame": "s2_u50.png",
+      "_round": "3"
+    },
+    "s3_u50.png": {
+      "scene": "s3",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s3_u50.png",
+      "_round": "3"
+    },
+    "s4_u50.png": {
+      "scene": "s4",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            845,
+            310,
+            910,
+            740
+          ],
+          "fix_hint": "Red photon's entry path is truncated by the 'A MOLECULE OF AIR' label; a short straight red tail entering the panel would clarify 'red drifts straight through'."
+        }
+      ],
+      "_frame": "s4_u50.png",
+      "_round": "3"
+    },
+    "s5_u50.png": {
+      "scene": "s5",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "medium",
+          "bbox": [
+            1620,
+            340,
+            1780,
+            760
+          ],
+          "fix_hint": "Bottom caption pill 'blue lamp' overlaps the character's feet/shoes and their contact shadow; nudge the character up ~80-100px or shrink/lower the pill so the feet and shadow stay clear."
+        },
+        {
+          "check": "readability",
+          "severity": "low",
+          "bbox": [
+            480,
+            310,
+            550,
+            770
+          ],
+          "fix_hint": "Mid-frame header 'EVERY PATCH: A LAMP' sits over translucent lamp patches, slightly reducing contrast; add a subtle backdrop or drop shadow behind the text."
+        },
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            450,
+            70,
+            1250,
+            1010
+          ],
+          "fix_hint": "Lamp patches read as flat translucent squares rather than glowing lamps; add a soft glow/bloom per patch (still blue) to match 'tiny blue lamp' payoff."
+        }
+      ],
+      "_frame": "s5_u50.png",
+      "_round": "3"
+    },
+    "s6_u50.png": {
+      "scene": "s6",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s6_u50.png",
+      "_round": "3"
+    },
+    "s7_u50.png": {
+      "scene": "s7",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s7_u50.png",
+      "_round": "3"
+    },
+    "s8_u50.png": {
+      "scene": "s8",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "pose_match",
+          "severity": "medium",
+          "bbox": [
+            1190,
+            310,
+            1620,
+            540
+          ],
+          "fix_hint": "Hero stands below the panel instead of peering down over its edge; raise hero so head/shoulders overlap the panel rim with downward gaze"
+        },
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            870,
+            900,
+            1160,
+            1220
+          ],
+          "fix_hint": "Blue photons show no upward scatter trail; add faint blue dots scattering back toward surface so 'KEPT' reads correctly"
+        },
+        {
+          "check": "anchoring_overlap",
+          "severity": "low",
+          "bbox": [
+            1190,
+            370,
+            1310,
+            540
+          ],
+          "fix_hint": "Hero head overlaps the ocean panel's bottom bezel; either clear the panel or integrate overlap as intentional peer-down"
+        }
+      ],
+      "_frame": "s8_u50.png",
+      "_round": "3"
+    },
+    "s9_u50.png": {
+      "scene": "s9",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            1130,
+            100,
+            1500,
+            800
+          ],
+          "fix_hint": "Sea glow reads as flat wave lines only; add a subtle independent blue glow patch in the water to match the 'two separate light sources' spec (sky lamp is present)."
+        }
+      ],
+      "_frame": "s9_u50.png",
+      "_round": "3"
+    },
+    "s4_end.png": {
+      "scene": "s4",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "low",
+          "bbox": [
+            845,
+            340,
+            915,
+            740
+          ],
+          "fix_hint": "'A MOLECULE OF AIR' label pill sits on top of the red photon's origin dot, partially occluding the red path start; nudge label down or right so the red photon entry point stays visible."
+        }
+      ],
+      "_frame": "s4_end.png",
+      "_round": "3"
+    },
+    "s7_end.png": {
+      "scene": "s7",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s7_end.png",
+      "_round": "3"
+    },
+    "s8_end.png": {
+      "scene": "s8",
+      "verdict": "pass",
+      "issues": [
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            620,
+            190,
+            1160,
+            950
+          ],
+          "fix_hint": "Red photons are shown fading with depth but not clearly sinking from the white beam impact point; consider aligning red column under beam entry for clearer 'absorbed' reading. Blue column matches 'KEPT'."
+        },
+        {
+          "check": "asset_match",
+          "severity": "low",
+          "bbox": [
+            1050,
+            640,
+            1180,
+            880
+          ],
+          "fix_hint": "The beam enters at panel title area rather than the water surface line; minor geometry mismatch, low impact."
+        }
+      ],
+      "_frame": "s8_end.png",
+      "_round": "3"
+    }
+  }
+}

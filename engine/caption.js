@@ -41,17 +41,30 @@ V2.caption = (text, u, emWords, opts) => {
   const fontOf = (s) => `800 ${s}px 'Bricolage Grotesque', 'DejaVu Sans', sans-serif`;
   const wOf = (w) => { V2._meas.font = fontOf(size); return Math.max(30, V2._meas.measureText(w).width); };
 
-  const g = V2.el("g", {});
-  const n = kws.length;
   const spaceW = 42;
-  const total = kws.reduce((a, w) => a + wOf(w), 0) + spaceW * (n - 1);
+  const total = kws.reduce((a, w) => a + wOf(w), 0) + spaceW * (kws.length - 1);
+
+  const g = V2.el("g", {});
+  // scrim: dark pill behind the keywords so they survive bright backgrounds
+  // on daylight phones (day-010 ultracritic directive on #0003's captions)
+  const anyShown = kws.some((_, i) => {
+    const at = kws.length === 1 ? 0 : (i / kws.length) * 0.55;
+    return u > at;
+  });
+  if (anyShown && !o.noScrim) {
+    const pad = 46;
+    V2.el("rect", { x: 540 - total / 2 - pad, y: (o.y || 1700) - size * 0.82,
+      width: total + pad * 2, height: size * 1.64, rx: size * 0.82,
+      fill: "#0A0E1E", opacity: 0.5 }, g);
+  }
+
   let x = 540 - total / 2;
   const y = o.y || 1700;
 
   kws.forEach((w, i) => {
     // pop timing: keyword i appears as the voice reaches it —
     // spread across the first 60% of the scene, staggered
-    const at = n === 1 ? 0 : (i / n) * 0.55;
+    const at = kws.length === 1 ? 0 : (i / kws.length) * 0.55;
     const k = V2.backOut(V2.clamp01((u - at) / 0.12));
     if (k > 0.01) {
       const el = V2.txt(x + wOf(w) / 2, y, w, {

@@ -1,0 +1,136 @@
+{
+  "short": "short-0004",
+  "verified_at": "2026-11-08T05:39:19.385347+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +25%",
+  "gap_s": 0.25,
+  "total_vo_s": 28.68,
+  "timeline_end_s": 31.18,
+  "n_fail": 0,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "narration",
+      "expected": "Why is the sky blue? The famous answer: oceans.",
+      "heard": "Why is the sky blue? The famous answer: oceans.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.856,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "narration",
+      "expected": "Blue sea below. Blue sky above. Seems obvious. It's wrong.",
+      "heard": "Blue sky below, blue sky above seems obvious. It's wrong.",
+      "wer": 0.1,
+      "accuracy": 0.9,
+      "verdict": "PASS",
+      "audio_dur_s": 3.672,
+      "synced_start_s": 3.106
+    },
+    {
+      "line": "02",
+      "role": "narration",
+      "expected": "The Sahara sits a thousand kilometers from any sea.",
+      "heard": "The Sahara sits a thousand kilometers from any sea.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.688,
+      "synced_start_s": 7.028
+    },
+    {
+      "line": "03",
+      "role": "narration",
+      "expected": "Its sky? Just as blue.",
+      "heard": "It's sky, just as blue.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 1.608,
+      "synced_start_s": 9.966
+    },
+    {
+      "line": "04",
+      "role": "narration",
+      "expected": "So what actually paints it? Sunlight, hitting air.",
+      "heard": "So what actually paints it, sunlight hitting air?",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.52,
+      "synced_start_s": 11.824
+    },
+    {
+      "line": "05",
+      "role": "narration",
+      "expected": "Air flings blue sideways, six times harder than red.",
+      "heard": "Air flings blue sideways, six times harder than red.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.76,
+      "synced_start_s": 14.594
+    },
+    {
+      "line": "06",
+      "role": "narration",
+      "expected": "Every patch of sky becomes a tiny blue lamp.",
+      "heard": "Every patch of sky becomes a tiny blue lamp.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.544,
+      "synced_start_s": 17.604
+    },
+    {
+      "line": "07",
+      "role": "narration",
+      "expected": "Aim your eyes away from the sun \u2014 deepest blue.",
+      "heard": "Aim your eyes away from the sun, deepest blue.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.472,
+      "synced_start_s": 20.398
+    },
+    {
+      "line": "08",
+      "role": "narration",
+      "expected": "That's the sky. Not a mirror \u2014 a lamp.",
+      "heard": "That's the sky, not a mirror, a lamp.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.304,
+      "synced_start_s": 23.12
+    },
+    {
+      "line": "09",
+      "role": "narration",
+      "expected": "And the ocean? Water eats red, keeps blue.",
+      "heard": "In the ocean, water eats red, keeps blue.",
+      "wer": 0.125,
+      "accuracy": 0.875,
+      "verdict": "PASS",
+      "audio_dur_s": 2.496,
+      "synced_start_s": 25.674
+    },
+    {
+      "line": "10",
+      "role": "narration",
+      "expected": "Sky and sea never painted each other. They just matched.",
+      "heard": "Sky and sea never painted each other; they just matched.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.76,
+      "synced_start_s": 28.42
+    }
+  ]
+}

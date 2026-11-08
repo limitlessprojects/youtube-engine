@@ -222,11 +222,19 @@ def main() -> int:
          "-ar", str(SR), "-c:a", "aac", "-b:a", "192k", str(master)])
 
     out = short / f"{slug}.mp4"
-    run(["ffmpeg", "-y", "-v", "error", "-framerate", str(FPS),
-         "-i", str(short / "render" / "frames" / "f%04d.png"), "-i", str(master),
-         "-c:v", "libx264", "-preset", "medium", "-crf", "18",
-         "-pix_fmt", "yuv420p", "-c:a", "copy", "-movflags", "+faststart",
-         "-shortest", str(out)])
+    # L-072 (made permanent day-010): the image2 demuxer got this sandbox
+    # OOM-killed on 1000+ frames; pipe the PNGs through stdin instead.
+    import glob as _glob
+    frames = sorted(_glob.glob(str(short / "render" / "frames" / "f*.png")))
+    cat = subprocess.Popen(["cat", *frames], stdout=subprocess.PIPE)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "image2pipe", "-framerate", str(FPS),
+                    "-i", "-", "-i", str(master),
+                    "-c:v", "libx264", "-preset", "medium", "-crf", "18",
+                    "-pix_fmt", "yuv420p", "-c:a", "copy", "-movflags", "+faststart",
+                    "-shortest", str(out)],
+                   stdin=cat.stdout, capture_output=True, timeout=1800)
+    cat.stdout.close()
+    cat.wait()
 
     dur = run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                "-of", "csv=p=0", str(out)]).stdout.strip()

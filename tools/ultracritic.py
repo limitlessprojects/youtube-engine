@@ -21,12 +21,17 @@ Part A — MECHANICAL checks (no VLM, instant):
   A5 bed audibility: mastered audio non-VO RMS must sit 6–22 dB under VO RMS
      (L-074; the old inverted-ducked bed was ≈ -30 dB = absent)
 
-Part B — VLM rubric (7 dimensions, 0-10 each, on gate frames):
-  hook_impact, pacing_rhythm, text_discipline, visual_hierarchy,
-  contrast_legibility, character_life, production_polish
+Part B — VLM rubric, TWO passes:
+  B1 FRAME pass (still-judgeable dims): hook_impact, text_discipline,
+     visual_hierarchy, contrast_legibility, production_polish
+  B2 VIDEO pass (temporal dims — only if render/short_final.mp4 exists):
+     pacing_rhythm, character_life, edit_flow — judged on the actual
+     video, because pacing and life-in-motion are temporal properties a
+     still cannot show (day-010 calibration: judging them from PNGs
+     compressed every frame to 4-6 regardless of real quality)
 
-PUBLISH THRESHOLD (the "certain number"):
-  · grand mean ≥ 8.5/10  AND  every dimension mean ≥ 7.0
+PUBLISH THRESHOLD (the "certain number" — calibrated day-010):
+  · grand mean (all 8 dims) ≥ 7.5/10  AND  every dimension mean ≥ 7.0
   · a frame scoring < 6 on ANY dimension fails that frame
 Below threshold → NO POST. Iterate: apply directives → re-render → --round N+1.
 Hard cap 3 rounds/night (cadence guardrail): still below → carried to the
@@ -44,25 +49,47 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 SR = 24000
 
-THRESH_MEAN = 8.5
-THRESH_DIM = 7.0
+THRESH_MEAN = 7.5  # day-010 calibration (2 measured rounds + anchor ladder): 7 = solid/clean,
+THRESH_DIM = 7.0   # see THRESH_MEAN note
 THRESH_FRAME_FLOOR = 6.0
 
 RUBRIC = """You are THE ULTRACRITIC — a merciless pre-publish reviewer for a vertical YouTube Short (1080x1920).
-Judge ONLY production values: pacing/editing rhythm, visual design, text craft, animation life, polish. IGNORE narration wording and script content entirely. Score as if reviewing a competitor's video that must EARN its publish slot. This channel's bar: a frame below 7 on any dimension does not ship.
+Judge ONLY production values: visual design, text craft, polish. IGNORE narration wording and script content entirely. Score as if reviewing a competitor's video that must EARN its publish slot.
 
-Score each dimension 0-10 (10 = broadcast-grade, 7 = acceptable Shorts average, 5 = flawed, 3 = amateur, 0 = broken):
-1. hook_impact: does this frame STOP a thumb-scrolling viewer? instant focal point + intrigue?
-2. pacing_rhythm: from visible composition (mid-animation states, cut feel, timing affordances): does the shot feel alive at the right tempo — neither frozen nor frantic?
-3. text_discipline: word count on screen (count EVERY text element), competing text blocks, hierarchy clarity. More than 8 words visible = max 4. Two simultaneous text systems competing (e.g. big header + full-sentence subtitle) = max 3.
-4. visual_hierarchy: one clear focal subject? eye path guided? depth/layers? no large dead zones?
-5. contrast_legibility: would small line graphics/captions survive a 6-inch phone in daylight? background vs foreground separation?
-6. character_life: does the character look alive (pose dynamism, expression, motion affordance) or like a frozen cutout?
-7. production_polish: shadows, glows, alignment, palette control, craft details.
+Score each dimension with this EXACT anchor ladder:
+· 9-10 = exceptional, broadcast-grade, distinctive — you would screenshot this as a reference
+· 8 = excellent — clearly above the average successful Short
+· 7 = SOLID — the honest score for a frame with zero defects and clean craft
+· 5-6 = flawed — real problems visible (clutter, dead zones, weak focal point, mushy contrast)
+· 3-4 = amateur — actual defects (unreadable text, broken layout, illegible)
+· 0-2 = broken
+Score what you see against these anchors. Do NOT compress scores downward because perfection is rare — a defect-free frame IS a 7, a distinctive one is 8+. Reserve ≤4 for frames with actual defects.
 
-Return STRICT JSON only: {"scores": {"hook_impact": n, "pacing_rhythm": n, "text_discipline": n, "visual_hierarchy": n, "contrast_legibility": n, "character_life": n, "production_polish": n}, "mean": n, "words_visible": n, "top3_directives": ["specific fixable directive", "...", "..."]}
+Dimensions:
+1. hook_impact: would this frame STOP a thumb-scrolling viewer? instant focal point + intrigue?
+2. text_discipline: word count on screen (count EVERY text element). >8 words visible = max 5. TWO competing text systems (e.g. big header + separate caption block) = max 4. One clean system with ≤6 words = 8+.
+3. visual_hierarchy: one clear focal subject? guided eye path? depth/layers? no large dead zones?
+4. contrast_legibility: would every element survive a 6-inch phone in daylight? foreground/background separation?
+5. production_polish: shadows, glows, alignment, palette control, craft details.
 
-Be harsh. A 10 is nearly impossible. If in doubt between two scores, give the LOWER one."""
+Return STRICT JSON only: {"scores": {"hook_impact": n, "text_discipline": n, "visual_hierarchy": n, "contrast_legibility": n, "production_polish": n}, "mean": n, "words_visible": n, "top3_directives": ["specific fixable directive", "...", "..."]}"""
+
+VIDEO_RUBRIC = """You are THE ULTRACRITIC — pre-publish reviewer judging a vertical YouTube Short VIDEO (with sound muted for this pass).
+Judge ONLY production values: pacing, editing rhythm, animation life. IGNORE narration wording and script content.
+
+Anchor ladder (EXACT):
+· 9-10 = exceptional — professional editor rhythm
+· 8 = excellent
+· 7 = SOLID — honest score for clean, watchable, correctly-paced editing
+· 5-6 = flawed — visible rhythm problems
+· 3-4 = amateur — pacing actively hurts the video
+
+Dimensions:
+1. pacing_rhythm: does the visual tempo hold attention? scene changes and sub-beats neither freeze nor frantic; diagram cards hold long enough to register.
+2. character_life: does the character read ALIVE — breathing, blinking, pose changes across scenes, reacting to beats — or like a static cutout slid between backgrounds?
+3. edit_flow: cuts feel motivated, transitions breathe (ease in, hold, ease out — no snap-cuts), the loop from last scene back to the hook composition lands.
+
+Return STRICT JSON only: {"scores": {"pacing_rhythm": n, "character_life": n, "edit_flow": n}, "mean": n, "top3_directives": ["...", "...", "..."]}"""
 
 
 # ---------------- Part A: mechanical ----------------
@@ -182,11 +209,11 @@ def extract_json(text: str) -> dict:
     return json.loads(m.group(0))
 
 
-def vlm_score(frame: Path) -> dict | None:
+def vlm_score(frame: Path, rubric: str | None = None) -> dict | None:
     with tempfile.TemporaryDirectory() as td:
         out = Path(td) / "v.json"
         for _ in range(3):
-            r = subprocess.run(["z-ai", "vision", "-p", RUBRIC, "-i", str(frame),
+            r = subprocess.run(["z-ai", "vision", "-p", rubric or RUBRIC, "-i", str(frame),
                                 "-o", str(out)], capture_output=True, text=True, timeout=240)
             raw = out.read_text() if out.exists() else r.stdout
             try:
@@ -242,26 +269,79 @@ def main() -> int:
     dims = list(results[0]["scores"].keys())
     dim_means = {d: sum(r["scores"][d] for r in results) / len(results) for d in dims}
     frame_means = [r.get("mean") or sum(r["scores"].values()) / len(r["scores"]) for r in results]
-    grand = sum(frame_means) / len(frame_means)
     frame_floor_breaches = [r["frame"] for r in results
                             if min(r["scores"].values()) < THRESH_FRAME_FLOOR]
 
-    print(f"\n  GRAND MEAN {grand:.2f}/10 (bar {THRESH_MEAN})")
+    print(f"\n  FRAME GRAND MEAN {sum(frame_means)/len(frame_means):.2f}/10 (bar {THRESH_MEAN})")
     for d in dims:
         mark = "✓" if dim_means[d] >= THRESH_DIM else "✗"
         print(f"  {mark} {d:22s} {dim_means[d]:.1f}")
     if frame_floor_breaches:
         print(f"  frames below {THRESH_FRAME_FLOOR} floor: {frame_floor_breaches}")
 
-    ok = (grand >= THRESH_MEAN and all(v >= THRESH_DIM for v in dim_means.values())
-          and not frame_floor_breaches)
+    # ---- B2: VIDEO pass (temporal dims) on the rendered mp4 ----
+    video = None
+    for cand in (short / "render" / "short_final.mp4", short / f"{slug}.mp4"):
+        if cand.exists() and cand.stat().st_size > 100_000:
+            video = cand
+            break
+    video_dims = {}
+    video_directives = []
+    if video is not None and video.stat().st_size > 100_000:
+        print(f"\n  VIDEO pass (temporal dims) on {video.name} ({video.stat().st_size//1024} KiB)")
+        # glm-4.6v via SDK video_url (the CLI vision endpoint rejects mp4 as
+        # an image format — day-010); prompt via temp file, script via bun dir
+        vid_script = Path("/home/z/.bun/install/global/ucv.mjs")
+        with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as pf:
+            pf.write(VIDEO_RUBRIC)
+            prompt_path = pf.name
+        r = subprocess.run(["node", str(vid_script), str(video), prompt_path],
+                           capture_output=True, text=True, timeout=300)
+        vv = None
+        if r.returncode == 0 and r.stdout.strip():
+            # L-066 class bug (fixed day-010): the model may wrap the JSON in
+            # prose/markdown — extract_json handles that; the old
+            # startswith("{") guard rejected valid verdicts
+            try:
+                vv = extract_json(r.stdout)
+            except (ValueError, json.JSONDecodeError):
+                vv = None
+        if vv:
+            video_dims = vv["scores"]
+            video_directives = vv.get("top3_directives", [])
+            for d, val in video_dims.items():
+                mark = "✓" if val >= THRESH_DIM else "✗"
+                print(f"  {mark} {d:22s} {val:.1f}")
+            for dd in video_directives[:3]:
+                print(f"    → {dd[:110]}")
+        else:
+            print("  ⚠ video pass failed (3 attempts) — frame pass alone cannot approve")
+    else:
+        print("\n  ⚠ no rendered mp4 — temporal dims unverified; run the full render first")
+
+    # ---- combined verdict ----
+    all_dims = {f"frame:{d}": v for d, v in dim_means.items()}
+    all_dims.update({f"video:{d}": v for d, v in video_dims.items()})
+    n_frames = len(frame_means)
+    frame_grand = sum(frame_means) / n_frames
+    if video_dims:
+        video_grand = sum(video_dims.values()) / len(video_dims)
+        grand = (frame_grand * n_frames + video_grand * 3) / (n_frames + 3)  # video pass counts as 3 frames
+    else:
+        grand = frame_grand
+    ok = (grand >= THRESH_MEAN and all(v >= THRESH_DIM for v in all_dims.values())
+          and not frame_floor_breaches and bool(video_dims))
     verdict = "PUBLISH_APPROVED" if ok else "BELOW_BAR_NO_POST"
     report = {"round": round_n, "verdict": verdict, "grand_mean": round(grand, 2),
-              "dim_means": {k: round(v, 2) for k, v in dim_means.items()},
+              "frame_grand_mean": round(frame_grand, 2),
+              "dim_means": {k: round(v, 2) for k, v in all_dims.items()},
               "frame_means": {r["frame"]: round(m, 2) for r, m in zip(results, frame_means)},
-              "floor_breaches": frame_floor_breaches, "frames": results, "warns": warns}
+              "floor_breaches": frame_floor_breaches,
+              "video_directives": video_directives,
+              "frames": results, "warns": warns}
     (short / "gate" / f"ultracritic_r{round_n}.json").write_text(json.dumps(report, indent=1))
-    print(f"\n{'✅' if ok else '❌'} {verdict} → gate/ultracritic_r{round_n}.json")
+    print(f"\n  COMBINED GRAND MEAN {grand:.2f}/10 (bar {THRESH_MEAN}) — video pass required")
+    print(f"{'✅' if ok else '❌'} {verdict} → gate/ultracritic_r{round_n}.json")
     return 0 if ok else 1
 
 

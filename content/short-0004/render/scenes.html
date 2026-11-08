@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#1E5AC8;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0004 v3 — "Why is the sky blue? (It's not the ocean)"
+   ENGINE V3, third video — FIRST under the day-010 rules:
+   · L-073 orient: beat 1 NAMES the topic (question-first hook)
+   · L-075 pacing: 11 beats, mean 2.8s, max 3.2s, 0.25s gaps
+   · L-076 keyword captions ONLY (≤5 words, scrim pill, no
+     full-sentence subtitles — hook/closer use the kinetic title
+     AS the caption, never two competing text systems)
+   · L-077 one spine one closer (no tangent entities late)
+   · character life: 11 distinct poses, breath bob ×2, blinks
+   · cards BREATHE: ease-in 0.25 → hold ≥0.5 → ease-out 0.25
+   · contrast: brighter panels, thicker beams, bigger photons
+   · day variant of the channel world (azure dome, sea, dunes)
+   Deterministic: every frame a pure function of t (L-043).
+   Timeline injected by tools/render_short.py (__TIMELINE__).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+
+/* ---------- DAY palette (channel world, daylight variant) ---------- */
+const DAY = {
+  skyTop: "#123C8C", skyMid: "#1E5AC8", skyLow: "#3E8BDD", horizon: "#BFE0FF",
+  sun: "#FFF6D8", sunGlow: "#FFE9A8",
+  sea: "#14509E", sea2: "#0D3A78", seaLit: "#2E7BC8",
+  sand: "#E8C87A", sand2: "#D4A84E", sand3: "#B8873C",
+  photon: "#5AB8FF", photonHot: "#8FD3FF",
+  panel: "#1D2F5E", panelLine: "#5566A0", panelInner: "#4A5A94",
+};
+const RAINBOW = ["#8A5AFF", "#3E7BFF", "#37C4A0", "#FFD23E", "#FF9A3D", "#FF5A4A"];
+
+/* ---------- poses — 11 distinct, no adjacent repeats (L-day-010 rule 16) ---------- */
+const POSES = {
+  skygawk: { tilt: -4, headTilt: -16, look: 0.15, expr: "shock",
+             armL: { a: 24, b: -30 }, armR: { a: 150, b: -96 }, handR: "open",
+             legL: { a: -13, b: 4 } },
+  lean:    { tilt: 6, yaw: 0.45, look: 0.5, headTilt: -6,
+             armL: { a: 30, b: -26 }, armR: { a: 34, b: -28 }, expr: "neutral" },
+  shield:  { tilt: -2, headTilt: -14, look: 0.1,
+             armL: { a: 148, b: -14 }, armR: { a: 40, b: -20 }, handL: "open",
+             expr: "neutral" },
+  present: { tilt: 2, yaw: 0.3, look: 0.4, headTilt: -6,
+             armL: { a: 18, b: -14 }, armR: { a: 138, b: -10 }, handR: "point" },
+  pointup: { tilt: -3, look: -0.2, headTilt: -10,
+             armL: { a: 20, b: -18 }, armR: { a: 152, b: -14 }, handR: "point",
+             expr: "neutral" },
+  amazed:  { tilt: -3, look: 0, armL: { a: 150, b: -100 }, armR: { a: 146, b: -100 }, expr: "shock" },
+  away:    { tilt: 4, yaw: -0.35, look: -0.45, headTilt: -4,
+             armL: { a: 140, b: -18 }, armR: { a: 26, b: -22 }, handL: "point",
+             expr: "neutral" },
+  smug:    { tilt: 0, yaw: 0.5, look: 0.55, headTilt: 2,
+             armL: { a: 58, b: -96 }, armR: { a: 122, b: -96 }, expr: "smug" },
+  peer:    { tilt: 14, headTilt: 24, look: 0.25,
+             armL: { a: 26, b: -22 }, armR: { a: 34, b: -26 }, expr: "neutral" },
+  happy:   { tilt: 0, look: 0.1, headTilt: -4,
+             armL: { a: 22, b: -16 }, armR: { a: 26, b: -22 },
+             expr: "happy" },
+};
+/* character LIFE: doubled breath bob, blink every ~3s, look drift (day-010) */
+const idleBlink = (t, off) => ((((t + (off || 0)) % 70) < 4 ? 1 : 0) ||
+                               (((t + (off || 0)) % 70) > 64 ? 0.6 : 0));
+const pose = (name, t, x, y, scale, extra) => Object.assign({}, V2.basePose, POSES[name] || {},
+  { x, y: y + Math.sin(t / 12) * 8, scale,
+    blink: idleBlink(t, 40),
+    look: (POSES[name] || {}).look !== undefined
+      ? Math.max(-1, Math.min(1, (POSES[name]).look + Math.sin(t / 9) * 0.12)) : 0,
+  }, extra || {});
+
+/* ---------- scarf (channel identity prop, windier today) ---------- */
+function scarf(x, y, scale, t, parent) {
+  const w = Math.sin(t / 3.2) * 14;
+  const g = V2.el("g", {}, parent);
+  V2.el("path", { d: `M ${x - 30 * scale} ${y - 118 * scale} q 30 ${14 * scale} 60 0 l 0 ${16 * scale} q -30 ${12 * scale} -60 0 z`,
+    fill: P.orange, stroke: "#121019", "stroke-width": 4 }, g);
+  V2.el("path", { d: `M ${x + 26 * scale} ${y - 108 * scale} q ${40 + w} ${12 * scale} ${22 + w * 1.5} ${58 * scale} q ${-16 - w * 0.4} ${-9 * scale} ${-28} ${-22 * scale} z`,
+    fill: P.amber, stroke: "#121019", "stroke-width": 4, "stroke-linejoin": "round" }, g);
+}
+
+/* ---------- the DAY world ---------- */
+function dayDefs() {
+  const d = V2.el("defs", {}, V2.root);
+  const g = V2.el("linearGradient", { id: "dzDay", x1: 0, y1: 0, x2: 0, y2: 1 }, d);
+  [["0%", "#1B4CA6"], ["42%", "#2E6ED4"], ["78%", "#5FA5E8"], ["100%", "#CDE6FF"]]
+    .forEach(([o, c]) => V2.el("stop", { offset: o, "stop-color": c }, g));
+  const g2 = V2.el("linearGradient", { id: "dzDayDeep", x1: 0, y1: 0, x2: 0, y2: 1 }, d);
+  [["0%", "#12388A"], ["45%", "#1E56C4"], ["80%", "#3F8ADC"], ["100%", "#A8D0F4"]]
+    .forEach(([o, c]) => V2.el("stop", { offset: o, "stop-color": c }, g2));
+  const rg = V2.el("radialGradient", { id: "dzSunD" }, d);
+  [["0%", DAY.sun, 1], ["32%", DAY.sunGlow, 0.55], ["100%", DAY.sunGlow, 0]]
+    .forEach(([o, c, op]) => V2.el("stop", { offset: o, "stop-color": c, "stop-opacity": op }, rg));
+  const sg = V2.el("linearGradient", { id: "dzSea", x1: 0, y1: 0, x2: 0, y2: 1 }, d);
+  [["0%", DAY.seaLit], ["34%", DAY.sea], ["100%", DAY.sea2]]
+    .forEach(([o, c]) => V2.el("stop", { offset: o, "stop-color": c }, sg));
+  /* DAY vignette: light, airy — the dusk V2.grade vignette reads 'night' on azure */
+  const vg = V2.el("radialGradient", { id: "dayVig", cx: 0.5, cy: 0.42, r: 0.75 }, d);
+  [["0%", "#06122E", 0], ["62%", "#06122E", 0], ["100%", "#06122E", 0.16]]
+    .forEach(([o, c, op]) => V2.el("stop", { offset: o, "stop-color": c, "stop-opacity": op }, vg));
+}
+function daySky(t, cam, opts) {
+  const o = opts || {};
+  const deep = o.deep || 0;  /* s2: sweep to the saturated deep dome */
+  if (deep > 0) {
+    V2.el("rect", { x: -260, y: -260, width: 1600, height: 2440, fill: "url(#dzDay)" }, cam);
+    V2.el("rect", { x: -260, y: -260, width: 1600, height: 2440, fill: "url(#dzDayDeep)", opacity: deep }, cam);
+  } else {
+    V2.el("rect", { x: -260, y: -260, width: 1600, height: 2440, fill: "url(#dzDay)" }, cam);
+  }
+  const sx = o.sunX === undefined ? 820 : o.sunX, sy = o.sunY === undefined ? 260 : o.sunY;
+  V2.el("circle", { cx: sx, cy: sy, r: 560, fill: "url(#dzSunD)", opacity: 0.4, style: "mix-blend-mode:screen" }, cam);
+  V2.el("circle", { cx: sx, cy: sy, r: 120, fill: "url(#dzSunD)", opacity: 0.75, style: "mix-blend-mode:screen" }, cam);
+  V2.el("circle", { cx: sx, cy: sy, r: 54, fill: DAY.sun, opacity: 0.95 }, cam);
+  /* drifting fair-weather cumulus */
+  for (let i = 0; i < 4; i++) {
+    const cy2 = 190 + i * 105 + V2.rnd(5, i) * 40;
+    const cx2 = ((t * (7 + i * 3) + V2.rnd(8, i) * 1400) % 1600) - 260;
+    const s = 0.7 + V2.rnd(6, i) * 0.7;
+    const cl = V2.el("g", { opacity: 0.85 - i * 0.12 }, cam);
+    [[0, 0, 74], [-64, 14, 46], [66, 12, 50], [22, -30, 44], [-30, -24, 36]].forEach(([dx, dy, r]) =>
+      V2.el("circle", { cx: cx2 + dx * s, cy: cy2 + dy * s, r: r * s, fill: "#FFFFFF" }, cl));
+  }
+  if (o.horizonY !== undefined)
+    V2.el("rect", { x: -260, y: o.horizonY, width: 1600, height: 8, rx: 4, fill: DAY.horizon, opacity: 0.7 }, cam);
+}
+function seaBand(t, cam, y0, h) {
+  V2.el("rect", { x: -260, y: y0, width: 1600, height: h, fill: "url(#dzSea)" }, cam);
+  /* sun glitter path on the water */
+  for (let i = 0; i < 14; i++) {
+    const gy = y0 + 26 + i * (h / 16);
+    const wob = Math.sin(t / 4 + i) * 30;
+    const wpx = 260 - i * 12 + wob;
+    V2.el("rect", { x: 540 - wpx / 2, y: gy, width: Math.max(40, wpx), height: 7, rx: 4,
+      fill: DAY.sunGlow, opacity: 0.5 - i * 0.03, style: "mix-blend-mode:screen" }, cam);
+  }
+  /* foam lines */
+  for (let i = 0; i < 5; i++) {
+    const fy = y0 + h - 30 - i * 26;
+    V2.el("path", { d: `M ${-100 + Math.sin(t / 3 + i * 2) * 40} ${fy} q 130 ${-16} 260 0 t 260 0 t 260 0 t 260 0 t 260 0`,
+      stroke: "#DCEFFF", "stroke-width": 5, fill: "none", opacity: 0.35 }, cam);
+  }
+}
+function dunes(t, cam) {
+  /* layered dune hills, warm sand tones */
+  V2.el("path", { d: "M -260 1180 Q 140 1010 460 1130 Q 760 1230 1060 1080 Q 1240 1000 1340 1090 L 1340 1450 L -260 1450 Z",
+    fill: DAY.sand2 }, cam);
+  V2.el("path", { d: "M -260 1270 Q 200 1150 520 1250 Q 820 1340 1340 1200 L 1340 1450 L -260 1450 Z",
+    fill: DAY.sand }, cam);
+  /* wind ripples on the front dune */
+  for (let i = 0; i < 8; i++) {
+    const ry = 1290 + i * 22;
+    V2.el("path", { d: `M ${-140 + i * 22} ${ry} q 90 ${-10} 190 2 t 200 2`,
+      stroke: DAY.sand3, "stroke-width": 4, fill: "none", opacity: 0.4 }, cam);
+  }
+  /* heat shimmer bands */
+  for (let i = 0; i < 3; i++) {
+    V2.el("rect", { x: -260, y: 1090 + i * 36 + Math.sin(t / 5 + i) * 5, width: 1600, height: 9,
+      fill: DAY.horizon, opacity: 0.20, style: "mix-blend-mode:screen" }, cam);
+  }
+  V2.el("rect", { x: -260, y: 1440, width: 1600, height: 620, fill: DAY.sand2 }, cam);
+}
+function groundPatch(x, hipsY, scale, parent, col) {
+  const fy = hipsY + 140 * scale + 6;
+  V2.el("ellipse", { cx: x, cy: fy + 8, rx: 120 * scale, ry: 26 * scale, fill: col || "#0D2250", opacity: 0.55 }, parent);
+  V2.el("ellipse", { cx: x, cy: fy, rx: 86 * scale, ry: 17 * scale, fill: col ? "#FFFFFF" : "#1E3A7A", opacity: col ? 0.25 : 0.75 }, parent);
+}
+
+/* ---------- photon: bigger + hotter than #0003 (contrast fix) ---------- */
+function photon(x, y, r, col, t, parent, seed) {
+  const g = V2.el("g", {}, parent);
+  V2.el("circle", { cx: x, cy: y, r: r * 3.0, fill: col, opacity: 0.2, style: "mix-blend-mode:screen" }, g);
+  V2.el("circle", { cx: x, cy: y, r: r, fill: col,
+    style: `filter: drop-shadow(0 0 ${r * 2.2}px ${col})`, opacity: 0.98 }, g);
+  return g;
+}
+function molecule(cx, cy, s, t, parent, col) {
+  const g = V2.el("g", { transform: `translate(${cx} ${cy}) rotate(${Math.sin(t / 2.1) * 14})` }, parent);
+  const c = col || DAY.photonHot;
+  V2.el("circle", { cx: -s * 0.5, cy: s * 0.2, r: s * 0.42, fill: c, opacity: 0.95 }, g);
+  V2.el("circle", { cx: s * 0.5, cy: -s * 0.15, r: s * 0.5, fill: "#CDD9EC", opacity: 0.95 }, g);
+  V2.el("circle", { cx: 0, cy: s * 0.45, r: s * 0.3, fill: c, opacity: 0.8 }, g);
+  return g;
+}
+/* bright panel (day-010 contrast fix: lighter fill, brighter lines) */
+function stagePanel(cam, opts) {
+  const o = Object.assign({ x: 90, y: 360, w: 900, h: 700, op: 0.6 }, opts || {});
+  const g = V2.el("g", {}, cam);
+  V2.el("rect", { x: o.x - 24, y: o.y - 24, width: o.w + 48, height: o.h + 48, rx: 54,
+    fill: "#081028", opacity: o.op }, g);
+  V2.el("rect", { x: o.x, y: o.y, width: o.w, height: o.h, rx: 40,
+    fill: DAY.panel, stroke: DAY.panelLine, "stroke-width": 5, opacity: 0.94 }, g);
+  V2.el("rect", { x: o.x + 14, y: o.y + 14, width: o.w - 28, height: o.h - 28, rx: 30,
+    fill: "none", stroke: DAY.panelInner, "stroke-width": 2.5, opacity: 0.6 }, g);
+  [[o.x + 26, o.y + 26, 1, 1], [o.x + o.w - 26, o.y + 26, -1, 1],
+   [o.x + 26, o.y + o.h - 26, 1, -1], [o.x + o.w - 26, o.y + o.h - 26, -1, -1]]
+    .forEach(([tx, ty, dx, dy]) =>
+      V2.el("path", { d: `M ${tx + dx * 26} ${ty} L ${tx} ${ty} L ${tx} ${ty + dy * 26}`,
+        stroke: "#7A8AC0", "stroke-width": 5, fill: "none", opacity: 0.85 }, g));
+  return g;
+}
+/* BREATHE envelope (boss note: cards snap → let them hold).
+   in 0.25s → hold → out 0.25s. at = in-start, outAt = out-start. */
+const breathe = (tau, at, outAt) => {
+  if (tau < at) return 0;
+  if (outAt !== undefined && tau > outAt) return 1 - V2.easeInOut(Math.min(1, (tau - outAt) / 0.25));
+  return V2.easeInOut(Math.min(1, (tau - at) / 0.25));
+};
+function stampCard(x, y, k, label, parent, accent, size) {
+  const S = (size || 300) / 300;
+  const pop = V2.backOut(V2.clamp01(k));
+  const w = 460, h = 210;
+  const g = V2.el("g", { transform: `translate(${x} ${y}) scale(${(0.6 + 0.4 * pop) * S}) translate(${-x} ${-y})`, opacity: Math.min(1, k * 3) }, parent);
+  V2.glow(x, y, w * 0.9, "Teal", 0.3, g);
+  V2.el("rect", { x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 34, fill: "#101A3E", stroke: accent || DAY.panelLine, "stroke-width": 6 }, g);
+  V2.txt(x, y + 20, label, { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+    "font-weight": 800, "font-size": 84, fill: "#FFFFFF",
+    style: "filter: drop-shadow(0 4px 12px rgba(0,0,0,0.8))" }, g);
+  return g;
+}
+
+/* ============================================================
+   SCENES (u = local progress, t = global time, tau = local seconds)
+   ============================================================ */
+const SCENES = {
+
+  /* HOOK — orient + myth named (L-073). Shore world. The kinetic title
+     IS the caption this scene — no band caption, one text system. */
+  hook(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 980, V2.kf(t, [[0, 1.0], [90, 1.07]]) )});
+    daySky(t, cam, { sunX: 780, sunY: 240 });
+    seaBand(t, cam, 1080, 390);
+    /* sun rays sweeping the mid-band + drifting photon motes (fill the void) */
+    for (let i = 0; i < 7; i++) {
+      const a = 2.05 + i * 0.13 + Math.sin(t / 40 + i) * 0.02;
+      const len = 560 + Math.sin(t / 18 + i * 2.1) * 60;
+      V2.el("line", { x1: 780, y1: 240, x2: 780 + Math.cos(a) * len, y2: 240 + Math.sin(a) * len,
+        stroke: DAY.sunGlow, "stroke-width": 6, "stroke-linecap": "round", opacity: 0.13, style: "mix-blend-mode:screen" }, cam);
+    }
+    for (let i = 0; i < 14; i++) {
+      const mx = ((t * (12 + i * 4) + V2.rnd(14, i) * 1300) % 1500) - 210;
+      const my = 900 + V2.rnd(15, i) * 260 + Math.sin(t / 7 + i) * 24;
+      photon(mx, my, 5 + V2.rnd(16, i) * 3, DAY.photonHot, t, cam, i);
+    }
+    /* shore rock bottom-right, hero BIG, gawking up (scaled for life) */
+    V2.el("path", { d: "M 660 1520 Q 760 1300 930 1315 Q 1040 1330 1060 1520 Z", fill: "#0D2250", opacity: 0.92 }, cam);
+    V2.el("path", { d: "M -260 1560 Q -60 1520 120 1560 T 500 1560 T 880 1560 T 1260 1560 L 1260 1620 L -260 1620 Z", fill: "#0B2E68", opacity: 0.85 }, cam);
+    const px = 860, py = 1380;
+    groundPatch(px, py, 1.12, cam);
+        V2.Hero(pose("skygawk", t, px, py, 1.12), null, "vRimR", 1, cam);
+    scarf(px, py, 1.12, t, cam);
+    /* mirror shimmer line at the waterline (the myth, visually) */
+    const shim = 0.5 + 0.5 * Math.sin(t / 2.6);
+    V2.el("rect", { x: -260, y: 1076, width: 1600, height: 10, rx: 5, fill: "#FFFFFF", opacity: 0.35 + shim * 0.3, style: "mix-blend-mode:screen" }, cam);
+    /* KINETIC TITLE = the caption (7 words total, word-synced, CENTERED in
+       the mid-band — no dead void, warm white for daylight) */
+    const tau = t - TL[0].start;
+    const bigWord = (txt, at, y, size, fill) => {
+      if (tau < at) return;
+      const k = V2.backOut(V2.clamp01((tau - at) / 0.26));
+      V2.txt(540, y + (1 - k) * 26, txt, { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": size * (0.7 + 0.3 * k), fill,
+        style: "filter: drop-shadow(0 6px 18px rgba(4,16,42,0.95)) drop-shadow(0 0 34px rgba(90,184,255,0.45))" }, cam);
+    };
+    if (tau > 0.10) V2.glow(540, 640, 400 * V2.clamp01((tau - 0.10) / 0.3), "Teal", 0.32, cam);
+    bigWord("WHY IS THE", 0.10, 520, 102, "#FFFDF4");
+    bigWord("SKY BLUE?", 0.42, 640, 116, "#FFFDF4");
+    bigWord("THE OCEAN?", 1.55, 790, 92, "#FFD9A0");
+  },
+
+  /* S0 — the seduction: symmetric mirror, then the crack. */
+  s0(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 980, V2.kf(t, [[0, 1.0], [96, 1.05]]) )});
+    daySky(t, cam, { sunX: 540, sunY: 200 });
+    /* sun rays fill the upper sky (no dead zone) */
+    for (let i = 0; i < 5; i++) {
+      const a = 2.1 + i * 0.16;
+      V2.el("line", { x1: 540, y1: 200, x2: 540 + Math.cos(a) * 640, y2: 200 + Math.sin(a) * 640,
+        stroke: DAY.sunGlow, "stroke-width": 7, "stroke-linecap": "round", opacity: 0.15, style: "mix-blend-mode:screen" }, cam);
+    }
+    /* the sea MIRRORS the sky (the seductive symmetry) */
+    seaBand(t, cam, 1130, 360);
+    const sym = 1 - breathe(tau0(t, 0), 1.9);   /* dims after the crack */
+    V2.el("rect", { x: -260, y: 1130, width: 1600, height: 360, fill: "#FFFFFF", opacity: 0.10 * sym, style: "mix-blend-mode:screen" }, cam);
+    for (let i = 0; i < 6; i++) {  /* reflected clouds in the water */
+      const cy = 1180 + i * 52;
+      V2.el("ellipse", { cx: 260 + (i % 3) * 280, cy, rx: 120 - i * 10, ry: 20, fill: "#FFFFFF", opacity: 0.16 * sym }, cam);
+    }
+    const tau = tau0(t, 0);
+    /* ONE text system: the kinetic NOPE carries the strike beat; the
+       mirror visual itself says below/above (ultracritic r1: two-caption
+       conflict + label clipped behind the hero — killed the tag pair) */
+    /* THE CRACK on "It's wrong." (~1.9s) */
+    if (tau > 2.55) {
+      const k = V2.backOut(V2.clamp01((tau - 2.55) / 0.22));
+      V2.el("path", { d: "M 540 1010 l -34 130 l 48 96 l -60 120 l 52 130",
+        stroke: "#FFFFFF", "stroke-width": 9 * k, fill: "none", "stroke-linecap": "round",
+        style: "filter: drop-shadow(0 0 22px rgba(255,255,255,0.9))" }, cam);
+      V2.glow(700, 900, 320 * k, "Warm", 0.45, cam);
+      V2.txt(700, 950 - k * 14, "NOPE.", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 132 * (0.7 + 0.3 * k), fill: "#FFFDF4",
+        style: "filter: drop-shadow(0 6px 18px rgba(4,16,42,0.95))" }, cam);
+    }
+    /* hero leans in near the action line, reacts to the crack (oops face) */
+    groundPatch(430, 1380, 1.3, cam);
+        V2.Hero(pose("lean", t, 430, 1380, 1.3, tau > 2.55 ? { expr: "oops", headTilt: -12 } : null), null, "vRimR", 1, cam);
+    scarf(430, 1380, 1.3, t, cam);
+  },
+
+  /* S1 — Sahara teardown 1a. Full desert swap. */
+  s1(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 950, V2.kf(t, [[0, 1.02], [87, 1.0]]) )});
+    daySky(t, cam, { sunX: 860, sunY: 300 });
+    dunes(t, cam);
+    /* extra far ridge (fill the mid void, depth layer) */
+    V2.el("path", { d: "M -260 1060 Q 300 940 700 1040 Q 1000 1100 1340 1010 L 1340 1200 L -260 1200 Z",
+      fill: DAY.sand3, opacity: 0.45 }, cam);
+    const tau = tau0(t, 1);
+    /* hero BIG on the dune crest, mid-stride lean, scarf whipping */
+    const px = 520, py = 1330;
+    groundPatch(px, py, 1.15, cam, DAY.sand3);
+        V2.Hero(pose("shield", t, px, py, 1.2, { legL: { a: -19, b: 7 }, yaw: 0.22 }), null, "vRimR", 1, cam);
+    scarf(px, py, 1.15, t, cam);
+    /* the distance stamp — pops and HOLDS (breathe), scrim plate, heavy */
+    const k = breathe(tau, 1.5);
+    if (k > 0) {
+      const g = V2.el("g", { opacity: k }, cam);
+      V2.el("rect", { x: 200, y: 420, width: 680, height: 240, rx: 40, fill: "#0A1228", opacity: 0.55, stroke: DAY.panelLine, "stroke-width": 4 }, g);
+      V2.glow(540, 540, 300, "Warm", 0.3, g);
+      V2.txt(540, 512, "SAHARA", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 148, fill: "#FFFFFF",
+        style: "filter: drop-shadow(0 6px 18px rgba(60,30,4,0.9))" }, g);
+      V2.txt(540, 618, "1,000 KM FROM ANY SEA", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 52, fill: "#FFE9C4", "letter-spacing": 2,
+        style: "filter: drop-shadow(0 4px 12px rgba(60,30,4,0.9))" }, g);
+      /* heat haze fills the upper-mid band */
+      for (let i = 0; i < 4; i++) {
+        V2.el("rect", { x: -260, y: 700 + i * 58 + Math.sin(t / 4 + i) * 7, width: 1600, height: 12,
+          fill: DAY.horizon, opacity: 0.12, style: "mix-blend-mode:screen" }, g);
+      }
+    }
+  },
+
+  /* S2 — teardown 1b, the punch: SAME BLUE. Sky saturates. */
+  s2(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 950, V2.kf(t, [[0, 1.0], [51, 1.06]]) )});
+    /* saturation sweep: base sky → deep dome left→right */
+    const sweep = V2.easeInOut(V2.clamp01((tau0(t, 2) - 0.15) / 0.8));
+    daySky(t, cam, { sunX: 860, sunY: 300, deep: sweep });
+    dunes(t, cam);
+    const tau = tau0(t, 2);
+    const px = 540, py = 1330;
+    groundPatch(px, py, 1.15, cam, DAY.sand3);
+        V2.Hero(pose("present", t, px, py, 1.15, { yaw: 0.22, handR: "open" }), null, "vRimR", 1, cam);
+    scarf(px, py, 1.15, t, cam);
+    /* sweep wipe line */
+    if (sweep > 0 && sweep < 1) {
+      const wx = -260 + sweep * 1600;
+      V2.el("rect", { x: wx - 26, y: -260, width: 52, height: 2440, fill: "#8FD3FF", opacity: 0.35, style: "mix-blend-mode:screen" }, cam);
+    }
+    const k = breathe(tau, 0.5);
+    if (k > 0) { stampCard(540, 780, k, "SAME BLUE.", cam, DAY.photon); V2.glow(540, 1060, 380 * k, "Teal", 0.3, cam); }
+  },
+
+  /* S3 — mechanism 1: sunlight hits air. */
+  s3(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.0], [78, 1.06]]) )});
+    daySky(t, cam, { sunX: 200, sunY: 220 });
+    stagePanel(cam, { x: 90, y: 430, w: 900, h: 660 });
+    const tau = tau0(t, 3);
+    /* beam from the sun, THICK (18px, contrast fix) */
+    const wk = V2.clamp01(tau / 0.35);
+    V2.el("path", { d: "M 130 300 L 520 760", stroke: DAY.sun, "stroke-width": 18 * wk + 6,
+      "stroke-linecap": "round", opacity: 0.95, style: "filter: drop-shadow(0 0 20px rgba(255,246,216,0.95))" }, cam);
+    /* the AIR slab — bright */
+    const sk = breathe(tau, 0.5);
+    V2.el("rect", { x: 440, y: 560, width: 300, height: 400, rx: 28,
+      fill: DAY.panel, stroke: DAY.panelLine, "stroke-width": 5, opacity: 0.95 * sk }, cam);
+    V2.txt(590, 500, "AIR", { "text-anchor": "middle", "font-family": V2.UI_MONO,
+      "font-size": 40, fill: DAY.horizon, "letter-spacing": 6, opacity: sk,
+      style: "filter: drop-shadow(0 3px 9px rgba(0,0,0,0.8))" }, cam);
+    /* beam CONTINUES through the slab and exits far side (r3: no mid-air mush) */
+    if (tau > 0.75) {
+      const bk = V2.clamp01((tau - 0.75) / 0.3);
+      const thk = V2.clamp01((tau - 0.95) / 0.35);
+      V2.el("path", { d: "M 738 760 L 950 880", stroke: DAY.sun, "stroke-width": 14 * thk + 4,
+        "stroke-linecap": "round", opacity: 0.9 * thk, style: "filter: drop-shadow(0 0 16px rgba(255,246,216,0.9))" }, cam);
+      if (thk > 0.4) molecule(950, 880, 40, t, cam);
+      V2.glow(520, 760, 260 * bk, "Warm", 0.6, cam);
+      for (let i = 0; i < 7; i++) {
+        const a = -2.9 + i * 0.55;
+        V2.el("line", { x1: 520 + Math.cos(a) * 36, y1: 760 + Math.sin(a) * 36,
+          x2: 520 + Math.cos(a) * (88 + bk * 92), y2: 760 + Math.sin(a) * (88 + bk * 92),
+          stroke: DAY.sun, "stroke-width": 7, "stroke-linecap": "round", opacity: 0.9 * bk }, cam);
+      }
+    }
+    /* hero points up at the beam (bigger, anchors the right side) */
+    groundPatch(250, 1400, 1.1, cam);
+        V2.Hero(pose("pointup", t, 250, 1400, 1.1), null, "vRimR", 1, cam);
+    scarf(250, 1400, 1.1, t, cam);
+  },
+
+  /* S4 — mechanism 2: blue ricochets ~6× harder (photon diagram). */
+  s4(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.0], [87, 1.05]]) )});
+    daySky(t, cam, { sunX: 940, sunY: 260 });
+    stagePanel(cam, { x: 90, y: 400, w: 900, h: 660 });
+    const tau = tau0(t, 4);
+    /* audio: "Air flings blue sideways" 0-1.4 / "six times harder than red" 1.4-2.63 */
+    const cx = 540, cy = 690;
+    molecule(cx, cy, 92, t, cam);
+    V2.tag(cx, cy + 150, Math.min(24, tau * 26), "AIR", null, 8, cam);
+    /* BLUE photon: wild ricochet — end-state PERSISTS (gate r2 bug: the
+       diagram erased itself at blueT=1, leaving a static molecule for the
+       verdict beat; freeze the ricochet + burst until scene end) */
+    const blueT = V2.clamp01((tau - 0.55) / 1.0);
+    const blueHold = blueT >= 1;   /* frozen at final ricochet pose */
+    const btt = Math.min(blueT, 0.999);
+    if (blueT > 0) {
+      const bx = 130 + btt * (cx - 160), by = cy - 30 - Math.sin(btt * 3) * 20;
+      if (!blueHold) photon(bx, by, 15, DAY.photonHot, t, cam, 0);
+      if (btt > 0.86) {
+        const sk = blueHold ? 1 : V2.clamp01((btt - 0.86) / 0.14);
+        const ex = cx + sk * 360, ey = cy - 80 - sk * 370;
+        V2.el("line", { x1: cx, y1: cy, x2: ex, y2: ey, stroke: DAY.photon, "stroke-width": 10,
+          "stroke-linecap": "round", opacity: 0.95 * sk, style: "filter: drop-shadow(0 0 16px #5AB8FF)" }, cam);
+        photon(ex, ey, 15, DAY.photonHot, t, cam, 1);
+        for (let k = 0; k < 5; k++) {
+          const a2 = -2.4 + k * 0.5;
+          V2.el("line", { x1: cx + Math.cos(a2) * 42, y1: cy + Math.sin(a2) * 42,
+            x2: cx + Math.cos(a2) * (86 + sk * 78), y2: cy + Math.sin(a2) * (86 + sk * 78),
+            stroke: DAY.photon, "stroke-width": 6, "stroke-linecap": "round", opacity: 0.75 * sk }, cam);
+        }
+      }
+    }
+    /* RED photon: drifts almost straight — end-state persists too */
+    const redT = V2.clamp01((tau - 1.45) / 1.0);
+    const redHold = redT >= 1;
+    const rtt = Math.min(redT, 0.999);
+    if (redT > 0) {
+      const rx = 950 - rtt * (950 - cx - 170), ry = cy + 60 + Math.sin(rtt * 2.2) * 6;
+      if (!redHold) photon(rx, ry, 15, "#FF7A5A", t, cam, 2);
+      if (rtt > 0.86) {
+        const sk = redHold ? 1 : V2.clamp01((rtt - 0.86) / 0.14);
+        V2.el("line", { x1: cx, y1: cy, x2: cx - sk * 190, y2: cy + 60 + sk * 60,
+          stroke: "#FF7A5A", "stroke-width": 8, "stroke-linecap": "round", opacity: 0.9 * sk }, cam);
+        photon(cx - sk * 190, cy + 60 + sk * 60, 15, "#FF7A5A", t, cam, 3);
+      }
+    }
+    /* verdict — pops and HOLDS (breathe), hot white on a plate */
+    const vk = breathe(tau, 2.1);
+    if (vk > 0) {
+      const k = V2.backOut(vk);
+      V2.el("rect", { x: 120, y: 350, width: 280, height: 150, rx: 28, fill: "#0A1228", opacity: 0.78, stroke: DAY.panelLine, "stroke-width": 4 }, cam);
+      V2.glow(260, 425, 210 * k, "Teal", 0.42, cam);
+      V2.txt(260, 448 + (1 - k) * 30, "BLUE ≈ 6×", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 92 * (0.7 + 0.3 * k), fill: "#FFFFFF",
+        style: "filter: drop-shadow(0 0 26px rgba(143,211,255,0.95)) drop-shadow(0 5px 14px rgba(0,0,0,0.85))" }, cam);
+    }
+    groundPatch(215, 1400, 0.92, cam);
+        V2.Hero(pose("present", t, 215, 1400, 0.92, { yaw: -0.3 }), null, "vRimR", 1, cam);
+    scarf(215, 1400, 0.92, t, cam);
+  },
+
+  /* S5 — payoff build: the dome of little lamps. */
+  s5(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.05], [87, 1.0]]) )});
+    daySky(t, cam, { sunX: 540, sunY: 180, deep: 0.32 });
+    const tau = tau0(t, 5);
+    /* lamp patches pop in sequence — the payoff visual */
+    const LAMPS = [[220, 560], [420, 480], [640, 500], [850, 560], [160, 780], [370, 700],
+                   [590, 680], [810, 740], [270, 940], [500, 880], [730, 900], [930, 960]];
+    LAMPS.forEach(([lx, ly], i) => {
+      const at = 0.35 + i * 0.16;
+      const k = V2.backOut(V2.clamp01((tau - at) / 0.22));
+      if (k <= 0.01) return;
+      const g = V2.el("g", { opacity: Math.min(1, k * 1.4) }, cam);
+      V2.glow(lx, ly, 150 * k, "Teal", 0.5, g);
+      V2.el("rect", { x: lx - 62, y: ly - 62, width: 124, height: 124, rx: 26,
+        fill: DAY.photon, opacity: 0.68, stroke: DAY.photonHot, "stroke-width": 6 }, g);
+      /* tiny light cone downward */
+      V2.el("path", { d: `M ${lx - 40} ${ly + 56} L ${lx - 78} ${ly + 150} L ${lx + 78} ${ly + 150} L ${lx + 40} ${ly + 56} Z`,
+        fill: DAY.photonHot, opacity: 0.22 }, g);
+    });
+    /* hero amazed under the dome */
+    const px = 540, py = 1430;
+    groundPatch(px, py, 0.9, cam);
+        V2.Hero(pose("amazed", t, px, py, 0.95), null, "vRimR", 1, cam);
+    scarf(px, py, 0.95, t, cam);
+    if (breathe(tau, 1.75) > 0) V2.tag(540, 300, breathe(tau, 1.75) * 24, "EVERY PATCH: A LAMP", null, 8, cam, DAY.photonHot);
+  },
+
+  /* S6 — proof detail: deeper blue away from the sun. */
+  s6(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.0], [84, 1.05]]) )});
+    daySky(t, cam, { sunX: 880, sunY: 320 });
+    stagePanel(cam, { x: 90, y: 430, w: 900, h: 640 });
+    const tau = tau0(t, 6);
+    /* two swatches: AWAY (saturated) vs TOWARD (washed) */
+    const k1 = breathe(tau, 0.5), k2 = breathe(tau, 1.05);
+    if (k1 > 0) {
+      V2.el("rect", { x: 150, y: 540, width: 340, height: 470, rx: 30, fill: "#164AB5",
+        stroke: DAY.photonHot, "stroke-width": 6, opacity: k1 }, cam);
+      V2.glow(320, 750, 220 * k1, "Teal", 0.45, cam);
+      V2.txt(320, 770, "DEEP", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 92, fill: "#EAF6FF", opacity: k1,
+        style: "filter: drop-shadow(0 4px 14px rgba(0,0,0,0.7))" }, cam);
+      V2.txt(320, 950, "AWAY FROM SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#D8ECFF", "letter-spacing": 2, opacity: k1 * 0.9 }, cam);
+    }
+    if (k2 > 0) {
+      V2.el("rect", { x: 590, y: 540, width: 340, height: 470, rx: 30, fill: "#BFE0FF",
+        stroke: "#FFFFFF", "stroke-width": 6, opacity: k2 }, cam);
+      V2.el("circle", { cx: 760, cy: 700, r: 64, fill: DAY.sun, opacity: k2,
+        style: "filter: drop-shadow(0 0 44px rgba(255,246,216,0.95))" }, cam);
+      V2.txt(760, 840, "WASHED", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 62, fill: "#123C8C", opacity: k2 }, cam);
+      V2.txt(760, 950, "TOWARD SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#123C8C", "letter-spacing": 2, opacity: k2 * 0.9 }, cam);
+    }
+    /* hero points AWAY from the sun */
+    groundPatch(250, 1400, 0.92, cam);
+        V2.Hero(pose("away", t, 250, 1380, 1.2), null, "vRimR", 1, cam);
+    scarf(250, 1380, 1.2, t, cam);
+  },
+
+  /* S7 — THE turn: the mirror shatters, a lamp remains. */
+  s7(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.04], [81, 1.0]]) )});
+    daySky(t, cam, { sunX: 540, sunY: 210, deep: 0.1 });
+    const tau = tau0(t, 7);
+    /* audio: "That's the sky." 0-0.9 / "Not a mirror — a lamp." 0.9-2.34 */
+    const mirrorK = 1 - breathe(tau, 1.55, undefined, 0.3);  /* mirror fades out */
+    if (mirrorK > 0.02) {
+      const g = V2.el("g", { opacity: mirrorK }, cam);
+      V2.el("rect", { x: 330, y: 430, width: 420, height: 560, rx: 34, fill: "#DDEEFF",
+        stroke: "#FFFFFF", "stroke-width": 8, opacity: 0.92 }, g);
+      /* a pale sky reflection inside the mirror */
+      V2.el("rect", { x: 360, y: 460, width: 360, height: 500, rx: 22, fill: "#9CC8F0", opacity: 0.8 }, g);
+      V2.el("circle", { cx: 620, cy: 560, r: 44, fill: DAY.sun, opacity: 0.9 }, g);
+    }
+    /* the VERDICT — outside the mirror group: persists after the shatter
+       (gate r2 bug: the label faded out with the mirror; verdicts outlive
+       the thing they strike) */
+    const vk7 = breathe(tau, 0.7);
+    if (vk7 > 0) {
+      const g7 = V2.el("g", { opacity: vk7 }, cam);
+      V2.tag(540, 1250, vk7 * 24, "NOT A MIRROR", null, 8, g7, P.orange);
+      if (tau > 1.05) {
+        const sk = V2.clamp01((tau - 1.05) / 0.2);
+        V2.el("line", { x1: 400 - sk * 40, y1: 1232, x2: 400 + sk * 152, y2: 1266,
+          stroke: "#FF5A4A", "stroke-width": 14, "stroke-linecap": "round", opacity: 0.95 * sk,
+          style: "filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8))" }, g7);
+      }
+    }
+    /* shatter shards fly at ~1.55s */
+    if (tau > 1.55) {
+      const sh = V2.clamp01((tau - 1.55) / 0.5);
+      for (let i = 0; i < 6; i++) {
+        const a = -0.4 + i * 0.75;
+        const dx = Math.cos(a) * 340 * sh, dy = Math.sin(a) * 300 * sh - 40 * sh;
+        V2.el("path", { d: `M 0 0 L 70 18 L 52 78 Z`, fill: "#DDEEFF", opacity: (1 - sh) * 0.9,
+          transform: `translate(${540 + dx} ${700 + dy}) rotate(${a * 57 + sh * 120})` }, cam);
+      }
+    }
+    /* the LAMP fades up in its place */
+    const lampK = breathe(tau, 1.85);
+    if (lampK > 0) {
+      const k = V2.backOut(lampK);
+      const g = V2.el("g", { opacity: Math.min(1, k * 1.2) }, cam);
+      V2.glow(540, 640, 300 * k, "Warm", 0.5, g);
+      /* lamp shade */
+      V2.el("path", { d: "M 540 470 L 660 640 L 420 640 Z", fill: P.orange, stroke: "#121019", "stroke-width": 6 }, g);
+      V2.el("rect", { x: 414, y: 640, width: 252, height: 20, rx: 10, fill: P.amber, stroke: "#121019", "stroke-width": 5 }, g);
+      /* light cone */
+      V2.el("path", { d: "M 430 668 L 250 1010 L 830 1010 L 650 668 Z", fill: DAY.sunGlow, opacity: 0.3 * k }, g);
+      V2.el("ellipse", { cx: 540, cy: 1014, rx: 250 * k, ry: 44 * k, fill: DAY.sunGlow, opacity: 0.5 * k, style: "mix-blend-mode:screen" }, g);
+      photon(540, 560, 12, DAY.sun, t, g, 9);
+    }
+    /* hero: smug arms-crossed → open */
+    groundPatch(230, 1400, 0.92, cam);
+        V2.Hero(pose("smug", t, 230, 1400, 0.92), null, "vRimR", 1, cam);
+    scarf(230, 1400, 0.92, t, cam);
+  },
+
+  /* S8 — the inversion: water eats red, keeps blue. */
+  s8(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.0], [78, 1.06]]) )});
+    daySky(t, cam, { sunX: 200, sunY: 240 });
+    stagePanel(cam, { x: 90, y: 430, w: 900, h: 680 });
+    const tau = tau0(t, 8);
+    /* water surface + depth gradient (cut-open ocean) */
+    V2.el("rect", { x: 130, y: 500, width: 820, height: 580, rx: 24, fill: "url(#dzSea)", opacity: 0.96 }, cam);
+    V2.el("rect", { x: 130, y: 500, width: 820, height: 10, rx: 5, fill: DAY.sunGlow, opacity: 0.85, style: "mix-blend-mode:screen" }, cam);
+    /* white beam hits the surface */
+    const wk = V2.clamp01(tau / 0.3);
+    V2.el("path", { d: "M 240 320 L 430 506", stroke: DAY.sun, "stroke-width": 20 * wk + 8,
+      "stroke-linecap": "round", opacity: 0.95, style: "filter: drop-shadow(0 0 18px rgba(255,246,216,0.95))" }, cam);
+    /* RED photons sink and FADE OUT (absorbed) */
+    const rk = V2.clamp01((tau - 0.45) / 1.4);
+    for (let i = 0; i < 4; i++) {
+      const ph = V2.clamp01(rk - i * 0.12);
+      if (ph > 0 && ph < 1) {
+        const ry = 540 + ph * 420;
+        const fade = 1 - ph;
+        photon(430 + i * 16 - ph * 34, ry, 17, "#FF7A5A", t, cam, 20 + i);
+        V2.el("circle", { cx: 430 + i * 16 - ph * 34, cy: ry, r: 19, fill: "#FF7A5A", opacity: fade * 0.95 }, cam);
+      }
+    }
+    const icoA = breathe(tau, 1.15);
+    if (icoA > 0) {  /* icon-only: red X, no word (matches the KEPT check) */
+      const g8a = V2.el("g", { opacity: icoA }, cam);
+      V2.el("circle", { cx: 320, cy: 1000, r: 50, fill: "#3A1414", stroke: "#FF7A5A", "stroke-width": 8, opacity: 0.95 }, g8a);
+      V2.el("line", { x1: 300, y1: 980, x2: 340, y2: 1020, stroke: "#FF7A5A", "stroke-width": 11, "stroke-linecap": "round" }, g8a);
+      V2.el("line", { x1: 340, y1: 980, x2: 300, y2: 1020, stroke: "#FF7A5A", "stroke-width": 11, "stroke-linecap": "round" }, g8a);
+    }
+    /* BLUE photons keep going DEEP */
+    const bk = V2.clamp01((tau - 0.8) / 1.3);
+    for (let i = 0; i < 3; i++) {
+      const ph = V2.clamp01(bk - i * 0.15);
+      if (ph > 0 && ph < 1) {
+        const by = 540 + ph * 480;
+        photon(640 + i * 34 + ph * 26, by, 18, DAY.photonHot, t, cam, 30 + i);
+      }
+    }
+    if (breathe(tau, 1.55) > 0) {
+      const icoK = breathe(tau, 1.55);
+      if (icoK > 0) {  /* icon-only: teal check, no word */
+        const g8b = V2.el("g", { opacity: icoK }, cam);
+        V2.el("circle", { cx: 770, cy: 1040, r: 46, fill: "#0E2E4A", stroke: DAY.photonHot, "stroke-width": 7, opacity: 0.95 }, g8b);
+        V2.el("path", { d: "M 746 1040 L 764 1060 L 798 1016", stroke: DAY.photonHot, "stroke-width": 11, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, g8b);
+      }
+      /* faint upward back-scatter: blue returns to the surface */
+      for (let i = 0; i < 4; i++) {
+        const pu = V2.clamp01((tau - 1.55) / 0.9 - i * 0.14);
+        if (pu > 0 && pu < 1) {
+          const ux = 660 + i * 30 - pu * 40, uy = 1030 - pu * 430;
+          photon(ux, uy, 9 - i, DAY.photonHot, t, cam, 40 + i);
+          V2.el("line", { x1: ux + 6, y1: uy + 14, x2: ux + 14, y2: uy + 40, stroke: DAY.photon, "stroke-width": 4, "stroke-linecap": "round", opacity: 0.4 * (1 - pu) }, cam);
+        }
+      }
+    }
+    /* hero peers over the panel edge (big lean, up-gaze) */
+    groundPatch(400, 1370, 0.98, cam);
+        V2.Hero(pose("peer", t, 400, 1370, 0.98), null, "vRimR", 1, cam);
+    scarf(400, 1370, 0.98, t, cam);
+  },
+
+  /* S9 — ONE closer (L-077): the loop mirror. Kinetic closer = caption. */
+  s9(u, t) {
+    const cam = V2.el("g", { transform: V2.cam(540, 980, V2.kf(t, [[0, 1.06], [93, 1.0]]) )});
+    daySky(t, cam, { sunX: 780, sunY: 240, deep: 0.2 });
+    seaBand(t, cam, 1080, 390);
+    const tau = tau0(t, 9);
+    /* sky lamps glow (from s5) AND the sea glows on its own — two sources */
+    const gk = breathe(tau, 0.4);
+    if (gk > 0) {
+      [[300, 410], [540, 350], [780, 430]].forEach(([lx, ly], i) => {
+        const k = V2.backOut(V2.clamp01((tau - 0.4 - i * 0.18) / 0.22));
+        if (k <= 0.01) return;
+        V2.glow(lx, ly, 110 * k, "Teal", 0.35, cam);
+        V2.el("rect", { x: lx - 50, y: ly - 50, width: 100, height: 100, rx: 22,
+          fill: DAY.photon, opacity: 0.45, stroke: DAY.photonHot, "stroke-width": 4 }, cam);
+      });
+    }
+    const sg = breathe(tau, 0.9);
+    if (sg > 0) {
+      V2.glow(540, 1310, 360 * sg, "Teal", 0.4, cam);
+      photon(340, 1290 - sg * 40, 8, DAY.photonHot, t, cam, 51);
+      photon(700, 1330 - sg * 30, 7, DAY.photonHot, t, cam, 52);
+      V2.el("rect", { x: -260, y: 1150, width: 1600, height: 300, fill: DAY.photon, opacity: 0.14 * sg, style: "mix-blend-mode:screen" }, cam);
+    }
+    /* hero relaxed on the shore rock — loop mirror of the hook */
+    V2.el("path", { d: "M 620 1440 Q 700 1180 880 1200 Q 1000 1220 1020 1440 Z", fill: "#0D2250", opacity: 0.92 }, cam);
+    const px = 850, py = 1400;
+    groundPatch(px, py, 0.9, cam);
+        V2.Hero(pose("happy", t, px, py, 1.25), null, "vRimR", 1, cam);
+    scarf(px, py, 1.25, t, cam);
+    /* KINETIC CLOSER = the caption (3 words) */
+    const bigWord = (txt, at, y, size) => {
+      if (tau < at) return;
+      const k = V2.backOut(V2.clamp01((tau - at) / 0.26));
+      V2.txt(540, y + (1 - k) * 26, txt, { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": size * (0.7 + 0.3 * k), fill: "#FFFFFF",
+        style: "filter: drop-shadow(0 6px 16px rgba(4,16,42,0.95)) drop-shadow(0 0 30px rgba(90,184,255,0.3))" }, cam);
+    };
+    if (tau > 0.9) V2.glow(540, 700, 330 * V2.clamp01((tau - 0.9) / 0.3), "Teal", 0.3, cam);
+    bigWord("THEY JUST", 1.15, 660, 96);
+    bigWord("MATCHED.", 1.5, 770, 104);
+  },
+};
+
+/* local seconds inside scene n (TL index) */
+function tau0(t, n) { return t - TL[n].start; }
+
+/* caption keywords per scene — THE caption (L-076). hook + closer use the
+   kinetic title instead (one text system, never two). */
+const EMPHASIS = {
+  hook: null,
+  s0: null,
+  s1: null,   /* SAHARA stamp is the text */
+  s2: null,   /* SAME BLUE. stamp is the text */
+  s3: null,  /* AIR label is the text */
+  s4: null,   /* verdict stamp BLUE ≈ 6× IS the text (one system) */
+  s5: null,  /* EVERY PATCH header is the text */
+  s6: null, /* swatch labels are the text */
+  s7: null,   /* NOT A MIRROR strike IS the text (one system) */
+  s8: ["eats", "red", "keeps", "blue"],
+  s9: null,
+};
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  dayDefs();
+  V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: DAY.skyTop });
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++)
+    if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx];
+  const u = V2.clamp01((t - sc.start) / (sc.end - sc.start));
+  /* scene-entry soft-fade 0.12s (video pass r2: hard snap-cuts between
+     environments — soften the seam without killing the cut rate) */
+  const entryK = V2.clamp01((t - sc.start) / 0.12);
+  (SCENES[sc.id] || SCENES.hook)(u, t);
+  if (entryK < 1) V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: DAY.skyTop, opacity: (1 - entryK) * 0.55 });
+  /* DAY grade: light airy vignette + fine grain (the dusk V2.grade
+     vignette made azure skies read as night — ultracritic r1/gate r1) */
+  V2.el("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#dayVig)" });
+  V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, filter: "url(#vGrain)", opacity: 0.35,
+    transform: `translate(${(Math.floor(t / 2) % 2) * 3} ${Math.floor(t / 2) % 3})` });
+  if (EMPHASIS[sc.id]) V2.caption(sc.narration, u, EMPHASIS[sc.id]);
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>
