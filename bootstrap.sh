@@ -81,6 +81,16 @@ EOF
   fi
 fi
 
+# --- 3b. z-ai SDK (node_modules is not git-tracked; the ultracritic video
+#     pass needs it — day-011: recycle wiped it and the pass went dark) ------
+if [ -x "$(command -v node)" ]; then
+  node -e "import('z-ai-web-dev-sdk').then(()=>1).catch(()=>process.exit(1))" 2>/dev/null \
+    && ok "z-ai-web-dev-sdk present" || {
+    (cd "$(dirname "$0")/.." && npm install --no-audit --no-fund z-ai-web-dev-sdk >/dev/null 2>&1) \
+      && ok "z-ai-web-dev-sdk installed" || warn "z-ai SDK install failed (video pass will be dark)"
+  }
+fi
+
 # --- 4. POT server (local sessions only; CI skips — runner IP is fresh) -------
 if [ "$START_POT" = "1" ] && [ -x "$(command -v node)" ]; then
   if curl -sf --max-time 2 http://127.0.0.1:4416/ping >/dev/null 2>&1; then

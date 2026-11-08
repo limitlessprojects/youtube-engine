@@ -26,11 +26,13 @@
 | 5 | Advance the next short: script → VO → scenes → render → gates → publish | `docs/playbook/` |
 | 6 | Ledger line + log + commit + push | `docs/lessons.md` + `logs/` |
 
-## Status right now (end of Day 011 consolidation session)
+## Status right now (end of Day 011 nightly session, 2026-11-09)
 
 - Published: #0001 (KKyrNUGZXcU, engine v1), #0002 (CZbJmmeyUc4, v3 debut), #0003 (DeaEvEduh88, boss-criticized, ultracritic 5.20).
-- **Carry: short-0004** — verdict 6.92 vs 7.5 bar (pacing 8.0, character_life 8.0, text 7.4, contrast 7.2; drags: visual_hierarchy 6.1, hook_impact 6.4, 4 frames under the 6.0 floor). The r4 directive notes were lost with the recycle (BUG-1, `docs/_audit/inventory.md`); the surviving directive hints — **NOPE hold idle, cadence variety in 12–28s, loop character position** — live in the day-010 ledger entry (`docs/_archive/lessons/2026-11-08-day010.md`) and `skills/stickman-whatif/examples/README.md`. Note: a carried short has no mp4 on disk (gitignored) — re-render `--full` before the video pass. Tonight's session re-derives r4 directives from the current frames (re-render `--keyframes`, run `--round 5` fresh) rather than trusting memory.
-- Consolidation session (today) restructured all docs; thresholds and pipeline behavior unchanged.
+- **Views (2026-11-08, RSS truth — tracker bug fixed tonight): #0003 = 1,136 · #0002 = 862 · #0001 = 195.** The 5.20-scored short leads the channel — gate score ≠ discovery pull; Phase B's question is the right one.
+- **Carry: short-0004** — frame mean 7.14–7.18 after r5→r7 tonight (cap reached). text 8.0–8.1 ✓, contrast 7.5–7.7 ✓; **hook_impact 6.6–6.9 ✗, visual_hierarchy 6.1–6.4 flat across all 7 rounds of its life = structural ceiling.** Video pass 429-blocked tonight (bugs fixed: repo-owned script path, SDK in bootstrap; r4 had measured pacing 8.0 / life 8.0 / edit 7.0). **The debt, with 3 named directives: `content/short-0004/gate/carry_r7.md` — hierarchy restructure of s4/s6/s8 (not decoration), hook probe-tests, video-pass backoff then ONE full round → publish or redesign decision. No round 8 of micro-polish.**
+- Tool fixes tonight: views_tracker media:group path (was logging zeros), ultracritic video-pass path + stderr, bootstrap installs the z-ai SDK (L-080/L-081/L-082 in lessons.md).
+- Next short: **#0005, superlative formula** — script + lint + VO next session; reference blueprint `research/blueprints/x-vpfrs7RIs.md` (493w, 192.9 WPM, hook 54w/15s).
 - Boss action items open: channel phone-verify (unlocks custom thumbnails via `thumbnails.set`); #0002 hook frame (7.5/10) is waiting for it.
 
 ## Phase A — Quality proof (Day 008–014, Nov 8–14)

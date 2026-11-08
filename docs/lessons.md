@@ -78,6 +78,8 @@
 - **L-070 The gate must know the intent** (per-short notes.json; cross-contamination otherwise). → rule G2
 - **L-078 Calibrate the bar against the judge** (7.5 mean / 7.0 dims / 6.0 floor; #0003=5.20, #0004=6.92 → NO POST). → rule G1
 - **Day-010 hybrid gate**: stills judge 5 frame dims; the VIDEO judges pacing/life/flow (glm-4.6v `video_url`; CLI vision rejects mp4). → rule G7
+- **L-080 The judge carries a ±0.8 noise band on identical pixels** (s2: 7.6→6.8 untouched between rounds; spatial directives contradict round-to-round). Never read a delta <0.5 as signal — decide on dim trends across ≥2 rounds, pixel-probe spatial claims (G3) before acting on them.
+- **L-081 Vision-endpoint 429 after ~50 frame calls in one night** — batch gate passes early, add backoff to the video pass, retry off-peak; a technical pass failure is not a creative round and must not consume the round cap.
 
 ## Pipeline & ops
 
@@ -105,10 +107,11 @@
 - **L-059 Autopsy your own frames** (195 views took 3 days to confirm what a 60-second VLM audit said: 3.5/10). → rule G8
 - **L-061 CI heartbeat + agent-creative split** survived the agent's sandbox dying for 3 days.
 - **L-067 Test the full path, not the function** (OAuth refresh 200 ≠ working upload). → rule P2
+- **L-082 node_modules dies with the recycle** (z-ai SDK wiped → ultracritic video pass went dark; a hardcoded `/home/z/.bun` script copy died with it). Env deps that aren't git-tracked get installed + import-probed by `bootstrap.sh`; scripts live in the repo, never in global dirs. Extends L-046/L-051.
 
 ## Signals so far (for calibration context)
 
 - #0001 (engine v1): 195 views / 3.5 days, first-frame 3.5/10 — premise fine, execution the bottleneck.
 - #0002 (engine v3 debut): hook 7.5/10 pre-publish, contact-sheet loop to 8/10 "SHIP IT".
 - #0003 (boss-criticized): ultracritic 5.20 — text 2.8, pacing 5.5, character 6.2, contrast min 4.
-- #0004 (first under the bar): 5.58 → 6.53 → 6.69 → 6.92 over 4 rounds — pacing 8.0, life 8.0, text 7.4, contrast 7.2; drags: visual_hierarchy 6.1, hook_impact 6.4, 4 frames under floor. NO POST, carried.
+- #0004 (carry): r4 6.92 → tonight r5 6.98 / r6 7.11 / r7 7.14–7.18 (frame-only; video pass 429-blocked, r4 measured pacing 8.0 / life 8.0 / edit 7.0). text 8.0–8.1 ✓, contrast 7.5–7.7 ✓; hook_impact 6.6–6.9 ✗ and **visual_hierarchy 6.1–6.4 flat across all 7 rounds — structural ceiling**. Debt + 3 directives: `content/short-0004/gate/carry_r7.md`.

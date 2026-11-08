@@ -290,8 +290,10 @@ def main() -> int:
     if video is not None and video.stat().st_size > 100_000:
         print(f"\n  VIDEO pass (temporal dims) on {video.name} ({video.stat().st_size//1024} KiB)")
         # glm-4.6v via SDK video_url (the CLI vision endpoint rejects mp4 as
-        # an image format — day-010); prompt via temp file, script via bun dir
-        vid_script = Path("/home/z/.bun/install/global/ucv.mjs")
+        # an image format — day-010); prompt via temp file. The script lives
+        # IN the repo so node resolves z-ai-web-dev-sdk from the project root
+        # (the old /home/z/.bun copy died with the recycle — BUG, day-011)
+        vid_script = Path(__file__).resolve().parent / "ultracritic_video.mjs"
         with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as pf:
             pf.write(VIDEO_RUBRIC)
             prompt_path = pf.name
@@ -315,7 +317,9 @@ def main() -> int:
             for dd in video_directives[:3]:
                 print(f"    → {dd[:110]}")
         else:
-            print("  ⚠ video pass failed (3 attempts) — frame pass alone cannot approve")
+            err = (r.stderr or "").strip().splitlines()[-1:]
+            print(f"  ⚠ video pass failed (rc={r.returncode}) {err[0][:140] if err else '(no stderr)'}")
+            print("  ⚠ frame pass alone cannot approve — fix the video pass, re-run")
     else:
         print("\n  ⚠ no rendered mp4 — temporal dims unverified; run the full render first")
 

@@ -1,0 +1,150 @@
+{
+ "round": 7,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.14,
+ "frame_grand_mean": 7.14,
+ "dim_means": {
+  "frame:hook_impact": 6.86,
+  "frame:text_discipline": 8.0,
+  "frame:visual_hierarchy": 6.43,
+  "frame:contrast_legibility": 7.57,
+  "frame:production_polish": 6.86
+ },
+ "frame_means": {
+  "hook_u50": 6.6,
+  "s0_u50": 7.4,
+  "s1_u50": 7.4,
+  "s2_u50": 7.4,
+  "s3_u50": 7.6,
+  "s4_u50": 6.6,
+  "s5_u50": 7.0
+ },
+ "floor_breaches": [],
+ "video_directives": [],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 6.6,
+   "words_visible": 7,
+   "top3_directives": [
+    "Remove or shorten the 'THE OCEAN?' secondary line \u2014 it competes with the header and pushes word count; fold it into the hook or drop it",
+    "Kill the orange/yellow glow stroke around the character \u2014 it clashes with the cool blue palette and looks like an unblended filter artifact",
+    "Fix the waterline seams: the horizontal white line and wave-band edges cut across the frame awkwardly and the bottom quarter is a flat dead zone \u2014 add a foreground element or darker vignette there"
+   ],
+   "frame": "hook_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the large empty sky dead zone (middle 30-45% of frame) \u2014 the gap between sun rays and 'NOPE.' breaks the eye path; extend rays or add subtle atmosphere/particles",
+    "Move 'NOPE.' tighter to the character so text and subject read as one composed unit instead of floating in the void",
+    "Add a subtle drop shadow or outline to 'NOPE.' \u2014 the cream-on-mid-blue text works now but will soften against the bright sun ray angle in daylight playback"
+   ],
+   "frame": "s0_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the large empty blue mid-band (between title card and dunes) with haze, birds, or heat-shimmer texture \u2014 it reads as a dead zone",
+    "Nudge the character and title card off the vertical center axis (rule-of-thirds) to break the static symmetric stack",
+    "Soften the title card's hard rounded rectangle \u2014 a subtle drop shadow or gradient edge would integrate it instead of looking stickered-on"
+   ],
+   "frame": "s1_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 2,
+   "top3_directives": [
+    "Raise the character's size slightly and lift the text card closer to the eye-line so figure and caption read as one connected focal cluster",
+    "Fill the large empty sand zone in the bottom third with a subtle shadow gradient or foreground dune detail to reduce dead space",
+    "The sun glow halo around the character's head is muddy against the dune line \u2014 clean up the rim-light mask for crisper separation"
+   ],
+   "frame": "s2_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.6,
+   "words_visible": 1,
+   "top3_directives": [
+    "Add subtle animated interest or a bolder central glow to the refraction point so the beam-impact moment reads as the unmistakable focal event",
+    "Enlarge the 'AIR' label (and give it a weight/outline) so it survives a 6-inch daylight phone \u2014 it currently reads as a faint caption on the dark panel",
+    "Fill the bottom-third dead zone: the character floats low-left with empty blue space at bottom-right \u2014 nudge composition or add a soft ground/sky element to balance",
+    ""
+   ],
+   "frame": "s3_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 6.6,
+   "words_visible": 4,
+   "top3_directives": [
+    "The diagram's focal cluster (faded translucent circles at vector intersection) is mushy \u2014 make the impact point crisp with a defined glow or marker so the eye lands instantly",
+    "Large empty zones at panel bottom-right and below 'AIR' label: recenter the diagram content or crop the panel tighter to kill dead space",
+    "Character points at nothing meaningful and the stray white arc bottom-right is orphaned \u2014 align the gesture/arc toward the panel's focal point to create one guided eye path"
+   ],
+   "frame": "s4_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Break the uniform lamp grid: vary lamp sizes/brightness or spotlight ONE glowing lamp to create a focal point \u2014 currently 12 identical tiles compete equally",
+    "Boost header contrast: light-blue text on dark navy pill is soft in daylight \u2014 go white text or add subtle outer glow",
+    "Reduce empty mid-lower band between lamp grid and character; either tighten composition or enlarge character ~15% to close the dead zone"
+   ],
+   "frame": "s5_u50"
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Water'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Sky', 'They'] appears only in the closer \u2014 tangent? (L-077 spine rule)"
+ ]
+}
