@@ -1,0 +1,26 @@
+{
+ "id": "x-vpfrs7RIs",
+ "duration_s": 153.4,
+ "words": 493,
+ "wpm": 192.9,
+ "hook_15s_words": 54,
+ "opener_sentence_words": 30,
+ "sentences": 22,
+ "avg_sentence_words": 22.5,
+ "short_sentence_ratio": 0.0,
+ "cue_word_density_per_min": 6.7,
+ "connector_starts": 6,
+ "estimated_cuts_per_min_proxy": 8.6,
+ "open_loop_markers": [],
+ "top_bigrams": [
+  {
+   "pair": "plane crashes",
+   "n": 3
+  },
+  {
+   "pair": "birds away",
+   "n": 3
+  }
+ ],
+ "language_note": "ci-android"
+}
