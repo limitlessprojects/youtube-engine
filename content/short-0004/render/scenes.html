@@ -144,21 +144,22 @@ function daySky(t, cam, opts) {
   if (o.horizonY !== undefined)
     V2.el("rect", { x: -260, y: o.horizonY, width: 1600, height: 8, rx: 4, fill: DAY.horizon, opacity: 0.7 }, cam);
 }
-function seaBand(t, cam, y0, h) {
+function seaBand(t, cam, y0, h, opts) {
+  const calm = opts && opts.calm;
   V2.el("rect", { x: -260, y: y0, width: 1600, height: h, fill: "url(#dzSea)" }, cam);
   /* sun glitter path on the water */
-  for (let i = 0; i < 14; i++) {
-    const gy = y0 + 26 + i * (h / 16);
+  for (let i = 0; i < (calm ? 7 : 14); i++) {
+    const gy = y0 + 26 + i * ((calm ? h / 8 : h / 16));
     const wob = Math.sin(t / 4 + i) * 30;
     const wpx = 260 - i * 12 + wob;
     V2.el("rect", { x: 540 - wpx / 2, y: gy, width: Math.max(40, wpx), height: 7, rx: 4,
-      fill: DAY.sunGlow, opacity: 0.5 - i * 0.03, style: "mix-blend-mode:screen" }, cam);
+      fill: DAY.sunGlow, opacity: (0.5 - i * (calm ? 0.055 : 0.03)), style: "mix-blend-mode:screen" }, cam);
   }
   /* foam lines */
-  for (let i = 0; i < 5; i++) {
-    const fy = y0 + h - 30 - i * 26;
+  for (let i = 0; i < (calm ? 3 : 5); i++) {
+    const fy = y0 + h - 30 - i * (calm ? 42 : 26);
     V2.el("path", { d: `M ${-100 + Math.sin(t / 3 + i * 2) * 40} ${fy} q 130 ${-16} 260 0 t 260 0 t 260 0 t 260 0 t 260 0`,
-      stroke: "#DCEFFF", "stroke-width": 5, fill: "none", opacity: 0.35 }, cam);
+      stroke: "#DCEFFF", "stroke-width": 5, fill: "none", opacity: calm ? 0.22 : 0.35 }, cam);
   }
 }
 function dunes(t, cam) {
@@ -253,25 +254,25 @@ const SCENES = {
     /* sun rays sweeping the mid-band + drifting photon motes (fill the void) */
     for (let i = 0; i < 7; i++) {
       const a = 2.05 + i * 0.13 + Math.sin(t / 40 + i) * 0.02;
-      const len = 560 + Math.sin(t / 18 + i * 2.1) * 60;
+      const len = 660 + Math.sin(t / 18 + i * 2.1) * 70;
       V2.el("line", { x1: 780, y1: 240, x2: 780 + Math.cos(a) * len, y2: 240 + Math.sin(a) * len,
-        stroke: DAY.sunGlow, "stroke-width": 6, "stroke-linecap": "round", opacity: 0.13, style: "mix-blend-mode:screen" }, cam);
+        stroke: DAY.sunGlow, "stroke-width": 7, "stroke-linecap": "round", opacity: 0.18, style: "mix-blend-mode:screen" }, cam);
     }
     for (let i = 0; i < 14; i++) {
       const mx = ((t * (12 + i * 4) + V2.rnd(14, i) * 1300) % 1500) - 210;
-      const my = 900 + V2.rnd(15, i) * 260 + Math.sin(t / 7 + i) * 24;
-      photon(mx, my, 5 + V2.rnd(16, i) * 3, DAY.photonHot, t, cam, i);
+      const my = 830 + V2.rnd(15, i) * 300 + Math.sin(t / 7 + i) * 24;
+      photon(mx, my, 6 + V2.rnd(16, i) * 3.4, DAY.photonHot, t, cam, i);
     }
     /* shore rock bottom-right, hero BIG, gawking up (scaled for life) */
     V2.el("path", { d: "M 660 1520 Q 760 1300 930 1315 Q 1040 1330 1060 1520 Z", fill: "#0D2250", opacity: 0.92 }, cam);
     V2.el("path", { d: "M -260 1560 Q -60 1520 120 1560 T 500 1560 T 880 1560 T 1260 1560 L 1260 1620 L -260 1620 Z", fill: "#0B2E68", opacity: 0.85 }, cam);
-    const px = 860, py = 1380;
-    groundPatch(px, py, 1.12, cam);
-        V2.Hero(pose("skygawk", t, px, py, 1.12), null, "vRimR", 1, cam);
-    scarf(px, py, 1.12, t, cam);
+    const px = 795, py = 1390;
+    groundPatch(px, py, 1.4, cam);
+        V2.Hero(pose("skygawk", t, px, py, 1.4), null, "vRimR", 1, cam);
+    scarf(px, py, 1.4, t, cam);
     /* mirror shimmer line at the waterline (the myth, visually) */
     const shim = 0.5 + 0.5 * Math.sin(t / 2.6);
-    V2.el("rect", { x: -260, y: 1076, width: 1600, height: 10, rx: 5, fill: "#FFFFFF", opacity: 0.35 + shim * 0.3, style: "mix-blend-mode:screen" }, cam);
+    V2.el("rect", { x: -260, y: 1077, width: 1600, height: 7, rx: 3.5, fill: "#FFFFFF", opacity: 0.2 + shim * 0.18, style: "mix-blend-mode:screen" }, cam);
     /* KINETIC TITLE = the caption (7 words total, word-synced, CENTERED in
        the mid-band — no dead void, warm white for daylight) */
     const tau = t - TL[0].start;
@@ -284,8 +285,16 @@ const SCENES = {
     };
     if (tau > 0.10) V2.glow(540, 640, 400 * V2.clamp01((tau - 0.10) / 0.3), "Teal", 0.32, cam);
     bigWord("WHY IS THE", 0.10, 520, 102, "#FFFDF4");
-    bigWord("SKY BLUE?", 0.42, 640, 116, "#FFFDF4");
-    bigWord("THE OCEAN?", 1.55, 790, 92, "#FFD9A0");
+    bigWord("SKY BLUE?", 0.42, 648, 116, "#FFFDF4");
+    bigWord("THE OCEAN?", 1.55, 778, 86, "#FFFDF4");
+    /* r5 D1: the myth line stays in the ONE title stack (same warm white,
+       smaller) and gets an amber underline beat — no second text system */
+    if (tau > 2.15) {
+      const uk = V2.backOut(V2.clamp01((tau - 2.15) / 0.24));
+      V2.el("path", { d: `M ${540 - 208 * uk} 828 Q 540 846 ${540 + 208 * uk} 826`,
+        stroke: "#FFD9A0", "stroke-width": 11, fill: "none", "stroke-linecap": "round",
+        opacity: 0.95, style: "filter: drop-shadow(0 3px 10px rgba(4,16,42,0.9))" }, cam);
+    }
   },
 
   /* S0 — the seduction: symmetric mirror, then the crack. */
@@ -397,8 +406,8 @@ const SCENES = {
     V2.el("rect", { x: 440, y: 560, width: 300, height: 400, rx: 28,
       fill: DAY.panel, stroke: DAY.panelLine, "stroke-width": 5, opacity: 0.95 * sk }, cam);
     V2.txt(590, 500, "AIR", { "text-anchor": "middle", "font-family": V2.UI_MONO,
-      "font-size": 40, fill: DAY.horizon, "letter-spacing": 6, opacity: sk,
-      style: "filter: drop-shadow(0 3px 9px rgba(0,0,0,0.8))" }, cam);
+      "font-size": 46, "font-weight": 700, fill: DAY.horizon, "letter-spacing": 8, opacity: sk,
+      style: "filter: drop-shadow(0 0 14px rgba(143,211,255,0.75)) drop-shadow(0 3px 9px rgba(0,0,0,0.8))" }, cam);
     /* beam CONTINUES through the slab and exits far side (r3: no mid-air mush) */
     if (tau > 0.75) {
       const bk = V2.clamp01((tau - 0.75) / 0.3);
@@ -428,8 +437,17 @@ const SCENES = {
     const tau = tau0(t, 4);
     /* audio: "Air flings blue sideways" 0-1.4 / "six times harder than red" 1.4-2.63 */
     const cx = 540, cy = 690;
-    molecule(cx, cy, 92, t, cam);
-    V2.tag(cx, cy + 150, Math.min(24, tau * 26), "AIR", null, 8, cam);
+    molecule(cx, cy, 108, t, cam);
+    /* AIR chip — same treatment family as the verdict chip (r5 D2: the
+       smallest label carried the diagram's whole meaning) */
+    const ak = V2.clamp01(tau / 0.3);
+    if (ak > 0) {
+      V2.el("rect", { x: cx - 92, y: cy + 108, width: 184, height: 84, rx: 22,
+        fill: "#0A1228", opacity: 0.72 * ak, stroke: DAY.photonHot, "stroke-width": 5 }, cam);
+      V2.txt(cx, cy + 170, "AIR", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 52, fill: "#FFFFFF", opacity: ak,
+        style: "filter: drop-shadow(0 3px 9px rgba(0,0,0,0.85))" }, cam);
+    }
     /* BLUE photon: wild ricochet — end-state PERSISTS (gate r2 bug: the
        diagram erased itself at blueT=1, leaving a static molecule for the
        verdict beat; freeze the ricochet + burst until scene end) */
@@ -445,11 +463,15 @@ const SCENES = {
         V2.el("line", { x1: cx, y1: cy, x2: ex, y2: ey, stroke: DAY.photon, "stroke-width": 10,
           "stroke-linecap": "round", opacity: 0.95 * sk, style: "filter: drop-shadow(0 0 16px #5AB8FF)" }, cam);
         photon(ex, ey, 15, DAY.photonHot, t, cam, 1);
-        for (let k = 0; k < 5; k++) {
-          const a2 = -2.4 + k * 0.5;
-          V2.el("line", { x1: cx + Math.cos(a2) * 42, y1: cy + Math.sin(a2) * 42,
-            x2: cx + Math.cos(a2) * (86 + sk * 78), y2: cy + Math.sin(a2) * (86 + sk * 78),
-            stroke: DAY.photon, "stroke-width": 6, "stroke-linecap": "round", opacity: 0.75 * sk }, cam);
+        /* r5 D3: one bright impact flash + a clean 3-ray burst — the old
+           5 overlapping circles read as mush at phone size */
+        V2.el("circle", { cx: cx, cy: cy, r: 30 + sk * 16, fill: "#EAF6FF", opacity: 0.85 * sk,
+          style: "filter: drop-shadow(0 0 30px #8FD3FF)" }, cam);
+        for (let k = 0; k < 3; k++) {
+          const a2 = -2.15 + k * 0.62;
+          V2.el("line", { x1: cx + Math.cos(a2) * 52, y1: cy + Math.sin(a2) * 52,
+            x2: cx + Math.cos(a2) * (110 + sk * 80), y2: cy + Math.sin(a2) * (110 + sk * 80),
+            stroke: DAY.photon, "stroke-width": 8, "stroke-linecap": "round", opacity: 0.8 * sk }, cam);
         }
       }
     }
@@ -471,11 +493,27 @@ const SCENES = {
     const vk = breathe(tau, 2.1);
     if (vk > 0) {
       const k = V2.backOut(vk);
-      V2.el("rect", { x: 120, y: 350, width: 280, height: 150, rx: 28, fill: "#0A1228", opacity: 0.78, stroke: DAY.panelLine, "stroke-width": 4 }, cam);
-      V2.glow(260, 425, 210 * k, "Teal", 0.42, cam);
-      V2.txt(260, 448 + (1 - k) * 30, "BLUE ≈ 6×", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": 92 * (0.7 + 0.3 * k), fill: "#FFFFFF",
+      V2.el("rect", { x: 60, y: 350, width: 460, height: 150, rx: 28, fill: "#0A1228", opacity: 0.78, stroke: DAY.panelLine, "stroke-width": 4 }, cam);
+      V2.glow(290, 425, 260 * k, "Teal", 0.42, cam);
+      V2.txt(290, 442 + (1 - k) * 30, "BLUE ≈ 6×", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 76 * (0.7 + 0.3 * k), fill: "#FFFFFF",
         style: "filter: drop-shadow(0 0 26px rgba(143,211,255,0.95)) drop-shadow(0 5px 14px rgba(0,0,0,0.85))" }, cam);
+    }
+    /* r5 D1: refracted hint exits bottom-right — completes the eye path
+       sun → scatter → exit, balances the bottom-left hero */
+    const ek4 = breathe(tau, 1.2);
+    if (ek4 > 0) {
+      V2.el("path", { d: "M 880 1020 Q 960 1120 1010 1230", stroke: DAY.sunGlow,
+        "stroke-width": 9, fill: "none", "stroke-linecap": "round", opacity: 0.55 * ek4,
+        style: "mix-blend-mode:screen" }, cam);
+      photon(1014, 1244, 10, DAY.sun, t, cam, 61);
+    }
+    /* r6 D1: blue scatters EVERYWHERE — faint far ricochets fill the
+       panel's right half so the diagram doesn't float in a dead zone */
+    if (breathe(tau, 1.6) > 0) {
+      [[780, 560, 7], [870, 690, 6], [800, 840, 8], [910, 580, 5]].forEach(([fx, fy, fr], i) =>
+        V2.el("circle", { cx: fx, cy: fy + Math.sin(t / 3 + i) * 6, r: fr, fill: DAY.photon,
+          opacity: 0.45, style: "mix-blend-mode:screen" }, cam));
     }
     groundPatch(215, 1400, 0.92, cam);
         V2.Hero(pose("present", t, 215, 1400, 0.92, { yaw: -0.3 }), null, "vRimR", 1, cam);
@@ -485,7 +523,7 @@ const SCENES = {
   /* S5 — payoff build: the dome of little lamps. */
   s5(u, t) {
     const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.05], [87, 1.0]]) )});
-    daySky(t, cam, { sunX: 540, sunY: 180, deep: 0.32 });
+    daySky(t, cam, { sunX: 540, sunY: 180, deep: 0.52 });
     const tau = tau0(t, 5);
     /* lamp patches pop in sequence — the payoff visual */
     const LAMPS = [[220, 560], [420, 480], [640, 500], [850, 560], [160, 780], [370, 700],
@@ -494,20 +532,39 @@ const SCENES = {
       const at = 0.35 + i * 0.16;
       const k = V2.backOut(V2.clamp01((tau - at) / 0.22));
       if (k <= 0.01) return;
+      const hot = i === 7;   /* r6 D1: one lamp differs — the focal anchor */
       const g = V2.el("g", { opacity: Math.min(1, k * 1.4) }, cam);
-      V2.glow(lx, ly, 150 * k, "Teal", 0.5, g);
+      V2.glow(lx, ly, (hot ? 240 : 170) * k, hot ? "Warm" : "Teal", hot ? 0.7 : 0.55, g);
+      /* r5 D1: lamps must read as a SUBJECT, not mush — bright core,
+         white rim, dark drop shadow separate them from the blue field */
       V2.el("rect", { x: lx - 62, y: ly - 62, width: 124, height: 124, rx: 26,
-        fill: DAY.photon, opacity: 0.68, stroke: DAY.photonHot, "stroke-width": 6 }, g);
-      /* tiny light cone downward */
+        fill: hot ? "#FFD9A0" : "#79C6FF", opacity: 0.92, stroke: hot ? "#FFF6D8" : "#FFFFFF", "stroke-width": 7,
+        style: "filter: drop-shadow(0 8px 20px rgba(4,16,42,0.85))" }, g);
+      V2.el("rect", { x: lx - 26, y: ly - 26, width: 52, height: 52, rx: 12,
+        fill: hot ? "#FFF6D8" : "#EAF6FF", opacity: 0.95 * k }, g);
+      /* light cone downward */
       V2.el("path", { d: `M ${lx - 40} ${ly + 56} L ${lx - 78} ${ly + 150} L ${lx + 78} ${ly + 150} L ${lx + 40} ${ly + 56} Z`,
-        fill: DAY.photonHot, opacity: 0.22 }, g);
+        fill: hot ? DAY.sunGlow : DAY.photonHot, opacity: hot ? 0.45 : 0.34 }, g);
     });
-    /* hero amazed under the dome */
-    const px = 540, py = 1430;
-    groundPatch(px, py, 0.9, cam);
-        V2.Hero(pose("amazed", t, px, py, 0.95), null, "vRimR", 1, cam);
-    scarf(px, py, 0.95, t, cam);
-    if (breathe(tau, 1.75) > 0) V2.tag(540, 300, breathe(tau, 1.75) * 24, "EVERY PATCH: A LAMP", null, 8, cam, DAY.photonHot);
+    /* r5 D2: low hill band anchors the hero — no float-in-void */
+    V2.el("path", { d: "M -260 1640 Q 240 1560 560 1610 Q 860 1656 1340 1580 L 1340 2180 L -260 2180 Z",
+      fill: "#0D2A64", opacity: 0.78 }, cam);
+    /* hero amazed under the dome — bigger, grounded */
+    const px = 540, py = 1470;
+    groundPatch(px, py, 1.3, cam, "#081A3E");
+        V2.Hero(pose("amazed", t, px, py, 1.3), null, "vRimR", 1, cam);
+    scarf(px, py, 1.3, t, cam);
+    /* r5 D3: header as a plate tied to the lamp palette — the flat navy
+       tag pill was the only element disconnected from the scene style */
+    const hk5 = breathe(tau, 1.75);
+    if (hk5 > 0) {
+      V2.glow(540, 300, 300 * hk5, "Teal", 0.4, cam);
+      V2.el("rect", { x: 540 - 330, y: 248, width: 660, height: 104, rx: 26,
+        fill: "#0A1228", opacity: 0.6 * hk5, stroke: DAY.photonHot, "stroke-width": 5 }, cam);
+      V2.txt(540, 318, "EVERY PATCH: A LAMP", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 54, fill: DAY.photonHot, opacity: hk5,
+        "letter-spacing": 2, style: "filter: drop-shadow(0 4px 12px rgba(0,0,0,0.85))" }, cam);
+    }
   },
 
   /* S6 — proof detail: deeper blue away from the sun. */
@@ -516,36 +573,43 @@ const SCENES = {
     daySky(t, cam, { sunX: 880, sunY: 320 });
     stagePanel(cam, { x: 90, y: 430, w: 900, h: 640 });
     const tau = tau0(t, 6);
+    /* r6 D3: sun-side warm wash motivates the card contrast */
+    V2.el("circle", { cx: 940, cy: 320, r: 560, fill: "url(#dzSunD)", opacity: 0.4, style: "mix-blend-mode:screen" }, cam);
     /* two swatches: AWAY (saturated) vs TOWARD (washed) */
     const k1 = breathe(tau, 0.5), k2 = breathe(tau, 1.05);
     if (k1 > 0) {
-      V2.el("rect", { x: 150, y: 540, width: 340, height: 470, rx: 30, fill: "#164AB5",
+      V2.el("rect", { x: 120, y: 500, width: 400, height: 520, rx: 30, fill: "#164AB5",
         stroke: DAY.photonHot, "stroke-width": 6, opacity: k1 }, cam);
-      V2.glow(320, 750, 220 * k1, "Teal", 0.45, cam);
-      V2.txt(320, 770, "DEEP", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": 92, fill: "#EAF6FF", opacity: k1,
+      V2.glow(320, 750, 240 * k1, "Teal", 0.45, cam);
+      V2.txt(320, 760, "DEEP", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 74, fill: "#EAF6FF", opacity: k1,
         style: "filter: drop-shadow(0 4px 14px rgba(0,0,0,0.7))" }, cam);
-      V2.txt(320, 950, "AWAY FROM SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#D8ECFF", "letter-spacing": 2, opacity: k1 * 0.9 }, cam);
+      V2.txt(320, 965, "AWAY FROM SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#D8ECFF", "letter-spacing": 2, opacity: k1 * 0.9 }, cam);
     }
     if (k2 > 0) {
-      V2.el("rect", { x: 590, y: 540, width: 340, height: 470, rx: 30, fill: "#BFE0FF",
+      V2.el("rect", { x: 560, y: 500, width: 400, height: 520, rx: 30, fill: "#BFE0FF",
         stroke: "#FFFFFF", "stroke-width": 6, opacity: k2 }, cam);
-      V2.el("circle", { cx: 760, cy: 700, r: 64, fill: DAY.sun, opacity: k2,
+      V2.el("circle", { cx: 760, cy: 680, r: 72, fill: DAY.sun, opacity: k2,
         style: "filter: drop-shadow(0 0 44px rgba(255,246,216,0.95))" }, cam);
-      V2.txt(760, 840, "WASHED", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": 62, fill: "#123C8C", opacity: k2 }, cam);
-      V2.txt(760, 950, "TOWARD SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#123C8C", "letter-spacing": 2, opacity: k2 * 0.9 }, cam);
+      V2.txt(760, 850, "WASHED", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 74, fill: "#123C8C", opacity: k2 }, cam);
+      V2.txt(760, 965, "TOWARD SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#123C8C", "letter-spacing": 2, opacity: k2 * 0.9 }, cam);
     }
-    /* hero points AWAY from the sun */
-    groundPatch(250, 1400, 0.92, cam);
-        V2.Hero(pose("away", t, 250, 1380, 1.2), null, "vRimR", 1, cam);
-    scarf(250, 1380, 1.2, t, cam);
+    /* r6 D1: hero recentered into the lower-right void */
+    groundPatch(780, 1400, 1.05, cam);
+        V2.Hero(pose("away", t, 780, 1385, 1.05), null, "vRimR", 1, cam);
+    scarf(780, 1385, 1.05, t, cam);
   },
 
   /* S7 — THE turn: the mirror shatters, a lamp remains. */
   s7(u, t) {
     const cam = V2.el("g", { transform: V2.cam(540, 900, V2.kf(t, [[0, 1.04], [81, 1.0]]) )});
     daySky(t, cam, { sunX: 540, sunY: 210, deep: 0.1 });
+    /* r5 D3: fill the top-left / bottom-right voids subtly */
+    [[150, 190, 46], [230, 225, 34], [95, 250, 30]].forEach(([cx2, cy2, r2], i) =>
+      V2.el("circle", { cx: cx2, cy: cy2 + Math.sin(t / 6 + i) * 6, r: r2, fill: "#FFFFFF", opacity: 0.16 }, cam));
+    V2.el("path", { d: "M 700 1650 Q 880 1560 1080 1600 L 1080 1920 L 700 1920 Z",
+      fill: "#0B2E68", opacity: 0.5 }, cam);
     const tau = tau0(t, 7);
     /* audio: "That's the sky." 0-0.9 / "Not a mirror — a lamp." 0.9-2.34 */
     const mirrorK = 1 - breathe(tau, 1.55, undefined, 0.3);  /* mirror fades out */
@@ -565,10 +629,12 @@ const SCENES = {
       const g7 = V2.el("g", { opacity: vk7 }, cam);
       V2.tag(540, 1250, vk7 * 24, "NOT A MIRROR", null, 8, g7, P.orange);
       if (tau > 1.05) {
+        /* r5 D1: red UNDERLINE, not a strike-through — the stroke crossed
+           the letters of the only text element and hurt legibility */
         const sk = V2.clamp01((tau - 1.05) / 0.2);
-        V2.el("line", { x1: 400 - sk * 40, y1: 1232, x2: 400 + sk * 152, y2: 1266,
-          stroke: "#FF5A4A", "stroke-width": 14, "stroke-linecap": "round", opacity: 0.95 * sk,
-          style: "filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8))" }, g7);
+        V2.el("path", { d: `M ${540 - 128 * sk} 1302 Q 540 1318 ${540 + 128 * sk} 1300`,
+          stroke: "#FF5A4A", "stroke-width": 13, fill: "none", "stroke-linecap": "round",
+          opacity: 0.95 * sk, style: "filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8))" }, g7);
       }
     }
     /* shatter shards fly at ~1.55s */
@@ -591,14 +657,16 @@ const SCENES = {
       V2.el("path", { d: "M 540 470 L 660 640 L 420 640 Z", fill: P.orange, stroke: "#121019", "stroke-width": 6 }, g);
       V2.el("rect", { x: 414, y: 640, width: 252, height: 20, rx: 10, fill: P.amber, stroke: "#121019", "stroke-width": 5 }, g);
       /* light cone */
-      V2.el("path", { d: "M 430 668 L 250 1010 L 830 1010 L 650 668 Z", fill: DAY.sunGlow, opacity: 0.3 * k }, g);
+      V2.el("path", { d: "M 430 668 L 150 1010 L 830 1010 L 650 668 Z", fill: DAY.sunGlow, opacity: 0.3 * k }, g);
       V2.el("ellipse", { cx: 540, cy: 1014, rx: 250 * k, ry: 44 * k, fill: DAY.sunGlow, opacity: 0.5 * k, style: "mix-blend-mode:screen" }, g);
+      /* light reaches the hero (r5 D2: beam pool and character must connect) */
+      V2.el("ellipse", { cx: 320, cy: 1428, rx: 210 * k, ry: 36 * k, fill: DAY.sunGlow, opacity: 0.35 * k, style: "mix-blend-mode:screen" }, g);
       photon(540, 560, 12, DAY.sun, t, g, 9);
     }
     /* hero: smug arms-crossed → open */
-    groundPatch(230, 1400, 0.92, cam);
-        V2.Hero(pose("smug", t, 230, 1400, 0.92), null, "vRimR", 1, cam);
-    scarf(230, 1400, 0.92, t, cam);
+    groundPatch(300, 1405, 1.15, cam);
+        V2.Hero(pose("smug", t, 300, 1405, 1.15), null, "vRimR", 1, cam);
+    scarf(300, 1405, 1.15, t, cam);
   },
 
   /* S8 — the inversion: water eats red, keeps blue. */
@@ -614,6 +682,16 @@ const SCENES = {
     const wk = V2.clamp01(tau / 0.3);
     V2.el("path", { d: "M 240 320 L 430 506", stroke: DAY.sun, "stroke-width": 20 * wk + 8,
       "stroke-linecap": "round", opacity: 0.95, style: "filter: drop-shadow(0 0 18px rgba(255,246,216,0.95))" }, cam);
+    /* r6 D1: spotlight the two dot clusters — one story, one glance */
+    const sp8 = breathe(tau, 0.6);
+    if (sp8 > 0) {
+      V2.glow(430, 720, 260 * sp8, "Warm", 0.35, cam);
+      V2.glow(700, 800, 280 * sp8, "Teal", 0.35, cam);
+    }
+    /* r6 D2: faint wave arcs fill the water panel's upper-left */
+    for (let i = 0; i < 3; i++)
+      V2.el("path", { d: `M ${200 - i * 10 + Math.sin(t / 4 + i) * 8} ${600 + i * 44} q 90 ${-14} 180 0 t 180 0`,
+        stroke: "#7FB8E8", "stroke-width": 5, fill: "none", opacity: 0.3 }, cam);
     /* RED photons sink and FADE OUT (absorbed) */
     const rk = V2.clamp01((tau - 0.45) / 1.4);
     for (let i = 0; i < 4; i++) {
@@ -668,7 +746,7 @@ const SCENES = {
   s9(u, t) {
     const cam = V2.el("g", { transform: V2.cam(540, 980, V2.kf(t, [[0, 1.06], [93, 1.0]]) )});
     daySky(t, cam, { sunX: 780, sunY: 240, deep: 0.2 });
-    seaBand(t, cam, 1080, 390);
+    seaBand(t, cam, 1080, 390, { calm: true });
     const tau = tau0(t, 9);
     /* sky lamps glow (from s5) AND the sea glows on its own — two sources */
     const gk = breathe(tau, 0.4);
@@ -683,28 +761,42 @@ const SCENES = {
     }
     const sg = breathe(tau, 0.9);
     if (sg > 0) {
-      V2.glow(540, 1310, 360 * sg, "Teal", 0.4, cam);
+      V2.glow(540, 1310, 380 * sg, "Teal", 0.45, cam);
       photon(340, 1290 - sg * 40, 8, DAY.photonHot, t, cam, 51);
       photon(700, 1330 - sg * 30, 7, DAY.photonHot, t, cam, 52);
-      V2.el("rect", { x: -260, y: 1150, width: 1600, height: 300, fill: DAY.photon, opacity: 0.14 * sg, style: "mix-blend-mode:screen" }, cam);
+      V2.el("rect", { x: -260, y: 1150, width: 1600, height: 300, fill: DAY.photon, opacity: 0.2 * sg, style: "mix-blend-mode:screen" }, cam);
+      /* r5 D1: lamp motes rise through the mid band — the gradient void
+         between headline and character let the eye drift off-frame */
+      for (let i = 0; i < 6; i++) {
+        const pu = V2.clamp01((tau - 0.9) / 1.4 - i * 0.13);
+        if (pu <= 0 || pu >= 1) continue;
+        const ux = 250 + i * 116 + Math.sin(t / 5 + i) * 18;
+        const uy = 1120 - pu * 300;
+        photon(ux, uy, 8 - i * 0.5, DAY.photonHot, t, cam, 60 + i);
+      }
     }
     /* hero relaxed on the shore rock — loop mirror of the hook */
     V2.el("path", { d: "M 620 1440 Q 700 1180 880 1200 Q 1000 1220 1020 1440 Z", fill: "#0D2250", opacity: 0.92 }, cam);
-    const px = 850, py = 1400;
-    groundPatch(px, py, 0.9, cam);
-        V2.Hero(pose("happy", t, px, py, 1.25), null, "vRimR", 1, cam);
-    scarf(px, py, 1.25, t, cam);
+    const px = 840, py = 1420;
+    groundPatch(px, py, 1.4, cam);
+        V2.Hero(pose("happy", t, px, py, 1.4), null, "vRimR", 1, cam);
+    scarf(px, py, 1.4, t, cam);
     /* KINETIC CLOSER = the caption (3 words) */
-    const bigWord = (txt, at, y, size) => {
+    const bigWord = (txt, at, y, size, fill) => {
       if (tau < at) return;
       const k = V2.backOut(V2.clamp01((tau - at) / 0.26));
       V2.txt(540, y + (1 - k) * 26, txt, { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": size * (0.7 + 0.3 * k), fill: "#FFFFFF",
-        style: "filter: drop-shadow(0 6px 16px rgba(4,16,42,0.95)) drop-shadow(0 0 30px rgba(90,184,255,0.3))" }, cam);
+        "font-weight": 800, "font-size": size * (0.7 + 0.3 * k), fill: fill || "#FFFFFF",
+        style: "filter: drop-shadow(0 6px 16px rgba(4,16,42,0.95)) drop-shadow(0 0 30px rgba(90,184,255,0.3)) drop-shadow(0 0 44px rgba(255,233,168,0.55))" }, cam);
     };
-    if (tau > 0.9) V2.glow(540, 700, 330 * V2.clamp01((tau - 0.9) / 0.3), "Teal", 0.3, cam);
-    bigWord("THEY JUST", 1.15, 660, 96);
-    bigWord("MATCHED.", 1.5, 770, 104);
+    /* r5 D3: double glow so the white type pops on the mid-blue sky */
+    if (tau > 0.9) {
+      V2.glow(540, 740, 400 * V2.clamp01((tau - 0.9) / 0.3), "Teal", 0.5, cam);
+      V2.glow(540, 760, 300 * V2.clamp01((tau - 0.9) / 0.3), "Warm", 0.35, cam);
+    }
+    bigWord("THEY JUST", 1.15, 690, 96);
+    /* r6 D2: keyword accent — MATCHED. in the hero's orange */
+    bigWord("MATCHED.", 1.5, 800, 104, P.orange);
   },
 };
 

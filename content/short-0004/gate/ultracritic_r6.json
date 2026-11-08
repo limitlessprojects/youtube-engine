@@ -1,0 +1,221 @@
+{
+ "round": 6,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.11,
+ "frame_grand_mean": 7.11,
+ "dim_means": {
+  "frame:hook_impact": 6.64,
+  "frame:text_discipline": 8.0,
+  "frame:visual_hierarchy": 6.36,
+  "frame:contrast_legibility": 7.55,
+  "frame:production_polish": 7.0
+ },
+ "frame_means": {
+  "hook_u50": 7.2,
+  "s0_u50": 7.4,
+  "s1_u50": 7.4,
+  "s2_u50": 7.6,
+  "s3_u50": 7.2,
+  "s4_u50": 6.8,
+  "s5_u50": 7.0,
+  "s6_u50": 6.6,
+  "s7_u50": 7.4,
+  "s8_u50": 6.8,
+  "s9_u50": 6.8
+ },
+ "floor_breaches": [],
+ "video_directives": [],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 7,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 6,
+   "top3_directives": [
+    "Move the character fully into frame \u2014 his elbow nearly touches the right edge and the rock is cropped; give him breathing room and center the lower-half composition",
+    "The stray hard-edged white waterline and flat horizontal stripes read as unfinished assets \u2014 soften the waterline with a gradient and give wave shapes varied curvature",
+    "The dead mid-zone between the subhead and the character (empty blue band) wastes ~25% of frame height \u2014 enlarge the character or raise the horizon to close the gap"
+   ],
+   "frame": "hook_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the large empty sky band between the sun and 'NOPE.' with subtle depth (dimmer cloud, gradient variation) to kill the dead zone",
+    "Reposition 'NOPE.' closer to the character with a slight tilt or glow so text and figure read as one unit instead of two floating elements",
+    "Strengthen the character's silhouette (thicker dark outline or stronger warm glow) so it pops against the mid-blue sea band"
+   ],
+   "frame": "s0_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the large empty sky-to-dune dead zone (middle 35% of frame) with a distant dune ridge or heat-shimmer detail to connect character and title",
+    "Give the title card a subtle warm rim or desert-tone accent so it doesn't read as a generic dark pill floating on blue",
+    "Add a soft contact shadow under the teal shoes plus slight ground gradient to anchor the character instead of the flat ellipse"
+   ],
+   "frame": "s1_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.6,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the dead sky zone between the text card and the character \u2014 the middle third is empty; add subtle depth (birds, gradient clouds, haze) or lift the character slightly",
+    "Resolve the clipped sun/cloud at the top-right edge \u2014 elements bleeding half-off-frame read as an export mistake unless intentional; pad or reframe",
+    "Give the text card more presence for thumb-stop: add a subtle drop shadow or 2-4px warmer stroke so the dark plate separates from the blue sky at small sizes"
+   ],
+   "frame": "s2_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 1,
+   "top3_directives": [
+    "Scale the character up and move him right-of-center so he doesn't compete with the panel's left edge and the bottom third stops being a dead zone",
+    "Fix the exiting beam so it passes cleanly through the panel border \u2014 it currently clips the corner radius and the small blue droplet dots read as stray artifacts",
+    "Add a subtle glow or outline to 'AIR' so the label holds against the dark panel on a bright screen"
+   ],
+   "frame": "s3_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or shrink the large empty right half of the dark panel \u2014 the scattered-ray diagram floats in a vast dead zone",
+    "Fix the header chip fit: '\u2248 6\u00d7' spills off the dark pill onto the panel edge; either widen the pill or shorten to 'BLUE 6\u00d7'",
+    "Strengthen the focal point \u2014 add a subtle glow/scale bump on the collision cluster so the eye lands there before wandering to the character"
+   ],
+   "frame": "s4_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "The lamp grid is 12 identical repeated elements with no focal anchor inside it \u2014 vary one lamp (lit/on state, glow, or color) to create a focal point and visual story",
+    "Light-blue lamps on mid-blue background is a low-separation monochrome wash; darken the sky or add drop shadows so lamps pop off the field",
+    "Large dead zone between the grid and the character (lower third gap) \u2014 tighten vertical composition or scale the character up to close the dead space"
+   ],
+   "frame": "s5_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 6,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 6.6,
+   "words_visible": 8,
+   "top3_directives": [
+    "Kill the large dead zone: bottom-right sky and lower third are empty \u2014 enlarge the comparison cards ~20% and recenter the character to fill the lower-right void",
+    "Unify the card text sizes: DEEP/WASHED headers differ in visual weight and the monospaced sub-labels feel like a second system \u2014 keep one header weight and make sub-labels same optical scale on both cards",
+    "Boost the hook: the flat blue gradient background has no texture or directional lighting \u2014 add a subtle sun-side glow gradient (warm right, cool left) so the card contrast is motivated and the frame reads instantly"
+   ],
+   "frame": "s6_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill the large dead zone between the light beam's ellipse and the character (~40% of frame height is empty blue) \u2014 e.g., subtle floating particles or secondary silhouette to connect pyramid to character",
+    "Strengthen the eye path: the character and 'NOT A MIRROR' tag sit low-left while the pyramid pulls center \u2014 shift the character up/right or angle the beam so the two focal subjects read as one composed unit",
+    "Give the character label more punch: the dark pill with thin monospace caps is legible but small at Shorts scale \u2014 bump its weight or add a stroke/glow so it reads as the hook text on a 6-inch screen"
+   ],
+   "frame": "s7_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 4,
+   "top3_directives": [
+    "Establish a single dominant focal point \u2014 the game panel and character split attention equally; enlarge or spotlight one (e.g. glow/vignette on the red-vs-blue dot clusters)",
+    "Fill the dead zone in the upper-left of the game panel \u2014 the sun beam crosses the frame corner but the panel interior reads as large empty navy space",
+    "Strengthen the hook at the top third: the caption 'eats red keeps blue' is the only intrigue, but it sits at the very bottom \u2014 move or echo it higher so a paused thumb gets the premise instantly"
+   ],
+   "frame": "s8_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "Relocate the character or text to reduce the dead zone between them \u2014 the middle third is a large empty void splitting the focal weight",
+    "Boost hook impact: 'THEY JUST MATCHED.' is intriguing copy but visually flat \u2014 add a colored keyword accent (e.g. MATCHED in the character's orange) or scale contrast so text and character compete for one instant read",
+    "Clarify the blurred UI mockup behind the character \u2014 at 6 inches it reads as smeared noise; either sharpen one recognizable detail or remove it and let the character glow carry the scene alone"
+   ],
+   "frame": "s9_u50"
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Water'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Sky', 'They'] appears only in the closer \u2014 tangent? (L-077 spine rule)"
+ ]
+}

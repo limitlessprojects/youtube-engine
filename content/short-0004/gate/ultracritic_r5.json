@@ -1,0 +1,224 @@
+{
+ "round": 5,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 6.98,
+ "frame_grand_mean": 6.98,
+ "dim_means": {
+  "frame:hook_impact": 6.73,
+  "frame:text_discipline": 7.55,
+  "frame:visual_hierarchy": 6.36,
+  "frame:contrast_legibility": 7.36,
+  "frame:production_polish": 6.91
+ },
+ "frame_means": {
+  "hook_u50": 6.6,
+  "s0_u50": 7.2,
+  "s1_u50": 7.4,
+  "s2_u50": 7.4,
+  "s3_u50": 7,
+  "s4_u50": 6.8,
+  "s5_u50": 6.2,
+  "s6_u50": 7.2,
+  "s7_u50": 6.8,
+  "s8_u50": 7.4,
+  "s9_u50": 6.8
+ },
+ "floor_breaches": [
+  "s5_u50",
+  "s9_u50"
+ ],
+ "video_directives": [],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 6,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.6,
+   "words_visible": 7,
+   "top3_directives": [
+    "Collapse 'THE OCEAN?' into the main title as one styled line or animate it in as a beat \u2014 a static second text block reads as two competing systems and caps the score",
+    "Fill the mid-frame dead zone (bubble area between text and waterline) with a subtle secondary element \u2014 light rays extending down, or a floating object \u2014 so the eye path flows title \u2192 character",
+    "Strengthen the focal point: the character is small and pushed to the corner with its glow clipped \u2014 scale it up ~25% and ensure the rim-light and shadow don't get cut by the rock silhouette"
+   ],
+   "frame": "hook_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the large empty sky dead zone (top 40% is nearly bare) \u2014 push the sun/rays larger or move the character/text up to compress vertical dead space",
+    "Add a subtle drop shadow or outline to 'NOPE.' so it separates from the flat blue gradient instead of floating in it",
+    "Strengthen the eye path: the sun rays point down-left away from the character \u2014 re-angle beams so they lead toward the figure and the text"
+   ],
+   "frame": "s0_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 7,
+   "top3_directives": [
+    "Move the title card down or enlarge the character \u2014 the top third and the stripe band leave a wide low-interest middle zone",
+    "Give the character a stronger ground shadow / rim light so it pops off the flat dune background at a glance",
+    "Unify the odd horizontal stripe band behind the dunes \u2014 it reads as an unexplained artifact rather than intentional design"
+   ],
+   "frame": "s1_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the large empty blue sky mid-band (upper-left quadrant is a dead zone) with a subtle secondary element \u2014 a distant cloud, bird, or gradient shift \u2014 to guide the eye from character to caption",
+    "Fix the top-right cloud cluster: the second cloud bleeds off-frame and a stray partial shape below it reads as an unplanned crop artifact",
+    "Give the 'SAME BLUE.' pill stronger separation from the blue sky \u2014 a soft drop shadow or warmer stroke would prevent the dark-navy badge from blending into the background at a glance"
+   ],
+   "frame": "s2_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7,
+   "words_visible": 1,
+   "top3_directives": [
+    "The incoming light beam visually terminates at the panel's top edge instead of passing coherently into the refractive element \u2014 extend/blend the beam so the entry point reads as continuous physics, not a layering error",
+    "The 'AIR' label is the only text and carries all context \u2014 give it slightly more presence (weight or size) so the concept lands instantly at thumb-scroll speed, or add a minimal action verb",
+    "Bottom third and lower-right of the panel are dead zones \u2014 either raise the character to overlap the panel edge for depth, or add a subtle refracted-ray hint exiting bottom-right to complete the eye path sun \u2192 scatter \u2192 exit \u2192 character"
+   ],
+   "frame": "s3_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 6,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the dead lower-right quadrant \u2014 the mascot is isolated bottom-left with nothing balancing the frame; shift the diagram panel down or add a secondary visual anchor",
+    "Strengthen the 'AIR' chip: it's the smallest element on screen but carries the diagram's meaning \u2014 enlarge ~30% and give it the same chip treatment as the BLUE header for a unified label system",
+    "Clarify the collision cluster \u2014 the overlapping light-blue circles where the rays meet read as mush at phone size; simplify to one bright impact flash with a single scatter burst"
+   ],
+   "frame": "s4_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 5,
+    "production_polish": 6
+   },
+   "mean": 6.2,
+   "words_visible": 4,
+   "top3_directives": [
+    "Boost the sky-lamp separation: the pale translucent lamps nearly dissolve into the blue background \u2014 add a stronger drop shadow, rim stroke, or warm glow (they're lamps, after all) so the pattern reads as a subject, not mush",
+    "Give the character a floor/scene anchor \u2014 it floats in empty blue with a huge dead zone between the lamp field and its feet; crop the lamp cluster lower or add ground context to compress the composition",
+    "Replace the flat navy pill caption with a treatment tied to the palette (warm accent or glowing text) \u2014 currently it's the only high-contrast element but visually disconnected from the scene's style"
+   ],
+   "frame": "s5_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 8,
+   "top3_directives": [
+    "Fill the large empty gradient dead zones (top-left sky and entire bottom-right quadrant) \u2014 shift the card panel up-center and let the character occupy the lower-right to balance the frame",
+    "Unify the two card label placements: DEEP sits mid-card while WASHED sits lower next to the sun icon, creating uneven eye path \u2014 align both headers to identical vertical positions",
+    "The character's pointing gesture aims at nothing; redirect the pose toward the card panel or the sun to connect figure and focal content"
+   ],
+   "frame": "s6_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 7,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "Remove or reposition the red strike-through so it doesn't cross through the letters of 'NOT A MIRROR' \u2014 it currently damages legibility of the only text element; strike beside the label or underline instead",
+    "Enlarge the character ~30-40% and shift the UFO beam to connect toward him \u2014 right now the beam's pool and the character are visually unrelated, weakening the eye path and the joke",
+    "Fill the top-left/bottom-right dead zones subtly (gradient vignette, faint cloud/ground texture) so the vertical frame doesn't feel empty above and below the action"
+   ],
+   "frame": "s7_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the large empty upper region of the blue panel \u2014 nearly 40% dead space kills depth; add a subtle sky-through-glass gradient or faint grid",
+    "Strengthen the caption pill's edge contrast \u2014 the translucent dark pill over mid-blue sky is a bit mushy in daylight; add a tighter dark stroke or stronger shadow",
+    "Make the X/check outcome marks more immediate focal anchors \u2014 they sit low-contrast against the panel; bump saturation or add a subtle glow so the win/lose state reads instantly"
+   ],
+   "frame": "s8_u50"
+  },
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill the large empty gradient band between the headline and the character \u2014 the middle third is a dead zone that lets the eye drift off-frame",
+    "Create one dominant focal point: either enlarge the character or move the headline closer so text and subject read as a single composition instead of two separated anchors",
+    "Add a subtle glow or rim-light contrast behind 'THEY JUST MATCHED.' so the white type pops harder on the mid-blue sky in daylight viewing"
+   ],
+   "frame": "s9_u50"
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Water'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Sky', 'They'] appears only in the closer \u2014 tangent? (L-077 spine rule)"
+ ]
+}
