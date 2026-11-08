@@ -108,10 +108,10 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 
 ## Evidence-coverage summary
 
-- 51 rules total (A1 A2 A3 A4 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 G1 G2 G3 G4 G5 G6 G7 G8 P1 P2 P3 P4 Q1 Q2 Q3 Q4 Q5 Q6 Q7 S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 V1 V2 V3 V4 V5 V6). Tool-enforced (linter / A1–A5 / vo_pipeline / gate dims /
-  upload / preflight / render+finish artifacts): 38 (75%) — preflight
+- 55 rules total. Tool-enforced (linter / A1–A5 / vo_pipeline / gate dims /
+  upload / preflight / render+finish artifacts): 38 (69%) — preflight
   (`tools/preflight.py`, self-tested per L-066) newly covers S7, G2, the C1
-  keyword cap, the S1 scan and a C6 Math.random guard. Process-only: 13 —
+  keyword cap, the S1 scan and a C6 Math.random guard. Process-only: 17 —
   human/agent discipline marked "process" above.
 - Every rule cites at least one ledger lesson or measured report. No rule is
   asserted from opinion. UNVERIFIED items: none at rule level (parameters
