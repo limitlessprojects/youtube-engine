@@ -1,0 +1,16 @@
+{
+  "short": "short-0004",
+  "lines": [
+    { "key": "hook", "role": "narration", "narration": "Why is the sky blue? The famous answer: oceans." },
+    { "key": "s0", "role": "narration", "narration": "Blue sea below. Blue sky above. Seems obvious. It's wrong." },
+    { "key": "s1", "role": "narration", "narration": "The Sahara sits a thousand kilometers from any sea." },
+    { "key": "s2", "role": "narration", "narration": "Its sky? Just as blue." },
+    { "key": "s3", "role": "narration", "narration": "So what actually paints it? Sunlight, hitting air." },
+    { "key": "s4", "role": "narration", "narration": "Air flings blue sideways, six times harder than red." },
+    { "key": "s5", "role": "narration", "narration": "Every patch of sky becomes a tiny blue lamp." },
+    { "key": "s6", "role": "narration", "narration": "Aim your eyes away from the sun — deepest blue." },
+    { "key": "s7", "role": "narration", "narration": "That's the sky. Not a mirror — a lamp." },
+    { "key": "s8", "role": "narration", "narration": "And the ocean? Water eats red, keeps blue." },
+    { "key": "s9", "role": "narration", "narration": "Sky and sea never painted each other. They just matched." }
+  ]
+}

@@ -14,11 +14,20 @@ on:
       slug:
         description: "content slug, e.g. short-0003"
         required: true
+      speed:
+        description: "prosody_speed rate knob (day-010): default 1.25 — Fish 1.0 ran 161 WPM, below the 185-215 band"
+        required: false
+        default: "1.25"
+        type: string
   workflow_call:
     inputs:
       slug:
         required: true
         type: string
+      speed:
+        required: false
+        type: string
+        default: "1.25"
 
 permissions:
   contents: write
@@ -44,6 +53,7 @@ jobs:
         env:
           FISH_AUDIO_KEY: ${{ secrets.FISH_AUDIO_KEY }}
           SLUG: ${{ inputs.slug }}
+          SPEED: ${{ inputs.speed }}
         run: |
           set -e
           mkdir -p "content/$SLUG/vo/fish"
@@ -64,7 +74,8 @@ jobs:
               if out.exists() and out.stat().st_size > 512:
                   ok += 1; continue
               body = {"text": ln["narration"].replace(" — ", ", "), "format": "mp3",
-                      "reference_id": ref}
+                      "reference_id": ref,
+                      "prosody_speed": max(0.5, min(2.0, float(os.environ.get("SPEED", "1.25"))))}
               for attempt in range(3):
                   r = requests.post(api, headers=hdr, json=body, timeout=120)
                   if r.status_code in (402, 429):

@@ -1,0 +1,160 @@
+{
+  "title": "Why is the sky blue? (It's not the ocean)",
+  "format": "short",
+  "hook": {
+    "timestamp_start": 0.0,
+    "narration": "Why is the sky blue? The famous answer: oceans.",
+    "visual": {
+      "pose": "skygawk (shield-eyes up at the azure dome)",
+      "prop": "sea band + azure sky + kinetic title (title IS the caption)",
+      "background": "day-shore"
+    },
+    "fact_sources": [
+      "myth documented as misconception — Royal Observatory Greenwich, 'Why is the sky blue?'"
+    ],
+    "audio_dur_s": 2.63
+  },
+  "scenes": [
+    {
+      "timestamp_start": 2.88,
+      "narration": "Blue sea below. Blue sky above. Seems obvious. It's wrong.",
+      "visual": {
+        "pose": "lean (skeptical, brow raised)",
+        "prop": "mirror-symmetry sky/sea shimmer → crack splits the symmetry",
+        "background": "day-shore"
+      },
+      "fact_sources": ["same RMG misconception line — the symmetry is the seduction"],
+      "audio_dur_s": 2.92
+    },
+    {
+      "timestamp_start": 6.05,
+      "narration": "The Sahara sits a thousand kilometers from any sea.",
+      "visual": {
+        "pose": "shield (hand shading eyes on dune crest)",
+        "prop": "full-frame dunes + brilliant azure sky, scarf whipping",
+        "background": "desert"
+      },
+      "fact_sources": ["inland skies equally blue = entailment of the mechanism (RMG: cause is the atmosphere, not the ocean)"],
+      "audio_dur_s": 2.63
+    },
+    {
+      "timestamp_start": 8.93,
+      "narration": "Its sky? Just as blue.",
+      "visual": {
+        "pose": "present (open palm up at the dome)",
+        "prop": "same dune frame, sky saturates + 'SAME BLUE.' stamp",
+        "background": "desert"
+      },
+      "fact_sources": ["same — observable fact + mechanism entailment"],
+      "audio_dur_s": 1.46
+    },
+    {
+      "timestamp_start": 10.64,
+      "narration": "So what actually paints it? Sunlight, hitting air.",
+      "visual": {
+        "pose": "point (up-left at the incoming beam)",
+        "prop": "white beam slams into a bright air slab, spark burst on impact",
+        "background": "day-sky panel"
+      },
+      "fact_sources": ["HyperPhysics: scattering of sunlight off atmospheric molecules gives the blue sky"],
+      "audio_dur_s": 2.34
+    },
+    {
+      "timestamp_start": 13.23,
+      "narration": "Air flings blue sideways, six times harder than red.",
+      "visual": {
+        "pose": "present (diagram at side)",
+        "prop": "molecule ricochet: blue photon bounces wild, red drifts straight, 'BLUE ≈ 6×'",
+        "background": "day-sky panel"
+      },
+      "fact_sources": ["Rayleigh ∝ 1/λ⁴; (700/450)⁴ = 5.86 ≈ six (computed day-009; do NOT say ten)"],
+      "audio_dur_s": 2.63
+    },
+    {
+      "timestamp_start": 16.11,
+      "narration": "Every patch of sky becomes a tiny blue lamp.",
+      "visual": {
+        "pose": "amazed (arms half-up under the dome)",
+        "prop": "sky dome fills with glowing lamp patches popping in sequence",
+        "background": "day-sky"
+      },
+      "fact_sources": ["scattered blue arrives from all directions — RMG/HyperPhysics mechanism restated as image"],
+      "audio_dur_s": 2.63
+    },
+    {
+      "timestamp_start": 18.99,
+      "narration": "Aim your eyes away from the sun — deepest blue.",
+      "visual": {
+        "pose": "point (away from sun icon)",
+        "prop": "two swatches: AWAY FROM SUN (saturated) vs TOWARD SUN (washed)",
+        "background": "day-sky panel"
+      },
+      "fact_sources": ["HyperPhysics blusky.html — sky more saturated further from the sun (Mie glare washes near-sun sky)"],
+      "audio_dur_s": 2.63
+    },
+    {
+      "timestamp_start": 21.87,
+      "narration": "That's the sky. Not a mirror — a lamp.",
+      "visual": {
+        "pose": "smug (arms crossed then open)",
+        "prop": "mirror shatters → glowing lamp icon remains, 'NOT A MIRROR' struck through",
+        "background": "day-sky"
+      },
+      "fact_sources": ["restatement — no new claim"],
+      "audio_dur_s": 2.34
+    },
+    {
+      "timestamp_start": 24.46,
+      "narration": "And the ocean? Water eats red, keeps blue.",
+      "visual": {
+        "pose": "peerdown (over the water)",
+        "prop": "ocean cross-section: red photons sink + fade, blue keeps going deep",
+        "background": "sea-cross-section"
+      },
+      "fact_sources": ["LoC Everyday Mysteries 'Why is the ocean blue?' + Siegel: water preferentially absorbs red; blue penetrates deepest and back-scatters"],
+      "audio_dur_s": 2.34
+    },
+    {
+      "timestamp_start": 27.05,
+      "narration": "Sky and sea never painted each other. They just matched.",
+      "visual": {
+        "pose": "relaxed (small smile, loop mirror of hook)",
+        "prop": "hook composition returns — sky lamp + sea glow independent; kinetic closer 'THEY JUST MATCHED.'",
+        "background": "day-shore"
+      },
+      "fact_sources": ["restatement + inversion of the RMG-documented myth — no new claim"],
+      "audio_dur_s": 2.92
+    }
+  ],
+  "sfx": [
+    { "at": 1.0,  "kind": "blip",   "gain": 0.6 },
+    { "at": 2.2,  "kind": "thump",  "seed": 21, "gain": 0.7 },
+    { "at": 5.6,  "kind": "riser",  "gain": 0.5 },
+    { "at": 6.2,  "kind": "whoosh", "seed": 5, "f_lo": 500, "f_hi": 2400, "gain": 0.6 },
+    { "at": 9.0,  "kind": "thump",  "seed": 22, "gain": 0.85 },
+    { "at": 10.9, "kind": "thump",  "seed": 23, "gain": 0.55 },
+    { "at": 12.9, "kind": "riser",  "gain": 0.75 },
+    { "at": 13.3, "kind": "thump",  "seed": 24, "gain": 0.9 },
+    { "at": 15.6, "kind": "whoosh", "seed": 6, "f_lo": 700, "f_hi": 3200, "gain": 0.7 },
+    { "at": 16.4, "kind": "thump",  "seed": 25, "gain": 0.8 },
+    { "at": 17.0, "kind": "blip",   "gain": 0.5 },
+    { "at": 17.5, "kind": "blip",   "gain": 0.5 },
+    { "at": 18.0, "kind": "blip",   "gain": 0.55 },
+    { "at": 22.2, "kind": "whoosh", "seed": 8, "f_lo": 400, "f_hi": 2600, "gain": 0.9 },
+    { "at": 22.4, "kind": "thump",  "seed": 26, "gain": 0.95 },
+    { "at": 24.7, "kind": "riser",  "gain": 0.55 },
+    { "at": 25.4, "kind": "thump",  "seed": 27, "gain": 0.6 },
+    { "at": 26.2, "kind": "blip",   "gain": 0.5 },
+    { "at": 28.4, "kind": "riser",  "gain": 0.7 },
+    { "at": 29.3, "kind": "thump",  "seed": 28, "gain": 0.8 }
+  ],
+  "timeline": {
+    "fps": 30,
+    "total_s": 30.2,
+    "gap_s": 0.25,
+    "voice": "TBD — A/B: edge-tts en-US-AndrewNeural rate +25% vs Fish s2.1-pro-free prosody_speed 1.25 (day-010 knob); pick by ASR WER, pacing band tiebreak",
+    "words": 94,
+    "wpm_planned": 187,
+    "wpm_at_ship_rate": 205
+  }
+}

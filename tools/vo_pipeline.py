@@ -32,7 +32,7 @@ VOICE = "en-US-AndrewNeural"
 # short-0003 vs the shipped #0002 at 207 (same measure) — scripts set
 # VO_RATE to match the 200-210 band; default stays the day-007 value.
 RATE = os.environ.get("VO_RATE", "+45%")
-GAP_S = 0.45
+GAP_S = float(os.environ.get("VO_GAP_S", "0.45"))  # day-010: 0.25 for the brisk cut-density class (L-075)
 PASS_WER, WARN_WER = 0.15, 0.30
 
 # TTS text normalization: em-dashes read inconsistently in neural TTS; commas breathe.
