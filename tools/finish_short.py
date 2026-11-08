@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Finish a short: VO assembly at synced timestamps -> -14 LUFS master -> mux.
+"""DEPRECATED (engine-v1 era): use tools/finish_v3.py (synth sound design +
+verified bed ducking + pipe-encode). Kept as the minimal no-SFX fallback.
+
+Finish a short: VO assembly at synced timestamps -> -14 LUFS master -> mux.
 
 Usage: tools/finish_short.py <slug>
 

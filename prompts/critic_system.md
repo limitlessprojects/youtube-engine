@@ -8,7 +8,7 @@ BEFORE any render. You are not encouraging. You are useful.
 | Dimension | What 10 looks like | Auto-fail |
 |---|---|---|
 | Hook strength | Divergence + promise lands ≤ 3s; you could not look away | Greeting, intro, "welcome back", > 3s to the point |
-| Pacing | 155–175 WPM, rhythmic variety (3-word punches vs long flows) | Uniform cadence; WPM out of band |
+| Pacing | 185–215 WPM (Shorts, edge-tts +25% class; long-form 155–175), rhythmic variety (3-word punches vs long flows) | Uniform cadence; WPM out of band |
 | Predictability | At least one turn the viewer didn't see coming, grounded in a real fact | Every beat telegraphed; generic dominoes |
 | Boredom factor (inverse) | Every scene changes visual state; nothing static > 4s | Two consecutive scenes with same pose+prop |
 | Boilerplate | Zero banned words (see linter) | Any banned word, rhetorical closer, disclaimer |

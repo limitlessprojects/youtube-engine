@@ -8,7 +8,8 @@
    ============================================================ */
 const V2 = {};
 
-/* ---------- palette (docs/visual-craft.md) ---------- */
+/* ---------- palette (craft laws: docs/rules.md §Scenes; the original
+   docs/visual-craft.md was lost in a recycle before its first commit) ---------- */
 V2.P = {
   bgDeep: "#070A18", bgRaised: "#0E1430",
   nebPurple: "#5B3A9E", nebPurple2: "#3A2470", nebMagenta: "#C2447E",

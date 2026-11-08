@@ -1,102 +1,78 @@
-# youtube-engine
+# youtube-engine — an autonomous "What If" stickman Shorts studio
 
-**The operating base for our autonomous YouTube channel.** One repo that holds the
-lessons ledger, the skill stack, the competitor-research pipeline, the tools, and the
-daily scheduler. Everything the channel learns lives here; everything the channel
-makes starts here.
+One repo holds everything the channel knows and makes: the pipeline, the rules,
+the research loop, and the daily paper trail. Channel: **Jack Blessed**
+(@JackBlessed-u5x). Format: "What If" stickman explainers, Shorts 30–60s daily.
 
-- Channel format: **"What If" stickman explainers** (Shorts 30–60s daily + long-form 8–12min 2×/week)
-- Non-negotiables: zero AI boilerplate, retention-first structure, VLM-checked frames,
-  synthetic-content disclosure on every upload, daily paper trail
+**READ THIS FIRST if you are a fresh agent:** your whole job tonight is in
+`docs/plan-30d.md` (status + today's deliverable) and `docs/playbook/` (how).
+The gate decides what ships — never your enthusiasm (`docs/playbook/gate.md`).
 
----
-
-## Repo map
+## The pipeline in 10 steps
 
 ```
-youtube-engine/
-├── lessons/        The daily ledger. What we learned, what we change tomorrow.  ← START HERE
-├── docs/           Strategy, architecture, tooling registry, YouTube OAuth guide
-├── prompts/        System prompts: scriptwriter, harsh critic, VLM inspector, blueprint analyst
-├── skills/         The 13-skill stack registry (sources + roles + status)
-├── tools/          Executable pipeline: transcribe (6-path + proxy ladder), blueprint, linter, TTS, render, VLM gate, master, upload, daily loop
-├── vendor/         Git submodules of the skills/repos we build on (pinned commits)
-├── config/         Competitor channels + learning queue (video URLs to process next)
-├── research/       Output: transcripts/ and structural blueprints/ of competitor videos
-├── logs/           Daily execution logs (auto-appended by the scheduler)
-└── .github/
-    └── workflows/  daily-loop.yml — GitHub Actions scheduler (06:00 UTC daily + manual)
+1  topic (formula rotation)                     docs/plan-30d.md
+2  script draft + fact-check                    prompts/scriptwriter_system.md
+3  lint + critic (N=2 cap)                      tools/script_linter.py
+4  VO synth → measure → ASR verify → timeline   tools/vo_pipeline.py        [playbook/voiceover.md]
+5  scenes.html authoring (engine/*.js)          content/<slug>/render/      [playbook/scenes.md]
+6  keyframe render + vlm_gate loop (≤2/scene)   tools/render_short.py, tools/vlm_gate.py
+7  full render + audio finish (−14 LUFS)        tools/finish_v3.py          [playbook/audio.md]
+8  ULTRACRITIC: A1–A5 + frame pass + video pass tools/ultracritic.py        [playbook/gate.md]
+9  publish ONLY on PUBLISH_APPROVED             tools/youtube_upload.py     [playbook/publish.md]
+10 ledger + log + commit + push                 docs/lessons.md, logs/
 ```
 
-## The daily loop (runs itself)
+Steps 2–10 are the nightly loop (~40 min target). A short that doesn't clear
+the bar after 3 rounds is carried with its report — cadence debt is paid, never
+forgiven silently.
 
-Every day at 06:00 UTC a GitHub runner:
+## Where everything lives
 
-1. Pops the next video off `config/learning_queue.txt`
-2. Transcribes it (captions via `youtube-transcript-api`; Whisper fallback locally via
-   `vendor/Youtube_transcriber`)
-3. Extracts a **structural blueprint** — hook length, WPM, sentence rhythm, cut density,
-   open-loop markers — into `research/blueprints/`
-4. Appends the day's log to `logs/YYYY-MM-DD.md` and commits back to this repo
-
-Queue a new competitor video:
-
-```bash
-echo "https://www.youtube.com/watch?v=VIDEO_ID" >> config/learning_queue.txt
-```
-
-Run the loop locally:
-
-```bash
-pip install -r requirements.txt
-python tools/daily_loop.py
-```
-
-## The 13-skill stack (short version)
-
-| # | Skill | Source | Role |
-|---|-------|--------|------|
-| 1 | stickman-video-director | `kaomei/stickman-video-director` (submodule) | Script → multi-style stickman video |
-| 2 | what-if-animation | `kelano86/what-if-animation` (submodule) | 7-beat What-If formula, SVG+Remotion, 11-pt self-check |
-| 3 | tool-reel-system | `kelano86/tool-reel-system` (submodule) | Reverse-engineered reel script + edit formula |
-| 4 | Youtube_transcriber | `Rakile/Youtube_transcriber` (submodule) | The "youtubecheck": competitor transcripts via Whisper |
-| 5 | motionmaxxing | our fork (submodule) | Turns AI-slop motion into designer-grade films |
-| 6 | motion-skills | our fork (submodule) | 50 motion-graphics skills, 14 installable packs |
-| 7 | anthropic skills | `anthropics/skills` (submodule) | docx/pdf/pptx/xlsx/canvas-design/skill-creator |
-| 8 | Remotion | `remotion-dev/remotion` (npm dep) | Programmatic video assembly |
-| 9 | Manim GX | our fork `manimgx` (noted) | Math/3D animation engine, Rust GPU core |
-| 10 | Fish Audio TTS | in-house `tools/fish_tts.py` | s2.1-pro-free narration, daily free quota |
-| 11 | VLM Inspector | in-house `prompts/vlm_inspector.md` | Frame-by-frame QC before any render ships |
-| 12 | Openclip | our fork `Openclip` (noted) | Competitor video → study clips |
-| 13 | unslop | our fork `unslop` (noted) | De-AI-ifies anything that looks vibecoded |
-
-Full details, provenance and status: [`skills/REGISTRY.md`](skills/REGISTRY.md) and
-[`docs/tooling.md`](docs/tooling.md) (25+ repos verified and catalogued).
-
-## Secrets (never in code)
-
-GitHub Actions secrets on this repo (encrypted at rest by GitHub):
-
-| Secret | Used for |
+| Path | What |
 |---|---|
-| `FISH_AUDIO_KEY` | TTS narration |
-| `GOOGLE_CLIENT_ID` | YouTube OAuth client |
-| `GOOGLE_CLIENT_SECRET` | YouTube OAuth client |
-| `YOUTUBE_TOKEN_JSON` | Full OAuth token JSON (upload scope, refresh token) |
-| `YTA_PROXY` (optional) | Explicit proxy for the transcribe chain |
-| `YTDLP_COOKIES` (optional) | Logged-in cookie jar that softens the bot-wall |
+| `docs/plan-30d.md` | **today's mission**: phases, status, forks, risks |
+| `docs/playbook/` | one file per stage: script, voiceover, scenes, audio, render-encode, gate, publish, research |
+| `docs/rules.md` | every hard rule + evidence + the tool that enforces it |
+| `docs/parameters.md` | every tuned constant + why (WPM band, bar 7.5, bed levels…) |
+| `docs/lessons.md` | the ledger, deduplicated and grouped (raw history in `docs/_archive/`) |
+| `docs/dead-ends.md` | tried and failed — read before experimenting |
+| `docs/registry.md` | every skill/repo we build on (verified only) |
+| `skills/stickman-whatif/` | the production skill: SKILL.md + templates + exemplars |
+| `engine/` | the render engine (rig, world, diagram, caption modules) |
+| `tools/` | executable pipeline — every file has a docstring; `tools/preflight.py` runs the cheap checks |
+| `content/short-NNNN/` | per-short spec: script.json, vo/, render/scenes.html, gate/ (verdict trail) |
+| `prompts/` | system prompts: scriptwriter, critic, VLM inspector, blueprint analyst |
+| `research/`, `config/`, `logs/` | competitor blueprints, queue, daily logs + views.csv |
+| `vendor/` | pinned submodules (what-if-animation is the backbone — see registry) |
+| `docs/_archive/` | raw history. Never deleted, never referenced by active docs. |
 
-Local-only twin lives outside this repo at `~/.secrets/` — `token.json`,
-`client_secret.json` and any key material are gitignored and must never be committed.
+## The daily loop (runs itself + you)
 
-## Publishing
+- **GitHub Actions (20:00 UTC):** the LLM-free research heartbeat — transcribe
+  queue head via the 5-leg bot-wall ladder, blueprint it, log + commit
+  (`docs/playbook/research.md`).
+- **Agent session (23:45 EAT, platform cron):** restore check → review the run →
+  views → pay any carry debt → advance the next short through steps 2–10 → ledger.
 
-`tools/youtube_upload.py` refreshes the OAuth token and uploads via the YouTube Data API
-resumable protocol. Every upload must tick **"Altered or Synthetic Content: Yes"** and
-follow the monetization guardrails in [`docs/content-strategy.md`](docs/content-strategy.md).
+## Non-negotiables
+
+- The ultracritic bar is the publish authority: **≥7.5 mean, every dim ≥7.0, no
+  frame <6.0, video pass required.** Below = NO POST, carry with report.
+- Zero AI boilerplate (linter-enforced), fact-checked claims with sources,
+  synthetic-content disclosure ON every upload (automated), one Short daily.
+- Measure, never estimate. Every number in every entry has an artifact.
+- Atomic pushes after every milestone — the sandbox dies; the repo doesn't.
+  Recovery: `bash ~/scripts/restore_workstation.sh --from-upload` (~2 min).
+
+## Secrets
+
+GitHub Actions secrets: `FISH_AUDIO_KEY`, `GOOGLE_CLIENT_ID`,
+`GOOGLE_CLIENT_SECRET`, `YOUTUBE_TOKEN_JSON` (+ optional `YTA_PROXY`,
+`YTDLP_COOKIES`). Local twins live outside the repo in `~/.secrets/`, mirrored
+to `upload/` (recycles never touch it). Never commit key material.
 
 ## License
 
-Our code: MIT (see LICENSE). Vendored skills keep their own licenses — see each
-submodule. `what-if-animation` and `tool-reel-system`: verify license before any
-commercial use (noted in tooling registry).
+Our code: MIT. Vendored skills keep their own licenses (see each submodule);
+`what-if-animation` and `tool-reel-system`: verify before commercial use.

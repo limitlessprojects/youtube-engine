@@ -45,5 +45,7 @@ content/*/render/scenes.built.html
 content/*/gate/*
 content/*/*.mp4
 !content/*/gate/report.json
+!content/*/gate/ultracritic_r*.json
+!content/*/gate/notes.json
 content/*/vo/*.wav
 content/*/vo/master.m4a
