@@ -100,6 +100,28 @@ A channel with 20+ live videos, a repeatable v3 pipeline that one agent
 session runs in under an hour, one proven outlier formula, and a ledger
 that any future agent (or human) can read as the operating manual.
 
+## Day-010 amendment (boss-feedback session — THE GATE LAW)
+
+1. **The ultracritic is the publish authority** (boss directive 2026-11-08):
+   every short must pass `tools/ultracritic.py` — mechanical A1–A5 + frame
+   pass + glm-4.6v video pass — at **mean ≥ 7.5, every dim ≥ 7.0, no frame
+   < 6.0** before youtube_upload runs. Threshold calibrated by measurement
+   (L-078: the boss-criticized #0003 measures 5.20 on the same rubric).
+   Below bar after 3 rounds → NO POST, carry with the report; cadence debt
+   is paid at the next session, never forgiven silently.
+2. **Structure law** (L-073/075/076/077): beat 1 names the topic; mean scene
+   ≤3.2s / max ≤4.2s / ≥12 visual events; ONE text system per scene, ≤8
+   words on screen (keyword pills only; full-sentence captions banned); one
+   spine one closer — no new entities in the last two scenes.
+3. **Audio is measured, never trusted** (L-074): A5 bed check gates the
+   master (non-VO RMS 6–22 dB under VO). The #0003 bed was inaudible by two
+   stacked bugs under a comment claiming otherwise.
+4. **Day-010 carry**: #0004 finished at 6.92 vs 7.5 (pacing 8.0,
+   character_life 8.0, text 7.4 — but visual_hierarchy 6.1 and 4 floor
+   frames). Tonight's 23:45 session iterates the r4 directives and re-gates;
+   if it clears, it posts and cadence holds. #0005 (superlative formula)
+   starts after #0004 ships.
+
 ## Day-009 amendment (nightly session, first scheduled run)
 
 1. **Scheduler confirmed live** (cron 512816 fired 23:45 EAT on the dot). The
