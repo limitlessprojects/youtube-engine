@@ -33,7 +33,7 @@ def fetch() -> list[dict]:
         vid = e.findtext("yt:videoId", namespaces=NS)
         title = (e.findtext("a:title", namespaces=NS) or "").strip()
         pub = (e.findtext("a:published", namespaces=NS) or "")[:10]
-        stats = e.find("media:community/media:statistics", NS)
+        stats = e.find("media:group/media:community/media:statistics", NS)
         views = int(stats.get("views", "0")) if stats is not None else 0
         rows.append({"video_id": vid, "title": title, "published": pub, "views": views})
     return rows
