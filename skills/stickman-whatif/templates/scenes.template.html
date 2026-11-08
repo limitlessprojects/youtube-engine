@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#0A0E1E;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   <SLUG> — "<TITLE>"
+   ENGINE V3 boilerplate (copy from the newest exemplar if it has
+   drifted — this file is the minimal skeleton).
+   LAWS IN FORCE (docs/rules.md):
+   · C1  one text system/scene ≤8 words (EMPHASIS pill ≤5 keywords;
+          null wherever a stamp/label IS the text)
+   · C4  no adjacent pose repeats + micro-motion (breath bob, blink)
+   · C5  cards breathe: ease-in ≥0.25 → hold ≥0.5 → ease-out
+   · C6  pure function of t (no Math.random — seed everything)
+   · C8  end-states persist (nothing animates out before scene end)
+   · C11 grade matches this world's time-of-day
+   Deterministic: every frame a pure function of t (L-043).
+   Timeline injected by tools/render_short.py (__TIMELINE__).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+
+/* ---------- world palette (define per-world; keep ONE accent/scene) ---------- */
+const WORLD = {
+  skyTop: "#123C8C", skyMid: "#1E5AC8", horizon: "#BFE0FF",
+  ground: "#E8C87A", panel: "#1D2F5E", panelLine: "#5566A0",
+  accent: "#FFB054", /* the ONE accent */
+};
+
+/* per-frame SVG defs (gradients/grain/vignette). Give every gradient/mask/clip
+   a UNIQUE id per use (vendor trap: shared ids across two draws of one set break). */
+function worldDefs() {
+  const D = V2.el("defs", {}, V2.root);
+  /* day vignette: LIGHT (a dusk-strength vignette reads as night — C11) */
+  const v = V2.el("radialGradient", { id: "dayVig", cx: "50%", cy: "42%", r: "75%" }, D);
+  V2.el("stop", { offset: "60%", "stop-color": "#000", "stop-opacity": 0 }, v);
+  V2.el("stop", { offset: "100%", "stop-color": "#04102E", "stop-opacity": 0.38 }, v);
+  /* grain on twos (drifts by t deterministically) */
+  const f = V2.el("filter", { id: "vGrain" }, D);
+  V2.el("feTurbulence", { type: "fractalNoise", baseFrequency: "0.9", numOctaves: 2,
+    seed: 7, stitchTiles: "stitch" }, f);
+  return D;
+}
+
+/* ---------- poses: distinct per scene, NO adjacent repeats (rule C4) ----------
+   Rig math (rule C7): arm/leg angles measured from straight DOWN;
+   forearm absolute angle a2 = a + b. Arms-up ⇒ small |b| (a2 ≈ 150°). */
+const POSES = {
+  gawk:    { tilt: -4, headTilt: -16, look: 0.15, expr: "shock",
+             armL: { a: 24, b: -30 }, armR: { a: 150, b: -96 }, handR: "open" },
+  lean:    { tilt: 6, yaw: 0.45, look: 0.5, headTilt: -6, expr: "skeptical",
+             armL: { a: 30, b: -110 }, armR: { a: 20, b: -14 } },
+  point:   { tilt: -2, look: -0.3, expr: "sure",
+             armR: { a: 120, b: -60 }, handR: "point" },
+  /* …one distinct pose per scene… */
+};
+
+/* ---------- SCENES: one draw function per scene id ----------
+   Contract: SCENES.<id>(u, t) where u = scene progress 0..1.
+   · cards/diagrams: ease-in ≥0.25 → HOLD the end-state (C5/C8)
+   · the hero: V2.hero(pose) with breath bob + blink built in
+   · text: either a stamp (EMPHASIS null) or ONE keyword pill (C1) */
+const SCENES = {
+  hook: (u, t) => {
+    /* premise visual at t=0 — never a caption. Kinetic title IS the text. */
+    const bob = Math.sin(t * 2.1) * 4;                       /* breath (C4) */
+    V2.hero({ ...POSES.gawk, x: 300, y: 1500 + bob, scale: 1.15 });
+    /* …premise visual + kinetic title… */
+  },
+  s0: (u, t) => {
+    const tau = t - TL[1].start;                             /* local seconds */
+    const k = V2.backOut(V2.clamp01(tau / 0.25));            /* ease-in 0.25 */
+    /* …scene content; HOLD the end-state through scene end (C8)… */
+  },
+  /* s1..sN: one per timeline scene */
+};
+
+/* local seconds inside scene n (TL index) */
+function tau0(t, n) { return t - TL[n].start; }
+
+/* caption keywords per scene — THE caption (L-076). null wherever a
+   stamp/label IS the text system (one system per scene, never two). */
+const EMPHASIS = {
+  hook: null,   /* kinetic title is the caption */
+  s0: null,
+  s1: ["keyword", "pill", "max", "five"],
+  /* … */
+  sN: null,
+};
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  worldDefs();
+  V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: WORLD.skyTop });
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++)
+    if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx];
+  const u = V2.clamp01((t - sc.start) / (sc.end - sc.start));
+  /* scene-entry soft-fade 0.12s (#0004 r2: soften seams, keep the cut rate) */
+  const entryK = V2.clamp01((t - sc.start) / 0.12);
+  (SCENES[sc.id] || SCENES.hook)(u, t);
+  if (entryK < 1)
+    V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: WORLD.skyTop,
+                    opacity: (1 - entryK) * 0.55 });
+  /* grade: LIGHT vignette + grain on twos (C11) */
+  V2.el("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#dayVig)" });
+  V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, filter: "url(#vGrain)",
+    opacity: 0.35, transform: `translate(${(Math.floor(t / 2) % 2) * 3} ${Math.floor(t / 2) % 3})` });
+  if (EMPHASIS[sc.id]) V2.caption(sc.narration, u, EMPHASIS[sc.id]);
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>

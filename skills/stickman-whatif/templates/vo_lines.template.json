@@ -1,0 +1,17 @@
+{
+  "_comment": "Template for content/<slug>/vo_lines.json — the VO line table (stage 2 input). key 'hook' = line 00, then s0..sN = lines 01.. This is what vo_pipeline reads; narration must match script.json exactly.",
+  "short": "short-NNNN",
+  "lines": [
+    {"key": "hook", "role": "narration", "narration": "…"},
+    {"key": "s0", "role": "narration", "narration": "…"},
+    {"key": "s1", "role": "narration", "narration": "…"},
+    {"key": "s2", "role": "narration", "narration": "…"},
+    {"key": "s3", "role": "narration", "narration": "…"},
+    {"key": "s4", "role": "narration", "narration": "…"},
+    {"key": "s5", "role": "narration", "narration": "…"},
+    {"key": "s6", "role": "narration", "narration": "…"},
+    {"key": "s7", "role": "narration", "narration": "…"},
+    {"key": "s8", "role": "narration", "narration": "…"},
+    {"key": "s9", "role": "narration", "narration": "…"}
+  ]
+}

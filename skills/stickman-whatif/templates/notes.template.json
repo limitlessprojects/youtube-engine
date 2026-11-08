@@ -1,0 +1,16 @@
+{
+  "_comment": "Template for content/<slug>/gate/notes.json — AUTHORITATIVE scene intent for the vlm_gate (rule G2: write BEFORE the first keyframe render). One entry per scene id (hook, s0..sN). State what is BY DESIGN: fast-beat timing, end-states, contrast choices, deliberate absences. The gate flags against these notes; stale/missing notes caused 5 false fails on #0003 (L-070). Keep each note 2-6 sentences, concrete.",
+  "notes": {
+    "hook": "The premise visual is on screen at t=0 (rule S2): <describe>. <What is by design: e.g. the kinetic title IS the caption here — no pill (rule C1).>",
+    "s0": "<Scene intent. E.g.: FAST STAMP BEATS (~1s each) — a keyframe shows ONLY the beat active at its timestamp; earlier beats are gone in later frames BY DESIGN (L-065).>",
+    "s1": "<E.g.: diagram scene on a dark stage panel. The <subject> is <lit/dark> BY DESIGN (rule C2: opposite value of ground). Links draw on one by one — early frames legitimately show fewer; gate the end-state (rule G4).>",
+    "s2": "…",
+    "s3": "…",
+    "s4": "…",
+    "s5": "…",
+    "s6": "…",
+    "s7": "…",
+    "s8": "…",
+    "s9": "<E.g.: the loop-out mirrors the hook composition; <element> fading in during the tilt is by design.>"
+  }
+}

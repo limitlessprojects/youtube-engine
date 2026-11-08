@@ -1,0 +1,43 @@
+{
+  "_comment": "Template for content/<slug>/script.json — stage 1 output. Fields: timestamp_start/audio_dur_s are FILLED BY THE VO STAGE (real measurements, rule V1); draft with 0.0 and update after vo_pipeline. fact_sources REQUIRED on every line (rule S7). sfx.at = final-timeline seconds. Copy from the newest exemplar (content/short-0004/script.json) when in doubt.",
+  "title": "Why is the sky blue? (It's not the ocean)",
+  "format": "short",
+  "hook": {
+    "timestamp_start": 0.0,
+    "narration": "ONE breath: the question names the topic (rule S3) + the promised subversion. ≤14 words (rule S2).",
+    "visual": {
+      "pose": "pose-name from your POSES table (rule C4: no adjacent repeats)",
+      "prop": "the premise visual, on screen at t=0 — never a caption",
+      "background": "world variant (e.g. day-shore, dusk-field)"
+    },
+    "fact_sources": ["source for any checkable claim — URL or named reference"],
+    "audio_dur_s": 0.0
+  },
+  "scenes": [
+    {
+      "timestamp_start": 0.0,
+      "narration": "Scene line. Short declaratives mixed with flowing ones (rule S8).",
+      "visual": {
+        "pose": "…",
+        "prop": "…",
+        "background": "…"
+      },
+      "fact_sources": ["…"],
+      "audio_dur_s": 0.0
+    }
+  ],
+  "sfx": [
+    {"at": 0.95, "kind": "blip", "gain": 0.6},
+    {"at": 2.35, "kind": "thump", "seed": 21, "gain": 0.7},
+    {"at": 5.50, "kind": "riser", "gain": 0.6},
+    {"at": 12.0, "kind": "whoosh", "seed": 3, "f_lo": 900, "f_hi": 3800, "gain": 0.8}
+  ],
+  "timeline": {
+    "fps": 30,
+    "total_s": 0.0,
+    "gap_s": 0.25,
+    "voice": "edge-tts en-US-AndrewNeural rate +25% (measured NNN WPM; 0 ASR fails)",
+    "words": 0,
+    "wpm_measured": 0
+  }
+}
