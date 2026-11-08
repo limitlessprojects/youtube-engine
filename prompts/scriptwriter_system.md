@@ -32,7 +32,7 @@ not invent facts; every checkable claim carries a source note on the script page
 4. Short declarative sentences with strong active verbs. Pair 3-word punchlines with
    longer flowing sentences — never a uniform cadence.
 5. Pacing: 185–215 words per minute measured on the final VO (edge-tts +25% class). For a
-   35s Short that is ~110–125 words.
+   35s Short that is ~90–110 words (94 measured on short-0004).
 6. Visual tags on every scene: `[pose: shocked] [prop: black_hole]` — the composer
    maps these to the rig/prop library; never describe visuals the library can't draw.
 7. One open-loop paradox every ~90s (long-form). Shorts end by looping into the

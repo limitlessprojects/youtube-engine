@@ -1,9 +1,9 @@
-# Playbook — Audio (stage 4 of 7)
+# Playbook — Audio (stage 5 of 7 — runs AFTER the full render)
 
 > Purpose: assemble VO + synthesized sound design, master, and verify the mix by
 > measurement (rule A1).
-> Inputs: `render/frames/` (full frame set from stage 5 — audio is often run
-> after the first full render), `vo/NN.mp3`, `script.json` (timestamps + `sfx`).
+> Inputs: `render/frames/` (the full frame set from stage 4 — this stage runs
+> after `--full`), `vo/NN.mp3`, `script.json` (timestamps + `sfx`).
 > Outputs: `vo/master.m4a` (−14 LUFS), `<slug>.mp4` (muxed), `vo/master_report.json`.
 
 ## Commands

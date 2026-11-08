@@ -1,4 +1,4 @@
-# Playbook — Render & encode (stage 5 of 7)
+# Playbook — Render & encode (stage 4 of 7)
 
 > Purpose: turn scenes.html into frames (gate probes first, full pass only when
 > the gates are green) and encode the final mp4.

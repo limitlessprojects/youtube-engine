@@ -30,7 +30,7 @@ Anchor examples per dimension (real measured frames — full trails in
 
 | Dimension | A 4 looks like | A 7 looks like | A 9 looks like |
 |---|---|---|---|
-| text_discipline | #0003: full-sentence captions, up to 22 words, two competing text systems (measured 2.8) | #0004: one keyword pill ≤5 words or one kinetic title, ≤7 words/frame (measured 7.4) | one clean system, ≤6 words, perfectly timed pops (not yet achieved) |
+| text_discipline | #0003: full-sentence captions, up to 22 words, two competing text systems (measured 2.8) | #0004: one keyword pill ≤5 words or one kinetic title, ≤7 words/frame (cap is 8, rule C1; measured 7.4) | one clean system, ≤6 words, perfectly timed pops (not yet achieved) |
 | pacing_rhythm (video pass) | #0003: 4.22s mean static holds, 8 beats in 34s (measured 5.5) | #0004: 2.83s mean, 11 beats + sub-beat stamps (measured 8.0) | same, plus varied beat lengths inside 1.2–3.9s with motivated cuts |
 | character_life (video pass) | #0003: one pointing gesture all video (measured 6.2) | #0004: 11 poses, blinks, breath bob (measured 8.0) | character reacts to each beat — anticipation, hold, overshoot |
 | contrast_legibility | #0003: white beams + pale dots on dark sky, min 4 | #0004: subjects opposite value of ground (measured 7.2) | every element survives a 6-inch phone in daylight |
@@ -149,6 +149,6 @@ Eyeball before the first `--keyframes` (no tool can check these):
 - Bar calibration + threshold changes: `docs/lessons.md` (L-078) and
   `docs/parameters.md` §Gate. Thresholds change ONLY with a ledger amendment
   (rule G6) — never silently.
-- Raw daily history: `docs/_archive/lessons/` (never referenced by active docs).
+- Raw daily history: `docs/_archive/lessons/` (provenance only — operational knowledge lives in the active docs).
 - Vendor craft sources: `vendor/what-if-animation/references/` (look.md,
   traps.md), `vendor/motionmaxxing/references/` (motion, judgment).

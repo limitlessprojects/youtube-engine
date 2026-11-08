@@ -19,8 +19,8 @@
 
 | Step | Action | Tool |
 |---|---|---|
-| 1 | Restore check (`.git` present? else run `~/scripts/restore_workstation.sh --from-upload` outside the repo) | shell |
-| 2 | Pull + review the 20:00 UTC Actions run (radar/blueprints) | `logs/` |
+| 1 | Restore check (`.git` present? else run `bash /home/z/my-project/scripts/restore_workstation.sh --from-upload`) | shell |
+| 2 | Pull + review the 20:00 UTC Actions run (no new log? the run may not have fired — check the Actions tab, don't assume) | `logs/` |
 | 3 | Log channel views | `tools/views_tracker.py` |
 | 4 | Carry-debt first: if a short sits BELOW_BAR, iterate its latest `gate/ultracritic_r*.json` directives, re-gate | `tools/ultracritic.py <slug> --round N+1` |
 | 5 | Advance the next short: script → VO → scenes → render → gates → publish | `docs/playbook/` |
@@ -29,7 +29,7 @@
 ## Status right now (end of Day 011 consolidation session)
 
 - Published: #0001 (KKyrNUGZXcU, engine v1), #0002 (CZbJmmeyUc4, v3 debut), #0003 (DeaEvEduh88, boss-criticized, ultracritic 5.20).
-- **Carry: short-0004** — verdict 6.92 vs 7.5 bar (pacing 8.0, character_life 8.0, text 7.4, contrast 7.2; drags: visual_hierarchy 6.1, hook_impact 6.4, 4 frames under the 6.0 floor). The r4 directive notes were lost with the recycle (BUG-1, `docs/_audit/inventory.md`); the surviving directive trail is in the day-010 ledger entry + the commit message of f559a13: **NOPE hold idle, cadence variety in 12–28s, loop character position**. Tonight's session re-derives r4 directives from the current frames (re-render `--keyframes`, run `--round 5` fresh) rather than trusting memory.
+- **Carry: short-0004** — verdict 6.92 vs 7.5 bar (pacing 8.0, character_life 8.0, text 7.4, contrast 7.2; drags: visual_hierarchy 6.1, hook_impact 6.4, 4 frames under the 6.0 floor). The r4 directive notes were lost with the recycle (BUG-1, `docs/_audit/inventory.md`); the surviving directive hints — **NOPE hold idle, cadence variety in 12–28s, loop character position** — live in the day-010 ledger entry (`docs/_archive/lessons/2026-11-08-day010.md`) and `skills/stickman-whatif/examples/README.md`. Note: a carried short has no mp4 on disk (gitignored) — re-render `--full` before the video pass. Tonight's session re-derives r4 directives from the current frames (re-render `--keyframes`, run `--round 5` fresh) rather than trusting memory.
 - Consolidation session (today) restructured all docs; thresholds and pipeline behavior unchanged.
 - Boss action items open: channel phone-verify (unlocks custom thumbnails via `thumbnails.set`); #0002 hook frame (7.5/10) is waiting for it.
 
@@ -68,7 +68,7 @@
 
 | Risk | Signal | Response |
 |---|---|---|
-| Sandbox recycle | `.git` missing | restore flow (upload/ mirrors + PAT; ~2 min, proven 5×) |
+| Sandbox recycle | `.git` missing | `bash /home/z/my-project/scripts/restore_workstation.sh --from-upload` (~2 min, proven 5×) |
 | OAuth refresh dies | upload 401 | boss re-verifies the Google app (project nura-health) |
 | Bot-wall blocks queue head | blocked N days | rotate queue; radar continues on RSS/oEmbed |
 | ASR quota flake | empty verify lines | 2s backoff, accept documented biases (L-066) |

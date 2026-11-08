@@ -45,7 +45,7 @@ forgiven silently.
 | `prompts/` | system prompts: scriptwriter, critic, VLM inspector, blueprint analyst |
 | `research/`, `config/`, `logs/` | competitor blueprints, queue, daily logs + views.csv |
 | `vendor/` | pinned submodules (what-if-animation is the backbone — see registry) |
-| `docs/_archive/` | raw history. Never deleted, never referenced by active docs. |
+| `docs/_archive/` | raw history. Never deleted; never *depended on* for operational knowledge (provenance citations only). |
 
 ## The daily loop (runs itself + you)
 
@@ -63,14 +63,15 @@ forgiven silently.
   synthetic-content disclosure ON every upload (automated), one Short daily.
 - Measure, never estimate. Every number in every entry has an artifact.
 - Atomic pushes after every milestone — the sandbox dies; the repo doesn't.
-  Recovery: `bash ~/scripts/restore_workstation.sh --from-upload` (~2 min).
+  Recovery: `bash /home/z/my-project/scripts/restore_workstation.sh --from-upload` (~2 min).
 
 ## Secrets
 
 GitHub Actions secrets: `FISH_AUDIO_KEY`, `GOOGLE_CLIENT_ID`,
 `GOOGLE_CLIENT_SECRET`, `YOUTUBE_TOKEN_JSON` (+ optional `YTA_PROXY`,
-`YTDLP_COOKIES`). Local twins live outside the repo in `~/.secrets/`, mirrored
-to `upload/` (recycles never touch it). Never commit key material.
+`YTDLP_COOKIES`). Local twins live at `/home/z/my-project/.secrets/` (outside this repo),
+durable mirrors in `/home/z/my-project/upload/` (the one directory sandbox
+recycles never touch). Never commit key material.
 
 ## License
 

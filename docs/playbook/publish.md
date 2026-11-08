@@ -11,7 +11,7 @@
 ```bash
 python3 tools/youtube_upload.py --file content/<slug>/<slug>.mp4 \
   --title "…" --description "…" --tags "what if,stickman,science" --privacy public \
-  --token-file ~/.secrets/token.json
+  --token-file /home/z/my-project/.secrets/token.json
 # then record:
 #   content/<slug>/published.json  (see short-0003's for the shape)
 # then views land nightly via tools/views_tracker.py (48h freshness rule).
@@ -32,8 +32,9 @@ the tool docstring; secrets map below.
 | `YOUTUBE_TOKEN_JSON` | Full token.json (access + refresh) |
 | `YTA_PROXY` / `YTDLP_COOKIES` (optional) | bot-wall softeners for the research ladder |
 
-Local twin lives OUTSIDE the repo (`~/.secrets/`, mirrored in `upload/` which
-recycles never touch — L-058). Never commit token material.
+Local twin lives at `/home/z/my-project/.secrets/` (outside this repo),
+mirrored in `/home/z/my-project/upload/` which recycles never touch (L-058).
+Never commit token material.
 
 ## Known failure modes
 

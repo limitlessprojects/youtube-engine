@@ -1,7 +1,8 @@
 # Lessons — the ledger, deduplicated and grouped by stage
 
 > Reader: anyone asking "why does the pipeline work this way?" Raw daily entries
-> live in `docs/_archive/lessons/` (never deleted, never referenced by active docs).
+> live in `docs/_archive/lessons/` (never deleted; cited for provenance only —
+> operational knowledge lives here and in rules.md/parameters.md).
 > This file keeps every lesson worth knowing, grouped by where it bites. Hard
 > rules extracted from these live in `docs/rules.md` (rule IDs cited); numbers
 > live in `docs/parameters.md`. Superseded lessons were deleted here, with one
