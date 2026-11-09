@@ -108,10 +108,15 @@
 - **L-061 CI heartbeat + agent-creative split** survived the agent's sandbox dying for 3 days.
 - **L-067 Test the full path, not the function** (OAuth refresh 200 ≠ working upload). → rule P2
 - **L-082 node_modules dies with the recycle** (z-ai SDK wiped → ultracritic video pass went dark; a hardcoded `/home/z/.bun` script copy died with it). Env deps that aren't git-tracked get installed + import-probed by `bootstrap.sh`; scripts live in the repo, never in global dirs. Extends L-046/L-051.
+- **L-083 A report named in a commit message must exist IN that commit** — day-011's message claimed "carry_r7.md with 3 directives"; the file was never committed and died with the working tree. Recreated day-012 from gate artifacts. Push-time check: `git show --stat` must show every file the message names.
+- **L-084 OAuth refresh grants die silently even when the app is "published"** — publish.md claimed long-lived; `invalid_grant` hit at the thumbnail moment, 8 days after mint. Mitigation shipped: `youtube_upload.py --check-token` (5-second refresh probe, exit 1 = dead). Run it at session start, not publish moment. Extends L-067 (full path, not function).
+- **L-085 The #0004 hierarchy ceiling is scoring-systemic, format-level** — 9 rounds of composition restructuring moved visual_hierarchy 6.1→6.9 max; r8 (dead-zone version) and r9 (filled version) scored identically within noise; frame dims and video dims both clear or nearly clear their bars (7.53 grand r8). Verdict: panel-in-world diagram cards cap at ~6.9 on this judge. Response: #0005 builds canvas-first (subject owns the frame height, no diagram-in-panel default) — never a 10th polish lap on #0004.
+- **L-086 Background processes die with the tool call** — nohup'd renders vanish between calls (sandbox reaps on return). Long jobs run FOREGROUND with an idempotent `--resume` flag; a timed-out call resumes in the next call at zero loss (proven: 660+289 and 643+306 frame resumes). Extends L-043.
+- **L-087 Probe-first variant selection** (day-012): 3 hook variants × (1 u50 render + 1 VLM call) picked the winner before any full render — the cheap A/B the gate always wanted. Directive-level changes get probed at u50 before they earn a full pipeline cycle.
 
 ## Signals so far (for calibration context)
 
 - #0001 (engine v1): 195 views / 3.5 days, first-frame 3.5/10 — premise fine, execution the bottleneck.
 - #0002 (engine v3 debut): hook 7.5/10 pre-publish, contact-sheet loop to 8/10 "SHIP IT".
 - #0003 (boss-criticized): ultracritic 5.20 — text 2.8, pacing 5.5, character 6.2, contrast min 4.
-- #0004 (carry): r4 6.92 → tonight r5 6.98 / r6 7.11 / r7 7.14–7.18 (frame-only; video pass 429-blocked, r4 measured pacing 8.0 / life 8.0 / edit 7.0). text 8.0–8.1 ✓, contrast 7.5–7.7 ✓; hook_impact 6.6–6.9 ✗ and **visual_hierarchy 6.1–6.4 flat across all 7 rounds — structural ceiling**. Debt + 3 directives: `content/short-0004/gate/carry_r7.md`.
+- #0004 (carry): r4 6.92 → r5 6.98 / r6 7.11 / r7 7.14–7.18 (video pass 429-blocked) → day-012 **r8 7.53** (video pass ran: pacing 8.0 / life 7.0 / edit 8.0; hook rubric fix → hook 7.0 ✓) → r9 redesign 7.35. Grand hit the 7.5 bar in r8; **visual_hierarchy 6.1–6.9 flat across 9 rounds = format ceiling** (L-085). CARRIED UNPOSTED; format-level fix assigned to #0005.

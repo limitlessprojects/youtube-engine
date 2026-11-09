@@ -62,3 +62,19 @@ C12 one accent per scene.
   (the gate is second opinion, not first).
 - `gate/notes.json` exists and describes every scene's by-design elements.
 - Re-render one t twice → byte-identical frame (rule C6 spot check).
+
+## Hook variants: probe FIRST (day-012, L-087)
+
+The hook frame is the weakest measured frame of any short — treat it as a
+design variable, not a fixed scene:
+
+1. Wire the candidate layouts behind a `const HOOK_VARIANT = "A|B|C"` switch
+   in `render/scenes.html`.
+2. Render each at u50: `tools/render_short.py <slug> --times <t_u50>`, rename
+   `probe_*.png` → `gate/probes/hookvar_<V>.png`.
+3. One VLM call per variant (hook_impact + visual_hierarchy + dominant_element
+   + one_fix). Pick the highest hierarchy; apply its `one_fix` if it is craft-
+   level.
+4. Only THEN run the full render + gate cycle.
+
+Cost: 3 renders + 3 VLM calls. It replaced three full render+gate cycles.

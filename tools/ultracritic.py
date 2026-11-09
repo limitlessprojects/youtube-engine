@@ -22,8 +22,13 @@ Part A — MECHANICAL checks (no VLM, instant):
      (L-074; the old inverted-ducked bed was ≈ -30 dB = absent)
 
 Part B — VLM rubric, TWO passes:
-  B1 FRAME pass (still-judgeable dims): hook_impact, text_discipline,
-     visual_hierarchy, contrast_legibility, production_polish
+  B1 FRAME pass (still-judgeable dims): text_discipline,
+     visual_hierarchy, contrast_legibility, production_polish on every
+     frame; hook_impact on FRAME 0 ONLY (boss directive 2026-11-09:
+     hook_impact asked "would this frame STOP a thumb-scrolling viewer"
+     — a property of the thumbnail/hook frame, not of diagram cards;
+     averaging it across all frames structurally capped #0004 at 6.6-6.9
+     for 7 rounds while craft dims hit 8+)
   B2 VIDEO pass (temporal dims — only if render/short_final.mp4 exists):
      pacing_rhythm, character_life, edit_flow — judged on the actual
      video, because pacing and life-in-motion are temporal properties a
@@ -35,7 +40,12 @@ PUBLISH THRESHOLD (the "certain number" — calibrated day-010):
   · a frame scoring < 6 on ANY dimension fails that frame
 Below threshold → NO POST. Iterate: apply directives → re-render → --round N+1.
 Hard cap 3 rounds/night (cadence guardrail): still below → carried to the
-next session with the report attached (boss fallback, never silent).
+next session with the report attached. PUBLISH-OR-REDESIGN IS AUTONOMOUS
+(boss directive 2026-11-09: sign-off removed — "you're the autonomous
+successful established youtuber in charge"). After a carried round with
+hierarchy/composition dims still < 7.0 across 2+ rounds, the call is
+structural REDESIGN of the offending scenes, never another polish lap
+(carry_r7.md D3; 7 polish rounds moved hierarchy 6.1→6.4 only).
 """
 from __future__ import annotations
 
@@ -73,6 +83,15 @@ Dimensions:
 5. production_polish: shadows, glows, alignment, palette control, craft details.
 
 Return STRICT JSON only: {"scores": {"hook_impact": n, "text_discipline": n, "visual_hierarchy": n, "contrast_legibility": n, "production_polish": n}, "mean": n, "words_visible": n, "top3_directives": ["specific fixable directive", "...", "..."]}"""
+
+# Body frames (frame 1+): identical minus hook_impact — a diagram card is
+# not a thumbnail; judging it on thumb-stopping power manufactured the
+# structural 6.x ceiling (carry_r7.md). Boss directive 2026-11-09.
+RUBRIC_BODY = RUBRIC.replace(
+    "1. hook_impact: would this frame STOP a thumb-scrolling viewer? instant focal point + intrigue?\n",
+    "").replace(
+    '"scores": {"hook_impact": n, "text_discipline": n',
+    '"scores": {"text_discipline": n')
 
 VIDEO_RUBRIC = """You are THE ULTRACRITIC — pre-publish reviewer judging a vertical YouTube Short VIDEO (with sound muted for this pass).
 Judge ONLY production values: pacing, editing rhythm, animation life. IGNORE narration wording and script content.
@@ -250,12 +269,14 @@ def main() -> int:
         print("no gate frames — run render_short.py --keyframes first")
         return 1
     results = []
-    for f in frames:
-        v = vlm_score(f)
+    for i, f in enumerate(frames):
+        rub = RUBRIC if i == 0 else RUBRIC_BODY  # hook_impact: frame 0 only
+        v = vlm_score(f, rub)
         if v is None:
             print(f"  {f.stem}: VLM FAILED (3 attempts)")
             continue
         v["frame"] = f.stem
+        v["is_hook_frame"] = (i == 0)
         results.append(v)
         s = v["scores"]
         mean_v = v.get("mean") or sum(s.values()) / len(s)
@@ -266,11 +287,21 @@ def main() -> int:
         print("VLM produced no verdicts — do not publish")
         return 1
 
-    dims = list(results[0]["scores"].keys())
-    dim_means = {d: sum(r["scores"][d] for r in results) / len(results) for d in dims}
+    dims: list[str] = []
+    for r in results:
+        for k in r["scores"]:
+            if k not in dims:
+                dims.append(k)
+    # hook_impact (frame 0 only): average over frames that HAVE the dim
+    dim_means = {d: sum(r["scores"][d] for r in results if d in r["scores"])
+                 / max(1, sum(1 for r in results if d in r["scores"])) for d in dims}
     frame_means = [r.get("mean") or sum(r["scores"].values()) / len(r["scores"]) for r in results]
+    # floor check on each frame's OWN dims (body frames carry 4 dims, hook 5)
     frame_floor_breaches = [r["frame"] for r in results
                             if min(r["scores"].values()) < THRESH_FRAME_FLOOR]
+    hook_score = results[0]["scores"].get("hook_impact") if results else None
+    if hook_score is not None:
+        print(f"  hook_impact (frame 0 only): {hook_score}")
 
     print(f"\n  FRAME GRAND MEAN {sum(frame_means)/len(frame_means):.2f}/10 (bar {THRESH_MEAN})")
     for d in dims:
@@ -346,6 +377,15 @@ def main() -> int:
     (short / "gate" / f"ultracritic_r{round_n}.json").write_text(json.dumps(report, indent=1))
     print(f"\n  COMBINED GRAND MEAN {grand:.2f}/10 (bar {THRESH_MEAN}) — video pass required")
     print(f"{'✅' if ok else '❌'} {verdict} → gate/ultracritic_r{round_n}.json")
+    if not ok:
+        # autonomous publish-or-redesign triage (boss: sign-off removed)
+        chronic = [d for d in ("frame:visual_hierarchy", "frame:hook_impact")
+                   if d in all_dims and all_dims[d] < THRESH_DIM]
+        if chronic:
+            print(f"  DECISION (autonomous): chronic structural dims {chronic} — "
+                  "REDESIGN the offending scenes (one dominant element), not another polish lap")
+        else:
+            print("  DECISION (autonomous): dims are craft-level — apply top3 directives, one more round")
     return 0 if ok else 1
 
 

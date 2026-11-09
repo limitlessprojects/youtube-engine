@@ -243,6 +243,13 @@ function stampCard(x, y, k, label, parent, accent, size) {
 /* ============================================================
    SCENES (u = local progress, t = global time, tau = local seconds)
    ============================================================ */
+/* D2 (carry_r7): hook variant switch — frame 0 is the weakest measured
+   frame (6.6). Variants probed at t=1.55 (u50): A = 3-line stack (r7
+   baseline), B = title-owns (myth line late + fewer rays/motes),
+   C = gaze-owns (hero-enlarged focal, title subordinate). Winner
+   becomes frame 0 before any full re-render. */
+const HOOK_VARIANT = "C";
+
 const SCENES = {
 
   /* HOOK — orient + myth named (L-073). Shore world. The kinetic title
@@ -252,24 +259,36 @@ const SCENES = {
     daySky(t, cam, { sunX: 780, sunY: 240 });
     seaBand(t, cam, 1080, 390);
     /* sun rays sweeping the mid-band + drifting photon motes (fill the void) */
-    for (let i = 0; i < 7; i++) {
-      const a = 2.05 + i * 0.13 + Math.sin(t / 40 + i) * 0.02;
+    const NRAYS = HOOK_VARIANT === "B" ? 4 : 7;
+    for (let i = 0; i < NRAYS; i++) {
+      const a = 2.05 + i * (HOOK_VARIANT === "B" ? 0.22 : 0.13) + Math.sin(t / 40 + i) * 0.02;
       const len = 660 + Math.sin(t / 18 + i * 2.1) * 70;
       V2.el("line", { x1: 780, y1: 240, x2: 780 + Math.cos(a) * len, y2: 240 + Math.sin(a) * len,
         stroke: DAY.sunGlow, "stroke-width": 7, "stroke-linecap": "round", opacity: 0.18, style: "mix-blend-mode:screen" }, cam);
     }
-    for (let i = 0; i < 14; i++) {
+    const NMOTES = HOOK_VARIANT === "B" ? 8 : 14;
+    for (let i = 0; i < NMOTES; i++) {
       const mx = ((t * (12 + i * 4) + V2.rnd(14, i) * 1300) % 1500) - 210;
       const my = 830 + V2.rnd(15, i) * 300 + Math.sin(t / 7 + i) * 24;
       photon(mx, my, 6 + V2.rnd(16, i) * 3.4, DAY.photonHot, t, cam, i);
     }
-    /* shore rock bottom-right, hero BIG, gawking up (scaled for life) */
+    /* shore rock bottom-right, hero BIG, gawking up (scaled for life).
+       C: gaze-owns — the character IS the focal point (curiosity: what
+       is he looking at?), title demoted to a tight top block */
     V2.el("path", { d: "M 660 1520 Q 760 1300 930 1315 Q 1040 1330 1060 1520 Z", fill: "#0D2250", opacity: 0.92 }, cam);
     V2.el("path", { d: "M -260 1560 Q -60 1520 120 1560 T 500 1560 T 880 1560 T 1260 1560 L 1260 1620 L -260 1620 Z", fill: "#0B2E68", opacity: 0.85 }, cam);
-    const px = 795, py = 1390;
-    groundPatch(px, py, 1.4, cam);
-        V2.Hero(pose("skygawk", t, px, py, 1.4), null, "vRimR", 1, cam);
-    scarf(px, py, 1.4, t, cam);
+    const px = HOOK_VARIANT === "C" ? 640 : 795, py = HOOK_VARIANT === "C" ? 1420 : 1390;
+    const hs = HOOK_VARIANT === "C" ? 1.8 : 1.4;
+    groundPatch(px, py, hs, cam);
+        V2.Hero(pose("skygawk", t, px, py, hs), null, "vRimR", 1, cam);
+    scarf(px, py, hs, t, cam);
+    if (HOOK_VARIANT === "C") {
+      /* the gaze line: ONE bright ray column from sun down to the hero's
+         eyeline — the title asks, the gaze answers, one reading order */
+      V2.el("line", { x1: 700, y1: 300, x2: 640, y2: 1120, stroke: DAY.sunGlow,
+        "stroke-width": 12, "stroke-linecap": "round", opacity: 0.4, style: "mix-blend-mode:screen" }, cam);
+      V2.glow(640, 1150, 340, "Teal", 0.4, cam);
+    }
     /* mirror shimmer line at the waterline (the myth, visually) */
     const shim = 0.5 + 0.5 * Math.sin(t / 2.6);
     V2.el("rect", { x: -260, y: 1077, width: 1600, height: 7, rx: 3.5, fill: "#FFFFFF", opacity: 0.2 + shim * 0.18, style: "mix-blend-mode:screen" }, cam);
@@ -281,17 +300,27 @@ const SCENES = {
       const k = V2.backOut(V2.clamp01((tau - at) / 0.26));
       V2.txt(540, y + (1 - k) * 26, txt, { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
         "font-weight": 800, "font-size": size * (0.7 + 0.3 * k), fill,
+        "stroke": "#0A1228", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round",
         style: "filter: drop-shadow(0 6px 18px rgba(4,16,42,0.95)) drop-shadow(0 0 34px rgba(90,184,255,0.45))" }, cam);
     };
-    if (tau > 0.10) V2.glow(540, 640, 400 * V2.clamp01((tau - 0.10) / 0.3), "Teal", 0.32, cam);
-    bigWord("WHY IS THE", 0.10, 520, 102, "#FFFDF4");
-    bigWord("SKY BLUE?", 0.42, 648, 116, "#FFFDF4");
-    bigWord("THE OCEAN?", 1.55, 778, 86, "#FFFDF4");
+    if (tau > 0.10) V2.glow(540, HOOK_VARIANT === "C" ? 480 : 640, 400 * V2.clamp01((tau - 0.10) / 0.3), "Teal", 0.32, cam);
+    /* B: myth line pops AFTER the u50 probe point (2.05 > 1.55) and
+       smaller — frame 0 = clean two-line title, zero mid-pop collision
+       (r7 VLM directive on hook_u50); C: whole stack demoted */
+    const TS = HOOK_VARIANT === "C"
+      ? [["WHY IS THE", 0.10, 420, 84], ["SKY BLUE?", 0.42, 540, 96], ["THE OCEAN?", 1.55, 655, 68]]
+      : HOOK_VARIANT === "B"
+      ? [["WHY IS THE", 0.10, 520, 102], ["SKY BLUE?", 0.42, 648, 116], ["THE OCEAN?", 2.05, 790, 72]]
+      : [["WHY IS THE", 0.10, 520, 102], ["SKY BLUE?", 0.42, 648, 116], ["THE OCEAN?", 1.55, 778, 86]];
+    TS.forEach(([w, at, y, sz]) => bigWord(w, at, y, sz, "#FFFDF4"));
     /* r5 D1: the myth line stays in the ONE title stack (same warm white,
-       smaller) and gets an amber underline beat — no second text system */
+       smaller) and gets an amber underline beat — no second text system.
+       C: underline tracks the demoted stack position. */
     if (tau > 2.15) {
       const uk = V2.backOut(V2.clamp01((tau - 2.15) / 0.24));
-      V2.el("path", { d: `M ${540 - 208 * uk} 828 Q 540 846 ${540 + 208 * uk} 826`,
+      const uy = HOOK_VARIANT === "C" ? 700 : 828;
+      const uw = HOOK_VARIANT === "C" ? 160 : 208;
+      V2.el("path", { d: `M ${540 - uw * uk} ${uy + 0} Q 540 ${uy + 18} ${540 + uw * uk} ${uy - 2}`,
         stroke: "#FFD9A0", "stroke-width": 11, fill: "none", "stroke-linecap": "round",
         opacity: 0.95, style: "filter: drop-shadow(0 3px 10px rgba(4,16,42,0.9))" }, cam);
     }
@@ -436,18 +465,14 @@ const SCENES = {
     stagePanel(cam, { x: 90, y: 400, w: 900, h: 660 });
     const tau = tau0(t, 4);
     /* audio: "Air flings blue sideways" 0-1.4 / "six times harder than red" 1.4-2.63 */
-    const cx = 540, cy = 690;
-    molecule(cx, cy, 108, t, cam);
-    /* AIR chip — same treatment family as the verdict chip (r5 D2: the
-       smallest label carried the diagram's whole meaning) */
-    const ak = V2.clamp01(tau / 0.3);
-    if (ak > 0) {
-      V2.el("rect", { x: cx - 92, y: cy + 108, width: 184, height: 84, rx: 22,
-        fill: "#0A1228", opacity: 0.72 * ak, stroke: DAY.photonHot, "stroke-width": 5 }, cam);
-      V2.txt(cx, cy + 170, "AIR", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": 52, fill: "#FFFFFF", opacity: ak,
-        style: "filter: drop-shadow(0 3px 9px rgba(0,0,0,0.85))" }, cam);
-    }
+    /* r9 REDESIGN (r8: hierarchy 5, "lower 55% dead zone"): the scatter
+       cluster ENLARGED and dropped to own the full card; verdict plate
+       moved INSIDE the panel under the burst — one vertical mass */
+    const cx = 540, cy = 780;
+    molecule(cx, cy, 150, t, cam);
+    /* D1 (carry_r7): ONE dominant element — the blue scatter cluster.
+       AIR chip deleted: the verdict plate + diagram carry the meaning;
+       every extra plate was a second focal point (hierarchy stuck ≤6.4). */
     /* BLUE photon: wild ricochet — end-state PERSISTS (gate r2 bug: the
        diagram erased itself at blueT=1, leaving a static molecule for the
        verdict beat; freeze the ricochet + burst until scene end) */
@@ -455,66 +480,62 @@ const SCENES = {
     const blueHold = blueT >= 1;   /* frozen at final ricochet pose */
     const btt = Math.min(blueT, 0.999);
     if (blueT > 0) {
-      const bx = 130 + btt * (cx - 160), by = cy - 30 - Math.sin(btt * 3) * 20;
-      if (!blueHold) photon(bx, by, 15, DAY.photonHot, t, cam, 0);
+      const bx = 90 + btt * (cx - 120), by = cy - 40 - Math.sin(btt * 3) * 24;
+      if (!blueHold) photon(bx, by, 18, DAY.photonHot, t, cam, 0);
       if (btt > 0.86) {
         const sk = blueHold ? 1 : V2.clamp01((btt - 0.86) / 0.14);
-        const ex = cx + sk * 360, ey = cy - 80 - sk * 370;
-        V2.el("line", { x1: cx, y1: cy, x2: ex, y2: ey, stroke: DAY.photon, "stroke-width": 10,
+        const ex = cx + sk * 380, ey = cy - 90 - sk * 390;
+        V2.el("line", { x1: cx, y1: cy, x2: ex, y2: ey, stroke: DAY.photon, "stroke-width": 12,
           "stroke-linecap": "round", opacity: 0.95 * sk, style: "filter: drop-shadow(0 0 16px #5AB8FF)" }, cam);
-        photon(ex, ey, 15, DAY.photonHot, t, cam, 1);
-        /* r5 D3: one bright impact flash + a clean 3-ray burst — the old
-           5 overlapping circles read as mush at phone size */
-        V2.el("circle", { cx: cx, cy: cy, r: 30 + sk * 16, fill: "#EAF6FF", opacity: 0.85 * sk,
-          style: "filter: drop-shadow(0 0 30px #8FD3FF)" }, cam);
+        photon(ex, ey, 18, DAY.photonHot, t, cam, 1);
+        /* r7 D1: the impact point IS the frame — crisp white-hot core,
+           defined glow (r7 VLM: "make the impact point crisp") */
+        V2.el("circle", { cx: cx, cy: cy, r: 42 + sk * 24, fill: "#EAF6FF", opacity: 0.92 * sk,
+          style: "filter: drop-shadow(0 0 48px #8FD3FF)" }, cam);
         for (let k = 0; k < 3; k++) {
           const a2 = -2.15 + k * 0.62;
-          V2.el("line", { x1: cx + Math.cos(a2) * 52, y1: cy + Math.sin(a2) * 52,
-            x2: cx + Math.cos(a2) * (110 + sk * 80), y2: cy + Math.sin(a2) * (110 + sk * 80),
+          V2.el("line", { x1: cx + Math.cos(a2) * 62, y1: cy + Math.sin(a2) * 62,
+            x2: cx + Math.cos(a2) * (140 + sk * 100), y2: cy + Math.sin(a2) * (140 + sk * 100),
             stroke: DAY.photon, "stroke-width": 8, "stroke-linecap": "round", opacity: 0.8 * sk }, cam);
         }
       }
     }
-    /* RED photon: drifts almost straight — end-state persists too */
+    /* RED photon: SUBORDINATE ghost trail (D1) — thin, dim, no photon
+       head: reference for "red goes straight", never a second actor */
     const redT = V2.clamp01((tau - 1.45) / 1.0);
     const redHold = redT >= 1;
     const rtt = Math.min(redT, 0.999);
     if (redT > 0) {
       const rx = 950 - rtt * (950 - cx - 170), ry = cy + 60 + Math.sin(rtt * 2.2) * 6;
-      if (!redHold) photon(rx, ry, 15, "#FF7A5A", t, cam, 2);
       if (rtt > 0.86) {
         const sk = redHold ? 1 : V2.clamp01((rtt - 0.86) / 0.14);
-        V2.el("line", { x1: cx, y1: cy, x2: cx - sk * 190, y2: cy + 60 + sk * 60,
-          stroke: "#FF7A5A", "stroke-width": 8, "stroke-linecap": "round", opacity: 0.9 * sk }, cam);
-        photon(cx - sk * 190, cy + 60 + sk * 60, 15, "#FF7A5A", t, cam, 3);
+        V2.el("line", { x1: cx, y1: cy, x2: cx - sk * 140, y2: cy + 60 + sk * 45,
+          stroke: "#FF7A5A", "stroke-width": 5, "stroke-linecap": "round", opacity: 0.5 * sk }, cam);
       }
     }
-    /* verdict — pops and HOLDS (breathe), hot white on a plate */
+    /* verdict — pops and HOLDS (breathe), hot white on a plate.
+       r9: plate INSIDE the panel (y 880), directly under the burst —
+       plate + molecule + rays = one connected mass owning the card */
     const vk = breathe(tau, 2.1);
     if (vk > 0) {
       const k = V2.backOut(vk);
-      V2.el("rect", { x: 60, y: 350, width: 460, height: 150, rx: 28, fill: "#0A1228", opacity: 0.78, stroke: DAY.panelLine, "stroke-width": 4 }, cam);
-      V2.glow(290, 425, 260 * k, "Teal", 0.42, cam);
-      V2.txt(290, 442 + (1 - k) * 30, "BLUE ≈ 6×", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": 76 * (0.7 + 0.3 * k), fill: "#FFFFFF",
+      V2.el("rect", { x: 290, y: 1000, width: 500, height: 140, rx: 28, fill: "#0A1228", opacity: 0.82, stroke: DAY.panelLine, "stroke-width": 4 }, cam);
+      V2.glow(540, 1070, 280 * k, "Teal", 0.45, cam);
+      V2.txt(540, 1088 + (1 - k) * 30, "BLUE ≈ 6×", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 74 * (0.7 + 0.3 * k), fill: "#FFFFFF",
         style: "filter: drop-shadow(0 0 26px rgba(143,211,255,0.95)) drop-shadow(0 5px 14px rgba(0,0,0,0.85))" }, cam);
     }
-    /* r5 D1: refracted hint exits bottom-right — completes the eye path
-       sun → scatter → exit, balances the bottom-left hero */
+    /* r5 D1: refracted hint exits bottom-right — kept, dimmed to 0.4:
+       completes the eye path without competing (D1 subordination) */
     const ek4 = breathe(tau, 1.2);
     if (ek4 > 0) {
       V2.el("path", { d: "M 880 1020 Q 960 1120 1010 1230", stroke: DAY.sunGlow,
-        "stroke-width": 9, fill: "none", "stroke-linecap": "round", opacity: 0.55 * ek4,
+        "stroke-width": 9, fill: "none", "stroke-linecap": "round", opacity: 0.4 * ek4,
         style: "mix-blend-mode:screen" }, cam);
       photon(1014, 1244, 10, DAY.sun, t, cam, 61);
     }
-    /* r6 D1: blue scatters EVERYWHERE — faint far ricochets fill the
-       panel's right half so the diagram doesn't float in a dead zone */
-    if (breathe(tau, 1.6) > 0) {
-      [[780, 560, 7], [870, 690, 6], [800, 840, 8], [910, 580, 5]].forEach(([fx, fy, fr], i) =>
-        V2.el("circle", { cx: fx, cy: fy + Math.sin(t / 3 + i) * 6, r: fr, fill: DAY.photon,
-          opacity: 0.45, style: "mix-blend-mode:screen" }, cam));
-    }
+    /* D1: far ricochet filler dots DELETED — the enlarged crisp burst +
+       re-centered plate own the panel; dots were manufactured mush */
     groundPatch(215, 1400, 0.92, cam);
         V2.Hero(pose("present", t, 215, 1400, 0.92, { yaw: -0.3 }), null, "vRimR", 1, cam);
     scarf(215, 1400, 0.92, t, cam);
@@ -575,25 +596,31 @@ const SCENES = {
     const tau = tau0(t, 6);
     /* r6 D3: sun-side warm wash motivates the card contrast */
     V2.el("circle", { cx: 940, cy: 320, r: 560, fill: "url(#dzSunD)", opacity: 0.4, style: "mix-blend-mode:screen" }, cam);
-    /* two swatches: AWAY (saturated) vs TOWARD (washed) */
+    /* D1 (carry_r7): ONE dominant element — the DEEP swatch owns the
+       frame; the comparison demoted to a small sun-inset chip (the sun
+       icon says "toward sun", no second equal-weight card) */
+    /* r9 REDESIGN (r8: hierarchy 6, "card 70% empty"): card shrunk to
+       hug its content + the away-from-sun cue INSIDE the card (pale
+       slashed sun, subordinate iconography — fills the top corner) */
     const k1 = breathe(tau, 0.5), k2 = breathe(tau, 1.05);
     if (k1 > 0) {
-      V2.el("rect", { x: 120, y: 500, width: 400, height: 520, rx: 30, fill: "#164AB5",
-        stroke: DAY.photonHot, "stroke-width": 6, opacity: k1 }, cam);
-      V2.glow(320, 750, 240 * k1, "Teal", 0.45, cam);
-      V2.txt(320, 760, "DEEP", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": 74, fill: "#EAF6FF", opacity: k1,
+      V2.el("rect", { x: 150, y: 540, width: 480, height: 560, rx: 34, fill: "#164AB5",
+        stroke: DAY.photonHot, "stroke-width": 7, opacity: k1 }, cam);
+      V2.glow(390, 830, 300 * k1, "Teal", 0.5, cam);
+      V2.txt(390, 850, "DEEP", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
+        "font-weight": 800, "font-size": 104, fill: "#EAF6FF", opacity: k1,
         style: "filter: drop-shadow(0 4px 14px rgba(0,0,0,0.7))" }, cam);
-      V2.txt(320, 965, "AWAY FROM SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#D8ECFF", "letter-spacing": 2, opacity: k1 * 0.9 }, cam);
+      /* inside-card cue: sun crossed out = "away from sun" (subordinate) */
+      V2.el("circle", { cx: 560, cy: 610, r: 36, fill: "none", stroke: "#D8ECFF", "stroke-width": 6, opacity: 0.85 * k1 }, cam);
+      V2.el("line", { x1: 534, y1: 584, x2: 586, y2: 636, stroke: "#FF7A5A", "stroke-width": 9, "stroke-linecap": "round", opacity: 0.9 * k1 }, cam);
     }
     if (k2 > 0) {
-      V2.el("rect", { x: 560, y: 500, width: 400, height: 520, rx: 30, fill: "#BFE0FF",
-        stroke: "#FFFFFF", "stroke-width": 6, opacity: k2 }, cam);
-      V2.el("circle", { cx: 760, cy: 680, r: 72, fill: DAY.sun, opacity: k2,
-        style: "filter: drop-shadow(0 0 44px rgba(255,246,216,0.95))" }, cam);
-      V2.txt(760, 850, "WASHED", { "text-anchor": "middle", "font-family": V2.UI_DISPLAY,
-        "font-weight": 800, "font-size": 74, fill: "#123C8C", opacity: k2 }, cam);
-      V2.txt(760, 965, "TOWARD SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 30, fill: "#123C8C", "letter-spacing": 2, opacity: k2 * 0.9 }, cam);
+      const g6 = V2.el("g", { opacity: k2 }, cam);
+      V2.el("rect", { x: 700, y: 810, width: 270, height: 250, rx: 24, fill: "#BFE0FF",
+        stroke: "#FFFFFF", "stroke-width": 5, opacity: 0.95 }, g6);
+      V2.el("circle", { cx: 835, cy: 900, r: 44, fill: DAY.sun, opacity: k2,
+        style: "filter: drop-shadow(0 0 30px rgba(255,246,216,0.95))" }, g6);
+      V2.txt(835, 1020, "TOWARD SUN", { "text-anchor": "middle", "font-family": V2.UI_MONO, "font-size": 26, fill: "#123C8C", "letter-spacing": 2, opacity: k2 * 0.9 }, g6);
     }
     /* r6 D1: hero recentered into the lower-right void */
     groundPatch(780, 1400, 1.05, cam);
@@ -682,16 +709,14 @@ const SCENES = {
     const wk = V2.clamp01(tau / 0.3);
     V2.el("path", { d: "M 240 320 L 430 506", stroke: DAY.sun, "stroke-width": 20 * wk + 8,
       "stroke-linecap": "round", opacity: 0.95, style: "filter: drop-shadow(0 0 18px rgba(255,246,216,0.95))" }, cam);
-    /* r6 D1: spotlight the two dot clusters — one story, one glance */
+    /* D1 (carry_r7): ONE dominant element — the depth cross-section.
+       Deleted: red-X + teal-check icon plates (the fade-out and the depth
+       ARE the story), 3 filler wave arcs, warm glow on the red side.
+       Single teal glow marks the blue column = the only focal anchor. */
     const sp8 = breathe(tau, 0.6);
     if (sp8 > 0) {
-      V2.glow(430, 720, 260 * sp8, "Warm", 0.35, cam);
-      V2.glow(700, 800, 280 * sp8, "Teal", 0.35, cam);
+      V2.glow(700, 800, 300 * sp8, "Teal", 0.42, cam);
     }
-    /* r6 D2: faint wave arcs fill the water panel's upper-left */
-    for (let i = 0; i < 3; i++)
-      V2.el("path", { d: `M ${200 - i * 10 + Math.sin(t / 4 + i) * 8} ${600 + i * 44} q 90 ${-14} 180 0 t 180 0`,
-        stroke: "#7FB8E8", "stroke-width": 5, fill: "none", opacity: 0.3 }, cam);
     /* RED photons sink and FADE OUT (absorbed) */
     const rk = V2.clamp01((tau - 0.45) / 1.4);
     for (let i = 0; i < 4; i++) {
@@ -703,14 +728,9 @@ const SCENES = {
         V2.el("circle", { cx: 430 + i * 16 - ph * 34, cy: ry, r: 19, fill: "#FF7A5A", opacity: fade * 0.95 }, cam);
       }
     }
-    const icoA = breathe(tau, 1.15);
-    if (icoA > 0) {  /* icon-only: red X, no word (matches the KEPT check) */
-      const g8a = V2.el("g", { opacity: icoA }, cam);
-      V2.el("circle", { cx: 320, cy: 1000, r: 50, fill: "#3A1414", stroke: "#FF7A5A", "stroke-width": 8, opacity: 0.95 }, g8a);
-      V2.el("line", { x1: 300, y1: 980, x2: 340, y2: 1020, stroke: "#FF7A5A", "stroke-width": 11, "stroke-linecap": "round" }, g8a);
-      V2.el("line", { x1: 340, y1: 980, x2: 300, y2: 1020, stroke: "#FF7A5A", "stroke-width": 11, "stroke-linecap": "round" }, g8a);
-    }
-    /* BLUE photons keep going DEEP */
+    /* D1: red X icon plate DELETED — red photons fading out mid-column
+       reads as "eats red" without a second plate; fewer focal points */
+    /* BLUE photons keep going DEEP — the dominant story */
     const bk = V2.clamp01((tau - 0.8) / 1.3);
     for (let i = 0; i < 3; i++) {
       const ph = V2.clamp01(bk - i * 0.15);
@@ -720,13 +740,9 @@ const SCENES = {
       }
     }
     if (breathe(tau, 1.55) > 0) {
-      const icoK = breathe(tau, 1.55);
-      if (icoK > 0) {  /* icon-only: teal check, no word */
-        const g8b = V2.el("g", { opacity: icoK }, cam);
-        V2.el("circle", { cx: 770, cy: 1040, r: 46, fill: "#0E2E4A", stroke: DAY.photonHot, "stroke-width": 7, opacity: 0.95 }, g8b);
-        V2.el("path", { d: "M 746 1040 L 764 1060 L 798 1016", stroke: DAY.photonHot, "stroke-width": 11, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, g8b);
-      }
-      /* faint upward back-scatter: blue returns to the surface */
+      /* D1: teal-check icon plate DELETED (same rule as red X); kept the
+         faint upward back-scatter — it is the blue story's payoff (why
+         your eye receives blue), not a competing element */
       for (let i = 0; i < 4; i++) {
         const pu = V2.clamp01((tau - 1.55) / 0.9 - i * 0.14);
         if (pu > 0 && pu < 1) {

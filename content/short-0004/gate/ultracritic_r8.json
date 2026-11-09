@@ -1,0 +1,231 @@
+{
+ "round": 8,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.53,
+ "frame_grand_mean": 7.5,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 8.27,
+  "frame:visual_hierarchy": 6.91,
+  "frame:contrast_legibility": 7.73,
+  "frame:production_polish": 7.09,
+  "video:pacing_rhythm": 8,
+  "video:character_life": 7,
+  "video:edit_flow": 8
+ },
+ "frame_means": {
+  "hook_u50": 7.0,
+  "s0_u50": 8.25,
+  "s1_u50": 7.5,
+  "s2_u50": 7.5,
+  "s3_u50": 7.5,
+  "s4_u50": 7.0,
+  "s5_u50": 8,
+  "s6_u50": 7.2,
+  "s7_u50": 7.5,
+  "s8_u50": 7.5,
+  "s9_u50": 7.5
+ },
+ "floor_breaches": [
+  "s4_u50"
+ ],
+ "video_directives": [
+  "Within-scene stillness: character holds a single pose 2-4s inside scenes (0-2s, 13-17s, 21-23s) \u2014 add idle breathing/blink micro-motion so held diagram beats don't read frozen",
+  "Scene changes land well with eased transitions and varied compositions; keep this rhythm \u2014 it's the edit's strongest asset",
+  "Cross-fade overlaps (3s, 6-7s, 11-12s, 20s) show exposed intermediate frames \u2014 tighten transition duration or switch to clean cut-in/cut-out to avoid muddy blend frames"
+ ],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 7,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 7,
+   "top3_directives": [
+    "The 'THE OCEAN?' sub-line floats awkwardly mid-sky with no visual anchor \u2014 either merge it into the main headline lockup or give it a pill/badge treatment so it reads as intentional",
+    "Sun rays cut directly through the headline text zone, slightly muddying letter edges \u2014 dim or reposition rays so text sits on clean background",
+    "Large dead zone in the mid-left ocean band (empty horizon strip) \u2014 add a subtle layer element (island, bird, wave accent) or push the horizon line down to tighten composition"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.25,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the large empty blue band between the sun rays and 'NOPE.' with a subtle secondary element (bird, drifting cloud) to tighten the vertical eye path",
+    "Add a faint drop shadow or darker outline behind 'NOPE.' so it pops identically over both sky and sea bands",
+    "Give the character a slightly stronger rim glow or scale bump (5-8%) to fully separate it from the horizon line crossing behind its head"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Large empty sand band in the bottom third \u2014 either push the character lower/larger or add subtle dune texture to reduce the dead zone",
+    "The mid-frame horizontal stripe artifacts across the sky and dunes look like rendering seams \u2014 clean or remove them",
+    "Title card's dark navy plate edges are hard against the sky; add a soft shadow or slight transparency for integration"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 7.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "Remove the semi-transparent horizontal stripe artifacts at the horizon line behind the character \u2014 they read as rendering errors",
+    "Fix the cloud cropped mid-shape at the right edge; either pull it fully in-frame or push it fully out",
+    "Fill the upper-left sky dead zone with a subtle secondary element (bird, faint gradient, distant dune line) to guide the eye from text to character"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the dead zones in the upper-right and bottom-third with subtle atmosphere (stars/dust, ground shadow detail) so the vertical canvas isn't empty",
+    "Clarify the scatter diagram's story: the incoming ray, fan of scattered rays, and outgoing ray overlap ambiguously \u2014 thicken/differentiate the primary ray so the eye path sun\u2192scatter\u2192eye is legible in one second",
+    "Anchor the character to a scene edge or frame line rather than floating in open sky; currently the figure reads as pasted below the panel"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill the lower ~55% of the dark panel \u2014 it's a large dead zone; enlarge/recenter the scattering cloud cluster and rays to occupy the full card.",
+    "Thicken and brighten the light rays (especially the thin blue streaks and the stray orange ray) so the diagram reads at a glance on a 6-inch daylight screen.",
+    "Anchor the label pill fully inside or fully outside the panel edge \u2014 right now it straddles the card border, creating a muddy overlap where the glow text meets the frame corner."
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 4,
+   "top3_directives": [
+    "The blue grid tiles sit close to the blue background value \u2014 push background darker or tiles lighter so the grid reads instantly on a daylight phone screen",
+    "The single amber lamp is the story beat but blends into the pattern; give it a stronger glow or scale bump so the eye finds it in under a second",
+    "The moon/sun at top and the header pill compete in the upper third \u2014 nudge the pill down slightly or dim the moon so the header owns that zone"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill or shrink the large blue card \u2014 it's ~70% empty, creating a big dead zone with only 'DEEP' floating in it",
+    "Clarify the relationship between 'DEEP' and 'TOWARD SUN' \u2014 right now they read as two unrelated labels; unify as one diagram with a connecting visual cue",
+    "Ground the character with stronger connection to the card (e.g., have the pointing hand overlap the card edge) so the eye path character \u2192 sun \u2192 card is explicit"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill the mid-left and lower-right dead zones with subtle secondary elements (birds, small clouds, parallax hills) to tighten the composition",
+    "Give the beam's ground ellipse a warm tint so the UFO-to-character eye path reads more clearly \u2014 the beam currently points at nothing",
+    "Add a subtle drop shadow or outline to the 'NOT A MIRROR' label's red underline so it separates cleanly from the blue background at small sizes"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or crop the large empty sky zones (left/right of character and below the pill) \u2014 the bottom third is a dead zone",
+    "The dots inside the whiteboard panel are faint and low-contrast; boost saturation/size so the red-vs-blue concept reads at a glance",
+    "Anchor the character visually to the panel (shadow, gaze, or pointer) so the eye path is sun \u2192 panel \u2192 character \u2192 caption instead of two disconnected subjects"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Anchor the character properly: the feet/shadow ellipse relationship looks detached \u2014 feet should contact the shadow plane, and the single green shoe reads as an asset error",
+    "Fill the dead zone between the headline and the horizon line (roughly y 900\u20131100) with a secondary visual beat or push the character larger into that space",
+    "Rebalance the empty left half: the character is hard-parked bottom-right while clouds/blur squares float top-left \u2014 either crop composition tighter or add a mid-left depth element at character scale"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Water'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Sky', 'They'] appears only in the closer \u2014 tangent? (L-077 spine rule)"
+ ]
+}

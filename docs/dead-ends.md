@@ -26,3 +26,4 @@
 | D18 | **Scheduling agent wake-ups during live sessions** | One model slot: cron fires during evening chats died silently with "concurrency limit exceeded" (L-056). Deep-night slots only. | Platform gains multi-slot concurrency |
 | D19 | **Hardcoded mirror lists** | 6/6 Invidious + 8/8 Piped defaults dead within days (L-050). Live registries, cached, always. | Never |
 | D20 | **Silent success paths in CI workflows** | vo-gen run 1 "succeeded" with 0/8 files (L-068). Logging + fail-on-shortfall is the permanent shape. | Never |
+| D21 | **Another composition lap on #0004** | 9 rounds moved visual_hierarchy 6.1→6.9 max; filled vs dead-zone variants scored identically within noise (L-085, L-080). The ceiling is the panel-in-world format, not the scene layout. | If the judge/rubric changes, or #0005 proves canvas-first scores ≥7.5 |

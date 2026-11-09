@@ -26,6 +26,7 @@ from pathlib import Path
 
 TOKEN_URI = "https://oauth2.googleapis.com/token"
 UPLOAD = "https://www.googleapis.com/upload/youtube/v3/videos"
+THUMB = "https://www.googleapis.com/upload/youtube/v3/thumbnails/set"
 
 
 def load_token(a: argparse.Namespace) -> dict:
@@ -50,6 +51,19 @@ def refresh(tok: dict, client_id: str, client_secret: str) -> dict:
     # reads ["token"] — bridge it or we ship the STALE token (day-008 bug)
     out["token"] = out["access_token"]
     return out
+
+
+def set_thumbnail(video_id: str, image: Path, tok_access: str) -> None:
+    """Custom thumbnail (unlocked by phone verification, boss 2026-11-09).
+    Idempotent: re-running just re-sets the same image."""
+    import requests
+    r = requests.post(
+        f"{THUMB}?videoId={video_id}",
+        headers={"Authorization": f"Bearer {tok_access}",
+                 "Content-Type": "image/png"},
+        data=image.read_bytes(), timeout=120)
+    r.raise_for_status()
+    print(f"[yt] thumbnail SET for {video_id} <- {image.name}")
 
 
 def upload(file: Path, tok_access: str, meta: dict) -> str:
@@ -98,31 +112,64 @@ def upload(file: Path, tok_access: str, meta: dict) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--file", required=True)
-    ap.add_argument("--title", required=True)
-    ap.add_argument("--description", required=True)
+    _no_upload = ("--set-thumbnail" in sys.argv) or ("--check-token" in sys.argv)
+    ap.add_argument("--file", required=not _no_upload)
+    ap.add_argument("--title", required=not _no_upload)
+    ap.add_argument("--description", required=False, default="")
+    ap.add_argument("--set-thumbnail", default="", metavar="VIDEO_ID:IMAGE",
+                    help="skip upload; set a custom thumbnail (phone-verified capability)")
     ap.add_argument("--tags", default="")
     ap.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"])
     ap.add_argument("--category", default="27", help="27=Education, 24=Entertainment, 28=Sci/Tech")
     ap.add_argument("--token-file")
     ap.add_argument("--content-type", default="video/mp4")
+    ap.add_argument("--check-token", action="store_true",
+                    help="probe refresh grant health; exit 0 = healthy (L-084: "
+                         "verify BEFORE the publish moment, grants die silently)")
     ap.add_argument("--no-synthetic", action="store_true",
                     help="skip the altered/synthetic disclosure (default: disclose YES per studio policy)")
     a = ap.parse_args()
 
-    file = Path(a.file)
-    if not file.exists():
+    file = Path(a.file) if a.file else None
+    if file is not None and not file.exists():
         sys.exit(f"missing video file: {file}")
     import requests  # noqa: F401  (fail fast if requests missing)
 
     tok = load_token(a)
     client_id = os.environ.get("GOOGLE_CLIENT_ID", tok.get("client_id", ""))
     client_secret = os.environ.get("GOOGLE_CLIENT_SECRET", tok.get("client_secret", ""))
-    if tok.get("refresh_token") and client_id and client_secret:
-        print("[yt] refreshing access token…")
-        tok = refresh(tok, client_id, client_secret)
-    elif not tok.get("token"):
-        sys.exit("token JSON has neither a usable access token nor refresh credentials")
+    if not a.check_token:
+        # (with --check-token the probe below does the refresh and reports health)
+        if tok.get("refresh_token") and client_id and client_secret:
+            print("[yt] refreshing access token…")
+            tok = refresh(tok, client_id, client_secret)
+        elif not tok.get("token"):
+            sys.exit("token JSON has neither a usable access token nor refresh credentials")
+
+    # token health probe (L-084): refresh dies silently — test it cheaply
+    if a.check_token:
+        try:
+            refresh(tok, client_id, client_secret)
+            print("[yt] token health: OK (refresh grant live)")
+            return 0
+        except Exception as e:  # noqa: BLE001
+            body = getattr(getattr(e, "response", None), "text", "")
+            reason = ""
+            try:
+                reason = json.loads(body).get("error", "")
+            except Exception:  # noqa: BLE001
+                pass
+            print(f"[yt] token health: DEAD ({reason or e}) — re-run OAuth consent, mint a fresh token.json")
+            return 1
+
+    # thumbnail-only mode (boss 2026-11-09: #0002's 7.5/10 hook frame waiting)
+    if a.set_thumbnail:
+        vid, _, img = a.set_thumbnail.partition(":")
+        img_p = Path(img)
+        if not vid or not img_p.exists():
+            sys.exit("--set-thumbnail expects VIDEO_ID:PATH_TO_IMAGE (image must exist)")
+        set_thumbnail(vid, img_p, tok["token"])
+        return 0
 
     vid = upload(file, tok["token"], {
         "title": a.title, "description": a.description,
