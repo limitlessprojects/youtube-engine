@@ -3,8 +3,8 @@
 | Metric | Value |
 |---|---|
 | Duration | 153.4s |
-| Words | 493 |
-| WPM | 192.9 (our band: 155–175) |
+| Words | 497 |
+| WPM | 194.4 (our band: 155–175) |
 | Hook (first 15s) | 54 words |
 | Opener sentence | 30 words (our rule: ≤ 12) |
 | Sentences | 22 (avg 22.5 words) |
@@ -14,5 +14,5 @@
 | Open-loop markers | none detected |
 | Top bigrams | `plane crashes`×3, `birds away`×3 |
 
-Source path: `ci-android` — numbers from tools/blueprint_extractor.py (deterministic).
+Source path: `ci-proxy` — numbers from tools/blueprint_extractor.py (deterministic).
 Next: run the LLM analyst (prompts/blueprint_analyst.md) to add beats + takeaways.

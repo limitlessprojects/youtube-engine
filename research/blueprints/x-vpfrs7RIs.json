@@ -1,8 +1,8 @@
 {
  "id": "x-vpfrs7RIs",
  "duration_s": 153.4,
- "words": 493,
- "wpm": 192.9,
+ "words": 497,
+ "wpm": 194.4,
  "hook_15s_words": 54,
  "opener_sentence_words": 30,
  "sentences": 22,
@@ -22,5 +22,5 @@
    "n": 3
   }
  ],
- "language_note": "ci-android"
+ "language_note": "ci-proxy"
 }
