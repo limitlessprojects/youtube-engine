@@ -2,3 +2,4 @@
 # must stay fast and LLM-free; heavy render deps (remotion, manim) are NOT installed here)
 requests>=2.31
 youtube-transcript-api>=1.0
+edge-tts>=7.0

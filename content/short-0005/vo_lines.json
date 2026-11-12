@@ -1,0 +1,16 @@
+{
+  "short": "short-0005",
+  "lines": [
+    { "key": "hook", "role": "narration", "narration": "The loudest sound ever: an island that blew itself apart." },
+    { "key": "s0", "role": "narration", "narration": "In eighteen eighty three, Krakatoa was an island near Java." },
+    { "key": "s1", "role": "narration", "narration": "A hundred miles out, it rated about one hundred eighty decibels." },
+    { "key": "s2", "role": "narration", "narration": "Pain kicks in around one hundred and thirty. This was fifty past it." },
+    { "key": "s3", "role": "narration", "narration": "Forty miles out, over half a ship's crew had their eardrums burst." },
+    { "key": "s4", "role": "narration", "narration": "Three thousand miles away, people blamed a nearby ship's cannons." },
+    { "key": "s5", "role": "narration", "narration": "The pressure wave circled the entire planet. Three and a half times." },
+    { "key": "s6", "role": "narration", "narration": "The waves it made killed thirty six thousand people." },
+    { "key": "s7", "role": "narration", "narration": "And the island that made the sound was gone." },
+    { "key": "s8", "role": "narration", "narration": "But Earth wasn't finished. A new island rose, the child of Krakatoa." },
+    { "key": "s9", "role": "narration", "narration": "It's been growing for nearly a century, and it could do it all again." }
+  ]
+}

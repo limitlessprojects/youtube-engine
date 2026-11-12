@@ -28,10 +28,10 @@ echo "== bootstrap: studio environment =="
 # --- 1. Python deps (fast path: check before installing) ---------------------
 PY="python3"
 $PY -c "import requests" 2>/dev/null && $PY -c "import yt_dlp" 2>/dev/null \
-  && $PY -c "import youtube_transcript_api" 2>/dev/null \
-  && ok "python deps present (requests, yt-dlp, youtube-transcript-api)" || {
+  && $PY -c "import youtube_transcript_api" 2>/dev/null && $PY -c "import edge_tts" 2>/dev/null \
+  && ok "python deps present (requests, yt-dlp, youtube-transcript-api, edge-tts)" || {
   echo "  installing python deps..."
-  $PY -m pip install -q -U requests yt-dlp youtube-transcript-api \
+  $PY -m pip install -q -U requests yt-dlp youtube-transcript-api edge-tts \
     && ok "python deps installed" || fail "python deps"
 }
 

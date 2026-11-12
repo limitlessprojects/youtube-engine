@@ -1,0 +1,23 @@
+{
+  "round": 1,
+  "verdict": "pass",
+  "scores": { "hook": 8, "pacing": 8, "predictability": 9, "boredom": 8, "boilerplate": 10, "loop": 9 },
+  "weakest_scenes": [
+    "s2 — dB-scale beat reads most textbook-like between two dramatic beats; carried by the giant-ear visual, keep but do not add a second number on screen (text budget)",
+    "s6+s7 — two consecutive down-beats (cost, loss) before s8 lifts; mitigated: s7 is 9 words and its visual (island splitting) is dramatic, not sad-static",
+    "s9 — longest line (14w, ~4.1s, near the 4.2s cap); visual must change state twice (rings pulse → loop mirror) to hold it"
+  ],
+  "rewrite_briefs": [
+    "s2: if it dies in the render, fold the pain-scale into the gauge scene — do NOT add a third consecutive number beat",
+    "s6/s7: if retention autopsy later shows a dip, shorten s7 to a 6-word punch (e.g. 'The island itself? Gone.') — only after measured evidence",
+    "s9: hold closer kinetics through the whole line; the loop mirror must land before the last syllable"
+  ],
+  "checked_against": {
+    "hook_lands_s_est": 2.9,
+    "wpm_linter": 204.2,
+    "linter": "PASS (114w, opener 10w, --duration-s 33.5 edge-tts +25% class)",
+    "banned_words": "zero (linter-verified)",
+    "loop_pair": "s9 '…it could do it all again' -> hook '…an island that blew itself apart' — seamless island referent",
+    "fact_audit": "all 11 lines carry fact_sources; numbers match the fact sheet verbatim (180~calculated, 130~threshold, 'over half' crew, 3.5 laps, thirty-six thousand rounded from 36,417)"
+  }
+}

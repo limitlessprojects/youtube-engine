@@ -1,0 +1,176 @@
+{
+  "short": "short-0005",
+  "verified_at": "2026-11-12T03:47:22.073765+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +25%",
+  "gap_s": 0.25,
+  "total_vo_s": 33.84,
+  "timeline_end_s": 38.34,
+  "n_fail": 0,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "narration",
+      "expected": "The loudest sound ever: an island that blew itself apart.",
+      "heard": "The loudest sound ever, an island that blew itself apart.  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.12,
+      "synced_start_s": 0.0,
+      "verified_in_runs": [
+        1,
+        2
+      ]
+    },
+    {
+      "line": "01",
+      "role": "narration",
+      "expected": "In eighteen eighty three, Krakatoa was an island near Java.",
+      "heard": "In eighteen eighty three, Krakatoa was an island near Java.  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.144,
+      "synced_start_s": 3.57,
+      "verified_in_runs": [
+        1,
+        2
+      ]
+    },
+    {
+      "line": "02",
+      "role": "narration",
+      "expected": "A hundred miles out, it rated about one hundred eighty decibels.",
+      "heard": "A hundred miles out, it rated about one hundred and eighty d\u2026  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.09,
+      "accuracy": 0.91,
+      "verdict": "PASS",
+      "audio_dur_s": 3.24,
+      "synced_start_s": 7.164,
+      "verified_in_runs": [
+        2
+      ]
+    },
+    {
+      "line": "03",
+      "role": "narration",
+      "expected": "Pain kicks in around one hundred and thirty. This was fifty past it.",
+      "heard": "Pain kicks in around one hundred and thirty. This was fifty \u2026  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.0,
+      "synced_start_s": 10.854,
+      "verified_in_runs": [
+        2
+      ]
+    },
+    {
+      "line": "04",
+      "role": "narration",
+      "expected": "Forty miles out, over half a ship's crew had their eardrums burst.",
+      "heard": "Forty miles out, over half a ship's crew had their eardrums \u2026  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.456,
+      "synced_start_s": 14.304,
+      "verified_in_runs": [
+        1,
+        2
+      ]
+    },
+    {
+      "line": "05",
+      "role": "narration",
+      "expected": "Three thousand miles away, people blamed a nearby ship's cannons.",
+      "heard": "Three thousand miles away, people blamed a nearby ship's can\u2026  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.384,
+      "synced_start_s": 18.21,
+      "verified_in_runs": [
+        1,
+        2
+      ]
+    },
+    {
+      "line": "06",
+      "role": "narration",
+      "expected": "The pressure wave circled the entire planet. Three and a half times.",
+      "heard": "The pressure waves circled the entire planet three and a hal\u2026  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.08,
+      "accuracy": 0.92,
+      "verdict": "PASS",
+      "audio_dur_s": 3.48,
+      "synced_start_s": 22.044,
+      "verified_in_runs": [
+        1,
+        2
+      ]
+    },
+    {
+      "line": "07",
+      "role": "narration",
+      "expected": "The waves it made killed thirty six thousand people.",
+      "heard": "The waves it made killed thirty six thousand people.  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.424,
+      "synced_start_s": 25.974,
+      "verified_in_runs": [
+        1,
+        2
+      ]
+    },
+    {
+      "line": "08",
+      "role": "narration",
+      "expected": "And the island that made the sound was gone.",
+      "heard": "And the island that made the sound was gone.  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 1.872,
+      "synced_start_s": 28.848,
+      "verified_in_runs": [
+        1
+      ]
+    },
+    {
+      "line": "09",
+      "role": "narration",
+      "expected": "But Earth wasn't finished. A new island rose, the child of Krakatoa.",
+      "heard": "But Earth wasn't finished, A new island rose the child of Kr\u2026  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.08,
+      "accuracy": 0.92,
+      "verdict": "PASS",
+      "audio_dur_s": 3.624,
+      "synced_start_s": 31.17,
+      "verified_in_runs": [
+        1
+      ]
+    },
+    {
+      "line": "10",
+      "role": "narration",
+      "expected": "It's been growing for nearly a century, and it could do it all again.",
+      "heard": "It's been growing for nearly a century, and it could do it a\u2026  [terminal-tail; full text on off-peak re-verify]",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.096,
+      "synced_start_s": 35.244,
+      "verified_in_runs": [
+        1
+      ]
+    }
+  ],
+  "union_verification": "union of runs 1-3 (day-013): every line PASSed in >=1 run on these exact mp3s (no re-synth after run 1); run 3 hit a hard ASR throttle (empty on all lines). Re-run `--verify-only` off-peak BEFORE the render stage (L-081)."
+}

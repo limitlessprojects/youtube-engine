@@ -26,8 +26,25 @@ NS = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/sche
 
 
 def fetch() -> list[dict]:
-    req = urllib.request.Request(FEED, headers={"User-Agent": "Mozilla/5.0 (rss-scout/1)"})
-    root = ET.fromstring(urllib.request.urlopen(req, timeout=20).read())
+    # bot-wall ladder (L-031): a 404/429 on one attempt is NOT a verdict —
+    # rotate UA + backoff before giving up (curl-verified feed works most nights)
+    import time
+    uas = ["Mozilla/5.0 (rss-scout/1)",
+           "Mozilla/5.0 (X11; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0",
+           "curl/8.5.0"]
+    last_err: Exception | None = None
+    for i, ua in enumerate(uas):
+        try:
+            req = urllib.request.Request(FEED, headers={"User-Agent": ua})
+            root = ET.fromstring(urllib.request.urlopen(req, timeout=20).read())
+            break
+        except Exception as e:  # noqa: BLE001
+            last_err = e
+            print(f"[views] fetch attempt {i + 1} failed ({e}); retrying…" if i < len(uas) - 1
+                  else f"[views] all {len(uas)} attempts failed: {e}")
+            time.sleep(3)
+    else:
+        raise SystemExit(f"[views] feed unreachable tonight: {last_err}")
     rows = []
     for e in root.findall("a:entry", NS):
         vid = e.findtext("yt:videoId", namespaces=NS)

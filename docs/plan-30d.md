@@ -1,4 +1,4 @@
-# The 30-Day Plan — status Day 011 (Nov 9), horizon Day 037 (Dec 8)
+# The 30-Day Plan — status Day 013 (Nov 12), horizon Day 037 (Dec 8)
 
 > Reader: the next session's agent. This is the contract: what each phase proves,
 > what you owe the channel today, and the forks we pre-decided so nobody spirals
@@ -26,14 +26,15 @@
 | 5 | Advance the next short: script → VO → scenes → render → gates → publish | `docs/playbook/` |
 | 6 | Ledger line + log + commit + push | `docs/lessons.md` + `logs/` |
 
-## Status right now (end of Day 011 nightly session, 2026-11-09)
+## Status right now (end of Day 013 nightly session, 2026-11-12)
 
 - Published: #0001 (KKyrNUGZXcU, engine v1), #0002 (CZbJmmeyUc4, v3 debut), #0003 (DeaEvEduh88, boss-criticized, ultracritic 5.20).
-- **Views (2026-11-08, RSS truth — tracker bug fixed tonight): #0003 = 1,136 · #0002 = 862 · #0001 = 195.** The 5.20-scored short leads the channel — gate score ≠ discovery pull; Phase B's question is the right one.
-- **Carry: short-0004** — frame mean 7.14–7.18 after r5→r7 tonight (cap reached). text 8.0–8.1 ✓, contrast 7.5–7.7 ✓; **hook_impact 6.6–6.9 ✗, visual_hierarchy 6.1–6.4 flat across all 7 rounds of its life = structural ceiling.** Video pass 429-blocked tonight (bugs fixed: repo-owned script path, SDK in bootstrap; r4 had measured pacing 8.0 / life 8.0 / edit 7.0). **The debt, with 3 named directives: `content/short-0004/gate/carry_r7.md` — hierarchy restructure of s4/s6/s8 (not decoration), hook probe-tests, video-pass backoff then ONE full round → publish or redesign decision. No round 8 of micro-polish.**
-- Tool fixes tonight: views_tracker media:group path (was logging zeros), ultracritic video-pass path + stderr, bootstrap installs the z-ai SDK (L-080/L-081/L-082 in lessons.md).
-- Next short: **#0005, superlative formula** — script + lint + VO next session; reference blueprint `research/blueprints/x-vpfrs7RIs.md` (493w, 192.9 WPM, hook 54w/15s).
-- Boss action items open: channel phone-verify (unlocks custom thumbnails via `thumbnails.set`); #0002 hook frame (7.5/10) is waiting for it.
+- **Views (2026-11-12, RSS): #0003 = 1,148 · #0002 = 1,141 · #0001 = 197.** The 5.20-scored short still leads — gate score ≠ discovery pull; Phase B's question stands.
+- **Carry: #0004 CLOSED (L-085)** — r8 7.53 hit the grand bar but visual_hierarchy 6.9 < 7.0 with s4 floor breach; r9 redesign 7.35 proved the ~6.9 ceiling is FORMAT-level (panel-in-world diagram cards). No more polish laps; the fix is #0005's canvas-first format. #0002 thumbnail still waiting on OAuth.
+- **#0005 (superlative formula #1): "The loudest sound in history" — Krakatoa 1883.** Day-013 delivered: fact-checked script (all 11 lines sourced: Wikipedia 1883 eruption + Anak Krakatau, Nautilus 2014), linter PASS, critic pass round 1 (all six dims ≥8, critique.json), VO synthed + measured (36.34s, WPM 214.5 canon — band ceiling, see script.md status block), ASR union-verified 11/11 (L-091; off-peak re-verify before render). **Next session: scenes.html canvas-first + hook-variant probes (L-087) → render → gate → publish-or-carry.**
+- **OAuth (L-084): refresh grant DEAD** (`invalid_grant`, both copies). `tools/oauth_mint.py` shipped day-013 (paste-back code flow); consent URL handed to boss. On fresh token.json: #0002 thumbnail FIRST (`--set-thumbnail`), then uploads unblocked.
+- Boss action items open: ① click the consent URL + paste the code back (chat); ② confirm the nura-health OAuth app is in **Production** status in Google Cloud Console (Testing mode kills refresh tokens in 7 days — that is the suspected cause of both deaths).
+- New GitHub PAT installed day-013 (old one possibly expired) — clone/pull/push verified working; Actions API read OK.
 
 ## Phase A — Quality proof (Day 008–014, Nov 8–14)
 
