@@ -1,0 +1,285 @@
+{
+ "round": 1,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.08,
+ "frame_grand_mean": 6.88,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 7.43,
+  "frame:visual_hierarchy": 6.79,
+  "frame:contrast_legibility": 6.21,
+  "frame:production_polish": 7.0,
+  "video:pacing_rhythm": 8,
+  "video:character_life": 8,
+  "video:edit_flow": 8
+ },
+ "frame_means": {
+  "hook_A_u65": 7.2,
+  "hook_B_u65": 8,
+  "hook_u50": 8.0,
+  "s0_u50": 7.2,
+  "s10_u50": 6.75,
+  "s1_u50": 6.5,
+  "s2_u50": 6.0,
+  "s3_u50": 7.0,
+  "s4_u50": 7.8,
+  "s5_u50": 7.5,
+  "s6_u50": 4.5,
+  "s7_u50": 6.3,
+  "s8_u50": 6.3,
+  "s9_u50": 7.25
+ },
+ "floor_breaches": [
+  "s10_u50",
+  "s6_u50",
+  "s7_u50",
+  "s8_u50"
+ ],
+ "video_directives": [
+  "Diagram cards (180 dB gauge, pain zone, 36,000 lives) each hold ~3s with eased fade-ins \u2014 keep this exact hold cadence",
+  "Character reacts to every beat (dizzy, clutching ears, shocked, somber) \u2014 sustain pose/emotion swaps between scenes to preserve life",
+  "The gauge-to-ear dissolve and BOOM ripple expansion are motivated, breathing transitions \u2014 extend this eased dissolve language; avoid any snap-cuts"
+ ],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 7,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 6,
+   "top3_directives": [
+    "The third line 'WAS AN ISLAND' drops to a dark gray that nearly merges with the navy ocean band \u2014 raise its brightness or switch to the cream white used on lines 1-2 so the full title reads at a glance.",
+    "The mascot character's arm and leg overlap the 'T' and 'H' of 'THE LOUDEST' \u2014 nudge the character left/up 20-30px or add a soft dark halo behind it to separate it from the type.",
+    "The lower-third ocean band is a large near-black dead zone between the shoreline and the text block; enlarge the type ~15% or lift the ocean with subtle wave-line highlights to reclaim that area."
+   ],
+   "frame": "hook_A_u65",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 7,
+   "top3_directives": [
+    "Trim hook to \u22646 words (e.g. 'THE LOUDEST SOUND EVER' + visual implies island) to hit the 8+ text tier",
+    "Upper third is a near-empty star field \u2014 extend smoke rings or add a subtle moon/arc detail to occupy the dead zone",
+    "Text block sits low with heavy bottom weight \u2014 nudge composition upward ~5% and add a faint glow/rim on the title for separation from the water band"
+   ],
+   "frame": "hook_B_u65",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 7,
+   "top3_directives": [
+    "Brighten the third line 'WAS AN ISLAND' \u2014 it reads visibly dimmer than lines 1-2 and drops legibility in daylight",
+    "Fill the upper ~25% dead zone (above the green arc) with a subtle element \u2014 moon, birds, or star cluster \u2014 to earn the vertical space",
+    "Nudge the title block up 3-4% to reduce crowding against the bottom frame edge and rebalance the volcano-to-text ratio"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 8
+   },
+   "mean": 7.2,
+   "words_visible": 3,
+   "top3_directives": [
+    "JAVA/SUMATRA labels are muddy mid-gray on dark navy \u2014 brighten to near-white or add subtle glow; they will vanish on a daylight phone screen",
+    "Bottom third is a dead zone: the glow-outlined character is small, dim, and disconnected from the volcano focal point \u2014 enlarge/integrate it or cut it and extend the wave detail upward",
+    "The repeating tan water-line dashes read as unfinished placeholder bars \u2014 either style them as actual wave highlights (varying width, opacity) or remove them"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 4,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 6,
+   "top3_directives": [
+    "The word 'AGAIN.' is nearly invisible \u2014 dark cream fill on dark navy background at the very bottom; brighten it to match the main caption or delete it",
+    "Remove the faint horizontal underline bars above/behind the text and the stray dark ellipse shapes floating above the volcano tip \u2014 they read as rendering artifacts",
+    "Mascot character overlaps the left edge awkwardly and faces the text but isn't anchored to anything; either ground it with a shadow/ledge or nudge it fully into frame"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 7,
+   "top3_directives": [
+    "The bottom third is a dead zone: the stick-figure character is tiny and dim \u2014 enlarge it 2-3x or cut it, and give 'PRESSURE WAVE' a real title treatment (bolder weight, brighter fill) so the lower frame carries weight",
+    "'PRESSURE WAVE' fails daylight contrast \u2014 it is low-opacity gray on near-black navy; raise to ~85% white or a brand accent color with subtle glow",
+    "Add a subtle drop shadow or dark halo behind the '180 dB' pill and gauge numerals so they separate cleanly from the bright purple gradient bleeding behind them"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.0,
+   "words_visible": 6,
+   "top3_directives": [
+    "The sound-wave arc floats detached to the right of the ear with no connection point \u2014 anchor it emanating from the ear canal or remove it",
+    "Bottom third is a murky near-black dead zone with a tiny illegible character \u2014 either enlarge/brighten the figure into the composition or crop the frame to end at the horizon",
+    "Two disconnected text systems ('PAIN ZONE' label + '130 dB = PAIN' pill) split attention \u2014 merge into one badge or place both in a single aligned block"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Brighten the 'EARDRUMS SPLIT' caption \u2014 light gray on mid-purple will mush on a daylight phone; push to near-white with a subtle dark halo",
+    "The character bottom-left is tiny and low-contrast against the near-black water \u2014 either enlarge ~30%, add rim light, or remove it; right now it reads as noise",
+    "The lower third is a large dead zone of flat dark navy \u2014 add faint water-surface glow reflection from the purple sky or subtle wave highlights to unify the composition"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.8,
+   "words_visible": 4,
+   "top3_directives": [
+    "Add a subtle dark scrim or lift the character's rim light \u2014 bottom-left figure currently sits near legibility floor on small screens",
+    "Break the large dark dead zone in the top 40% with faint star parallax or a thin atmospheric gradient accent",
+    "Unify the caption chip styling (border radius/color) with the arc palette so the two text systems read as one family"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill the bottom-third dead zone: the mascot floats in near-black emptiness \u2014 anchor it with subtle ground glow or a faint orbital echo curve so the lower frame isn't a void",
+    "Add a thin dark rim/stroke between planet and the purple nebula glow on the right edge \u2014 the teal atmosphere line nearly melts into the highlight there",
+    "Give the caption pill a touch more presence (slight scale-up or drop shadow) so the single text system commands the frame instead of reading as an afterthought"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 4,
+    "contrast_legibility": 3,
+    "production_polish": 5
+   },
+   "mean": 4.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Boost the '36,000 LIVES' badge contrast or remove it entirely \u2014 as rendered it's a ghost element that reads as a rendering error, not a design choice",
+    "The character bottom-right is almost invisible against the navy ground; raise its brightness, scale, or rim light so it reads as the focal subject at 6 inches in daylight",
+    "Kill the dead zones: top ~55% of the frame is empty gradient and the bottom third is featureless navy \u2014 either add atmospheric layers (stars, mist, horizon glow) or reposition text/character to occupy the mid-band with intent"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.3,
+   "words_visible": 1,
+   "top3_directives": [
+    "Remove or merge the two overlapping circles (orange + teal) \u2014 they read as UI artifacts and split the focal point with the volcano; keep at most one highlight ring",
+    "Boost contrast of the 'GONE.' label \u2014 grey text on glowing purple is the weakest element on a 6-inch daylight screen; use white with a subtle dark scrim or heavier weight",
+    "Give the small character a clear role \u2014 at bottom-left it's nearly invisible against dark water; either enlarge, rim-light it, or cut it to clean up the composition"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 6.3,
+   "words_visible": 5,
+   "top3_directives": [
+    "The 'CHILD OF KRAKATOA' subtitle is nearly invisible \u2014 muted teal on dark purple; brighten it, add a subtle drop shadow, or place it inside the pill card",
+    "The bottom-quarter horizontal lines read as unresolved placeholder text \u2014 either render real captions with proper contrast or remove them; right now they're dead mush against the navy background",
+    "The character bottom-left is dim, small, and disconnected from the composition \u2014 lift it with a rim light or reposition it into the eye path between the volcano glow and the caption zone"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Boost separation of the foreground character from the dark shoreline \u2014 add rim light or glow so it survives a 6-inch daylight screen",
+    "Activate the bottom third: the wave lines and faint dashes read as dead zones; add a subtle reflection of the beacon light on the water",
+    "Strengthen the eye path between the small character and the beacon \u2014 a subtle light beam or scale adjustment connects the two focal points"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

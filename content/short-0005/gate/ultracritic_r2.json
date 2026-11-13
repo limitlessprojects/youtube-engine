@@ -1,0 +1,284 @@
+{
+ "round": 2,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.16,
+ "frame_grand_mean": 7.12,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 8.0,
+  "frame:visual_hierarchy": 6.86,
+  "frame:contrast_legibility": 6.5,
+  "frame:production_polish": 7.14,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 8,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_A_u65": 7.2,
+  "hook_B_u65": 7.5,
+  "hook_u50": 8.25,
+  "s0_u50": 7.5,
+  "s10_u50": 7,
+  "s1_u50": 7.0,
+  "s2_u50": 6.5,
+  "s3_u50": 6.5,
+  "s4_u50": 6.25,
+  "s5_u50": 7.3,
+  "s6_u50": 5,
+  "s7_u50": 8.0,
+  "s8_u50": 7.5,
+  "s9_u50": 8.25
+ },
+ "floor_breaches": [
+  "s10_u50",
+  "s4_u50",
+  "s6_u50"
+ ],
+ "video_directives": [
+  "Tighten the ear/pressure-wave hold (10-13s): the same static ear with a tiny jet loop outstays its beat \u2014 cut it a second earlier.",
+  "Vary the character's idle motion \u2014 he reacts per scene nicely but returns to the same lean pose between beats; add micro-shifts (weight change, head tilt) to keep mid-scene frames alive.",
+  "The final 'IT COULD DO IT ALL' card sits on an unchanged frame for the whole tail \u2014 add the character's gaze following the wave rings or a slow ring expansion to earn the hold."
+ ],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fix the mascot's arm/head overlapping the 'T' and 'H' of 'THE' \u2014 either nudge text right or shrink mascot so nothing collides",
+    "Brighten the third line 'WAS AN ISLAND' \u2014 it reads dimmer/grayer than lines 1-2 and will wash out further in daylight on a 6-inch screen",
+    "Reclaim the dead top third of sky: extend the purple glow, add subtle cloud/smoke plume detail above the eruption rings, or lift the title block ~10% higher to tighten the composition"
+   ],
+   "frame": "hook_A_u65",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 6,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Brighten the third line 'WAS AN ISLAND' \u2014 it drops to near-background contrast on the dark navy band and will vanish on a daylight phone; match the cream value of lines 1-2 or add a subtle dark scrim behind it",
+    "Fill the upper ~25% dead zone above the smoke plumes: the dark starfield band with the faint arc reads as empty; either crop in, raise the mountain, or add a subtle atmospheric element to guide the eye down to the crater",
+    "Strengthen the title block's separation from the water texture \u2014 increase weight/size contrast between the hook lines ('THE LOUDEST SOUND') and the payoff line so the eye path reads in one deliberate order"
+   ],
+   "frame": "hook_B_u65",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 8
+   },
+   "mean": 8.25,
+   "words_visible": 5,
+   "top3_directives": [
+    "Lift the crescent moon detail \u2014 it's nearly invisible against the dark sky and adds nothing at current contrast",
+    "The smoke plume ellipses get mushy where they blend into the purple glow \u2014 sharpen their edges for cleaner read",
+    "Bottom water band below the title is a near-dead dark zone; add subtle texture or vignette intent so it doesn't read as empty space"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill the top third of dead sky zone with subtle atmosphere (cloud glow, birds, or erupting debris trail) so the eye path travels from character to peak without a dead gap",
+    "Give JAVA/SUMATRA labels stronger tie-in (thin connector lines or map pins) since they float ambiguously over the ridge line",
+    "Repose the character's pointing arm to gesture toward the volcano instead of out of frame, strengthening the guided eye path"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 7,
+   "words_visible": 6,
+   "top3_directives": [
+    "The word 'AGAIN.' is dark-on-dark and nearly invisible \u2014 raise its opacity/lighten its color so the full sentence reads on a 6-inch screen in daylight.",
+    "Reduce the vertical gap between 'IT COULD DO IT ALL' and 'AGAIN.' so the caption reads as one tight block instead of a line plus a floating orphan.",
+    "Nudge the caption block left-aligned with the character's pointing gesture and confirm the character's arm doesn't crowd the 'I' \u2014 currently the mascot and text fight slightly at the left margin."
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 6,
+   "top3_directives": [
+    "Lift the dead zone: the entire bottom-right third is near-black empty \u2014 add a subtle wave/shockwave graphic or push the gauge/composition down to rebalance vertical mass",
+    "Boost the character's visibility \u2014 the stick figure reads at ~20% contrast against the navy ground; add rim light or scale it up so the gag lands on a 6-inch phone",
+    "Fill the unlabeled gauge: add a small unit label (dB) or danger-zone tick text inside the dial so the red arc communicates without relying on the caption below"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 4,
+   "top3_directives": [
+    "Relight or crop the bottom third: the character is tiny, dim, and marooned in a near-black dead zone occupying ~35% of frame \u2014 either scale the character up, move it into the purple glow, or extend the ear scene lower",
+    "Fix the caption placement: '130 dB = PAIN' is left-aligned in dead space while the ear is center-right; center it under the ear or anchor it to the sound-wave origin for a guided eye path",
+    "Strengthen the sound-wave motif: the red/blue streak entering the ear canal is faint and reads as a smudge at 6 inches \u2014 increase glow, add motion streaks, and give it contrast against the dark canal hole"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "The mascot character bottom-left is nearly swallowed by the dark water background \u2014 add rim light or raise its brightness so it reads as a secondary focal point on a 6-inch phone",
+    "The letter-spaced 'EARDRUMS SPLIT' caption is thin and low-contrast against the purple glow \u2014 add a subtle dark drop shadow or increase weight for daylight legibility",
+    "Bottom-right quadrant is a large dead zone \u2014 either extend waterline detail/wave highlights into it or reframe the composition slightly upward to tighten dead space"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 6.25,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or compress the empty top 40% (stars-only dead zone) \u2014 raise the horizon/glow so composition doesn't sit in the bottom half",
+    "Brighten the '3,000 MILES AWAY' chip \u2014 its muted blue on dark navy will wash out on a daylight phone; push label to near-white or add a stronger fill",
+    "Resolve the focal-point tug-of-war: 'BOOM' and the character are equally weighted at opposite ends \u2014 either enlarge the character into the glow pool or dim/reposition so the eye path runs BOOM \u2192 horizon \u2192 character"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 3,
+   "top3_directives": [
+    "The mascot in the bottom-left is tiny, dimly lit, and visually disconnected from the planet \u2014 scale it up and light it with the planet's rim glow so it reads as part of the scene, not a pasted sticker",
+    "The bottom quarter of the frame is a near-black dead zone; either lift the ground/floor gradient slightly to keep depth readable or push the character/text composition into it",
+    "The caption chip straddles the hard seam between the space gradient and the black floor \u2014 either commit to a consistent background transition (soft horizon glow) or anchor the chip clearly on one surface"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 4,
+    "production_polish": 5
+   },
+   "mean": 5,
+   "words_visible": 6,
+   "top3_directives": [
+    "The '36,000 LIVES' chip is nearly invisible against the purple glow \u2014 either kill it or add a solid dark fill/strong stroke so it reads on a daylight phone",
+    "The character in the bottom-right is a dark-on-dark silhouette; add a rim light or lift the sea's luminance behind them so the focal subject separates from the background",
+    "Fill the large dead zone in the upper-middle third with a subtle texture, star field, or horizon detail \u2014 right now nearly half the frame carries no visual information"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Lift the lower third: the bottom ~30% is a large near-black dead zone with only faint wave lines \u2014 add subtle water shimmer, reflection of the volcano glow, or a slight vignette push so the character's environment reads on a daylight phone.",
+    "Reposition or enlarge 'GONE.' \u2014 it currently collides with the volcano peak and its smoke plume; the white-on-lavender edge loses crispness against the glow. Nudge text up/left and add a tighter dark stroke or drop shadow.",
+    "Give the decorative ring a purpose: the thin orange circle is misaligned with both the text and the character and reads as arbitrary \u2014 either animate/rotate it as a highlight around the volcano or reduce its opacity to function as pure ambient framing."
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 5,
+   "top3_directives": [
+    "Top third is a large dead zone of near-black sky \u2014 add subtle atmosphere (drifting ash/embers, moon glow) to activate it without clutter",
+    "The mascot gestures toward nothing; align the gesture path toward the volcano/text to connect the two subjects into a guided eye path",
+    "Subtitle 'CHILD OF KRAKATAU' sits slightly left of center under the label \u2014 optically center both lines to the volcano's axis and align margins precisely"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom third is a near-black dead zone \u2014 lift the foreground water texture/reflections slightly or push the walking path glow stronger to hold the eye after the monument",
+    "Character's rim glow is slightly hotter than the monument's light source; match hue/warmth so the light logic reads as one system",
+    "Faint horizontal dashes on the water read as noise at phone scale \u2014 either commit them to a visible path or remove them"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

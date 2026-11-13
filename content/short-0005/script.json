@@ -1,158 +1,170 @@
 {
-  "title": "The loudest sound in history (was heard 3,000 miles away)",
-  "format": "short",
-  "hook": {
-    "timestamp_start": 0.0,
-    "narration": "The loudest sound ever: an island that blew itself apart.",
-    "visual": {
-      "pose": "skygawk (hero tiny on shore rock)",
-      "prop": "Krakatoa island OWNS the frame + blast rings + kinetic title",
-      "background": "tropic-dawn-sea"
-    },
-    "fact_sources": [
-      "loudest sound in recorded history, 27 Aug 1883 Krakatoa blast (Wikipedia '1883 eruption of Krakatoa'; Nautilus 'The Sound So Loud That It Circled the Earth Four Times', 2014)"
-    ],
-    "audio_dur_s": 3.12
+ "title": "The loudest sound in history (was heard 3,000 miles away)",
+ "format": "short",
+ "hook": {
+  "timestamp_start": 0.0,
+  "narration": "The loudest sound ever: an island that blew itself apart.",
+  "visual": {
+   "pose": "skygawk (hero tiny on shore rock)",
+   "prop": "Krakatoa island OWNS the frame + blast rings + kinetic title",
+   "background": "tropic-dawn-sea"
   },
-  "scenes": [
-    {
-      "timestamp_start": 3.37,
-      "narration": "In eighteen eighty three, Krakatoa was an island near Java.",
-      "visual": {
-        "pose": "presenting",
-        "prop": "island wide shot + '1883' stamp, Java/Sumatra silhouettes at frame edges",
-        "background": "tropic-dawn-sea"
-      },
-      "fact_sources": [
-        "eruption 27 August 1883, Sunda Strait between Java and Sumatra (Wikipedia '1883 eruption of Krakatoa') \u2014 date as '1883' STAMP on screen; VO says the year as words"
-      ],
-      "audio_dur_s": 3.144
-    },
-    {
-      "timestamp_start": 6.76,
-      "narration": "A hundred miles out, it rated about one hundred eighty decibels.",
-      "visual": {
-        "pose": "recoil (knocked back a step)",
-        "prop": "barograph gauge OWNS the frame \u2014 needle slams past + '180 dB' stamp",
-        "background": "tropic-dawn-sea"
-      },
-      "fact_sources": [
-        "calculated 180 dB SPL at 160 km / 100 mi (Wikipedia); Batavia gasworks barometer 2.5 inHg \u2248 172 dB (Nautilus 2014) \u2014 'about', never 'measured'; '180 dB' as STAMP, VO says words"
-      ],
-      "audio_dur_s": 3.24
-    },
-    {
-      "timestamp_start": 10.25,
-      "narration": "Pain kicks in around one hundred and thirty. This was fifty past it.",
-      "visual": {
-        "pose": "wincing (hands toward ears)",
-        "prop": "giant ear + red-zone arc past the 130 mark, hero small at edge",
-        "background": "pale-sea"
-      },
-      "fact_sources": [
-        "human pain threshold near 130 dB (Nautilus 2014)"
-      ],
-      "audio_dur_s": 3.0
-    },
-    {
-      "timestamp_start": 13.5,
-      "narration": "Forty miles out, over half a ship's crew had their eardrums burst.",
-      "visual": {
-        "pose": "braced (leaning into the blast)",
-        "prop": "ship silhouette OWNS the frame + 'CRACK' stamp, sailors hands to ears",
-        "background": "storm-sea"
-      },
-      "fact_sources": [
-        "Norham Castle 40 mi: 'ear-drums of over half my crew have been shattered' \u2014 captain's log (via Nautilus 2014)"
-      ],
-      "audio_dur_s": 3.456
-    },
-    {
-      "timestamp_start": 17.21,
-      "narration": "Three thousand miles away, people blamed a nearby ship's cannons.",
-      "visual": {
-        "pose": "listening (hand cupped to ear)",
-        "prop": "Rodrigues beach, distant 'BOOM' kinetic text",
-        "background": "tropic-calm-sea"
-      },
-      "fact_sources": [
-        "heard 4,800 km / 3,000 mi away at Rodrigues; 'thought to have been cannon fire from a nearby ship' (Wikipedia)"
-      ],
-      "audio_dur_s": 3.384
-    },
-    {
-      "timestamp_start": 20.84,
-      "narration": "The pressure wave circled the entire planet. Three and a half times.",
-      "visual": {
-        "pose": "amazed",
-        "prop": "globe OWNS the frame \u2014 one pressure ring orbiting + '3.5\u00d7' stamp",
-        "background": "space-band"
-      },
-      "fact_sources": [
-        "barographs recorded the wave 7 times over 5 days = 3.5 circuits of the globe (Wikipedia)"
-      ],
-      "audio_dur_s": 3.48
-    },
-    {
-      "timestamp_start": 24.57,
-      "narration": "The waves it made killed thirty six thousand people.",
-      "visual": {
-        "pose": "mourning (head down)",
-        "prop": "dark swell over a village silhouette",
-        "background": "dark-sea"
-      },
-      "fact_sources": [
-        "official Dutch toll 36,417, mostly by the ~30 m tsunami; 165 coastal settlements swept (Wikipedia; Nautilus 2014) \u2014 'the waves it made' = the tsunami"
-      ],
-      "audio_dur_s": 2.424
-    },
-    {
-      "timestamp_start": 27.25,
-      "narration": "And the island that made the sound was gone.",
-      "visual": {
-        "pose": "stunned",
-        "prop": "island splits and sinks into the sea",
-        "background": "tropic-dusk-sea"
-      },
-      "fact_sources": [
-        "Krakatoa island largely destroyed in the eruption (Wikipedia)"
-      ],
-      "audio_dur_s": 1.872
-    },
-    {
-      "timestamp_start": 29.37,
-      "narration": "But Earth wasn't finished. A new island rose, the child of Krakatoa.",
-      "visual": {
-        "pose": "pointing",
-        "prop": "small sprouting cone island + 'ANAK KRAKATAU' stamp",
-        "background": "tropic-calm-sea"
-      },
-      "fact_sources": [
-        "Anak Krakatau rose permanently above sea level 11 Aug 1930; 'Anak Krakatau' = 'child of Krakatoa' (Wikipedia 'Anak Krakatau'). Indonesian name lives in the 'ANAK KRAKATAU' STAMP (ASR cannot carry it, day-013); VO says 'the child of Krakatoa'"
-      ],
-      "audio_dur_s": 3.624
-    },
-    {
-      "timestamp_start": 33.24,
-      "narration": "It's been growing for nearly a century \u2014 and it could do it all again.",
-      "visual": {
-        "pose": "skygawk (loop mirror of hook)",
-        "prop": "growth rings pulse on the cone + kinetic closer",
-        "background": "tropic-dawn-sea"
-      },
-      "fact_sources": [
-        "Anak Krakatau still active \u2014 Sept 2026 eruption ongoing; grew ~7\u20139 m/yr before 2018; 96 years since 1930 = 'nearly a century' (Wikipedia)"
-      ],
-      "audio_dur_s": 3.096
-    }
+  "fact_sources": [
+   "loudest sound in recorded history, 27 Aug 1883 Krakatoa blast (Wikipedia '1883 eruption of Krakatoa'; Nautilus 'The Sound So Loud That It Circled the Earth Four Times', 2014)"
   ],
-  "timeline": {
-    "fps": 30,
-    "total_s": 36.34,
-    "gap_s": 0.25,
-    "voice": "edge-tts en-US-AndrewNeural rate +25% (day-013: 214.5 WPM on VO spans, band ceiling)",
-    "words": 122,
-    "wpm_measured": 214.5,
-    "wpm_note": "214.5 on canon tokens (contractions=1); naive split 216.3; linter convention (words/total incl gaps) 201.4 PASS. Band 185-215: canon measure in-band at the ceiling; render-stage gate re-checks (day-013, L-080 noise +-0.8)."
+  "audio_dur_s": 3.12
+ },
+ "scenes": [
+  {
+   "timestamp_start": 3.37,
+   "narration": "In eighteen eighty three, Krakatoa was an island near Java.",
+   "visual": {
+    "pose": "presenting",
+    "prop": "island wide shot + '1883' stamp, Java/Sumatra silhouettes at frame edges",
+    "background": "tropic-dawn-sea"
+   },
+   "fact_sources": [
+    "eruption 27 August 1883, Sunda Strait between Java and Sumatra (Wikipedia '1883 eruption of Krakatoa') — date as '1883' STAMP on screen; VO says the year as words"
+   ],
+   "audio_dur_s": 3.144
+  },
+  {
+   "timestamp_start": 6.76,
+   "narration": "A hundred miles out, it rated about one hundred eighty decibels.",
+   "visual": {
+    "pose": "recoil (knocked back a step)",
+    "prop": "barograph gauge OWNS the frame — needle slams past + '180 dB' stamp",
+    "background": "tropic-dawn-sea"
+   },
+   "fact_sources": [
+    "calculated 180 dB SPL at 160 km / 100 mi (Wikipedia); Batavia gasworks barometer 2.5 inHg ≈ 172 dB (Nautilus 2014) — 'about', never 'measured'; '180 dB' as STAMP, VO says words"
+   ],
+   "audio_dur_s": 3.24
+  },
+  {
+   "timestamp_start": 10.25,
+   "narration": "Pain kicks in around one hundred and thirty. This was fifty past it.",
+   "visual": {
+    "pose": "wincing (hands toward ears)",
+    "prop": "giant ear + red-zone arc past the 130 mark, hero small at edge",
+    "background": "pale-sea"
+   },
+   "fact_sources": [
+    "human pain threshold near 130 dB (Nautilus 2014)"
+   ],
+   "audio_dur_s": 3.0
+  },
+  {
+   "timestamp_start": 13.5,
+   "narration": "Forty miles out, over half a ship's crew had their eardrums burst.",
+   "visual": {
+    "pose": "braced (leaning into the blast)",
+    "prop": "ship silhouette OWNS the frame + 'CRACK' stamp, sailors hands to ears",
+    "background": "storm-sea"
+   },
+   "fact_sources": [
+    "Norham Castle 40 mi: 'ear-drums of over half my crew have been shattered' — captain's log (via Nautilus 2014)"
+   ],
+   "audio_dur_s": 3.456
+  },
+  {
+   "timestamp_start": 17.21,
+   "narration": "Three thousand miles away, people blamed a nearby ship's cannons.",
+   "visual": {
+    "pose": "listening (hand cupped to ear)",
+    "prop": "Rodrigues beach, distant 'BOOM' kinetic text",
+    "background": "tropic-calm-sea"
+   },
+   "fact_sources": [
+    "heard 4,800 km / 3,000 mi away at Rodrigues; 'thought to have been cannon fire from a nearby ship' (Wikipedia)"
+   ],
+   "audio_dur_s": 3.384
+  },
+  {
+   "timestamp_start": 20.84,
+   "narration": "The pressure wave circled the entire planet. Three and a half times.",
+   "visual": {
+    "pose": "amazed",
+    "prop": "globe OWNS the frame — one pressure ring orbiting + '3.5×' stamp",
+    "background": "space-band"
+   },
+   "fact_sources": [
+    "barographs recorded the wave 7 times over 5 days = 3.5 circuits of the globe (Wikipedia)"
+   ],
+   "audio_dur_s": 3.48
+  },
+  {
+   "timestamp_start": 24.57,
+   "narration": "The waves it made killed thirty six thousand people.",
+   "visual": {
+    "pose": "mourning (head down)",
+    "prop": "dark swell over a village silhouette",
+    "background": "dark-sea"
+   },
+   "fact_sources": [
+    "official Dutch toll 36,417, mostly by the ~30 m tsunami; 165 coastal settlements swept (Wikipedia; Nautilus 2014) — 'the waves it made' = the tsunami"
+   ],
+   "audio_dur_s": 2.424
+  },
+  {
+   "timestamp_start": 27.25,
+   "narration": "And the island that made the sound was gone.",
+   "visual": {
+    "pose": "stunned",
+    "prop": "island splits and sinks into the sea",
+    "background": "tropic-dusk-sea"
+   },
+   "fact_sources": [
+    "Krakatoa island largely destroyed in the eruption (Wikipedia)"
+   ],
+   "audio_dur_s": 1.872
+  },
+  {
+   "timestamp_start": 29.37,
+   "narration": "But Earth wasn't finished. A new island rose, the child of Krakatoa.",
+   "visual": {
+    "pose": "pointing",
+    "prop": "small sprouting cone island + 'ANAK KRAKATAU' stamp",
+    "background": "tropic-calm-sea"
+   },
+   "fact_sources": [
+    "Anak Krakatau rose permanently above sea level 11 Aug 1930; 'Anak Krakatau' = 'child of Krakatoa' (Wikipedia 'Anak Krakatau'). Indonesian name lives in the 'ANAK KRAKATAU' STAMP (ASR cannot carry it, day-013); VO says 'the child of Krakatoa'"
+   ],
+   "audio_dur_s": 3.624
+  },
+  {
+   "timestamp_start": 33.24,
+   "narration": "It's been growing for nearly a century — and it could do it all again.",
+   "visual": {
+    "pose": "skygawk (loop mirror of hook)",
+    "prop": "growth rings pulse on the cone + kinetic closer",
+    "background": "tropic-dawn-sea"
+   },
+   "fact_sources": [
+    "Anak Krakatau still active — Sept 2026 eruption ongoing; grew ~7–9 m/yr before 2018; 96 years since 1930 = 'nearly a century' (Wikipedia)"
+   ],
+   "audio_dur_s": 3.096
+  },
+  {
+   "timestamp_start": 34.95,
+   "narration": "",
+   "visual": {
+    "pose": "skygawk (loop mirror, held)",
+    "prop": "closer hold: pulse rings continue + kinetic title pops",
+    "background": "tropic-dawn-sea"
+   },
+   "fact_sources": [
+    "visual-only pacing beat (day-015): A2 mean-scene law at 214.5 WPM needs 12 beats; J-cut over s9 VO line"
+   ]
   }
+ ],
+ "timeline": {
+  "fps": 30,
+  "total_s": 36.34,
+  "gap_s": 0.25,
+  "voice": "edge-tts en-US-AndrewNeural rate +25% (day-013: 214.5 WPM on VO spans, band ceiling)",
+  "words": 122,
+  "wpm_measured": 214.5,
+  "wpm_note": "214.5 on canon tokens (contractions=1); naive split 216.3; linter convention (words/total incl gaps) 201.4 PASS. Band 185-215: canon measure in-band at the ceiling; render-stage gate re-checks (day-013, L-080 noise +-0.8)."
+ }
 }

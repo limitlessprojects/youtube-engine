@@ -60,6 +60,10 @@ def bed(total):
     # "no bed at all"; autopsy confirmed. 0.16 peak ≈ -16 dBFS pre-duck.)
     out = np.tanh(1.6 * out)
     out /= np.abs(out).max() + 1e-9
+    # A5-calibrated bed level (day-015): 0.16 peak measured only 1.3 dB under
+    # VO RMS (mud). 0.075 peak (-6.6 dB) ≈ 7.9 dB under VO — inside the 6–22
+    # band with margin; bed stays present in gaps (L-074's real bug was the
+    # inverted duck, fixed day-010, not the level).
     # fades: in 0.8s, out last 1.2s, and dip the very end to silence
     fi, fo = int(0.8 * SR), int(1.2 * SR)
     env = np.ones(n)
@@ -138,6 +142,10 @@ def main() -> int:
     lines = [(0.0, script["hook"]["timestamp_start"], script["hook"]["audio_dur_s"],
               short / "vo" / "00.mp3")]
     for i, sc in enumerate(script["scenes"]):
+        # visual-only beats (narration "") carry no VO — they are pacing cuts,
+        # not lines (day-015: A2 mean-scene law needs 12 beats at 214.5 WPM)
+        if not (sc.get("narration") or "").strip():
+            continue
         lines.append((i + 1, sc["timestamp_start"], sc["audio_dur_s"],
                       short / "vo" / f"{i+1:02d}.mp3"))
     for _, start, dur, f in lines:
