@@ -53,6 +53,11 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 | C10 | Characters anchored: feet on a surface with contact shadow; captions in the bottom-20% band (y ≥ 1536) | gate checklist 1–2; day-009 caption-shoes fix (heroes raised to y1385–1395) | gate checks 1–2 + pixel-probe arbitration |
 | C11 | Grade must match the world's time-of-day (a dusk vignette on a day world reads as night) | day-010 r1: "background reads as night sky with moon" on the day short | gate (notes-aware) + dim `production_polish` |
 | C12 | One accent color per scene; palette tokens defined once (`V2.P`), never drift | L-004; vendor look.md | process + dim `production_polish` |
+| C13 | **Locked style bible precedes all asset work**: 6–8 color palette, a gradient+glow recipe, outline rules, 3–5 reference frames; every asset is generated or checked against it — stop drawing with primitives | Boss directive 2026-11-13; L-085 (primitives/panel format caps visual_hierarchy at ~6.9) | `content/style-bible.md` + pre-render asset check |
+| C14 | **Layered assets, not flat frames**: characters, objects, backgrounds as separate transparent layers; each gets a bold silhouette, rim light, soft gradient shading, tiny detail props | Boss directive 2026-11-13 (Kurzgesagt-density reference) | asset pipeline (image model + background removal); dims `visual_hierarchy`/detail |
+| C15 | **Motion design carries the professional feel**: parallax depth, easing, squash & stretch, secondary motion (hair/cloth/particles), slow camera pushes, subtle grain + vignette | Boss directive 2026-11-13; C4/C5 already cover idle micro-motion and eased transitions | render motion pass; video dims `pacing_rhythm`/`edit_flow` |
+| C16 | Image-to-video is for HERO SHOTS ONLY (explosions, fluids, space), fed approved keyframes so style stays consistent; never whole scenes | Boss directive 2026-11-13; free-GPU route assessed in `research/free-gpu-video.md` | process |
+| C17 | **Accuracy pass before animating**: list every object in a scene, check against real references (shape, scale, colour), add one detailed "wow" element per scene | Boss directive 2026-11-13 | process (script→scenes handoff checklist) |
 
 ## Audio (stage: `docs/playbook/audio.md`)
 
@@ -84,6 +89,7 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 | G6 | Thresholds are calibrated by measurement and documented when changed, never silent | L-078: an 8.5 bar under a judge whose honest ceiling measured 7.0–7.2 would have silently repealed the cadence law | process (ledger amendment) |
 | G7 | Temporal dimensions are judged on the VIDEO (glm-4.6v video pass), never on stills | day-010: pacing scored 5.4 from PNGs (structurally capped) but 8.0 from the video | ultracritic B2 (required for pass) |
 | G8 | Two VLM layers: contact-sheet autopsy (systemic) THEN per-frame gate (verification) | L-062: #0002 loop 3.5 → 5 → 7 → 8/10 | process (playbook) |
+| G9 | **Ultracritic judges style consistency, detail density, depth and motion quality; any scene that reads as "basic shapes" is rejected regardless of mean** | Boss directive 2026-11-13; L-085 (the format ceiling the judge never had words for) | `tools/ultracritic.py` — new dims land with the next rubric revision; bars calibrated on first run per G6 (existing 7.5/7.0/6.0 untouched) |
 
 ## Publish (stage: `docs/playbook/publish.md`)
 
