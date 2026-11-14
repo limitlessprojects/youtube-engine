@@ -1,0 +1,42 @@
+# How Does an Editor Think and Feel? — Every Frame a Painting (Tony Zhou) (~2.8M views per wishlist brief, 564s)
+**Source: youtube.com/watch?v=3Q3eITC01Fg · accessed 2026-11-14 · analysis-only**
+
+## 01 Verdict
+The definitive short lecture on cut grammar: cuts land when the *eyes* change, emotions need *time on screen*, and rhythm (~70% of editing per Walter Murch, paraphrased) is felt, not computed. This is the reasoning layer under our C5 no-snap-cut rule and the L-097 beat law — and it mostly *concedes* the snap-cut's legitimacy while defining when it fails (under-credited emotion).
+
+## 02 Hook anatomy / opening grammar (first 2 seconds / first beat)
+- t=1.2s: open on film-leader/editing-room imagery (splicer, reels — see hook.jpg) + direct-address VO: host names himself and the show ("Every Frame a Painting"). No cold-open spectacle; the hook is a *question the host admits he cannot answer*: someone asked how he knows when to cut, and he had no verbal description (vtt 00:08–00:25).
+- Grammar: anti-hook that works — a confessed incompetence + a famous-editor promise (Kahn "it's the process of your thinking, feel it" ~00:28–00:44). Curiosity gap = "can this be taught at all?"
+- 00:48: the episode's thesis lands as a bare question: "How does an editor think and feel?" — title card equivalent delivered by voice.
+- For us: this is a *S3-orient-compatible* cold open (topic named in first 15s), using "admitted ignorance + expert testimony" as the retention device rather than spectacle.
+
+## 03 Craft notes: motion vocabulary (cite timestamps)
+- **Eye-line is the cut cue** (00:55–01:59): coverage of glances; the model example cuts from eyes to the looked-at object to convey unspoken thought without words. The cut lands ON the look, not before or after.
+- **Emotions take time** (02:01–03:10): two matched shots shown back-to-back (Chinese-language scene, woman-by-door); the audience is asked to feel the difference between ~4s holds. The lesson: the same footage plays as different emotions at different hold lengths; "four seconds makes a big difference" (paraphrase, 03:01).
+- **Build/release tension curve** (03:24–04:14): Star Wars (Luke/Yoda) — as a sequence builds, each shot gets shorter toward the climax (5 rising shots), then after the peak, shots get LONGER than the build phase; ~15s rising, ~30s falling — twice the release as the build.
+- **30 frames vs 30 seconds** (04:19–05:07): a modern remake of the same beat fails because the failure lands in ~1s ("30 frames") vs the original's ~30s; the audience doesn't believe it. Direct, quantified statement of minimum emotional screen-time.
+- **Rhythm over rules** (05:23–06:41): Murch paraphrase — story and rhythm have an in-built relationship; editing is ~70% rhythm (06:48, paraphrase). Obvious rhythm (physical action, music) vs subtle rhythm (walking pace, restaurant ambience); subtle rhythms are harder because they match everyday feel. "Watch anything over and over and you feel the moment when the shot wants you to cut" (paraphrase, 06:28).
+- **Invisible vs jarring cuts** (06:42–08:00): classical Hollywood = cut WITH the rhythm so the cut is unnoticed; but some emotions play better jarring (agitated subject), some audiences should be made uncomfortable; Schoonmaker/Scorsese (paraphrase, 07:27): sometimes hold a little too long, then cut — if justified. Justification = intended audience reaction, not editor comfort.
+- **Practice is the only teacher** (08:04–08:35): Murch dance analogy (paraphrase) — rudiments explainable, mastery only by doing.
+- Cut grammar (not typography) is the entire vocabulary here; no motion-design graphics except title/end cards and film-clip excerpts (16:9, letterboxed excerpts inside 4:3-era uploads; this master is 854×480).
+
+## 04 Pacing + cuts
+- scene_changes.txt: **64 detected changes** in 564s → 65 shots, mean **8.68s**, max 57.9s (the two-matched-shots emotion exercise, held deliberately long), min 0.25s (flash-cut inside a film excerpt).
+- Long takes cluster 03:10–05:10 zone (the Luke/Yoda sequence plays in long held shots with internal rhythm acceleration via shot-length ramping, not via detection-visible cuts).
+- Burst zone 07:00–09:30 (283.7–549.4s markers): rapid excerpt cuts 271.6→276.99→278.24→283.70… — the "jarring cut" montage section, ~0.5–4s shots.
+- **WPM: 1,206 spoken words / 9.4 min ≈ 128 WPM** (from .en.vtt) — slow, deliberate lecture cadence, far below our ~200 WPM Shorts target. Long holds are affordable at this WPM; they are not at ours.
+- Cut-frequency vs shot-length law visible in the data: mean 8.7s but the *variance* is the craft — shot-length ramps (long → shorter → shortest at climax → longer in release) are the structural signature.
+
+## 05 What maps to our pipeline
+- **C5 no-snap-cut, restated precisely**: C5 (ease-in ≥0.25s → hold ≥0.5s → ease-out, no snap-cuts) is our *visual* analog of his rule that cuts must follow felt rhythm, not knowledge. His Schoonmaker "hold a little too long, then cut — if justified" (07:27–07:46) is the exact warrant for our 0.5s hold floor: the hold IS the emotion credit. Our scenes.md / `docs/playbook/scenes.md` should cite this episode as the *why*, not just the *rule*.
+- **L-097 beat law interface**: L-097 sets beats ≥ ceil(VO_s / 3.2). The York/climax analysis shows beats should not be uniform — the beat budget should **ramp**: hold longer pre-insight, compress toward the payoff, release longest after. Concrete proposal for `tools/script_linter.py`: add an *attention-curve* advisory (not a hard fail): warn if scene durations are flat (stddev < 15% of mean) across ≥8 scenes; suggest a build→release shape (shortening into the insight beat, lengthening after) — direction only, never auto-shorten past the 3.2s floor (L-097 is a floor, this is a shape).
+- **Finish / master stage** (`tools/finish_v3.py`): his "30 frames vs 30 seconds" failure mode = our #0003-style critique that the audience doesn't believe the payoff. finish_v3's insight-beat riser already targets the s3 payoff; the episode argues for holding the *release* scene (visual-only beat after the insight) ≥ 1.5× the build scene before the closer — our #0005 s9+s10 split (J-cut closer, L-097) is the right instinct; formalize as a finish_v3 expectation: post-insight visual-only beat present and ≥ its pre-insight neighbor.
+- **Hook calibration** (`tools/probe_hook.py`, `docs/playbook/hook-calibration` if present): his cold open (confessed ignorance + expert witness) is a calibration archetype absent from our image-frame probe set — hook_impact is scored on stills, but this proves a *verbal* cold-open device; our script stage should list it as an opening archetype (AUDIENCE-QUESTION / EXPERT-ADMITS-GAP).
+- **Style bible §6 motion**: unaffected visually (no type motion here), but the bible's "slow pushes on held beats" is validated — held beats are where shots are longest; parallax/push duration should scale with hold length, not be fixed.
+- **Engine (`engine/core.js`, `engine/rig.js`)**: nothing to add technically; the mapping is editorial. Add a comment/reference in `docs/rules.md` C5 row pointing here (one line) — do not touch code for this episode.
+- **Concretely adoptable rules for our edits**: (1) cut lands on the "eyes change" analog — for stickman scenes, cut on the pose/expression change frame, not mid-gesture; (2) never cut a verdict scene shorter than its build neighbors; (3) release ≥ build in total seconds (his 15s up / 30s down ratio, paraphrase); (4) snap-cuts legal ONLY as a deliberate discomfort device with a written justification — matches C5's "if justified" escape hatch and Schoonmaker's warrant; anything else stays eased.
+
+## 06 Judge anchor?
+No — this is not a visual reference; it is a *process* anchor. Use it as the citation for C5 and the L-097 advisory shape. Do not feed to any frame judge; it would anchor nothing measurable.
+
+## Compliance: no verbatim quotes >50 words; all quotes paraphrased from the .en.vtt caption track (timestamps cited). Views ~2.8M per wishlist brief; exact count UNKNOWN. No audio track in the .f397 master; WPM computed from the caption file. "70% rhythm", "four seconds", "30 frames/30 seconds", "15/30 seconds" are the episode's own round numbers, reported as such. Cut stats from automated scene detector; film-excerpt internal cuts partially below threshold — counts are lower bounds. 854×480 source; letterboxed excerpts are in-film, not added by us.

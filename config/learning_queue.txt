@@ -3,3 +3,22 @@
 # Seeded 2026-11-02 with verified-ID videos from our benchmark channels.
 # NOTE: cloud IPs (incl. GitHub runners) are often bot-blocked by YouTube; failed items
 # are logged and retried the next day. Set YTDLP_COOKIES / YTA_PROXY secrets to unblock.
+
+# Seeded 2026-11-14 (session A) from the video wishlist (boss-approved wishlist) — downloaded
+# and analyzed locally this day; see research/attribution log + video-notes/. One ID per line.
+https://www.youtube.com/watch?v=ttuKeS5k4Uo   # VL-01 How Stitches Work (ZackD, 255M)
+https://www.youtube.com/watch?v=yGw0nhlUtkQ   # VL-02 How Splinters Get Unstuck (ZackD)
+https://www.youtube.com/watch?v=rRAmNz6G3Tk   # VL-03 McFlurry Spoon (ZackD)
+https://www.youtube.com/watch?v=c5G_25dhoeU   # VL-04 Blood Vessels (ZackD)
+https://www.youtube.com/watch?v=ciIAcD4eXsI   # VL-05 Ancient Armor (ZackD)
+https://www.youtube.com/watch?v=h6fcK_fRYaI   # VL-06 The Egg (Kurzgesagt, 36M)
+https://www.youtube.com/watch?v=MQW3VefRozc   # VL-07 What if Germany Won WWI? (AltHistoryHub, 7.9M)
+https://www.youtube.com/watch?v=uFk0mgljtns   # VL-08 1200 Hours (Kurzgesagt, 9.1M)
+https://www.youtube.com/watch?v=y4sOfO8Ei1g   # VL-12 Shop Vac kinetic (1.7M)
+https://www.youtube.com/watch?v=3Q3eITC01Fg   # VL-13 How Does an Editor Think and Feel? (EFP, 2.8M)
+https://www.youtube.com/watch?v=9PJvV5PYDm0   # VL-14 Sunsets (MinuteEarth, overlaps our #0003 A/B)
+https://www.youtube.com/watch?v=0fV8kYoGDNM   # VL-15 2+2=3.999 (MinutePhysics)
+https://www.youtube.com/watch?v=31kyER-8dak   # VL-15 portals cube (MinutePhysics)
+https://www.youtube.com/watch?v=sEQvDbyFNbo   # VL-15 backwards driving (MinutePhysics)
+https://www.youtube.com/watch?v=nGutkWaXDUs   # VL-14 nuclear weapon (MinuteEarth ft Fry)
+https://www.youtube.com/watch?v=TK2N99BDw7A   # VL-22 USGS Kilauea lava (USGS PD — for PD note pipeline)

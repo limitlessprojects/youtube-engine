@@ -53,3 +53,4 @@ content/*/vo/master.m4a
 
 # Carry/debt reports are DOCS, not gate artifacts (L-083: named claims must be tracked)
 !content/*/gate/carry_*.md
+research/cache/
