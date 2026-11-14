@@ -2,7 +2,9 @@
 """script_linter.py — mechanical anti-boilerplate gate (runs before critic, render, upload).
 
 Checks: banned vocabulary, greeting/intro patterns, hook length, WPM band,
-rhetorical-closing question, disclaimer phrases.
+rhetorical-closing question, disclaimer phrases, boss-directive structure rules
+(L-073 orientation, L-075 pacing, L-077 spine, L-090 digits-in-narration,
+L-097 beat-count law).
 
 Input: plain text, or a script JSON with {"scenes":[{"narration": "..."}]} (also
 accepts the scriptwriter output contract; `loop_line` included).
@@ -12,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
 
@@ -29,11 +32,11 @@ WPM_BAND = {"short": (185, 215), "long": (155, 175)}  # day-010: shorts class = 
 FISH_WPS = 2.6  # measured: Fish Audio s2.1-pro-free "Energetic Male" (needs rate knob)
 
 
-def narration_from(payload: str) -> tuple[str, list[str]]:
+def narration_from(payload: str) -> tuple[str, list[str], dict | None]:
     try:
         data = json.loads(payload)
     except json.JSONDecodeError:
-        return payload, []
+        return payload, [], None
     lines: list[str] = []
     if isinstance(data, dict):
         if data.get("hook", {}).get("narration"):
@@ -43,10 +46,10 @@ def narration_from(payload: str) -> tuple[str, list[str]]:
                 lines.append(sc["narration"])
         if data.get("loop_line"):
             lines.append(data["loop_line"])
-    return " ".join(lines), [ln for ln in lines]
+    return " ".join(lines), lines, data
 
 
-def lint(text: str, fmt: str, duration_s: float | None) -> dict:
+def lint(text: str, fmt: str, duration_s: float | None, data: dict | None = None) -> dict:
     fails: list[str] = []
     warns: list[str] = []
     low = text.lower()
@@ -84,10 +87,6 @@ def lint(text: str, fmt: str, duration_s: float | None) -> dict:
         warns.append(f"rhythm flat: only {short_ratio:.0%} short sentences (mix 3-word punches in)")
 
     # ---- boss-directive structure rules (2026-11-08, enforced at script time) ----
-    try:
-        data = json.loads(text) if text.strip().startswith("{") else None
-    except json.JSONDecodeError:
-        data = None
     if isinstance(data, dict) and data.get("scenes") and data.get("hook", {}).get("narration"):
         hook = data["hook"]["narration"]
         scenes = data["scenes"]
@@ -110,6 +109,20 @@ def lint(text: str, fmt: str, duration_s: float | None) -> dict:
                     fails.append(f"L-075 pacing: max scene {max(durs):.2f}s > 4.2s")
                 if len(durs) < 10:
                     warns.append(f"L-075 cut density: {len(durs)} scenes — target ≥ 12 visual events/35s")
+        # L-097: beat-count law — beats >= ceil(VO_seconds / 3.2) (fails at lint, not at gate)
+        tl_total = data.get("timeline", {}).get("total_s")
+        if isinstance(tl_total, (int, float)) and tl_total > 0:
+            beats = 1 + len(scenes)   # hook + every scene, incl. visual-only pacing beats
+            required = math.ceil(tl_total / 3.2)
+            if beats < required:
+                fails.append(f"L-097 beat count: {beats} beats < ceil({tl_total:.1f}/3.2) = {required} (mean scene will exceed 3.2s)")
+        # L-090: digits defeat ASR — numbers are spoken words; digits live on screen as stamps
+        vo_lines = [hook] + [s.get("narration", "") for s in scenes]
+        if data.get("loop_line"):
+            vo_lines.append(data["loop_line"])
+        for ln in vo_lines:
+            if re.search(r"\d", ln or ""):
+                fails.append(f"L-090 digits in narration: '{(ln or '')[:60]}…' — write numbers as spoken words (digits live on screen as stamps)")
         # L-077: spine — no new capitalized entity only in the last 2 scenes
         early = " ".join([hook] + [s.get("narration", "") for s in scenes[:-2]])
         early_caps = set(re.findall(r"\b[A-Z][a-z]{2,}\b", early))
@@ -144,8 +157,8 @@ def main() -> int:
         text = open(a.script, encoding="utf-8").read()
     else:
         text = sys.stdin.read()
-    flat, _lines = narration_from(text)
-    report = lint(flat or text, a.format, a.duration_s)
+    flat, _lines, data = narration_from(text)
+    report = lint(flat or text, a.format, a.duration_s, data=data)
     if a.json:
         print(json.dumps(report, indent=1))
     else:

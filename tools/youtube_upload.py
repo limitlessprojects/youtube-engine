@@ -126,6 +126,8 @@ def main() -> int:
     ap.add_argument("--check-token", action="store_true",
                     help="probe refresh grant health; exit 0 = healthy (L-084: "
                          "verify BEFORE the publish moment, grants die silently)")
+    ap.add_argument("--id-file", default="",
+                    help="write the uploaded video id to this file (CI publish path)")
     ap.add_argument("--no-synthetic", action="store_true",
                     help="skip the altered/synthetic disclosure (default: disclose YES per studio policy)")
     a = ap.parse_args()
@@ -177,6 +179,8 @@ def main() -> int:
         "privacy": a.privacy, "categoryId": a.category, "contentType": a.content_type,
         "synthetic": not a.no_synthetic,
     })
+    if a.id_file:
+        Path(a.id_file).write_text(vid + "\n", encoding="utf-8")
     print(f"[yt] UPLOADED: https://youtu.be/{vid}")
     if not a.no_synthetic:
         print("[yt] altered/synthetic disclosure: set via API (containsSyntheticMedia=true)")

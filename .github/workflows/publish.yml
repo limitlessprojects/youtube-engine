@@ -1,0 +1,167 @@
+name: Publish Short
+
+# Manual publish path for a FRESH machine (no local YouTube token): the agent gates
+# locally (tools/ultracritic.py -> PUBLISH_APPROVED), then dispatches this workflow.
+# CI re-renders deterministically (rule C6), finishes, uploads with disclosure ON,
+# sets the thumbnail, records content/<slug>/published.json, and pushes it.
+#
+# NOT scheduled. NOT automatic. The gate is the law (docs/playbook/gate.md) — if you
+# have not run the bar on the CURRENT cut, do not dispatch with dry_run=false.
+#
+# Secrets used (already on this repo): GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET,
+# YOUTUBE_TOKEN_JSON. Thumbnail: any repo-relative PNG path. Custom thumbnails need
+# channel phone verification; if that 403s the video still ships (retry later or use
+# the Studio UI). Disclosure (containsSyntheticMedia) is sent automatically.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "content slug, e.g. short-0005"
+        required: true
+        type: string
+      title:
+        description: "video title (required unless dry_run)"
+        required: false
+        type: string
+        default: ""
+      description:
+        description: "video description"
+        required: false
+        type: string
+        default: ""
+      tags:
+        required: false
+        type: string
+        default: "what if,stickman,science"
+      privacy:
+        required: false
+        type: choice
+        options: [public, unlisted, private]
+        default: public
+      category:
+        required: false
+        type: string
+        default: "27"
+      thumbnail:
+        description: "repo-relative thumbnail PNG (empty = skip)"
+        required: false
+        type: string
+        default: "content/short-0005/render/hook_B_u65.png"
+      set_thumbnail:
+        description: "set the custom thumbnail after upload"
+        required: false
+        type: boolean
+        default: true
+      dry_run:
+        description: "true = token-health probe only; nothing renders, nothing ships"
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-${{ inputs.slug }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      SLUG: ${{ inputs.slug }}
+      TITLE: ${{ inputs.title }}
+      DESCRIPTION: ${{ inputs.description }}
+      TAGS: ${{ inputs.tags }}
+      PRIVACY: ${{ inputs.privacy }}
+      CATEGORY: ${{ inputs.category }}
+      THUMB: ${{ inputs.thumbnail }}
+      SET_THUMB: ${{ inputs.set_thumbnail }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+
+      - name: Dependencies
+        run: python3 -m pip install -q -U requests numpy playwright pillow
+
+      - name: Token health probe (cheap, always runs)
+        run: python3 tools/youtube_upload.py --check-token
+
+      - name: Dry run stops here
+        if: env.DRY_RUN == 'true'
+        run: |
+          echo "dry_run=true — probe only; no render, no upload."
+          echo "slug=$SLUG privacy=$PRIVACY thumbnail=$THUMB set_thumbnail=$SET_THUMB"
+
+      - name: Fail fast on missing title
+        if: env.DRY_RUN != 'true'
+        run: test -n "$TITLE" || (echo "title is required for a real publish" && exit 1)
+
+      - name: Chromium (deterministic re-render, rule C6)
+        if: env.DRY_RUN != 'true'
+        run: python3 -m playwright install --with-deps chromium
+
+      - name: Render (full)
+        if: env.DRY_RUN != 'true'
+        run: python3 tools/render_short.py "$SLUG" --full
+
+      - name: Finish (sound design + loudnorm + mux)
+        if: env.DRY_RUN != 'true'
+        run: python3 tools/finish_v3.py "$SLUG"
+
+      - name: Verify artifact
+        if: env.DRY_RUN != 'true'
+        run: ffprobe -v error -show_entries format=duration,size -of default=nw=1 "content/$SLUG/$SLUG.mp4"
+
+      - name: Upload (synthetic-content disclosure ON)
+        id: upload
+        if: env.DRY_RUN != 'true'
+        run: |
+          python3 tools/youtube_upload.py --file "content/$SLUG/$SLUG.mp4" \
+            --title "$TITLE" --description "$DESCRIPTION" --tags "$TAGS" \
+            --privacy "$PRIVACY" --category "$CATEGORY" --id-file /tmp/vid.txt
+          echo "vid=$(cat /tmp/vid.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Set thumbnail (best effort — phone verification may block it)
+        if: env.DRY_RUN != 'true' && env.SET_THUMB == 'true' && env.THUMB != ''
+        continue-on-error: true
+        run: |
+          python3 tools/youtube_upload.py --set-thumbnail "${{ steps.upload.outputs.vid }}:$THUMB"
+
+      - name: Record + commit
+        if: env.DRY_RUN != 'true'
+        run: |
+          SLUG="$SLUG" TITLE="$TITLE" PRIVACY="$PRIVACY" TAGS="$TAGS" VID="${{ steps.upload.outputs.vid }}" \
+          python3 - <<'PY'
+          import json, os, pathlib
+          from datetime import datetime, timezone
+          p = pathlib.Path("content") / os.environ["SLUG"] / "published.json"
+          p.write_text(json.dumps({
+              "video_id": os.environ["VID"],
+              "url": f"https://youtu.be/{os.environ['VID']}",
+              "title": os.environ["TITLE"],
+              "channel": "Jack Blessed",
+              "handle": "@JackBlessed-u5x",
+              "published_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "privacy": os.environ["PRIVACY"],
+              "tags": os.environ["TAGS"],
+              "source": f"content/{os.environ['SLUG']}",
+              "note": "published via .github/workflows/publish.yml (CI re-render); synthetic disclosure via API (containsSyntheticMedia=true)",
+          }, indent=2) + "\n")
+          print(p.read_text())
+          PY
+          git config user.name "limitlessprojects"
+          git config user.email "limitlessprojects@users.noreply.github.com"
+          git add "content/$SLUG/published.json"
+          git commit -m "publish($SLUG): $TITLE" || echo "nothing to commit"
+          git push
