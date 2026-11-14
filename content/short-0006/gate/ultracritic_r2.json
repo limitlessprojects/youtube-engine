@@ -1,0 +1,270 @@
+{
+ "round": 2,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 6.61,
+ "frame_grand_mean": 6.9,
+ "dim_means": {
+  "frame:hook_impact": 6.0,
+  "frame:text_discipline": 8.31,
+  "frame:visual_hierarchy": 5.92,
+  "frame:contrast_legibility": 6.62,
+  "frame:production_polish": 6.77,
+  "video:pacing_rhythm": 5,
+  "video:character_life": 5,
+  "video:edit_flow": 6
+ },
+ "frame_means": {
+  "hook_u50": 6.4,
+  "s0_u50": 7.25,
+  "s10_u50": 7.5,
+  "s11_u50": 5.75,
+  "s1_u50": 7.3,
+  "s2_u50": 8,
+  "s3_u50": 7.5,
+  "s4_u50": 7.0,
+  "s5_u50": 7.0,
+  "s6_u50": 5.5,
+  "s7_u50": 7.0,
+  "s8_u50": 6.75,
+  "s9_u50": 6.75
+ },
+ "floor_breaches": [
+  "s0_u50",
+  "s11_u50",
+  "s5_u50",
+  "s6_u50",
+  "s8_u50",
+  "s9_u50"
+ ],
+ "video_directives": [
+  "Trim dead holds: the 4-6s knocked-out beat and the 14-19s near-empty stretch stall the visual tempo badly \u2014 cut each by half.",
+  "Give the character intra-scene life: breathing, blinking, head tracking the diagram \u2014 right now he's a static cutout swapped between poses.",
+  "Ease scene transitions: current swaps snap between states; add a 0.3-0.5s ease-out on the wave/suture reveals so beats land instead of popping."
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.4,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the dead lower-third: the bottom ~40% is empty dark water with faint specks \u2014 raise the glowing waveform/hook element or add a legible focal anchor so the eye path lands somewhere",
+    "Fix the character's grounding: the feet hang below the ledge line while the elliptical shadow sits above it \u2014 align contact point, shadow, and platform edge so the figure isn't floating",
+    "Increase subject scale and glow separation: the character is small in the top-right and the cyan/orange lines are mid-frame; either enlarge the protagonist ~30% or boost rim light/glow intensity so the focal chain reads instantly on a 6-inch daylight screen"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "The bottom ~55% of the frame is a near-empty dead zone with only faint scratches and bokeh \u2014 reposition the character to vertical center (safe zone ~1/3 from top) or add a secondary visual anchor below the horizon line",
+    "Character is pinned to the extreme right edge, partially crowding frame margin \u2014 pull it inward toward the right-third power point so the rim glow doesn't bleed off-frame",
+    "The three silhouette arcs on the left read as murky smudges at phone scale \u2014 either separate them from the purple glow band with clearer rim lighting or remove them to clean the midground"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill or activate the large dead zone in the middle third (the faint orange line reads as an artifact, not a design element) \u2014 add a subtle depth layer or move the caption up",
+    "Enlarge or reposition the character so it competes less weakly with the headline; right now the eye has no guided path from top subject to bottom text",
+    "Give the headline a stronger anchor treatment (slight scale variance or emphasis color on 'NEVER') since all three lines carry equal weight"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 4,
+    "production_polish": 6
+   },
+   "mean": 5.75,
+   "words_visible": 5,
+   "top3_directives": [
+    "The word 'SEE.' is nearly invisible against the dark floor \u2014 raise its opacity/brightness or add a glow/stroke so the punchline survives a 6-inch daylight screen",
+    "Fill the large dead zone between the character and the caption with a mid-ground element (subtle seam highlight, dust motes, or a guiding light path) to connect top and bottom",
+    "Strengthen the focal tug-of-war: either enlarge the character slightly with a stronger rim glow or push the caption up ~15% so the eye path character\u2192text feels intentional rather than split"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the bottom ~35% dead zone with subtle depth cues (faint silhouettes, light shafts) or reframe the wave line lower so the eye path connects character to subject",
+    "Anchor the character better: he sits hard on the top-right edge with his shadow clipping the horizon line \u2014 nudge him inward and unify his contact shadow with the glow",
+    "The squiggle's glow hotspot sits behind the line rather than on it \u2014 align the emissive highlight to the stroke so the energy source reads as intentional"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the large dark lower third (below the wave) with subtle texture or a soft label so it doesn't read as a dead zone",
+    "Give the orange wave a slight glow or thicker stroke so it clearly outranks the character as the focal subject",
+    "Nudge the SUBCUTICULAR chip left-of-center alignment consistency \u2014 it floats between character and wave without anchoring to either"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the dead bottom third \u2014 no focal content exists below ~65% height; shift the action node lower or add subtle supporting layer there to anchor the 9:16 frame.",
+    "Enlarge or backlight the character: at 6 inches in daylight the small figure against the near-black ceiling is barely legible; add rim glow or scale up ~1.5x.",
+    "Resolve the character's relationship to the ledge \u2014 the shadow ellipse clips awkwardly under the platform edge, breaking the otherwise clean vector craft."
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the large dead zone in the lower third (below the orange squiggle) with a subtle payoff element or glow so the eye has a destination",
+    "Strengthen separation of the dark-blue crosshair line against the similarly-dark background \u2014 it nearly disappears in daylight viewing",
+    "Give the character zone a slight vignette or rim-light boost so the eye path flows character \u2192 glow \u2192 squiggle without stalling"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or compress the dead lower third \u2014 the entire bottom ~40% is empty mush with barely-visible streak blobs; add depth layers, background entities, or reframe the composition upward",
+    "Fix the character's grounding: the shadow ellipse overlaps the ledge awkwardly and one leg crosses the platform edge \u2014 align feet, contact shadow, and platform plane consistently",
+    "Strengthen the focal conflict: the glowing orange subject and the hooded character compete at similar brightness in different corners \u2014 establish a clear eye path (e.g., leading lines or glow gradient from character to subject)"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 5,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 5,
+    "production_polish": 6
+   },
+   "mean": 5.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fix the clipped 'AM' label \u2014 it collides with the character glow and reads as a cropping error; move or resize it fully inside frame",
+    "Boost 'TRACKS' label contrast (current dim gray on dark navy is near-illegible on a daylight phone) or drop it entirely",
+    "Fill the dead lower 50% \u2014 the reflection zone has no focal interest; add a subtle mirrored glow or secondary visual anchor to justify the vertical real estate"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Character is pinned to the top-right edge while the entire lower two-thirds is a near-empty dead zone \u2014 recenter subject or place focal action at the power center (upper-middle third)",
+    "Add a focal anchor in the deep underwater area (light shaft, glowing subject, or subtle vignette) so the eye has a return path below the squiggly line",
+    "Raise foreground/background separation around the character \u2014 the warm rim glow is good but the dark navy floor blends into the horizon band; add a soft contact shadow/reflection to seat him"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 6.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or break up the massive empty underwater dead zone (bottom 60% has no focal interest) \u2014 add a subject, prop, or depth cue below the surface line",
+    "Move the orange curved line out of mid-frame limbo or make it a deliberate design element (e.g., a cable/seam) with consistent color logic",
+    "Anchor the character and label into a tighter composition \u2014 currently they float top-right while the label sits detached mid-air; consider bottom-third safe-zone placement"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Enlarge/reposition the character \u2014 it occupies <10% of frame and sits in a corner, leaving ~70% of the vertical canvas as empty dead water; scale subject up or add a mid-frame element to guide the eye down",
+    "Increase luminance separation between subject and background \u2014 the purple horizon glow and dark navy lower half sit near-identical in exposure; raise rim-light intensity or darken floor so the figure pops in daylight viewing",
+    "Activate the lower two-thirds: the faint bubbles/scratches read as compression noise, not design \u2014 either amplify them into a clear depth layer or crop composition upward to reclaim dead zone"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}
