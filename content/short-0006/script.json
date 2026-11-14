@@ -1,0 +1,183 @@
+{
+ "title": "How stitches work when doctors actually use them",
+ "format": "short",
+ "hook": {
+  "timestamp_start": 0.0,
+  "narration": "When doctors sew you up, the most important thread never surfaces.",
+  "visual": {
+   "pose": "skygawk (surgeon hero tiny at frame edge, curious lean)",
+   "prop": "skin cross-section OWNS the frame: cream epidermis band, amber thread arcing UNDER the surface with 3-stop glow, teal needle tip entering; NO text on frame-0 (L-109: the image poses the question)",
+   "background": "skin-cross-section-dawn"
+  },
+  "fact_sources": [
+   "running subcuticular (intradermal) suture lies entirely WITHIN the dermis and never surfaces; first described by Halsted (Zhang, Xie & Zeng, Dermatol Surg 2022, PMC9154294); 'leaves behind practically no suture mark on the skin' (Chatterjee 2012, PubMed)"
+  ],
+  "audio_dur_s": 3.48
+ },
+ "scenes": [
+  {
+   "timestamp_start": 3.73,
+   "narration": "Forget the shoelace picture: loops and knots on top.",
+   "visual": {
+    "pose": "recoil (myth cringe)",
+    "prop": "MYTH frame: surface sutures as ink loops + knots ON the cream band, dimmed and cracking = the old picture; hero steps back",
+    "background": "skin-myth-dim"
+   },
+   "fact_sources": [
+    "belief frame: simple interrupted sutures with visible knots are one common closure, but the flat-scar closures run subcuticularly (PMC9154294) — the scene presents the assumption being corrected, not a false fact"
+   ],
+   "audio_dur_s": 2.832
+  },
+  {
+   "timestamp_start": 6.81,
+   "narration": "For scars that heal flat, the thread rides under the surface.",
+   "visual": {
+    "pose": "presenting",
+    "prop": "thread path animates beneath the bright surface line (arc wipe follows the needle path), wound edges below start to meet",
+    "background": "skin-ride"
+   },
+   "fact_sources": [
+    "subcuticular suture proven to reduce scar width via tension reduction on wound edges (PMC9154294)"
+   ],
+   "audio_dur_s": 3.144
+  },
+  {
+   "timestamp_start": 10.21,
+   "narration": "It's the subcuticular stitch: one thread hidden inside the skin.",
+   "visual": {
+    "pose": "pointing",
+    "prop": "STAMP 'SUBCUTICULAR' (cream chip, ink stroke on busy zone) + thread highlighted inside the dermis band",
+    "background": "skin-name"
+   },
+   "fact_sources": [
+    "technique name and lineage (PMC9154294) — the name lives in the STAMP (ASR cannot carry it, day-013 precedent); VO says it"
+   ],
+   "audio_dur_s": 3.528
+  },
+  {
+   "timestamp_start": 13.98,
+   "narration": "The needle zigzags through one layer, catching both edges every pass.",
+   "visual": {
+    "pose": "brace (focused)",
+    "prop": "NEEDLE CLOSE-UP OWNS the frame: teal needle zigzagging through the amber dermis band, entry/exit bites marked on both wound edges; scatter-angle arc wipe = G9 hero moment (reuse #0003 device)",
+    "background": "skin-needle-close"
+   },
+   "fact_sources": [
+    "running intradermal stitch passes horizontally through the dermis taking a small bite on each side of the wound (subcuticular technique teaching, limbsandthings suture tutor; Halsted lineage PMC9154294)"
+   ],
+   "audio_dur_s": 3.768
+  },
+  {
+   "timestamp_start": 17.73,
+   "narration": "Each pass pulls the gap shut: a zipper under the surface.",
+   "visual": {
+    "pose": "presenting (hands guiding)",
+    "prop": "wound gap closes from below as the thread 'zipper' pulls: two skin edges slide together, ink dash zipper line abstract under the surface",
+    "background": "skin-zipper"
+   },
+   "fact_sources": [
+    "continuous intradermal suture apposes wound edges as it runs (subcuticular technique teaching, limbsandthings)"
+   ],
+   "audio_dur_s": 3.12
+  },
+  {
+   "timestamp_start": 21.1,
+   "narration": "The end knot gets buried, where your skin swallows it whole.",
+   "visual": {
+    "pose": "amazed",
+    "prop": "camera dives to the KNOT: ink knot tucked beneath the dermis band, gentle closing motion around it, teal rim on the needle tail",
+    "background": "skin-buried-knot"
+   },
+   "fact_sources": [
+    "most subcuticular closures use absorbable sutures that are not removed, secured with a buried knot technique (limbsandthings suture tutor); knotless running variants also documented (ISHS 'running subcutaneous suture without knots') — VO says 'buried', never 'no knots at all'"
+   ],
+   "audio_dur_s": 2.976
+  },
+  {
+   "timestamp_start": 24.33,
+   "narration": "No stitch tracks. Just a clean seam.",
+   "visual": {
+    "pose": "happy (relieved)",
+    "prop": "compare frame: railroad-track stitch marks (myth side, dimmed) vs the clean surface line (glowing faint)",
+    "background": "skin-clean-seam"
+   },
+   "fact_sources": [
+    "'practically no suture mark on the skin' (Chatterjee 2012, PubMed)"
+   ],
+   "audio_dur_s": 2.112
+  },
+  {
+   "timestamp_start": 26.69,
+   "narration": "The thread dissolves on its own. No removal visit.",
+   "visual": {
+    "pose": "relaxed (hands free)",
+    "prop": "thread dissolving into drifting amber particles (secondary motion), dermis band calm",
+    "background": "skin-dissolve"
+   },
+   "fact_sources": [
+    "most subcuticular closures now use absorbable sutures that are not removed (limbsandthings suture tutor)"
+   ],
+   "audio_dur_s": 2.712
+  },
+  {
+   "timestamp_start": 29.66,
+   "narration": "In about two days, the surface seals itself.",
+   "visual": {
+    "pose": "amazed",
+    "prop": "surface seals with a gentle pulse along the line; STAMP 'SEALED IN 48 HOURS' lands (digits on-screen legal; VO says words)",
+    "background": "skin-seal"
+   },
+   "fact_sources": [
+    "well-approximated wounds can re-epithelialize within 48 hours (StatPearls 'Physiology, Epithelialization', NBK532977) — DEVIATION from boss brief's 'CLOSED IN 24 HOURS' recorded in script.md: no source supports 24 h, 48 h is the sourced figure"
+   ],
+   "audio_dur_s": 2.496
+  },
+  {
+   "timestamp_start": 32.41,
+   "narration": "The best-stitched skin shows almost no trace.",
+   "visual": {
+    "pose": "soft smile (neutral)",
+    "prop": "skin smooth, the faint seam line fading to almost invisible; one restrained sparkle",
+    "background": "skin-fade"
+   },
+   "fact_sources": [
+    "'practically no suture mark on the skin' (Chatterjee 2012); RCT cosmesis: patients preferred subcuticular closure for better cosmetic results (Tanaka 2014, PubMed 24439741)"
+   ],
+   "audio_dur_s": 2.496
+  },
+  {
+   "timestamp_start": 35.16,
+   "narration": "The finest seam is the one you never see.",
+   "visual": {
+    "pose": "skygawk (loop mirror of hook)",
+    "prop": "loop mirror: same cross-section as hook, thread now dissolved, only the smooth surface + faint seam remain; kinetic closer title pops = the spoken line",
+    "background": "skin-cross-section-dawn"
+   },
+   "fact_sources": [
+    "one closer (L-077), loops to hook (day-013 structure law); no new claim"
+   ],
+   "audio_dur_s": 2.376
+  },
+  {
+   "timestamp_start": 37.79,
+   "narration": "",
+   "visual": {
+    "pose": "skygawk (loop mirror, held)",
+    "prop": "closer hold: smooth skin + faint seam shimmer continues, title stays; visual-only pacing beat for L-097 headroom (day-015/#0005 precedent)",
+    "background": "skin-cross-section-dawn"
+   },
+   "fact_sources": [
+    "visual-only pacing beat (day-015 law): 13 beats vs ceil(38.69/3.2)=13 PASS with margin; J-cut over the s10 closer"
+   ]
+  }
+ ],
+ "timeline": {
+  "fps": 30,
+  "total_s": 38.69,
+  "gap_s": 0.25,
+  "voice": "edge-tts en-US-AndrewNeural rate +25% — MEASURED day-017 23:45 session: 12 lines, VO spans 34.79 s, 196.6 WPM canon (in-band), end 37.79 s",
+  "words": 114,
+  "wpm_note": "measured post-synth (L-003): VO spans 34.79 s (37.79 minus 12 gaps x 0.25), 114 words = 196.6 WPM canon — in-band 185-215. L-097: 12 beats vs ceil(37.79/3.2)=12 PASS, mean scene 3.15 s (at floor). ASR verify throttled this session (12/12 empty, L-081 class) — union re-verify --verify-only BEFORE render is a carry liability.",
+  "wpm_measured": 196.6
+ }
+}

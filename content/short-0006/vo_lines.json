@@ -1,0 +1,17 @@
+{
+  "short": "short-0006",
+  "lines": [
+    { "key": "hook", "role": "narration", "narration": "When doctors sew you up, the most important thread never surfaces." },
+    { "key": "s0", "role": "narration", "narration": "Forget the shoelace picture: loops and knots on top." },
+    { "key": "s1", "role": "narration", "narration": "For scars that heal flat, the thread rides under the surface." },
+    { "key": "s2", "role": "narration", "narration": "It's the subcuticular stitch: one thread hidden inside the skin." },
+    { "key": "s3", "role": "narration", "narration": "The needle zigzags through one layer, catching both edges every pass." },
+    { "key": "s4", "role": "narration", "narration": "Each pass pulls the gap shut: a zipper under the surface." },
+    { "key": "s5", "role": "narration", "narration": "The end knot gets buried, where your skin swallows it whole." },
+    { "key": "s6", "role": "narration", "narration": "No stitch tracks. Just a clean seam." },
+    { "key": "s7", "role": "narration", "narration": "The thread dissolves on its own. No removal visit." },
+    { "key": "s8", "role": "narration", "narration": "In about two days, the surface seals itself." },
+    { "key": "s9", "role": "narration", "narration": "The best-stitched skin shows almost no trace." },
+    { "key": "s10", "role": "narration", "narration": "The finest seam is the one you never see." }
+  ]
+}

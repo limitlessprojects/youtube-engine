@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#070A18;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0006 v1 — "How stitches work when doctors actually use them"
+   (boss-kept 9/10, belief-correction #2). FIRST body-interior world:
+   skin cross-section. Style bible (C13-C17) + corpus laws:
+   · L-109 frame-0: NO text on the hook — the image poses the question
+   · C13 palette: deep-tissue = bgDeep/raised/nebula world; amber thread
+     = the ONE warm accent; teal needle = cool secondary; cream skin
+   · C14 layered: epidermis / dermis fibers / thread plane / deep tissue,
+     rim lights, gradient shading, detail props (bites, fibers, cells)
+   · C15 motion: eased everything, slow pushes, idle blink, secondary
+     particle drift; camera dives (s5) and zooms (s3)
+   · C17 accuracy pass in gate/notes.json (object list per scene)
+   · L-076 one text system per scene (stamps s2/s8, kinetic closer s10)
+   · G9: fiber/cell density everywhere — no basic-shapes read
+   Deterministic: every frame a pure function of t (C6). SC_T0 set by
+   renderFrame. Timeline injected by tools/render_short.py (__TIMELINE__).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+let SC_T0 = 0;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+const TITLE_FONT = "'Bricolage Grotesque', sans-serif";
+const MONO = "'Fragment Mono', monospace";
+
+/* ---------- body-interior world (bible §1: raised ground + nebula + amber) ---------- */
+const SKIN = {
+  outTop: P.bgDeep, outMid: "#10173A", outLow: P.nebPurple2,
+  surfLine: P.cream, surfShade: "#D8CBB4",
+  dermisTop: "#303462", dermisMid: "#272C52", dermisLow: "#1E2446",
+  fiber: "#3F4670", fiberLit: "#4B5280",
+  deep: "#1A2144", deepLow: "#131936",
+  lobule: "#37406E", lobuleCore: "#49558A",
+  capillary: "#C2447E",
+  ink: P.ink,
+};
+const SURF = 640;          /* epidermis top */
+const DERM_BOT = 1060;     /* dermis bottom */
+const THREAD_Y = 830;      /* thread plane in mid-dermis */
+const WOUND_X = 540;       /* wound centre */
+
+/* ---------- poses — 11 distinct, no adjacent repeats ---------- */
+const POSES = {
+  skygawk:  { tilt: -4, headTilt: -18, look: -0.4, expr: "shock",
+              armL: { a: 30, b: -34 }, armR: { a: 148, b: -100 }, handR: "open",
+              legL: { a: -14, b: 4 } },
+  present:  { tilt: 3, look: 0.45, expr: "neutral",
+              armL: { a: 96, b: -18 }, armR: { a: -18, b: -6 } },
+  recoil:   { tilt: -10, headTilt: -12, look: -0.7, expr: "dizzy",
+              armL: { a: 60, b: -110 }, armR: { a: 120, b: -120 },
+              legL: { a: -26, b: 30 } },
+  point:    { tilt: 4, headTilt: -6, look: -0.55, expr: "happy",
+              armR: { a: 108, b: -36 }, armL: { a: -6, b: -4 } },
+  brace:    { tilt: 14, headTilt: -8, look: -0.5, expr: "shock",
+              armL: { a: 118, b: -104 }, armR: { a: 36, b: -58 },
+              legL: { a: -22, b: 18 }, legR: { a: 18, b: -6 } },
+  amazed:   { tilt: 0, headTilt: -14, look: -0.6, expr: "happy",
+              armL: { a: 40, b: -40 }, armR: { a: 132, b: -92 } },
+  happy:    { tilt: -3, headTilt: 6, look: 0.3, expr: "happy",
+              armL: { a: 52, b: -22 }, armR: { a: -40, b: 14 } },
+  relaxed:  { tilt: 2, headTilt: 4, look: 0.2, expr: "neutral",
+              armL: { a: 12, b: -6 }, armR: { a: -10, b: 4 } },
+};
+const idleBlink = (t, seed) => (V2.rnd(seed, Math.floor(t / 2.7)) < 0.14 &&
+  (t % 2.7) < 0.18 ? 1 : 0);
+const pose = (name, t, x, y, scale, extra) => Object.assign({}, V2.basePose,
+  POSES[name] || {},
+  { x, y: y + Math.sin(t / 12) * 8, scale,
+    blink: idleBlink(t, 41),
+    look: (POSES[name] || {}).look !== undefined
+      ? Math.max(-1, Math.min(1, POSES[name].look + Math.sin(t / 9) * 0.1)) : 0,
+  }, extra || {});
+
+/* ---------- world pieces (C14 layers) ---------- */
+function skinBase(t, dimK) {
+  /* outside-the-body upper band: dim clinical nebula */
+  const g = V2.el("linearGradient", { id: "kOut", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", SKIN.outTop], ["58%", SKIN.outMid], ["100%", SKIN.outLow]]
+    .forEach(([o, c]) => V2.el("stop", { offset: o, "stop-color": c }, g));
+  V2.el("rect", { x: 0, y: 0, width: 1080, height: SURF + 8, fill: "url(#kOut)" });
+  V2.stars(t, 5, { x: 40, y: 50, w: 1000, h: SURF - 130 }, 26, 0.42);
+  /* dermis: layered warm-violet flesh with fiber density (G9) */
+  const dg = V2.el("linearGradient", { id: "kDerm", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", SKIN.dermisTop], ["45%", SKIN.dermisMid], ["100%", SKIN.dermisLow]]
+    .forEach(([o, c]) => V2.el("stop", { offset: o, "stop-color": c }, dg));
+  V2.el("rect", { x: 0, y: SURF + 8, width: 1080, height: DERM_BOT - SURF - 8, fill: "url(#kDerm)" });
+  /* collagen fibers + cell specks: deterministic, drifting slowly (C15 idle life) */
+  for (let i = 0; i < 26; i++) {
+    const fx = (V2.rnd(31, i) * 1080 + Math.sin(t / 21 + i * 2) * 7);
+    const fy = SURF + 46 + V2.rnd(32, i) * (DERM_BOT - SURF - 80);
+    const fl = 60 + V2.rnd(33, i) * 120, la = -0.5 + V2.rnd(34, i) * 1.0;
+    V2.el("path", { d: `M ${fx} ${fy} q ${Math.cos(la) * fl * 0.5} ${Math.sin(la) * fl * 0.22} ${Math.cos(la) * fl} ${Math.sin(la) * fl * 0.3}`,
+      stroke: i % 5 ? SKIN.fiber : SKIN.fiberLit, "stroke-width": 3.5, fill: "none",
+      opacity: 0.30 + V2.rnd(35, i) * 0.24, "stroke-linecap": "round" });
+  }
+  for (let i = 0; i < 16; i++) {
+    const cx = V2.rnd(36, i) * 1040 + 20 + Math.sin(t / 17 + i * 3) * 6;
+    const cy = SURF + 60 + V2.rnd(37, i) * (DERM_BOT - SURF - 110);
+    V2.el("ellipse", { cx, cy, rx: 9 + V2.rnd(38, i) * 8, ry: 7 + V2.rnd(39, i) * 6,
+      fill: "#31375C", opacity: 0.5 });
+    V2.el("circle", { cx, cy, r: 3.2, fill: "#3D446E", opacity: 0.7 });
+  }
+  /* deep tissue: lobule clusters + capillaries — the lower band carries
+     real content (r5-class dead-zone lesson; G9 density) */
+  const dpg = V2.el("linearGradient", { id: "kDeep", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", SKIN.deep], ["100%", SKIN.deepLow]].forEach(([o, c]) =>
+    V2.el("stop", { offset: o, "stop-color": c }, dpg));
+  V2.el("rect", { x: 0, y: DERM_BOT, width: 1080, height: 1920 - DERM_BOT, fill: "url(#kDeep)" });
+  for (let i = 0; i < 13; i++) {
+    const lx = 60 + V2.rnd(46, i) * 960 + Math.sin(t / 19 + i * 2.2) * 8;
+    const ly = DERM_BOT + 50 + V2.rnd(47, i) * 720;
+    const lr = 30 + V2.rnd(48, i) * 40;
+    V2.el("ellipse", { cx: lx, cy: ly, rx: lr, ry: lr * 0.72, fill: SKIN.lobule, opacity: 0.55 });
+    V2.el("ellipse", { cx: lx, cy: ly, rx: lr * 0.5, ry: lr * 0.36, fill: SKIN.lobuleCore, opacity: 0.5 });
+  }
+  for (let i = 0; i < 7; i++) {
+    const vx = 60 + V2.rnd(41, i) * 960;
+    const vy = DERM_BOT + 40 + V2.rnd(42, i) * 620;
+    V2.el("path", { d: `M ${vx} ${vy} q ${30 + V2.rnd(43, i) * 60} ${24} ${70 + V2.rnd(44, i) * 90} ${12}`,
+      stroke: SKIN.capillary, "stroke-width": 4.5, fill: "none", opacity: 0.28, "stroke-linecap": "round" });
+  }
+  V2.glow(540, 1560, 420, "Warm", 0.14 + 0.04 * Math.sin(t / 3.1));
+  /* epidermis: bright cream surface line + soft under-shade */
+  V2.el("rect", { x: 0, y: SURF, width: 1080, height: 20, fill: SKIN.surfLine });
+  V2.el("rect", { x: 0, y: SURF + 20, width: 1080, height: 10, fill: SKIN.surfShade, opacity: 0.5 });
+  /* fine surface micro-texture (G9 detail) */
+  for (let i = 0; i < 14; i++) {
+    const mx = 30 + V2.rnd(45, i) * 1020;
+    V2.el("path", { d: `M ${mx} ${SURF + 4} q 14 3 30 2`, stroke: SKIN.surfShade,
+      "stroke-width": 2.2, fill: "none", opacity: 0.5 });
+  }
+  if (dimK) V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: SKIN.outTop, opacity: dimK });
+}
+function surfaceHero(t, hx, hs, name) {
+  /* hero ON the skin surface (gate r1 law: hero must READ at 6 inches) */
+  V2.glow(hx, SURF - 60 * hs, 210 * hs, "Warm", 0.8);
+  V2.el("ellipse", { cx: hx, cy: SURF + 8, rx: 130 * hs, ry: 22 * hs, fill: SKIN.ink, opacity: 0.9 });
+  V2.Hero(pose(name, t, hx, SURF - 52 * hs, hs, {}), null, "vRimR");
+}
+/* subcuticular thread path: horizontal zigzag just under the surface */
+function threadPath(x0, x1, yBase, amp, n, phase) {
+  let d = `M ${x0} ${yBase + amp}`;
+  const step = (x1 - x0) / n;
+  for (let i = 0; i < n; i++) {
+    const xa = x0 + step * i, xb = xa + step;
+    const up = (i + (phase || 0)) % 2 === 0;
+    const cy = up ? yBase - amp : yBase + amp;
+    d += ` Q ${(xa + xb) / 2} ${cy} ${xb} ${up ? yBase - amp * 0.15 : yBase + amp * 0.15}`;
+  }
+  return d;
+}
+function needleAt(px, py, ang, s) {
+  /* curved teal needle + ink outline + rim (C14); s = scale */
+  const g = V2.el("g", { transform: `translate(${px} ${py}) rotate(${ang})` });
+  V2.el("path", { d: `M ${-58 * s} ${-14 * s} Q ${10 * s} ${-34 * s} ${58 * s} ${2 * s}`,
+    stroke: SKIN.ink, "stroke-width": 15 * s, fill: "none", "stroke-linecap": "round" }, g);
+  V2.el("path", { d: `M ${-58 * s} ${-14 * s} Q ${10 * s} ${-34 * s} ${58 * s} ${2 * s}`,
+    stroke: P.teal, "stroke-width": 9 * s, fill: "none", "stroke-linecap": "round" }, g);
+  V2.el("circle", { cx: -58 * s, cy: -14 * s, r: 6 * s, fill: SKIN.ink }, g);
+  V2.glow(10 * s, -20 * s, 60 * s, "Teal", 0.75, g);
+  return g;
+}
+function scatterWipe(cx, cy, a0, a1, r0, r1, k) {
+  /* G9 hero moment: scatter-angle arc wipe (#0003 device) — fan of ticks */
+  for (let i = 0; i < 9; i++) {
+    const a = a0 + (a1 - a0) * (i / 8);
+    const ra = r0 + V2.rnd(51, i) * (r1 - r0);
+    V2.el("path", { d: `M ${cx + Math.cos(a) * ra} ${cy + Math.sin(a) * ra} L ${cx + Math.cos(a) * (ra + 34 + V2.rnd(52, i) * 26)} ${cy + Math.sin(a) * (ra + 34 + V2.rnd(52, i) * 26)}`,
+      stroke: P.amber, "stroke-width": 4, fill: "none", opacity: k * (0.7 - i * 0.05), "stroke-linecap": "round" });
+  }
+  V2.el("path", { d: `M ${cx + Math.cos(a0) * r0} ${cy + Math.sin(a0) * r0} A ${r0} ${r0} 0 0 1 ${cx + Math.cos(a1) * r0} ${cy + Math.sin(a1) * r0}`,
+    stroke: P.amber, "stroke-width": 5, fill: "none", opacity: k * 0.8 });
+}
+function stamp(t, x, y, text, t0, accent, dark) {
+  /* same gate-learned chip as #0005 (r2/r7 contrast lessons) */
+  const lt = V2.clamp01((t - SC_T0 - t0) / 0.3);
+  if (lt <= 0) return;
+  const pop = V2.backOut(lt);
+  const wpx = 46 + text.length * 21;
+  const g = V2.el("g", { opacity: pop, transform: `translate(${x} ${y + (1 - pop) * 26})` });
+  V2.el("rect", { x: -wpx / 2, y: -30, width: wpx, height: 60, rx: 14,
+    fill: dark ? SKIN.ink : P.cream, stroke: dark ? P.cream : SKIN.ink,
+    "stroke-width": 3.5 }, g);
+  V2.el("rect", { x: -wpx / 2 + 10, y: -16, width: 7, height: 32, rx: 3.5,
+    fill: accent || P.amber }, g);
+  V2.txt(10, 11, text, { "text-anchor": "middle", "font-family": MONO, "font-size": 31,
+    fill: dark ? P.cream : SKIN.ink, "letter-spacing": 1.5 }, g);
+}
+function kineticTitle(t, lines, yTop, size, t0) {
+  const gap = size * 1.09;
+  for (let i = 0; i < lines.length; i++) {
+    const lt = V2.clamp01((t - SC_T0 - t0 - i * 0.22) / 0.4);
+    if (lt <= 0) continue;
+    const pop = V2.backOut(lt);
+    V2.txt(540, yTop + gap * i + (1 - pop) * 60, lines[i],
+      { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+        "font-size": lines[i].length > 12 ? size * 0.72 : size, fill: P.cream,
+        stroke: SKIN.ink, "stroke-width": 8, "paint-order": "stroke", opacity: pop });
+  }
+}
+function withCam(cx, cy, s, fn) {
+  const hold = V2.root;
+  V2.root = V2.el("g", { transform: V2.cam(cx, cy, s) }, hold);
+  fn();
+  V2.root = hold;
+}
+
+/* ---------- scenes ---------- */
+const SCENES = {};
+
+SCENES.hook = (u, t) => {
+  skinBase(t);
+  withCam(540, 950, 1 + V2.easeInOut(V2.clamp01(u / 1.4)) * 0.05, () => {
+    /* the thread rides UNDER the surface — arc + glow, needle entering */
+    const draw = V2.easeOut(V2.clamp01(u / 0.75));
+    const d = threadPath(120, 120 + 760 * draw, THREAD_Y, 34, 7, 0);
+    V2.el("path", { d, stroke: SKIN.ink, "stroke-width": 16, fill: "none", "stroke-linecap": "round" });
+    V2.el("path", { d, stroke: P.amber, "stroke-width": 10, fill: "none", "stroke-linecap": "round" });
+    V2.glow(430, THREAD_Y - 20, 260, "Warm", 0.55);
+    if (u < 0.55) {
+      const nx = 900 - V2.easeOut(V2.clamp01(u / 0.35)) * 470;
+      needleAt(nx, THREAD_Y - 30, -12, 1.25);
+    }
+  });
+  surfaceHero(t, 190, 0.92, "skygawk");
+  V2.grade(t);
+};
+
+SCENES.s0 = (u, t) => {
+  skinBase(t);
+  /* MYTH frame: loops + knots sitting ON the surface (the shoelace picture) */
+  const crack = V2.easeIn(V2.clamp01((u - 0.45) / 0.5));
+  for (let i = 0; i < 5; i++) {
+    const sx = 200 + i * 150;
+    const wob = Math.sin(t / 9 + i * 1.7) * (2 + crack * 7);
+    V2.el("path", { d: `M ${sx - 34} ${SURF + 10} Q ${sx} ${SURF - 90 + wob} ${sx + 34} ${SURF + 10}`,
+      stroke: SKIN.ink, "stroke-width": 10, fill: "none", opacity: 0.95 - crack * 0.45 });
+    V2.el("circle", { cx: sx, cy: SURF - 96 + wob, r: 13, fill: SKIN.ink, opacity: 0.95 - crack * 0.45 });
+    V2.glow(sx, SURF - 96, 40, "Warm", 0.14 * (1 - crack));
+  }
+  V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: SKIN.outTop, opacity: 0.18 + crack * 0.24 });
+  surfaceHero(t, 850, 0.92, "recoil");
+  V2.grade(t);
+};
+
+SCENES.s1 = (u, t) => {
+  skinBase(t);
+  withCam(540, 950, 1 + V2.easeInOut(V2.clamp01(u / 1.6)) * 0.04, () => {
+    /* the thread rides under the surface — progressive arc wipe reveal */
+    const draw = V2.easeInOut(V2.clamp01(u / 0.8));
+    const d = threadPath(140, 940, THREAD_Y, 26, 7, 0);
+    V2.el("path", { d, stroke: SKIN.ink, "stroke-width": 13, fill: "none",
+      "stroke-linecap": "round", "stroke-dasharray": 1600, "stroke-dashoffset": 1600 * (1 - draw) });
+    V2.el("path", { d, stroke: P.amber, "stroke-width": 8, fill: "none",
+      "stroke-linecap": "round", "stroke-dasharray": 1600, "stroke-dashoffset": 1600 * (1 - draw) });
+    V2.glow(140 + 800 * draw, THREAD_Y - 14, 190, "Warm", 0.6);
+  });
+  surfaceHero(t, 880, 0.88, "present");
+  V2.grade(t);
+};
+
+SCENES.s2 = (u, t) => {
+  skinBase(t);
+  /* the name lands: thread highlighted + STAMP (one text system) */
+  const pulse = 0.75 + 0.25 * Math.sin(t / 1.4);
+  V2.el("path", { d: threadPath(140, 940, THREAD_Y, 26, 7, 0),
+    stroke: SKIN.ink, "stroke-width": 14, fill: "none", "stroke-linecap": "round" });
+  V2.el("path", { d: threadPath(140, 940, THREAD_Y, 26, 7, 0),
+    stroke: P.amber, "stroke-width": 9, fill: "none", "stroke-linecap": "round", opacity: pulse });
+  V2.glow(540, THREAD_Y - 16, 300, "Warm", 0.5 + 0.12 * Math.sin(t / 1.4));
+  stamp(t, 540, 430, "SUBCUTICULAR", 0.35, P.amber);
+  surfaceHero(t, 860, 0.88, "point");
+  V2.grade(t);
+};
+
+SCENES.s3 = (u, t) => {
+  skinBase(t);
+  /* NEEDLE CLOSE-UP owns the frame (C15 zoom; G9 scatter-angle wipe) */
+  withCam(540, THREAD_Y - 20, 1.34, () => {
+    const prog = V2.easeInOut(V2.clamp01((u - 0.08) / 0.8));
+    const n = 8, x0 = 130, x1 = 950, amp = 30;
+    const step = (x1 - x0) / n, fi = prog * n;
+    const seg = Math.min(n - 1, Math.floor(fi)), fr = fi - seg;
+    const xa = x0 + step * seg, xb = xa + step;
+    const up = seg % 2 === 0;
+    const cy = up ? THREAD_Y - amp : THREAD_Y + amp;
+    const px = xa + (xb - xa) * fr;
+    const py = (up ? THREAD_Y - amp * 0.15 : THREAD_Y + amp * 0.15) + (cy - THREAD_Y) * Math.sin(fr * Math.PI);
+    const ang = up ? -38 : 38;
+    /* passed track: thread behind the needle */
+    const dDone = threadPath(x0, px, THREAD_Y, amp, Math.max(2, Math.round(fi) + 1), 0);
+    V2.el("path", { d: dDone, stroke: SKIN.ink, "stroke-width": 13, fill: "none", "stroke-linecap": "round" });
+    V2.el("path", { d: dDone, stroke: P.amber, "stroke-width": 8, fill: "none", "stroke-linecap": "round" });
+    /* bites on both wound edges (C17 detail props) */
+    for (let i = 0; i <= seg; i++) {
+      const bx = x0 + step * i;
+      V2.el("circle", { cx: bx, cy: THREAD_Y - 44, r: 8, fill: SKIN.ink, opacity: 0.75 });
+      V2.el("circle", { cx: bx, cy: THREAD_Y + 44, r: 8, fill: SKIN.ink, opacity: 0.75 });
+    }
+    needleAt(px, py, ang, 1.5);
+    scatterWipe(px, py, ang * Math.PI / 180 - 0.9, ang * Math.PI / 180 + 0.5, 120, 240,
+      0.5 + 0.3 * Math.sin(t / 2));
+    V2.glow(px, py, 150, "Teal", 0.5);
+  });
+  surfaceHero(t, 905, 0.62, "brace");
+  V2.grade(t);
+};
+
+SCENES.s4 = (u, t) => {
+  skinBase(t);
+  withCam(540, 950, 1 + V2.easeInOut(V2.clamp01(u / 1.5)) * 0.04, () => {
+    /* wound gap closes from below as the thread 'zipper' pulls */
+    const close = V2.easeInOut(V2.clamp01(u / 0.85));
+    const gap = 150 * (1 - close);
+    /* skin edges with V gap */
+    V2.el("rect", { x: 0, y: SURF, width: WOUND_X - gap / 2, height: 20, fill: SKIN.surfLine });
+    V2.el("rect", { x: WOUND_X + gap / 2, y: SURF, width: 1080 - WOUND_X - gap / 2, height: 20, fill: SKIN.surfLine });
+    V2.el("path", { d: `M ${WOUND_X - gap / 2} ${SURF + 20} L ${WOUND_X - gap * 0.12} ${DERM_BOT} L ${WOUND_X - gap / 2} ${DERM_BOT + 40} Z`,
+      fill: SKIN.dermisLow });
+    V2.el("path", { d: `M ${WOUND_X + gap / 2} ${SURF + 20} L ${WOUND_X + gap * 0.12} ${DERM_BOT} L ${WOUND_X + gap / 2} ${DERM_BOT + 40} Z`,
+      fill: SKIN.dermisLow });
+    /* thread zigzag + ink dash zipper line under the closing edges */
+    const d = threadPath(200, 880, THREAD_Y, 24, 6, 0);
+    V2.el("path", { d, stroke: SKIN.ink, "stroke-width": 13, fill: "none", "stroke-linecap": "round" });
+    V2.el("path", { d, stroke: P.amber, "stroke-width": 8, fill: "none", "stroke-linecap": "round" });
+    for (let i = 0; i < 7; i++) {
+      const zx = 220 + i * 100;
+      if (zx < WOUND_X - gap / 2 || zx > WOUND_X + gap / 2) continue;
+      V2.el("path", { d: `M ${zx - 16} ${THREAD_Y - 6} L ${zx + 16} ${THREAD_Y + 6}`,
+        stroke: SKIN.ink, "stroke-width": 7, "stroke-linecap": "round",
+        opacity: 0.55 * close });
+    }
+    V2.glow(WOUND_X, THREAD_Y - 10, 210, "Warm", 0.5);
+  });
+  surfaceHero(t, 880, 0.88, "present");
+  V2.grade(t);
+};
+
+SCENES.s5 = (u, t) => {
+  skinBase(t);
+  /* camera dives to the buried knot (C15 push-in, deeper than s3) */
+  withCam(300, THREAD_Y - 10, 1 + V2.easeInOut(V2.clamp01(u / 1.3)) * 0.55, () => {
+    V2.el("path", { d: threadPath(60, 320, THREAD_Y, 24, 4, 0),
+      stroke: SKIN.ink, "stroke-width": 13, fill: "none", "stroke-linecap": "round" });
+    V2.el("path", { d: threadPath(60, 320, THREAD_Y, 24, 4, 0),
+      stroke: P.amber, "stroke-width": 8, fill: "none", "stroke-linecap": "round" });
+    /* the buried knot: ink figure-8 tucked under, skin closes around it */
+    const swallow = V2.easeInOut(V2.clamp01((u - 0.3) / 0.55));
+    const ks = 1.5 - swallow * 0.25;
+    const g = V2.el("g", { transform: `translate(340 ${THREAD_Y - 6}) scale(${ks}) rotate(${Math.sin(t / 5) * 4})` });
+    V2.el("path", { d: "M -34 -18 Q 0 -44 34 -18 Q 44 0 22 20 Q 0 34 -22 20 Q -44 0 -34 -18",
+      stroke: SKIN.ink, "stroke-width": 12, fill: "none" }, g);
+    V2.el("path", { d: "M -18 -8 Q 6 -22 24 -4 Q 30 10 8 16 Q -14 20 -18 -8",
+      stroke: P.amber, "stroke-width": 6, fill: "none", opacity: 0.9 }, g);
+    V2.glow(340, THREAD_Y - 10, 130, "Warm", 0.5);
+    /* skin swallowing: dermis band soft-closing over the knot */
+    V2.el("rect", { x: 0, y: SURF + 20, width: 1080, height: Math.max(0, THREAD_Y - 60 - SURF) * (0.25 + swallow * 0.35),
+      fill: SKIN.dermisMid, opacity: 0.34 * swallow });
+  });
+  surfaceHero(t, 860, 0.8, "amazed");
+  V2.grade(t);
+};
+
+SCENES.s6 = (u, t) => {
+  skinBase(t);
+  /* compare: railroad tracks (myth, left, dimmed) vs clean seam (right) */
+  V2.el("path", { d: `M 540 ${SURF - 260} L 540 ${DERM_BOT + 120}`, stroke: SKIN.ink,
+    "stroke-width": 4, opacity: 0.55, "stroke-dasharray": "10 14" });
+  for (let i = 0; i < 3; i++) {
+    const sx = 130 + i * 110;
+    V2.el("path", { d: `M ${sx - 26} ${SURF + 10} Q ${sx} ${SURF - 74} ${sx + 26} ${SURF + 10}`,
+      stroke: SKIN.ink, "stroke-width": 8, fill: "none", opacity: 0.85 });
+    V2.el("circle", { cx: sx, cy: SURF - 80, r: 9, fill: SKIN.ink });
+  }
+  V2.txt(255, SURF - 190, "TRACKS", { "text-anchor": "middle", "font-family": MONO,
+    "font-size": 24, fill: P.cream, opacity: 0.6, "letter-spacing": 3 });
+  /* clean side: seamless line + faint amber under-seam */
+  V2.el("path", { d: `M 640 ${THREAD_Y} Q 790 ${THREAD_Y - 26} 950 ${THREAD_Y}`,
+    stroke: P.amber, "stroke-width": 6, fill: "none", opacity: 0.4 + 0.14 * Math.sin(t / 1.8) });
+  V2.glow(800, THREAD_Y - 14, 170, "Warm", 0.4);
+  V2.txt(795, SURF - 190, "SEAM", { "text-anchor": "middle", "font-family": MONO,
+    "font-size": 24, fill: P.cream, opacity: 0.85, "letter-spacing": 3 });
+  surfaceHero(t, 760, 0.8, "happy");
+  V2.grade(t);
+};
+
+SCENES.s7 = (u, t) => {
+  skinBase(t);
+  withCam(540, 950, 1.04, () => {
+    /* absorbable: the thread dissolves into drifting amber particles */
+    const fade = V2.easeInOut(V2.clamp01(u / 0.85));
+    const d = threadPath(160, 920, THREAD_Y, 24, 7, 0);
+    V2.el("path", { d, stroke: SKIN.ink, "stroke-width": 13, fill: "none",
+      "stroke-linecap": "round", opacity: 1 - fade * 0.9,
+      "stroke-dasharray": 1600, "stroke-dashoffset": 1600 * fade * 0.55 });
+    V2.el("path", { d, stroke: P.amber, "stroke-width": 8, fill: "none",
+      "stroke-linecap": "round", opacity: (1 - fade) * 0.95,
+      "stroke-dasharray": 1600, "stroke-dashoffset": 1600 * fade * 0.55 });
+    for (let i = 0; i < 18; i++) {
+      const ph = (t * (10 + V2.rnd(61, i) * 8) + V2.rnd(62, i) * 380) % 380;
+      const exx = 170 + V2.rnd(63, i) * 740 + Math.sin(ph / 70 + i) * 20;
+      V2.el("circle", { cx: exx, cy: THREAD_Y - ph, r: 2.6 + V2.rnd(64, i) * 3,
+        fill: P.amber, opacity: Math.max(0, 0.7 * fade - ph / 900) });
+    }
+    V2.glow(540, THREAD_Y - 10, 200, "Warm", 0.35 * (1 - fade * 0.6));
+  });
+  surfaceHero(t, 880, 0.85, "relaxed");
+  V2.grade(t);
+};
+
+SCENES.s8 = (u, t) => {
+  skinBase(t);
+  /* the surface seals itself: bright wave travels the line, stamp lands */
+  const seal = V2.easeInOut(V2.clamp01(u / 0.7));
+  const wx = 60 + seal * 960;
+  V2.el("rect", { x: 0, y: SURF, width: 1080, height: 20, fill: SKIN.surfLine });
+  V2.el("rect", { x: Math.max(0, wx - 130), y: SURF - 2, width: 130, height: 24,
+    rx: 10, fill: P.cream, opacity: 0.9 });
+  V2.glow(wx, SURF + 4, 130, "Warm", 0.6);
+  V2.el("path", { d: `M 160 ${THREAD_Y} Q 540 ${THREAD_Y - 22} 920 ${THREAD_Y}`,
+    stroke: P.amber, "stroke-width": 6, fill: "none", opacity: 0.30 + 0.1 * Math.sin(t / 1.6) });
+  stamp(t, 540, 430, "SEALED IN 48 HOURS", 0.42, P.amber);
+  surfaceHero(t, 850, 0.85, "amazed");
+  V2.grade(t);
+};
+
+SCENES.s9 = (u, t) => {
+  skinBase(t);
+  /* almost no trace: the seam fades toward invisible; one sparkle */
+  const fade = 0.36 - V2.easeInOut(V2.clamp01(u / 0.9)) * 0.24;
+  V2.el("path", { d: `M 200 ${THREAD_Y} Q 540 ${THREAD_Y - 18} 880 ${THREAD_Y}`,
+    stroke: P.amber, "stroke-width": 5, fill: "none", opacity: fade });
+  const tw = V2.clamp01((u - 0.45) / 0.3);
+  if (tw > 0 && tw < 1) {
+    const sx = 640, sy = THREAD_Y - 8, r = 14 * Math.sin(tw * Math.PI);
+    V2.el("path", { d: `M ${sx - r} ${sy} L ${sx + r} ${sy} M ${sx} ${sy - r} L ${sx} ${sy + r}`,
+      stroke: P.cream, "stroke-width": 3.5, opacity: 0.9 * Math.sin(tw * Math.PI), "stroke-linecap": "round" });
+    V2.glow(sx, sy, 60, "Warm", 0.5 * Math.sin(tw * Math.PI));
+  }
+  surfaceHero(t, 800, 0.9, "happy");
+  V2.grade(t);
+};
+
+SCENES.s10 = (u, t) => {
+  /* closer — loop mirror of hook: thread gone, seam faint, title pops */
+  skinBase(t);
+  withCam(540, 950, 1.05 + V2.easeInOut(V2.clamp01(u / 1.4)) * 0.03, () => {
+    V2.el("path", { d: `M 200 ${THREAD_Y} Q 540 ${THREAD_Y - 18} 880 ${THREAD_Y}`,
+      stroke: P.amber, "stroke-width": 5, fill: "none", opacity: 0.2 + 0.08 * Math.sin(t / 2) });
+    V2.glow(540, THREAD_Y - 8, 170, "Warm", 0.28);
+  });
+  surfaceHero(t, 205, 0.9, "skygawk");
+  V2.glow(540, 1450, 300, "Warm", 0.4);
+  kineticTitle(t, ["THE SEAM", "YOU NEVER", "SEE."], 1268, 126, 0.16);
+  V2.grade(t);
+};
+
+SCENES.s11 = (u, t) => {
+  /* hold (visual-only 13th beat): title stays, seam shimmer continues */
+  skinBase(t);
+  withCam(540, 950, 1.08, () => {
+    V2.el("path", { d: `M 200 ${THREAD_Y} Q 540 ${THREAD_Y - 18} 880 ${THREAD_Y}`,
+      stroke: P.amber, "stroke-width": 5, fill: "none", opacity: 0.18 + 0.07 * Math.sin(t / 1.7) });
+    V2.glow(540, THREAD_Y - 8, 170, "Warm", 0.26);
+  });
+  surfaceHero(t, 205, 0.9, "skygawk");
+  V2.glow(540, 1450, 300, "Warm", 0.4);
+  kineticTitle(t, ["THE SEAM", "YOU NEVER", "SEE."], 1268, 126, 0.0);
+  V2.grade(t);
+};
+
+/* caption policy: stamps/titles ARE the text — no second caption layer (L-076) */
+const EMPHASIS = {};
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  V2.defsHold = V2.el("defs", {}, V2.root);
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++)
+    if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx];
+  SC_T0 = sc.start;
+  const u = V2.clamp01((t - sc.start) / (sc.end - sc.start));
+  const entryK = V2.clamp01((t - sc.start) / 0.12);
+  (SCENES[sc.id] || SCENES.hook)(u, t);
+  if (entryK < 1) V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: SKIN.outTop, opacity: (1 - entryK) * 0.55 });
+  if (EMPHASIS[sc.id]) V2.caption(sc.narration, u, EMPHASIS[sc.id]);
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>
