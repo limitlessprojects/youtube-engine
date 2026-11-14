@@ -1,8 +1,8 @@
 # Zack D. Films — production intel (boss-supplied, 2026-11-14)
 
 > Boss passed over a research brief: "research deep study Zack D. Films — it's a completely different
-> entity from Pixar/DreamWorks." Marked **BOSS-SUPPLIED, UNVERIFIED** throughout — figures are
-> his research, ours to use but not to assert as fact without an independent check.
+> entity from Pixar/DreamWorks." Channel figures below are **web-verified 2026-11-14** (vidIQ, TubeGrade,
+> HypeAuditor, Communitrics); company-team figures remain **boss-supplied, UNVERIFIED**.
 > Compliance: analysis-only; their catalog (4,000+ Shorts, all copyrighted) may never be composited,
 > remixed wholesale, or re-uploaded; observation stays at the pattern level.
 
@@ -10,8 +10,8 @@
 
 Zack D. Films = American digital-media company / YouTube channel — short-form, cinematic **3D**
 animated explainers (20–45 s, vertical, high-production, ultra-optimized for Shorts). Founder/lead:
-**Zachary Dziadul** (Dec 28, 1992). Figures claimed (unverified): ~29M subscribers, ~81B total views,
-4,000+ videos, remote team growing to ~300 employees / ~200 animators by Aug 2026. Content pillars:
+**Zachary Dziadul** (Dec 28, 1992). Figures **web-verified 2026-11-14** — vidIQ (7 Nov snapshot: 29.7M subs / 83,002,853,224 total views / 4,212 videos, joined Jun 7 2021, rank #367 worldwide, #176 Entertainment, ~500K subs last 28d, ~3B views last 28d), TubeGrade (@zackdfilms, 29.6M / 4,100 vids / 82.7B views as of Nov 9 2026, avg ~6.96M views/video, rank #60 fastest-growing this week, rank #346), HypeAuditor (Oct 2026: 29.7M subs, 4,170 videos, ~30 uploads per 2 days rot, engagement rate 3.43%, avg 6.54M views), Communitrics (Sep–Nov 2026: #381, +1.3M subs in 90d). Cadence ~37 uploads/WEEK (~5/day; ~82 videos + 4.43B views gained in Oct 2026 alone).
+Team scale per boss brief (UNVERIFIED): ~300 employees, ~200 animators (Aug 2026). Content pillars:
 historical incidents, science-how-things-work, unusual stories, "violation/scary injury" hooks.
 
 ## Their pipeline (per the brief; near-confirmed by their animator portfolios + job posts)
@@ -49,7 +49,7 @@ body-interior "gross but educational" lane (their highest-views anatomy). Those 
 ## What it means for us — three directional takeaways
 
 1. **Cadence is the moat.** They ship daily via templates + eyeball dailies; we ship slower but with a VLM gate.
-   Our cadence on the nightly is ~1 Short/2 days; theirs ~4,000/3.5yr ≈ 3.2/day. Different universe, same law:
+   Our cadence on the nightly is ~1 Short/2 days; theirs ≈ 5.3/day (~37 uploads/WEEK, vidIQ 2026-11; Oct 2026 alone: +900K subs, +4.43B views, +712 vids). Different universe, same law:
    reduce friction-to-ship without lowering the bar (C6/L-069/L-090 chain already does this).
 2. **Their 3D pipeline has nothing to do with our 2D stickman; the lesson is the *content formula*, not the stack:**
    20–45 s, one HOOK question, one payoff, scare-adjacent anatomy wins (s1/s4/s6 anatomy scenes). Our #0006 hook
