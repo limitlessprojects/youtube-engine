@@ -16,7 +16,7 @@ published Short; NASA/USGS PD is the only render-eligible class, with attributio
 | VL-06 | Kurzgesagt "The Egg" (36M, 486s) | ✅ done | h6fcK_fRYaI-VL-06-kurzgesagt-egg.md (G9 ceiling anchor) |
 | VL-07 | AlternateHistoryHub WWI Pt.1 (7.9M, 492s) | ✅ done | MQW3VefRozc-VL-07-althistoryhub-wwi.md (what-if spine template) |
 | VL-08 | Kurzgesagt "1200 Hours" (9.1M, 408s) | ✅ done | uFk0mgljtns-VL-08-kurzgesagt-1200-hours.md (studio pipeline vs ours) |
-| VL-09 | Gunner '22 showreel | ❌ blocked (vimeo 401/403; site /reel/ 500s) | needs boss's direct MP4 or vimeo login |
+| VL-09 | Gunner '22 showreel | ❌ blocked (status + routes tried: `BLOCKED.md` §VL-09) | analysis burden: boss's direct MP4 or vimeo login |
 | VL-10 | Buff Motion 2025 showreel | ✅ done (3 files, 2160p downloaded; only showreel analyzed in depth) | VL-10a-buff-showreel-1.md |
 | VL-11 | Ae Genius easing curves (97.5k, 588s) | ✅ done (re-downloaded after 429 flap) | 6zrEKEuJGKs-VL-11-ae-genius-easing.md |
 | VL-12 | Kinetic "Shop Vac" (1.74M, 206s) | ✅ done | y4sOfO8Ei1g-VL-12-kinetic-shopvac.md |
@@ -24,7 +24,7 @@ published Short; NASA/USGS PD is the only render-eligible class, with attributio
 | VL-14a/b/c | MinuteEarth (nuclear 23.3M, Grolar 2.87M, sunsets 169k) | ✅ done (sunset = our #0003 A/B) | nGutkWaXDUs-VL-14a, ZA4OQ-1ahXg-VL-14b, 9PJvV5PYDm0-VL-14c |
 | VL-15a/b/c | MinutePhysics (2+2, portals cube, backwards) | ✅ done | 0fV8kYoGDNM-VL-15a, 31kyER-8dak-VL-15b, sEQvDbyFNbo-VL-15c |
 | VL-16 | Wan-Animate official demos (res921 + rep_shots) | ⏳ frames extracted, notes pending (subagent running) | — |
-| VL-17 | r/comfyui Wan 2.2 Animate thread | ❌ blocked (reddit 403 from this IP everywhere, incl. r.jina.ai) | community-intel.md §Reddit marks it CANDIDATE |
+| VL-17 | r/comfyui Wan 2.2 Animate thread | ❌ blocked (status + routes tried: `BLOCKED.md` §VL-17) | needs boss/reddit token or thread paste; community-intel.md marks findings CANDIDATE |
 | VL-18/19/20 | boss phone clip; style-anchor Shorts; PD picks | ⏳ pending boss | — |
 | VL-21 | NASA PD: Earth views (200s) + Rocket Lab PREFIRE (51.5s) | ✅ done (PD) | notes pending (same subagent as VL-16) |
 | VL-22 | USGS PD: Kilauea lava fountain (2.5M, 121s) | ✅ done (PD) | notes pending (same subagent as VL-16) |
@@ -90,6 +90,7 @@ quantization eats likeness first; identity drift/hands/context loss = failure mo
 judged by eye/likeness/flicker with NO objective metric — hero shots must be Medium-Res; canvas
 stickman stays the backbone.
 
+**Blocked items: see `BLOCKED.md` (routes tried, verbatim errors, what unblocks each).**
 **Pending/waiting items (not done, named):**
 - VL-16/VL-21/VL-22 analysis notes — subagent running (Wan demos + NASA/USGS frames done).
 - VL-17 reddit thread — 403 everywhere from this IP (unverifiable here; notes marked CANDIDATE).
