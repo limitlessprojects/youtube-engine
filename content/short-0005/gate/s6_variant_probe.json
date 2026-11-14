@@ -1,0 +1,53 @@
+{
+ "label": "s6_variant",
+ "times": [
+  25.91,
+  26.5
+ ],
+ "replaces": [
+  [
+   "shoreRock(t, 910, 1660, 1.0, \"mourn\");",
+   "shoreRock(t, 910, 1660, 1.2, \"mourn\");"
+  ],
+  [
+   "stamp(t, 540, 1010, \"36,000 LIVES\", 1.3, P.amber, true);",
+   "stamp(t, 270, 555, \"36,000 LIVES\", 1.3, P.amber, false);"
+  ],
+  [
+   "V2.glow(540, 1010, 260, \"Warm\", 0.5);",
+   "V2.glow(270, 555, 260, \"Warm\", 0.5);"
+  ]
+ ],
+ "frames": {
+  "25.91": {
+   "baseline": {
+    "vh": 7,
+    "cl": 7
+   },
+   "variant": {
+    "vh": 7,
+    "cl": 6
+   },
+   "delta": {
+    "vh": 0,
+    "cl": -1
+   }
+  },
+  "26.5": {
+   "baseline": {
+    "vh": 6,
+    "cl": 6
+   },
+   "variant": {
+    "vh": 7,
+    "cl": 5
+   },
+   "delta": {
+    "vh": 1,
+    "cl": -1
+   }
+  }
+ },
+ "delta_mean": -0.25,
+ "verdict": "NOISE (mean delta -0.25) \u2014 no integration call"
+}

@@ -63,3 +63,39 @@
 - Thresholds unchanged (7.5 / 7.0 / 6.0). Video pass cleared every round.
 - hook B, 12-beat timing, bed level, cream/ink chips, rembg asset pipeline,
   night palette (D3 verdict): keep — measured wins. Do not re-litigate.
+
+## D1 staging (day-017 midday — READY for the 23:45 EAT session)
+
+- Cut RE-RENDERED from tracked sources + finished, verified byte-faithful vs
+  r9's master: **36.8s / -14.97 LUFS / -0.45 dBTP / 11.17 MB** (identical to
+  master_report.json — deterministic pipeline confirmed). Mirrored to the
+  durable store as `upload/short-0005.mp4` (survives recycle, L-058
+  discipline). **Tonight uses the mirror — do NOT re-render, do NOT touch
+  scenes.html/script.json.** The unchanged-cut guarantee holds.
+- D2 done (day-017): s6 variant probe = NOISE, mean -0.25 (hero 1.2 + stamp
+  in crest void helps vh +1 at settled t, costs cl -1 at both t) — current
+  composition holds. Evidence: gate/s6_variant_probe.json + 4 probe PNGs in
+  render/ (tools/probe_ab.py). No scene edits followed from it.
+- Runbook, in order (rounds renumbered r12/r13 — r10/r11 were consumed by the
+  concurrent fresh-machine session's substitute-judge rounds, see carry_r10.md;
+  the decision must run on the STUDIO judge for comparability with r9):
+  1. (only if recycled) restore, then `cp /home/z/my-project/upload/short-0005.mp4 content/short-0005/short-0005.mp4`
+  2. `python3 tools/render_short.py short-0005 --keyframes`
+  3. `python3 tools/ultracritic.py short-0005 --round 12`
+  4. `python3 tools/ultracritic.py short-0005 --round 13`
+  5. PUBLISH if grand_mean >= 7.5 in r12 OR r13, OR mean(r12, r13) >= 7.5:
+     `python3 tools/youtube_upload.py --file content/short-0005/short-0005.mp4 --title "The loudest sound in history (was heard 3,000 miles away)" --token-file .secrets/token.json`
+     (synthetic disclosure is ON by default — never pass --no-synthetic) →
+     write `content/short-0005/published.json` (copy short-0003's shape) →
+     video_id into the day log; views_tracker picks it up next session.
+  6. Both rounds < 7.5 → carry #0005 (lessons banked; the 7.49 ceiling-
+     adjacent result + L-101 variance is the whole story) → open #0006 with
+     the armed linter (L-097 beat law + L-090 digits now fire at authoring
+     time; tools/lint_selftest.py is the regression guard).
+- Validity requirement for the decision rounds: same judge family as r1–r9
+  (studio z-ai; a substitute judge's 7.33/7.63 from session A is recorded but
+  NOT usable for the publish rule — L-103b: never compare across judges).
+- Gate mechanics unchanged: hook_impact frame-0-only; no sign-off (autonomous
+  per boss 2026-11-09). OAuth probe BEFORE upload (L-092: mirror first).
+  Reminder: Testing-mode refresh token dies ~Nov 19 if the nura-health app is
+  still not in Production — boss action item, still open.

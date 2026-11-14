@@ -71,3 +71,38 @@ The fix (boss action, needs a human with Google access):
   (or a local model) before the tool's pass can be trusted again. Ask the boss.
 - Views row — still behind the RSS/bot wall from this egress; not touched (never fabricate).
 - `finish_v3` still exits −9/255 after writing the report (L-098); treat mp4 mtime, not exit code.
+
+## Studio reconciliation (session B, same day — read before acting on the blocker above)
+
+- **The OAuth grant is NOT dead — the CI secret is a stale copy.** The verdict
+  above tested the Actions secret `YOUTUBE_TOKEN_JSON` (and a fresh-machine
+  box with no mirrors). The durable mirror `upload/token.json` refreshed
+  200 OK before AND after the CI probe (studio probes 14:1xZ and later;
+  CI invalid_grant 14:23:16Z) — two different copies, two different states.
+  Filed as L-105 ("a token copy is not the token"). Consequences:
+  - NO re-consent is needed to publish from the studio
+    (`tools/youtube_upload.py --token-file .secrets/token.json`, seeded from
+    the live mirror).
+  - The CI path is FIXED (studio, 14:49Z): all three secrets refreshed from
+    the live mirror (YOUTUBE_TOKEN_JSON + GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET
+    from the token's own minting client) — the PAT turned out to carry
+    secrets-write. Verified end-to-end: dry-run run 43606867269 = SUCCESS
+    (vs 43604597533 = failure on the stale copy 26 minutes earlier).
+  - The real boss item is unchanged: nura-health app → **Production**
+    (Testing mode kills the day-011 refresh token ~Nov 19 — every copy,
+    mirror included, dies then).
+- **r10/r11 do not satisfy carry_r9 D1.** Those rounds ran on a substitute
+  judge (glm-4.5v via OpenRouter) with 3 frames unscored per round and an
+  agent-judged video pass; this file's own calibration note says the numbers
+  are not comparable to r1–r9. The clean two-round decision still fires at
+  **23:45 EAT on the studio judge** as **r12/r13** (runbook in carry_r9.md;
+  the studio's z-ai VLM was verified live this afternoon — 4 successful
+  vision calls during the s6 D2 probe).
+- **D2 is done** (session B): s6 hero-1.2 + stamp-to-crest-void probe =
+  NOISE (mean −0.25; vh +1 at settled t, cl −1 at both) — current
+  composition holds. Evidence: gate/s6_variant_probe.json, tools/probe_ab.py.
+  The "D2 named, not run" debt above is closed.
+- **D3 merged**: both sessions fixed the dead linter dispatch independently;
+  the merged script_linter carries session A's 3-tuple wiring + the studio's
+  L-097 VO ladder / at-floor warn / per-token L-090 + tools/lint_selftest.py
+  (10/10 green). #0003 fails at lint as designed; #0004/#0005 pass.

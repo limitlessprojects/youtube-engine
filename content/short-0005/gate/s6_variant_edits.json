@@ -1,0 +1,8 @@
+{
+  "label": "s6_variant",
+  "replaces": [
+    ["shoreRock(t, 910, 1660, 1.0, \"mourn\");", "shoreRock(t, 910, 1660, 1.2, \"mourn\");"],
+    ["stamp(t, 540, 1010, \"36,000 LIVES\", 1.3, P.amber, true);", "stamp(t, 270, 555, \"36,000 LIVES\", 1.3, P.amber, false);"],
+    ["V2.glow(540, 1010, 260, \"Warm\", 0.5);", "V2.glow(270, 555, 260, \"Warm\", 0.5);"]
+  ]
+}
