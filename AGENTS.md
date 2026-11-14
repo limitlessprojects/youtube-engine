@@ -164,3 +164,12 @@ Order = ship order. Full provenance: `research/video-notes/TOP10-UPGRADES.md` �
 8. **Clarity > novelty** — Heliyon PRISMA 40-study; TED clarity β=.339; no Short ships with a confusion point; L-097 3.2s floor enforces.
 9. **Hero-shot discipline** — community pass (reddit, CANDIDATE): Medium-Res only; AR-match input; frames-skip=0; quantization kills likeness first; C16 exceptions only.
 10. **Cadence beats spectacle** — one structural edit per publish; no delete-and-republish; re-uploads via Studio description edit only; weekly retention re-read, not merge-batch review.
+
+## 9. Directive to the next Claude — the 90-minute audit (boss 2026-11-14)
+
+**Read `docs/future-claude.md` FIRST.** The boss caught the paperwork drifting faster than sessions could fix it.
+Your first job is not a new Short — it is a 90-minute honest audit of `docs/plan-30d.md`, `docs/registry.md`, `AGENTS.md`,
+`README.md`, `research/video-notes/README.md`, `research/video-notes/BLOCKED.md`, `.gitignore` — report every stale claim,
+correct what's verifiable today, archive what's obsolete (`docs/_archive/` with date), delete what's wrong, and
+**stop before** the style bible / C13 / Voices-spend / engine flips — those are boss-held. Commit as one atomic
+`docs(audit):` commit; ask the boss BEFORE changing the plan's arc or phases themselves.
