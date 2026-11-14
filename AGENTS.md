@@ -4,6 +4,11 @@ The fresh agent's job lives in `docs/plan-30d.md` + `docs/playbook/`; this file 
 **the machine-specific "how to even run anything here"** that `docs/` cannot know.
 Everything below was measured on 2026-11-14 (CachyOS, fresh clone of `limitlessprojects/youtube-engine`).
 
+## 0. Which box am I on? (triage — added day-017 audit)
+
+- **Studio box** (`/home/z/my-project/youtube-engine`, restored by `scripts/restore_workstation.sh --from-upload`): the `z-ai` CLI is **FUNDED and live** (studio judge verified day-017 — gate rounds r12/r13 ran on it; §2's out-of-balance note applies to fresh machines only). `.secrets/token.json` may need reseeding after a recycle: `cp /home/z/my-project/upload/token.json .secrets/token.json && chmod 600 .secrets/token.json`. The `gh` CLI may be absent — call the GitHub API with the PAT in `/home/z/my-project/upload/gh_token` via curl (never print it).
+- **Fresh opencode machine** (`/home/ryioshi/youtube-engine`): everything in §1–§4 as written (z-ai shim → OpenRouter glm-4.5v, opencode-held git auth).
+
 ## 1. First command on a fresh clone
 
 ```bash

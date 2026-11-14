@@ -32,6 +32,8 @@ forgiven silently.
 | Path | What |
 |---|---|
 | `docs/plan-30d.md` | **today's mission**: phases, status, forks, risks |
+| `AGENTS.md` | machine runbook: fresh-clone setup, VLM/judge state, publish path, multi-session concurrency |
+| `docs/publish-runway.md` | the publish runway: exact commands to ship a Short (lint → render → gate → upload) |
 | `docs/playbook/` | one file per stage: script, voiceover, scenes, audio, render-encode, gate, publish, research |
 | `docs/rules.md` | every hard rule + evidence + the tool that enforces it |
 | `docs/parameters.md` | every tuned constant + why (WPM band, bar 7.5, bed levels…) |

@@ -25,7 +25,6 @@ work/
 *.mp4
 *.mov
 *.webm
-!research/**/*.mp4
 
 # OS noise
 .DS_Store

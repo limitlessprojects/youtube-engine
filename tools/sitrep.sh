@@ -19,15 +19,16 @@ ls -1 2>/dev/null || true
 echo "--- docs/ (depth 2) ---"
 find docs -maxdepth 2 -type d 2>/dev/null | sort || echo "(no docs/)"
 echo "--- consolidation dirs present? ---"
-for d in docs/playbook rules parameters dead-ends _archive skills tools; do
+for d in docs/playbook docs/_archive skills tools; do
   [ -d "$d" ] && echo "OK  $d/ ($(ls -1 "$d" | wc -l) entries)" || echo "MISSING  $d/"
 done
+for f in docs/rules.md docs/parameters.md docs/dead-ends.md docs/plan-30d.md AGENTS.md README.md; do
+  [ -f "$f" ] && echo "OK  $f" || echo "MISSING  $f"
+done
 
-sec "LEDGER tail (40)"
-[ -f LEDGER.md ] && tail -40 LEDGER.md || echo "(LEDGER.md missing)"
+sec "LEDGER (docs/lessons.md tail)"
+[ -f docs/lessons.md ] && tail -25 docs/lessons.md || echo "(docs/lessons.md missing)"
 
-sec "lessons/ (last 12)"
-ls -1 lessons/ 2>/dev/null | tail -12 || echo "(no lessons/)"
 sec "logs/ (last 12)"
 ls -1 logs/ 2>/dev/null | tail -12 || echo "(no logs/)"
 

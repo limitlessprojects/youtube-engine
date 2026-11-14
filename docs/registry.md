@@ -17,6 +17,7 @@
 | Audio finish | `tools/finish_v3.py` (numpy-synth bed/SFX, −14 LUFS, pipe-encode) | ✅ in-house |
 | Script gates | `tools/script_linter.py` + `prompts/scriptwriter_system.md` + `prompts/critic_system.md` | ✅ in-house |
 | Publish | `tools/youtube_upload.py` (OAuth, disclosure automated) | ✅ in-house |
+| Hero-shot i2v (free GPU, experimental) | `tools/hero_shot/ai_rerender.py` + `.github/workflows/ai-rerender.yml` (ZeroGPU Wan2.2-Animate anonymous ~160 GPU-s/IP; census `research/anonymous-gpus.md`) | ⚠️ boss-directed experiment — text stamps DRIFT (AGENTS.md §6); never gated/shipped without boss sign-off |
 | Research loop | `tools/transcribe.py`, `daily_loop.py`, `blueprint_extractor.py`, `rss_scout.py` + `vendor/Youtube_transcriber` (Whisper fallback) | ✅ CI daily |
 | Bot-wall infra | `tools/proxy_pool.py`, `fetch_instances.py`, `vendor/bgutil-ytdlp-pot-provider` (@2.0.2, POT server :4416) | ✅ opportunistic |
 | Taste layer (motion QC laws) | `vendor/motionmaxxing` (our fork @ `8c8ec0f`): 12 craft references, ~4,300 measured moves (M913–M974) | ✅ mined into rules |

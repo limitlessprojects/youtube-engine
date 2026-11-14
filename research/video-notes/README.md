@@ -23,11 +23,11 @@ published Short; NASA/USGS PD is the only render-eligible class, with attributio
 | VL-13 | Every Frame a Painting: editor 2.8M + Edgar Wright 11.4M | ✅ done (both) | 3Q3eITC01Fg-VL-13a-everyframe-editor.md, 3FOzD4Sfgag-VL-13b-everyframe-edgar-wright.md |
 | VL-14a/b/c | MinuteEarth (nuclear 23.3M, Grolar 2.87M, sunsets 169k) | ✅ done (sunset = our #0003 A/B) | nGutkWaXDUs-VL-14a, ZA4OQ-1ahXg-VL-14b, 9PJvV5PYDm0-VL-14c |
 | VL-15a/b/c | MinutePhysics (2+2, portals cube, backwards) | ✅ done | 0fV8kYoGDNM-VL-15a, 31kyER-8dak-VL-15b, sEQvDbyFNbo-VL-15c |
-| VL-16 | Wan-Animate official demos (res921 + rep_shots) | ⏳ frames extracted, notes pending (subagent running) | — |
+| VL-16 | Wan-Animate official demos (res921 + rep_shots) | ✅ done (notes: `VL-16a-wan-animate-res921.md` + `VL-16b-wan-animate-rep-shots.md` — input/output pairing; text-drift risk confirmed) | VL-16a, VL-16b |
 | VL-17 | r/comfyui Wan 2.2 Animate thread | ✅ **UNBLOCKED 2026-11-14** (Playwright + boss's Brave `Default` profile through `reddit.com`; `api.reddit.com` IP-blocked but HTML page works) | `VL-17-reddit-Wan2.2-Animate-Thread.md` |
 | VL-18/19/20 | boss phone clip; style-anchor Shorts; PD picks | ⏳ pending boss | — |
-| VL-21 | NASA PD: Earth views (200s) + Rocket Lab PREFIRE (51.5s) | ✅ done (PD) | notes pending (same subagent as VL-16) |
-| VL-22 | USGS PD: Kilauea lava fountain (2.5M, 121s) | ✅ done (PD) | notes pending (same subagent as VL-16) |
+| VL-21 | NASA PD: Earth views (200s) + Rocket Lab PREFIRE (51.5s) | ✅ done (PD) | VL-21a-nasa-earth-views.md, VL-21b-nasa-rocket-lab-launch.md |
+| VL-22 | USGS PD: Kilauea lava fountain (2.5M, 121s) | ✅ done (PD) | VL-22-usgs-kilauea-lava.md |
 
 Raw videos live in `/home/ryioshi/Downloads/wishlist/` (kept OUT of git), captions as `.en.vtt`
 beside them, frames+cut maps under `/tmp/opencode/wishlist/frames/`.
@@ -99,8 +99,8 @@ stickman stays the backbone.
 - `engine/core.js` — additive motion-grammar easing library (V2.backInBig etc.) + RESERVED V2.REGISTERS (boss-held C13 flip).
 
 **Pending/waiting items (not done, named):**
-- VL-16/VL-21/VL-22 analysis notes — subagent running (Wan demos + NASA/USGS frames done).
-- VL-17 reddit thread — 403 everywhere from this IP (unverifiable here; notes marked CANDIDATE).
+- Corpus notes all landed 2026-11-14 evening (VL-16a/b, VL-21a/b, VL-22) — no subagent still running.
+- VL-17 reddit thread — UNBLOCKED same day via Playwright + boss's Brave `Default` profile (`VL-17-reddit-Wan2.2-Animate-Thread.md`).
 - VL-09 Gunner — vimeo 401/403; needs boss.
 - VL-11/VL-13b — retried + frame-extracted + analyzed ✓ (added to the corpus this session).
 - VL-18/19/20 — boss-side (phone clip; 2 style-anchor Shorts by their eye; PD grading picks).
