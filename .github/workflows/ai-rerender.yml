@@ -1,0 +1,160 @@
+name: AI re-render Short (ZeroGPU anonymous)
+
+# Anonymous HuggingFace ZeroGPU route (L-093 / research/free-gpu-video.md):
+# per-IP quota, fresh runner IP per matrix job. Wan2.2-Animate re-renders OUR
+# deterministic render (C6) as an AI hero pass. Text stamps WILL drift — this
+# produces an experimental AI cut, NOT a gate-approved short, and it is never
+# uploaded anywhere. The assembled artifact is for inspection only.
+#
+# Each job: render its 2 s window from scenes.built.html, then one anonymous
+# /animate_scene call (Character Swap, reference = the window's first frame).
+# On quota exhaustion the job exits 4; assemble is skipped loudly. That is the
+# pattern — fresh IPs absorb the cap, we do not re-try into a wall.
+#
+# NOT scheduled. Manual dispatch only.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "content slug, e.g. short-0005"
+        required: true
+        type: string
+        default: "short-0005"
+      resolution:
+        description: "Wan output resolution (Medium costs ~2x quota; Low fits anonymous cap)"
+        required: true
+        type: choice
+        options: ["Low Res", "Medium Res"]
+        default: "Low Res"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-rerender-${{ inputs.slug }}
+  cancel-in-progress: false
+
+jobs:
+  chunk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+
+      - name: Dependencies
+        run: python3 -m pip install -q -U gradio_client playwright numpy pillow
+
+      - name: Chromium
+        run: python3 -m playwright install --with-deps chromium
+
+      - name: Render this 2 s window from the deterministic scenes
+        run: |
+          SLUG="${{ inputs.slug }}"
+          K="${{ matrix.chunk }}"
+          A=$((K * 60))
+          B=$((A + 60))
+          if [ "$B" -gt 1104 ]; then B=1104; fi
+          echo "chunk $K: frames $A-$B"
+          python3 tools/render_short.py "$SLUG" --frames "$A" "$B"
+
+      - name: AI re-render via anonymous ZeroGPU
+        env:
+          RESOLUTION: ${{ inputs.resolution }}
+        run: |
+          SLUG="${{ inputs.slug }}"
+          K="${{ matrix.chunk }}"
+          A=$((K * 60))
+          B=$((A + 60))
+          if [ "$B" -gt 1104 ]; then B=1104; fi
+          python3 tools/hero_shot/ai_rerender.py --slug "$SLUG" --frames "$A" "$B" --out out
+
+      - name: Upload chunk artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: chunk-${{ matrix.chunk }}
+          path: out/
+          if-no-files-found: warn
+          retention-days: 7
+
+  assemble:
+    needs: chunk
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+
+      - name: Dependencies
+        run: python3 -m pip install -q -U numpy pillow
+
+      - name: Download all chunk artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: chunk-*
+          merge-multiple: true
+          path: chunks
+
+      - name: Verify every chunk exists (no silent short cuts)
+        run: |
+          python3 - > check_missing.txt <<'PY'
+          import os, sys
+          REPO_FRAMES = 1104
+          missing = []
+          for k in range(19):
+              a = k * 60
+              b = min(a + 60, REPO_FRAMES)
+              expect = f"chunk_{a:04d}_swapped.mp4"
+              if not os.path.exists(os.path.join("chunks", expect)):
+                  missing.append(expect)
+          print("MISSING:" if missing else "ALL CHUNKS PRESENT", ",".join(missing))
+          sys.exit(1 if missing else 0)
+          PY
+          cat check_missing.txt
+
+      - name: Normalize each chunk (upscale to 1080x1920 @30fps) and concatenate
+        run: |
+          mkdir -p norm
+          for f in chunks/chunk_*_swapped.mp4; do
+            b=$(basename "$f")
+            ffmpeg -y -v error -i "$f" -vf "scale=1080:1920:flags=lanczos,fps=30" \
+              -c:v libx264 -crf 20 -pix_fmt yuv420p "norm/$b"
+          done
+          python3 - > list.txt <<'PY'
+          for k in range(19):
+              a = k * 60
+              b = min(a + 60, 1104)
+              print(f"file 'norm/chunk_{a:04d}_swapped.mp4'")
+          PY
+          ffmpeg -y -v error -f concat -safe 0 -i list.txt -c:v copy ai-video.mp4
+
+      - name: Rebuild the audio mix/master from the repo (deterministic)
+        run: python3 tools/finish_v3.py "${{ inputs.slug }}" --audio-only
+
+      - name: Mux AI video + deterministic audio master
+        run: |
+          SLUG="${{ inputs.slug }}"
+          ffmpeg -y -v error -i ai-video.mp4 -i "content/$SLUG/vo/master.m4a" \
+            -c:v copy -c:a aac -b:a 192k -movflags +faststart -shortest "content/$SLUG/ai-full.mp4"
+          ffprobe -v error -show_entries format=duration,size -of default=nw=1 "content/$SLUG/ai-full.mp4"
+
+      - name: Upload the assembled AI cut
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-full
+          path: content/short-0005/ai-full.mp4
+          retention-days: 14

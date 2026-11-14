@@ -229,6 +229,17 @@ def main() -> int:
     run(["ffmpeg", "-y", "-v", "error", "-i", str(raw), "-af", filt,
          "-ar", str(SR), "-c:a", "aac", "-b:a", "192k", str(master)])
 
+    if "--audio-only" in sys.argv:
+        # CI AI-rerender path: build the mix/master only — the visual side comes
+        # from the ZeroGPU chunks, which the collector remuxes with this master.
+        report = {"file": str(master),
+                  "sound_design": "synth bed (Aadd9 pad) + riser + 2 whoosh + 7 thumps + blip, ducked -8dB",
+                  "audio_only": True}
+        (short / "vo" / "master_report.json").write_text(json.dumps(report, indent=2) + "\n")
+        raw.unlink()
+        print(json.dumps(report, indent=2))
+        return 0
+
     out = short / f"{slug}.mp4"
     # L-072 (made permanent day-010): the image2 demuxer got this sandbox
     # OOM-killed on 1000+ frames; pipe the PNGs through stdin instead.

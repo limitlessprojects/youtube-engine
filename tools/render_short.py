@@ -5,6 +5,7 @@ Usage:
   tools/render_short.py <slug> --keyframes   # gate frames at scene midpoints (+u .25/.75 if long)
   tools/render_short.py <slug> --full        # every frame at FPS
   tools/render_short.py <slug> --times 3.2 7.9   # arbitrary probe frames
+  tools/render_short.py <slug> --frames 0 60     # render frames [0, 60) (AI-rerender chunks)
 
 Builds render/scenes.built.html by injecting the synced timeline from
 script.json into render/scenes.html, then drives renderFrame(t) via
@@ -74,6 +75,12 @@ def main() -> int:
             for u in us:
                 t = sc["start"] + u * dur
                 jobs.append((t, gate / f"{sc['id']}_u{int(u*100):02d}.png"))
+    elif mode == "--frames":
+        a, b = int(sys.argv[3]), int(sys.argv[4])
+        frames = short / "render" / "frames"
+        frames.mkdir(parents=True, exist_ok=True)
+        t_end = tl[-1]["end"]
+        jobs = [(min(i / FPS, t_end), frames / f"f{i:04d}.png") for i in range(a, b)]
     elif mode == "--full":
         frames = short / "render" / "frames"
         frames.mkdir(parents=True, exist_ok=True)
