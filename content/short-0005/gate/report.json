@@ -1,0 +1,181 @@
+{
+  "frames": {
+    "hook_u50.png": {
+      "scene": "hook",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": ""
+        }
+      ],
+      "_frame": "hook_u50.png",
+      "_round": "1"
+    },
+    "s0_u50.png": {
+      "scene": "s0",
+      "verdict": "pass",
+      "issues": [],
+      "_frame": "s0_u50.png",
+      "_round": "1"
+    },
+    "s10_u50.png": {
+      "scene": "s10",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": ""
+        }
+      ],
+      "_frame": "s10_u50.png",
+      "_round": "1"
+    },
+    "s1_u50.png": {
+      "scene": "s1",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "text_collision",
+          "severity": "high",
+          "bbox": [
+            636,
+            269,
+            666,
+            737
+          ],
+          "fix_hint": "Move the 'PRESSURE WAVE \u00b7 180 dB' text to the bottom-20% zone (y > 1536) to avoid overlapping the central visual band."
+        },
+        {
+          "check": "asset_match",
+          "severity": "medium",
+          "bbox": [
+            0,
+            0,
+            1080,
+            1920
+          ],
+          "fix_hint": "Background is currently a starry night sky; change to 'tropic-dawn-sea' as specified in the visual spec."
+        }
+      ],
+      "_frame": "s1_u50.png",
+      "_round": "1"
+    },
+    "s2_u50.png": {
+      "scene": "s2",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": "```json\n{\"scene\": \"s2\", \"verdict\": \"fix\", \"issues\": [{\"check\": \"text_collision\", \"severity\": \"high\", \"bbox\": [606, 377, 623, 662], \"fix_hint\": \"Caption '130 dB = PAIN' is\n"
+        }
+      ],
+      "_frame": "s2_u50.png",
+      "_round": "1"
+    },
+    "s3_u50.png": {
+      "scene": "s3",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": "```json\n{\n  \"scene\": \"s3\",\n  \"verdict\": \"fix\",\n  \"issues\": [\n    {\n      \"check\": \"text_collision\",\n      \"severity\": \"high\",\n      \"bbox\": [212, 351, 292, 649],\n      \"fix_hint\": \"Captions ('CRACK', 'EARDRUMS SPLIT') must be relocated to the bottom-20% zone (y > 1536) to avoid overlapping the central action band.\"\n    },\n    {\n      \"check\": \"asset_match\",\n      \"severity\": \"high\",\n      \"bbox\": "
+        }
+      ],
+      "_frame": "s3_u50.png",
+      "_round": "1"
+    },
+    "s4_u50.png": {
+      "scene": "s4",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": ""
+        }
+      ],
+      "_frame": "s4_u50.png",
+      "_round": "1"
+    },
+    "s5_u50.png": {
+      "scene": "s5",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": ""
+        }
+      ],
+      "_frame": "s5_u50.png",
+      "_round": "1"
+    },
+    "s6_u50.png": {
+      "scene": "s6",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": "```json\n{\n  \"scene\": \"s6\",\n  \"verdict\": \"fix\",\n  \"issues\": [\n    {\n      \"check\": \"text_collision\",\n      \"severity\": \"high\",\n      \"bbox\": [\n        525,\n        362,\n        590,\n        638\n      ],\n      \"fix_hint\": \"Text elements ('36,\n"
+        }
+      ],
+      "_frame": "s6_u50.png",
+      "_round": "1"
+    },
+    "s7_u50.png": {
+      "scene": "s7",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": ""
+        }
+      ],
+      "_frame": "s7_u50.png",
+      "_round": "1"
+    },
+    "s8_u50.png": {
+      "scene": "s8",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": ""
+        }
+      ],
+      "_frame": "s8_u50.png",
+      "_round": "1"
+    },
+    "s9_u50.png": {
+      "scene": "s9",
+      "verdict": "fix",
+      "issues": [
+        {
+          "check": "vlm_parse",
+          "severity": "medium",
+          "bbox": null,
+          "fix_hint": "```json\n{\"scene\": \"s9\", \"verdict\": \"fix\", \"issues\": [{\"check\": \"asset_match\", \"severity\": \"high\", \"bbox\": [1536, 0, 1920, 1080], \"fix_hint\": \"Missing kinetic closer text ('IT COULD / DO IT ALL / AGAIN..') in the bottom-20% zone (y > 1536) as specified in the composition notes.\"}, {\"check\": \"asset_match\", \"severity\": \"medium\", \"bbox\": [200, 400, 450, 700], \"fix\n"
+        }
+      ],
+      "_frame": "s9_u50.png",
+      "_round": "1"
+    }
+  }
+}
