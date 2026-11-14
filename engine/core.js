@@ -27,6 +27,26 @@ V2.easeOut = (t) => 1 - Math.pow(1 - V2.clamp01(t), 3);
 V2.easeIn = (t) => Math.pow(V2.clamp01(t), 3);
 V2.backOut = (t) => { const c1 = 1.70158, c3 = c1 + 1; t = V2.clamp01(t);
   return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+/* ---------- easings for motion grammar (additive, day-017) ----------
+   Easing ramp map corpus-validated in research/video-notes/movement-analysis.md.
+   All functions are pure (same t -> same output), all may be used inside
+   V2.kf() as the ease argument. No existing behavior changed. */
+V2.backIn = (t) => { const c1 = 1.70158, c3 = c1 + 1; t = V2.clamp01(t);
+  return c3 * t * t * t - c1 * t * t; };
+V2.backOutBig = (t) => { const c1 = 2.6, c3 = c1 + 1; t = V2.clamp01(t);   /* impact overshoot for stamp slams (beat-hit) */
+  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+V2.backInBig = (t) => { const c1 = 2.6, c3 = c1 + 1; t = V2.clamp01(t);
+  return c3 * t * t * t - c1 * t * t; };
+V2.snapIn = (t) => 1 - Math.pow(1 - V2.clamp01(t), 4);                      /* fast-in arrival, no overshoot (authority stamps) */
+V2.easeOutQuart = V2.snapIn;                                                /* alias: documented name */
+V2.easeInQuart = (t) => Math.pow(V2.clamp01(t), 4);
+V2.easeOutQuint = (t) => 1 - Math.pow(1 - V2.clamp01(t), 5);                 /* long slow settle (reveals, wipes) */
+V2.easeInQuint = (t) => Math.pow(V2.clamp01(t), 5);
+V2.expoOut = (t) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * V2.clamp01(t)));     /* decay-parameterized expo (smooth arrivals) */
+V2.circOut = (t) => Math.sqrt(1 - Math.pow(t - 1, 2));
+V2.circIn  = (t) => 1 - Math.sqrt(1 - Math.pow(t, 2));
+/* 3-key snap deliberately: fast attack (0->0.35), hold (0.35->0.6), settle (0.6->1). */
+V2.kf3 = (f, k0, k1, k2) => V2.kf(f, [[k0[0], k0[1]], [k1[0], k1[1]], [k2[0], k2[1]]], V2.easeOutQuint);
 /* piecewise value from [frame, value] keys */
 V2.kf = (f, keys, ease) => {
   ease = ease || V2.easeInOut;
@@ -148,3 +168,16 @@ V2.dust = (t, seed, box, n, o, parent) => {
     V2.el("circle", { cx: x, cy: y, r: 1.2 + V2.rnd(seed + 3, i) * 2.2, fill: "#FFE2B0", opacity: (o || 0.5) * (0.25 + 0.75 * tw) }, g);
   }
 };
+
+/* ---------- REGISTERS (RESERVED — unused data, awaiting boss directive C13) ----------
+   The two-register palette switch validated on Kurzgesagt "The Egg" corpus study
+   (research/video-notes/h6fcK_fRYaI-VL-06-kurzgesagt-egg.md): cosmic world and human
+   world are strictly separated, both registers coherent within a scene.
+   Any scene MAY read V2.REGISTERS.<name> once the boss signs the register switch.
+   Until then this object is dead data and nothing renders differently. */
+V2.REGISTERS = {
+  cosmic:  { bg: "#070A18", glow: "#5B3A9E", accent: "#C2447E", dim: "#8A93B8", meta: "deep space + nebula registers" },
+  earth:   { bg: "#0E1430", glow: "#1E5F8A", accent: "#FFB054", dim: "#6B4B42", meta: "krakatoa-family dawn/night (current #0005 palette)" },
+  sea:     { bg: "#0A1220", glow: "#174C71", accent: "#2FD4C5", dim: "#4AA8FF", meta: "pre-erupting Krakatoa sea register" },
+};
+

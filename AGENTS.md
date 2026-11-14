@@ -138,6 +138,11 @@ words. Also never re-dispatch just to re-roll — one run eats the free plan's w
   enforces orientation, pacing, spine, **L-090 digits-in-narration** and the **L-097
   beat-count law** (beats ≥ ceil(VO_seconds/3.2)). Sanity: #0003 fails with the documented
   4.22s/5.90s pacing, L-097 (8 < 11) and the L-077 'Mars' closer warning; #0005 and #0004 pass.
+- `engine/core.js` now exports a day-017 motion-grammar easing library (additive, unused by
+  published scenes): `V2.backIn`, `V2.backOutBig`, `V2.backInBig`, `V2.snapIn`,
+  `V2.easeInQuart`/`Out`, `V2.easeOutQuint`/`easeInQuint`, `V2.expoOut`, `V2.circOut`/`circIn`,
+  `V2.kf3` (3-key snaps). Plus `V2.REGISTERS` — a RESERVED dead-data block for the corpus-validated
+  two-register palette switch (cosmic/earth/sea) for the boss to flip on under C13.
 - Keep the paper trail: commit the `gate/ultracritic_r*.json`, write the ledger line in
   `docs/lessons.md`, and `contextm` a `session_note` at every decision.
 - If the YouTube refresh grant is dead (`--check-token` FAIL), the fix is the boss re-verifying
