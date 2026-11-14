@@ -45,6 +45,8 @@ const TL = __TIMELINE__;
 const T_END = __T_END__;
 const HOOK_VARIANT = "B";   /* probe day-015: B 9 vs A 8 (cleaner focal, no mascot-vs-text clutter, better tiny-size contrast) — gate/hook_probe_verdict.json */
 let SC_T0 = 0;
+/* C14 asset layers: warm the cache so <image> draws on frame 0 */
+["assets/wave.png", "assets/beach.png", "assets/cone.png"].forEach(h => { const i = new Image(); i.src = h; });
 V2.root = document.getElementById("frame");
 const P = V2.P;
 const TITLE_FONT = "'Bricolage Grotesque', sans-serif";
@@ -156,7 +158,8 @@ function volcano(t, x, baseY, hgt, wid, glowK, smokeK) {
     V2.glow(x, apexY + 26, 190 + 80 * glowK, "Red", 0.55 + 0.3 * glowK, g);
     V2.glow(x, apexY + 60, 320, "Warm", 0.28 + 0.2 * glowK, g);
     for (let i = 0; i < 9; i++) {
-      const ph = (t * (10 + V2.rnd(5, i) * 8) + V2.rnd(7, i) * 400) % 420;
+      /* D2 motion life: faster ember drift (carry_r3 D2) */
+      const ph = (t * (15 + V2.rnd(5, i) * 9) + V2.rnd(7, i) * 400) % 420;
       const ex = x + Math.sin(ph / 60 + i * 2) * (26 + V2.rnd(9, i) * 40);
       V2.el("circle", { cx: ex, cy: apexY + 20 - ph, r: 3 + V2.rnd(11, i) * 3.5,
         fill: i % 3 ? NIGHT.lavaHot : NIGHT.lava, opacity: Math.max(0, 0.85 - ph / 420) }, g);
@@ -216,20 +219,23 @@ function kineticTitle(t, lines, yTop, size, t0) {
         stroke: NIGHT.ink, "stroke-width": 8, "paint-order": "stroke", opacity: pop });
   }
 }
-function stamp(t, x, y, text, t0, accent) {
+function stamp(t, x, y, text, t0, accent, dark) {
   /* INVERTED chip for the dark world (r2: dark pills vanished on navy):
-     cream fill, ink mono text, accent tick — one text system per scene */
+     cream fill, ink mono text, accent tick — one text system per scene.
+     dark=true flips it (ink fill, cream text) for scenes where the chip
+     lands on WHITE foam (r7: cream-on-foam read ~0 contrast) */
   const lt = V2.clamp01((t - SC_T0 - t0) / 0.3);
   if (lt <= 0) return;
   const pop = V2.backOut(lt);
   const wpx = 46 + text.length * 21;
   const g = V2.el("g", { opacity: pop, transform: `translate(${x} ${y + (1 - pop) * 26})` });
   V2.el("rect", { x: -wpx / 2, y: -30, width: wpx, height: 60, rx: 14,
-    fill: P.cream, stroke: NIGHT.ink, "stroke-width": 3.5 }, g);
+    fill: dark ? NIGHT.ink : P.cream, stroke: dark ? P.cream : NIGHT.ink,
+    "stroke-width": 3.5 }, g);
   V2.el("rect", { x: -wpx / 2 + 10, y: -16, width: 7, height: 32, rx: 3.5,
     fill: accent || P.amber }, g);
   V2.txt(10, 11, text, { "text-anchor": "middle", "font-family": MONO, "font-size": 31,
-    fill: NIGHT.ink, "letter-spacing": 1.5 }, g);
+    fill: dark ? P.cream : NIGHT.ink, "letter-spacing": 1.5 }, g);
 }
 /* camera push (C15): route implicit draws through a transformed group */
 function withCam(cx, cy, s, fn) {
@@ -250,7 +256,8 @@ SCENES.hook = (u, t) => {
     V2.el("circle", { cx: 214, cy: 204, r: 50, fill: NIGHT.skyTop });
     V2.glow(190, 220, 130, "Cool", 0.4);
     withCam(540, 960, 1 + V2.easeOut(V2.clamp01(u / 2)) * 0.05, () => {
-      volcano(t, 540, 1240, 300, 260, 0.8 + 0.2 * Math.sin(t / 2), 0.8);
+      /* D2: crown pulse stronger/faster (carry_r3 D2) */
+      volcano(t, 540, 1240, 300, 260, 0.7 + 0.38 * Math.sin(t / 1.7), 0.8);
       sea(t, 1240);
       rings(t, 540, 1230, SC_T0 + 0.15, 1.15);
       birds(t, 8, { x: 60, y: 240, w: 700, h: 380 }, 7, 1);
@@ -283,6 +290,14 @@ SCENES.s0 = (u, t) => {
   boat(t, 830, 1318, 0.42);
   birds(t, 12, { x: 620, y: 330, w: 330, h: 260 }, 5, 1);
   stamp(t, 540, 760, "1883", 0.9, P.amber);
+  /* D2 beat spike: one-shot reveal ring behind the 1883 card (carry_r3 D2,
+     video directive: the 1883/gauge cards sat near-static 3-4s) */
+  {
+    const lt = V2.clamp01((t - SC_T0 - 0.95) / 1.5);
+    if (lt > 0)
+      V2.el("circle", { cx: 540, cy: 760, r: 60 + V2.easeOut(lt) * 240, fill: "none",
+        stroke: P.amber, "stroke-width": 6, opacity: (1 - lt) * 0.45 });
+  }
   V2.txt(790, 1210, "SUMATRA", { "text-anchor": "middle", "font-family": MONO,
     "font-size": 28, fill: P.cream, "letter-spacing": 4, opacity: 0.95,
     stroke: NIGHT.ink, "stroke-width": 4, "paint-order": "stroke" });
@@ -318,14 +333,12 @@ SCENES.s1 = (u, t) => {
   V2.el("circle", { cx: 0, cy: 34, r: 22, fill: P.cream, stroke: NIGHT.ink, "stroke-width": 5 }, g);
   V2.glow(Math.cos(rad) * 268, -Math.sin(rad) * 268, 90, "Warm", 0.7, g);
   V2.glow(540, 1240, 200, "Warm", 0.6);
-  stamp(t, 540, 1240, "180 dB", 0.55, NIGHT.lavaHot);
-  V2.txt(540, 1370, "PRESSURE WAVE", { "text-anchor": "middle", "font-family": MONO,
-    "font-size": 27, fill: P.cream, "letter-spacing": 6, opacity: 0.95,
-    stroke: NIGHT.ink, "stroke-width": 4, "paint-order": "stroke" });
+  /* r7: ONE text system — pill + caption merged */
+  stamp(t, 540, 1240, "PRESSURE WAVE \u00B7 180 dB", 0.55, NIGHT.lavaHot);
   for (let i = 0; i < 3; i++) {
     const lt = V2.clamp01((t - SC_T0 - 0.5 - i * 0.4) / 1.6);
     if (lt > 0)
-      V2.el("circle", { cx: 880, cy: 1560, r: 60 + V2.easeOut(lt) * 300, fill: "none",
+      V2.el("circle", { cx: 880, cy: 1560, r: 60 + V2.easeOut(lt) * 380, fill: "none",
         stroke: NIGHT.lavaHot, "stroke-width": 7, opacity: (1 - lt) * 0.4 });
   }
   shoreRock(t, 185, 1560, 1.0, "recoil");
@@ -348,6 +361,8 @@ SCENES.s2 = (u, t) => {
       fill: "none", stroke: hot ? NIGHT.lava : P.blue, "stroke-width": hot ? 12 : 7,
       opacity: (1 - ph) * (hot ? 0.95 : 0.5) }, g);
   }
+  /* D2 reflection arcs: TESTED in r4 and REJECTED (s2 7.0->6.3, faint blue
+     bands read as noise/dead-zone split) — reverted per measurement. */
   V2.txt(560, 1180, "130 dB = PAIN", { "text-anchor": "middle", "font-family": MONO,
     "font-size": 30, fill: NIGHT.lavaHot, "letter-spacing": 4,
     stroke: NIGHT.ink, "stroke-width": 5, "paint-order": "stroke" });
@@ -377,25 +392,42 @@ SCENES.s3 = (u, t) => {
   V2.txt(540, 540, "EARDRUMS SPLIT", { "text-anchor": "middle", "font-family": MONO,
     "font-size": 28, fill: P.cream, "letter-spacing": 6, opacity: 0.95,
     stroke: NIGHT.ink, "stroke-width": 5, "paint-order": "stroke" });
-  shoreRock(t, 175, 1600, 0.95, "brace");
+  /* r5: light the emotional focal — surface light shafts down to the hero
+     (directive: character vanished into the navy) */
+  for (let i = 0; i < 3; i++) {
+    const lx = 90 + i * 70;
+    V2.el("path", { d: `M ${lx} 1210 L ${lx + 46} 1210 L ${lx + 128} 1920 L ${lx - 24} 1920 Z`,
+      fill: NIGHT.lavaHot, opacity: 0.07 + (i === 1 ? 0.03 : 0) });
+  }
+  shoreRock(t, 175, 1600, 1.1, "brace");
   V2.grade(t);
 };
 
 SCENES.s4 = (u, t) => {
   dawnSky(t, false);
   stars(t, 9, 380);
-  V2.el("ellipse", { cx: 540, cy: 420, rx: 620, ry: 170, fill: P.nebPurple, opacity: 0.16 });
-  V2.el("ellipse", { cx: 240, cy: 260, rx: 380, ry: 130, fill: P.nebPurple2, opacity: 0.2 });
+  V2.el("ellipse", { cx: 540, cy: 420, rx: 620, ry: 170, fill: P.nebPurple, opacity: 0.26 });
+  V2.el("ellipse", { cx: 240, cy: 260, rx: 380, ry: 130, fill: P.nebPurple2, opacity: 0.3 });
   V2.el("path", { d: "M 470 1246 Q 520 1196 570 1206 Q 610 1212 640 1246 Z", fill: "#131A3C" });
   const boomK = V2.clamp01((t - SC_T0 - 1.2) / 0.5);
   if (boomK > 0) {
-    V2.txt(540, 1010, "BOOM", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
-      "font-size": 96, fill: P.cream, stroke: NIGHT.ink, "stroke-width": 7, "paint-order": "stroke",
+    /* r7: BOOM as SFX impact, not a text block — glow + skew, larger halo */
+    V2.glow(490, 1000, 240, "Red", 0.5 * boomK);
+    V2.txt(490, 1010, "BOOM", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+      "font-size": 84, fill: P.cream, stroke: NIGHT.ink, "stroke-width": 7, "paint-order": "stroke",
       opacity: boomK * (1 - V2.clamp01((u - 0.72) * 2.6)) * 0.92,
-      transform: `translate(0 ${(1 - V2.backOut(boomK)) * 40})` });
+      transform: `translate(0 ${(1 - V2.backOut(boomK)) * 40}) rotate(-5 490 1010)` });
     rings(t, 540, 1200, SC_T0 + 1.2, 0.4);
   }
   sea(t, 1240);
+  /* C14 pilot: far Rodrigues shoreline (assets/beach.png) on the horizon —
+     palms + signal hut + moon lane; slow far-plane drift (C15 parallax) */
+  {
+    const bw = 560, bh = bw * (1152 / 864);
+    V2.el("image", { href: "assets/beach.png",
+      x: 760 + Math.sin(t / 13) * 6, y: 1272 - bh,
+      width: bw, height: bh, preserveAspectRatio: "xMidYMax meet" });
+  }
   V2.el("path", { d: "M 950 1920 L 968 1440 Q 970 1408 992 1392 L 1006 1414 Q 990 1424 988 1450 L 986 1920 Z",
     fill: NIGHT.ink });
   for (let i = 0; i < 5; i++) {
@@ -404,7 +436,14 @@ SCENES.s4 = (u, t) => {
       stroke: NIGHT.ink, "stroke-width": 12, fill: "none", "stroke-linecap": "round" });
   }
   V2.el("ellipse", { cx: 250, cy: 1660, rx: 420, ry: 130, fill: "#12204A" });
-  shoreRock(t, 265, 1620, 1.0, "listen");
+  /* r5: layered sky depth in the dead top band + hero holds lower third */
+  {
+    const drift = Math.sin(t / 15) * 12;
+    V2.el("ellipse", { cx: 340 + drift, cy: 340, rx: 230, ry: 46, fill: "#1A1F3E", opacity: 0.7 });
+    V2.el("ellipse", { cx: 820 - drift, cy: 250, rx: 200, ry: 42, fill: "#181D3C", opacity: 0.65 });
+    V2.el("ellipse", { cx: 560 + drift, cy: 180, rx: 170, ry: 36, fill: "#20264A", opacity: 0.55 });
+  }
+  shoreRock(t, 265, 1620, 1.15, "listen");
   stamp(t, 540, 1330, "3,000 MILES AWAY", 1.6, P.blue);
   V2.grade(t);
 };
@@ -450,20 +489,50 @@ SCENES.s6 = (u, t) => {
     V2.el("path", { d: `M ${x - 60 * s} 1420 L ${x + 60 * s} 1420 L ${x + 60 * s} ${1330 + 60 * (1 - s)} L ${x - 60 * s} ${1330 + 60 * (1 - s)} Z M ${x - 78 * s} ${1336 + 60 * (1 - s)} L ${x} ${1268 + 40 * (1 - s)} L ${x + 78 * s} ${1336 + 60 * (1 - s)} Z`,
       fill: NIGHT.ink });
   };
-  hut(220, 0.8); hut(400, 1); hut(590, 0.7); hut(760, 0.9);
-  const rise = V2.easeIn(V2.clamp01((u - 0.18) / 0.5)) * 210;
-  V2.glow(880, 300, 150, "Cool", 0.5);
-  V2.el("circle", { cx: 880, cy: 300, r: 66, fill: P.cream, opacity: 0.85 });
-  V2.el("circle", { cx: 902, cy: 286, r: 56, fill: NIGHT.skyTop });
-  V2.el("path", { d: `M -30 1300 Q 260 ${1180 - rise * 0.6} 540 ${1200 - rise} Q 820 ${1180 - rise * 0.6} 1110 1300 L 1110 1920 L -30 1920 Z`,
-    fill: "#0B1734", opacity: 0.96 });
-  V2.el("path", { d: `M -30 1300 Q 260 ${1180 - rise * 0.6} 540 ${1200 - rise} Q 820 ${1180 - rise * 0.6} 1110 1300`,
-    fill: "none", stroke: NIGHT.foam, "stroke-width": 6, opacity: 0.6 });
+  /* huts retired r5: the wave+hero own the story (r4: competing focal) */
+  /* top-band depth (r5: dead top 40%) — layered sky: clouds + enlarged moon */
+  V2.el("ellipse", { cx: 260, cy: 260, rx: 420, ry: 150, fill: P.nebPurple2, opacity: 0.3 });
+  V2.el("ellipse", { cx: 760, cy: 170, rx: 380, ry: 130, fill: P.nebPurple, opacity: 0.22 });
+  {
+    const drift = Math.sin(t / 16) * 14;
+    V2.el("ellipse", { cx: 300 + drift, cy: 430, rx: 210, ry: 44, fill: "#1A1F3E", opacity: 0.75 });
+    V2.el("ellipse", { cx: 430 + drift * 1.2, cy: 460, rx: 150, ry: 34, fill: "#20264A", opacity: 0.6 });
+    V2.el("ellipse", { cx: 830 - drift, cy: 500, rx: 180, ry: 38, fill: "#181D3C", opacity: 0.7 });
+  }
+  V2.glow(880, 300, 190, "Cool", 0.6);
+  V2.el("circle", { cx: 880, cy: 300, r: 80, fill: P.cream, opacity: 0.9 });
+  V2.el("circle", { cx: 904, cy: 284, r: 68, fill: NIGHT.skyTop });
+  /* C14 pilot: image-model tsunami (assets/wave.png) is the DOMINANT
+     element (D1) — grows fast so even the u50 frame reads wave-first;
+     soft side mask dissolves the cutout edges into the sea (r4/r5 seam) */
+  {
+    const gk = 0.62 + V2.easeIn(V2.clamp01((u - 0.12) / 0.42)) * 0.38;
+    const wW = 820 * gk, wH = wW * (1344 / 768);
+    const wx = 430 - wW / 2, wy = 1924 - wH + Math.sin(t / 7) * 5;
+    const mg = V2.el("linearGradient", { id: "wFadeL", x1: 0, y1: 0, x2: 1, y2: 0 }, V2.defsHold);
+    V2.el("stop", { offset: "0%", "stop-color": "#000" }, mg);
+    V2.el("stop", { offset: "100%", "stop-color": "#fff" }, mg);
+    const mg2 = V2.el("linearGradient", { id: "wFadeR", x1: 0, y1: 0, x2: 1, y2: 0 }, V2.defsHold);
+    V2.el("stop", { offset: "0%", "stop-color": "#fff" }, mg2);
+    V2.el("stop", { offset: "100%", "stop-color": "#000" }, mg2);
+    const mk = V2.el("mask", { id: "waveM", maskUnits: "userSpaceOnUse",
+      x: wx - 4, y: wy - 4, width: wW + 8, height: wH + 8 }, V2.defsHold);
+    V2.el("rect", { x: wx, y: wy, width: wW, height: wH, fill: "#fff" }, mk);
+    V2.el("rect", { x: wx, y: wy, width: wW * 0.14, height: wH, fill: "url(#wFadeL)" }, mk);
+    V2.el("rect", { x: wx + wW * 0.86, y: wy, width: wW * 0.14, height: wH, fill: "url(#wFadeR)" }, mk);
+    V2.el("image", { href: "assets/wave.png", x: wx + Math.sin(t / 11) * 9, y: wy,
+      width: wW, height: wH, preserveAspectRatio: "xMidYMax slice", mask: "url(#waveM)" });
+    V2.glow(430, 1924 - wH * 0.76, 300, "Warm", 0.5 + gk * 0.15);
+  }
   V2.glow(540, 1010, 260, "Warm", 0.5);
-  stamp(t, 540, 1010, "36,000 LIVES", 1.3, P.cream);
-  V2.txt(540, 1110, "THE SEA TOOK THEM", { "text-anchor": "middle", "font-family": MONO,
-    "font-size": 25, fill: P.cream, "letter-spacing": 5, opacity: 0.95,
-    stroke: NIGHT.ink, "stroke-width": 4, "paint-order": "stroke" });
+  /* r7: ink chip (dark=true) — the cream chip sat on white foam at ~0 contrast */
+  stamp(t, 540, 1010, "36,000 LIVES", 1.3, P.amber, true);
+  /* r4: thin mono washed out — ink plate + heavier halo under the line */
+  V2.el("rect", { x: 540 - 240, y: 1076, width: 480, height: 58, rx: 14,
+    fill: NIGHT.ink, opacity: 0.55 });
+  V2.txt(540, 1118, "THE SEA TOOK THEM", { "text-anchor": "middle", "font-family": MONO,
+    "font-size": 26, fill: P.cream, "letter-spacing": 5, opacity: 0.98,
+    stroke: NIGHT.ink, "stroke-width": 6, "paint-order": "stroke" });
   shoreRock(t, 910, 1660, 1.0, "mourn");
   V2.grade(t);
 };
@@ -506,9 +575,21 @@ SCENES.s8 = (u, t) => {
   boat(t, 300, 1330, 0.4);
   shoreRock(t, 210, 1470, 0.6, "point");
   stamp(t, 620, 1010, "ANAK KRAKATAU", 1.1, P.teal);
-  V2.txt(620, 1096, "\u201CCHILD OF KRAKATOA\u201D", { "text-anchor": "middle", "font-family": MONO,
-    "font-size": 24, fill: P.cream, "letter-spacing": 4, opacity: 0.95,
+  /* r7: subtitle plate — dark type over dark volcano failed in daylight */
+  V2.el("rect", { x: 620 - 190, y: 1072, width: 380, height: 46, rx: 12,
+    fill: NIGHT.ink, opacity: 0.72 });
+  V2.txt(620, 1105, "\u201CCHILD OF KRAKATOA\u201D", { "text-anchor": "middle", "font-family": MONO,
+    "font-size": 24, fill: P.cream, "letter-spacing": 4, opacity: 1,
     stroke: NIGHT.ink, "stroke-width": 4, "paint-order": "stroke" });
+  /* r7: top-band depth — clouds + moon in the dead starfield */
+  {
+    const drift = Math.sin(t / 17) * 12;
+    V2.el("ellipse", { cx: 320 + drift, cy: 300, rx: 220, ry: 44, fill: "#1A1F3E", opacity: 0.7 });
+    V2.el("ellipse", { cx: 780 - drift, cy: 210, rx: 190, ry: 40, fill: "#181D3C", opacity: 0.65 });
+    V2.glow(870, 150, 120, "Cool", 0.5);
+    V2.el("circle", { cx: 870, cy: 150, r: 52, fill: P.cream, opacity: 0.88 });
+    V2.el("circle", { cx: 888, cy: 138, r: 44, fill: NIGHT.skyTop });
+  }
   shoreRock(t, 235, 1520, 1.0, "point");
   V2.grade(t);
 };
@@ -519,7 +600,8 @@ SCENES.s9 = (u, t) => {
   dawnSky(t, true);
   stars(t, 3, 500);
   withCam(540, 980, 1 + V2.easeInOut(V2.clamp01(u / 1.6)) * 0.05, () => {
-    volcano(t, 540, 1240, 200 + V2.easeOut(V2.clamp01(u / 0.8)) * 300, 200, 0.8 + 0.2 * Math.sin(t / 2), 0.9);
+    /* D2: crown pulse stronger/faster (carry_r3 D2, s9 closer) */
+    volcano(t, 540, 1240, 200 + V2.easeOut(V2.clamp01(u / 0.8)) * 300, 200, 0.7 + 0.38 * Math.sin(t / 1.7), 0.9);
     for (let i = 0; i < 2; i++) {
       const lt = ((t * 0.42 + i * 0.5) % 1);
       V2.el("circle", { cx: 540, cy: 1240, r: 120 + lt * 560, fill: "none",
@@ -537,17 +619,33 @@ SCENES.s10 = (u, t) => {
   dawnSky(t, true);
   stars(t, 3, 500);
   withCam(540, 980, 1.05 + V2.easeInOut(V2.clamp01(u / 1.4)) * 0.03, () => {
-    volcano(t, 540, 1240, 500, 220, 0.8 + 0.2 * Math.sin(t / 2), 0.9);
+    /* pulse rings BEHIND the cone (r4: teal arc cut through the hero) */
     for (let i = 0; i < 3; i++) {
       const lt = ((t * 0.42 + i * 0.34) % 1);
       V2.el("circle", { cx: 540, cy: 1240, r: 120 + lt * 620, fill: "none",
         stroke: i % 2 ? P.teal : NIGHT.lavaHot, "stroke-width": 8, opacity: (1 - lt) * 0.5 });
     }
+    /* C14 pilot: Anak Krakatau cone (assets/cone.png) — image-model hero
+       replaces the SVG primitive (D1/G9). Image drawn BEFORE the SVG sea:
+       its internal sea band (~38% of frame height) is hidden below the
+       SVG sea line, so the cone sits ON the horizon — no double horizon
+       (r5: "hard cut edges where the plate meets the glow band") */
+    {
+      const cw = 1180, ch = cw;
+      V2.el("image", { href: "assets/cone.png", x: 540 - cw / 2,
+        y: 1240 - ch * 0.62, width: cw, height: ch });
+    }
+    /* D2: crown pulse on the image hero (carry_r3 D2) */
+    V2.glow(540, 320, 250 + 70 * Math.sin(t / 1.7), "Warm", 0.55);
     sea(t, 1240, 540);
     birds(t, 8, { x: 90, y: 300, w: 380, h: 330 }, 5, 1);
-    shoreRock(t, 240, 1450, 0.9, "skygawk");
+    /* r5: hero clear of the type block (arm overlapped "COULD") */
+    shoreRock(t, 200, 1560, 0.78, "skygawk");
   });
-  kineticTitle(t, ["IT COULD", "DO IT ALL", "AGAIN."], 1408, 126, 0.22);
+  /* r4: all three title lines landed by ~0.7s (u50 frame caught a half-faded
+     line); warm glow plate behind the block lifts punchline contrast */
+  V2.glow(540, 1540, 330, "Warm", 0.4);
+  kineticTitle(t, ["IT COULD", "DO IT ALL", "AGAIN."], 1408, 126, 0.14);
   V2.grade(t);
 };
 

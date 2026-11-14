@@ -1,0 +1,16 @@
+{
+ "night": {
+  "vh": 8,
+  "cl": 8
+ },
+ "day": {
+  "vh": 6,
+  "cl": 7
+ },
+ "frame_t": 26.4,
+ "delta": {
+  "vh": -2,
+  "cl": -1
+ },
+ "verdict": "NIGHT holds \u2014 no structural palette penalty measured"
+}

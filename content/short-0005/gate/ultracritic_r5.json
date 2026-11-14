@@ -1,0 +1,240 @@
+{
+ "round": 5,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.09,
+ "frame_grand_mean": 7.09,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 7.83,
+  "frame:visual_hierarchy": 6.75,
+  "frame:contrast_legibility": 6.92,
+  "frame:production_polish": 6.83
+ },
+ "frame_means": {
+  "hook_u50": 8.2,
+  "s0_u50": 8.0,
+  "s10_u50": 7.25,
+  "s1_u50": 6.5,
+  "s2_u50": 7.3,
+  "s3_u50": 6.3,
+  "s4_u50": 6.75,
+  "s5_u50": 7.0,
+  "s6_u50": 5.5,
+  "s7_u50": 7.3,
+  "s8_u50": 7.25,
+  "s9_u50": 7.75
+ },
+ "floor_breaches": [
+  "s3_u50",
+  "s6_u50"
+ ],
+ "video_directives": [],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 8
+   },
+   "mean": 8.2,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the large empty upper-third sky: the moon is tiny and dim \u2014 enlarge it or add drifting ash/cloud layers so the top of frame isn't a dead zone",
+    "Boost the eruption glow at the crater rim \u2014 the orange fissure reads slightly flat; add a warmer rim light and ember particles for more stop-power",
+    "The caption band's navy fill meets the sky with a hard, slightly muddy edge \u2014 add a subtle gradient or thin light seam so text block integrates with the scene"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "JAVA/SUMATRA labels sit almost exactly at the horizon line where the dark ridge and sea meet \u2014 lift them ~40px above the waterline with a subtle dark backing bar so they never blend into the mountain silhouette",
+    "The faint smoke puffs above the crater are barely distinguishable from the purple glow ring \u2014 either strengthen the plume opacity or remove it; right now it reads as visual noise inside the halo",
+    "The character's glow halo bleeds a yellow rim onto the dark sea with no cast shadow grounding him \u2014 add a proper contact shadow at his feet to match the grounding the volcano gets"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 7.25,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fix the character/text collision: the stick figure's arm and hoodie overlap the 'COULD' glyph \u2014 nudge the text block right or shrink the character so no element touches type.",
+    "Clean up the visible horizontal seams where the volcano plate meets the pink/orange glow band and the navy water \u2014 the hard cut edges and stray blue vertical lines read as compositing errors.",
+    "Resolve the mid-frame tonal banding: the salmon-pink strip behind the character clashes with the controlled purple-to-navy palette; either blend it as a gradient into the water or match it to the scene's color script."
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 7,
+   "top3_directives": [
+    "Light the character: the stick figure is dim and loses silhouette against the navy floor \u2014 add rim light or lift its key level ~20%",
+    "Lift 'PRESSURE WAVE' legibility \u2014 increase size/weight or add subtle dark scrim; it would wash out on a 6-inch phone in daylight",
+    "Fill the lower-right dead zone \u2014 the wave rings are too faint; strengthen their opacity or add a second focal accent to balance the composition"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 3,
+   "top3_directives": [
+    "Relocate or shrink the character vignette: the bottom-third scene is dark, low-contrast and reads as a dead zone competing with the ear focal point \u2014 either raise its lighting/key or crop it tighter",
+    "The sound waves entering the ear are nearly invisible faint blue on purple \u2014 boost their contrast/opacity so the action reads on a 6-inch daylight screen",
+    "The caption floats in the gradient gap between scenes; anchor it with a subtle plate or tighten spacing so it belongs visually to the ear scene rather than straddling both"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 5,
+    "production_polish": 6
+   },
+   "mean": 6.3,
+   "words_visible": 3,
+   "top3_directives": [
+    "Light the underwater character: it's the emotional focal point but nearly vanishes into the navy background \u2014 raise its rim glow/exposure or add a spotlight cone so it reads on a 6-inch daylight screen",
+    "Fill the large dead zone in the lower-right quadrant with a secondary layer (fish silhouette, sonar rings, light shafts refracting below the waterline) to complete the eye path from ship \u2192 rays \u2192 character",
+    "Boost 'EARDRUMS SPLIT' contrast: the muted grey on purple haze is the weakest text \u2014 go cream (#F5F0DC like the CRACK pill) or add a subtle drop shadow; also unify the two text styles into one labeled system"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 5,
+   "top3_directives": [
+    "Resolve the dual focal point: BOOM/ring and the bottom-left character compete \u2014 either enlarge the character into the mid-frame eye path or dim it so BOOM clearly reads first",
+    "The top 30% of frame is a near-empty starfield dead zone \u2014 push the horizon/ring composition up or add subtle atmospheric layering to recover vertical real estate",
+    "The dark character against the dark navy ground band loses edge separation \u2014 add a rim light, ground shadow glow, or lift the lower band's value ~15% for daylight-phone legibility"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Brighten the mascot character \u2014 it currently sits at ~30% visibility and reads as noise rather than a secondary subject",
+    "Fill the dead bottom-right quadrant (below the caption chip) with a subtle element \u2014 secondary glow, orbit trail, or star density",
+    "Add a soft rim light or key light on the character consistent with the moon's cyan glow source to unify the two lighting systems"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 5
+   },
+   "mean": 5.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Remove the visible rectangular crop edges around the Hokusai wave asset \u2014 mask/feather it into the background or rebuild it as a native illustration",
+    "Eliminate the dead top 40% of the frame: the empty purple gradient with a lone tiny moon reads as a dead zone on a 9:16 crop \u2014 push the title text higher or add layered sky depth",
+    "The 'THE SEA TOOK THEM' dark caption bar nearly disappears into the dark background \u2014 add stroke, brighter pill fill, or drop shadow for daylight phone legibility"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 1,
+   "top3_directives": [
+    "Move 'GONE.' off the volcano peak \u2014 the word collides with the glowing summit, splitting the focal point; place it in the upper-third dead zone where the empty purple sky offers free real estate",
+    "The upper ~35% of frame is a near-empty gradient dead zone \u2014 add subtle depth layers (star density, smoke wisps, or the embers rising higher) to keep vertical-frame eyes engaged",
+    "Boost 'GONE.' separation: the light gray fill over the hazy purple glow will soften on a small daylight screen \u2014 thicken the dark outline or add a soft drop shadow behind the text"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 5,
+   "top3_directives": [
+    "Merge the title pill and subtitle into one lockup so the two text systems read as a single caption block",
+    "Fill the top 35% sky dead zone \u2014 add the smoke plume extending upward or a subtle vignette/star density to justify the space",
+    "Strengthen the eye path: the character's gesture points at nothing \u2014 aim it toward the volcano or the text to unify focal points"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom third is a dark near-empty dead zone \u2014 add water reflections of the lava glow or foreground waves to anchor it",
+    "Character reads as secondary clutter on the left edge; either move him along the path toward the volcano or strengthen his rim light so the eye path is directed to the eruption",
+    "The concentric halo rings around the peak are faintly banding/aliased \u2014 clean up the gradient stepping and unify the orange ring with the eruption palette"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

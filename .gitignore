@@ -47,6 +47,7 @@ content/*/*.mp4
 !content/*/gate/report.json
 !content/*/gate/ultracritic_r*.json
 !content/*/gate/notes.json
+!content/*/gate/day_night_probe.json
 content/*/vo/*.wav
 content/*/vo/master.m4a
 

@@ -1,0 +1,237 @@
+{
+ "round": 6,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.48,
+ "frame_grand_mean": 7.48,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.0,
+  "frame:visual_hierarchy": 7.25,
+  "frame:contrast_legibility": 7.5,
+  "frame:production_polish": 7.17
+ },
+ "frame_means": {
+  "hook_u50": 8.2,
+  "s0_u50": 7.75,
+  "s10_u50": 7.5,
+  "s1_u50": 7.75,
+  "s2_u50": 6.5,
+  "s3_u50": 7.0,
+  "s4_u50": 7.0,
+  "s5_u50": 7.5,
+  "s6_u50": 6.75,
+  "s7_u50": 7.8,
+  "s8_u50": 7.75,
+  "s9_u50": 8.25
+ },
+ "floor_breaches": [],
+ "video_directives": [],
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 7
+   },
+   "mean": 8.2,
+   "words_visible": 4,
+   "top3_directives": [
+    "Break the hard horizontal banner edge where the navy band meets the scene \u2014 feather or blend the waterline so the text panel doesn't read as a pasted rectangle",
+    "Add a subtle warm rim-glow or drop shadow behind the title tying it to the volcano's light source for cohesion",
+    "Give the mid-frame some secondary interest (birds, ember particles) to enliven the large empty purple sky between moon and smoke rings"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 3,
+   "top3_directives": [
+    "Nudge JAVA label right or up so the mascot's hood does not crowd/overlap its baseline",
+    "Boost SUMATRA/JAVA label weight or size slightly for daylight 6-inch legibility over the dark ridge",
+    "Give the '1883' chip a subtle drop shadow or stronger border to pop against the bright crater glow"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the top ~30% dead zone \u2014 the starfield/moon glow is empty atmosphere with no subject; extend the smoke plume or add subtle ember particles upward to connect frame edges",
+    "Character bottom-left is small and low-contrast against the dark navy floor \u2014 add a rim light or scale it up ~20% so the pointing gesture reads on a 6-inch screen",
+    "The caption's last line 'AGAIN.' sits on the darker floor band creating uneven block density \u2014 re-balance line breaks or add a consistent soft drop shadow behind all three lines"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 5,
+   "top3_directives": [
+    "Merge '180 dB' badge and 'PRESSURE WAVE' caption into a single locked-up label near the gauge to eliminate the split text system",
+    "Fill the lower-right dead zone further \u2014 the character and wave rings are nice but the right third of the bottom panel reads empty at a glance",
+    "Brighten the character's rim glow slightly so the x-eyed reaction reads on a daylight phone screen; currently it sits a touch too dim against the navy floor"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fix the hard horizontal seam where the purple sky meets the dark band \u2014 use a gradient blend, not a visible cut",
+    "Strengthen the sound-wave element (thicker strokes, glow, motion trails) so the ear-to-canal action reads as the focal event, not a faint afterthought",
+    "Fill or rebalance the dead lower-right third: the small character is dim and lost \u2014 enlarge/brighten it or crop the composition tighter"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill or anchor the large dead zone in the bottom-right dark water region \u2014 the composition is heavily left-weighted with the character; shift the ship rightward or add a subtle water highlight/shadow mass to balance",
+    "Give the character a stronger light beam or rim-glow directed at it so the eye path flows from text \u2192 rays \u2192 ship \u2192 character; currently the character feels detached from the sound-ray narrative",
+    "The 'CRACK' pill and 'EARDRUMS SPLIT' caption are two stacked text blocks \u2014 merge into one lockup (pill as prefix within the same line) to read as a single system and tighten vertical spacing"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Unify the text system: 'BOOM' and the '3,000 MILES AWAY' pill use two unrelated type styles \u2014 match one family/weight or integrate BOOM as a scene SFX with matching treatment",
+    "Fill the top ~25% dead zone \u2014 the near-black sky reads as empty render space; add subtle stars, gradient banding, or a vignette to earn the frame",
+    "Ground the floating debris silhouettes on the right \u2014 the broken shapes hover without a shoreline, breaking the scene's depth logic"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Character is clipped at the left edge and crowded into the corner \u2014 pull it fully into frame with breathing room from the border",
+    "Bottom-right quadrant is a large near-black dead zone \u2014 add subtle ground texture, rim light, or reposition the character to balance the lower third",
+    "Caption pill sits awkwardly overlapping the planet/ground seam \u2014 anchor it to one consistent safe-margin position with equal padding"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 6,
+   "top3_directives": [
+    "Enlarge the two caption bars ~30% and increase monospace weight \u2014 thin strokes over the blue/white wave foam will mush on a 6-inch daylight screen",
+    "The sad character bottom-right is nearly black-on-black; add rim light or lift its value so it reads as a secondary subject instead of a smudge",
+    "The top third is a large near-dead zone with only a faint moon; either deepen the gradient into the wave faster or add subtle cloud/texture detail to justify the space"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the top ~25% dead zone with subtle atmospheric depth (mist layers, drifting embers) so the vertical frame isn't empty above the title",
+    "Give the character a slight scale/contrast boost or move the focal glow lower so the eye path reads text \u2192 volcano \u2192 character instead of two competing anchors",
+    "Thin the gold circle ring or drop its opacity \u2014 it slices through both the title baseline and character, adding a third visual system without purpose"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 5,
+   "top3_directives": [
+    "Volcano title chip slightly collides with the volcano slope \u2014 add breathing room or nudge the label higher for cleaner separation",
+    "Top ~25% of frame is empty starfield dead zone; drift a subtle glow or smoke plume upward to tighten the composition",
+    "Character's gesture overlaps the horizon hard edge \u2014 add a soft ground shadow/reflection to anchor it spatially"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Character's bottom edge/feet sit very close to safe-zone boundary \u2014 nudge composition up ~5% to avoid UI overlap on the left anchor subject",
+    "Bottom third of water is a soft dead zone with faint ripple lines barely registering \u2014 add one subtle foreground element (rock, glow reflection) to complete the eye path",
+    "Torch light pool on water is absent \u2014 reflect a warm ripple under the lighthouse to tie focal tower and foreground water together"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}
