@@ -49,8 +49,16 @@ mid-video stills without saying so.
 ## 3. Publishing (the machine you are on has no local YouTube token)
 
 There is **no `.secrets/` here**. The repo's GitHub Actions secrets DO have
-`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `YOUTUBE_TOKEN_JSON` (values unreadable;
-names only). So the publish path is CI, not local:
+**L-105 correction (studio, same day): the "grant is dead" verdict tested a stale COPY.**
+The durable mirror `upload/token.json` refreshes 200 OK; the CI secret was stale. All three
+Actions secrets were refreshed from the mirror at 14:49Z (the PAT carries secrets-write) and
+`publish.yml` **dry-run 43606867269 = SUCCESS**. So: publish path works from any box now — but
+the bar is unchanged and you still need a green gate. The studio's two-round decision
+(**r12/r13**, 23:45 EAT) is authoritative; r10/r11 (glm-4.5v, this box) are NOT the D1 verdict.
+`docs/lessons.md` L-105; `gate/carry_r10.md` → "Studio reconciliation".
+
+`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `YOUTUBE_TOKEN_JSON` (values unreadable by design).
+So the publish path is CI, not local:
 
 ```bash
 # 1) local: finish the bar; if PUBLISH_APPROVED, then
@@ -90,7 +98,15 @@ Frame count ≈ `(total_s + 0.45) × 30`. `--full --resume` after any interrupti
 
 ## 6. Advice for whoever comes next
 
-- The boss asked this box to publish, not just build: finish #0005 D1 honestly.
+- This repo is run by MULTIPLE concurrent agent sessions (studio + fresh-machine opencode).
+  Before every commit: `git fetch origin && git pull --rebase` — and re-read what changed
+  (session B independently fixed the same linter bug same-day; both merged cleanly except a
+  conflict marker left INSIDE the docstring, which I cleaned). Keep commits small and atomic;
+  never push over a sibling's unreviewed work; write your ledger entries as additions, not edits.
+- The boss asked this box to publish, not just build — but the box's gate is not the verdict.
+  The D1 two-round publish decision on #0005 fires on the studio judge (r12/r13). Don't touch it.
+
+- The boss authorized building the publish path; the publish decision is the studio gate.
 - Do not fabricate views/scores/transcripts. The RSS bot-wall 404s from this IP; `views_tracker`
   is behind a wall — say so.
 - The open gate weakness is still visual_hierarchy (format-level, L-085). Don't burn rounds.

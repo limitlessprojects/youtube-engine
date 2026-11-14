@@ -2,22 +2,13 @@
 """script_linter.py — mechanical anti-boilerplate gate (runs before critic, render, upload).
 
 Checks: banned vocabulary, greeting/intro patterns, hook length, WPM band,
-<<<<<<< HEAD
-rhetorical-closing question, disclaimer phrases, boss-directive structure rules
-(L-073 orientation, L-075 pacing, L-077 spine, L-090 digits-in-narration,
-L-097 beat-count law).
-=======
 rhetorical-closing question, disclaimer phrases; scene-JSON structure rules
-L-073/L-075/L-077 + L-097 beat law (beats >= ceil(VO_seconds/3.2)) + L-090
-digits-in-narration.
-
-Day-017 fix: the structure rules were DEAD for JSON scripts — narration_from()
-flattens the script to narration text, so lint() never saw the JSON and the
-L-073/075/077 block never executed on a real script (proved with a must-fail
-fixture; scripts since day-008 'passed lint' with the checks silently off).
-main() now parses the raw payload once and hands BOTH the flat narration and
-the parsed data to lint().
->>>>>>> 53a876f (day-017: carry_r9 D2+D3 done, D1 staged for 23:45 EAT (two-round publish decision on the unchanged cut): s6 variant probe NOISE -0.25 — hero 1.2 + stamp-to-crest-void helps vh but costs cl, composition holds (tools/probe_ab.py, gate/s6_variant_probe.json + s6_variant_edits.json, 4 probe PNGs); script_linter structure rules were DEAD since day-008 (dispatch bug, L-103) — fixed, L-097 beat law + L-090 digits live, tools/lint_selftest.py 10/10 green; cut reproduced byte-faithful (36.8s/-14.97 LUFS/11.17 MB) + mirrored to durable upload/ (outside git); runbook appended to gate/carry_r9.md; views 11-14 row recovered via fresh-IP RSS (logs/views.csv))
+L-073 orientation / L-075 pacing / L-077 spine + X-ray raw-payload parse
+(L-103/L-104 class: flatten-then-reparse had made them dead since day-008 —
+now parse the raw payload once and hand lint() BOTH the flat narration and the
+parsed data); L-090 digits-in-narration; L-097 beat law
+(beats >= ceil(VO_seconds / 3.2)). tools/lint_selftest.py proves every block
+fires with a must-fail fixture (run it before touching this file).
 
 Input: plain text, or a script JSON with {"scenes":[{"narration": "..."}]} (also
 accepts the scriptwriter output contract; `loop_line` included).
