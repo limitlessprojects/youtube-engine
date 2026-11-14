@@ -85,3 +85,29 @@ print(len(allsp), "zero-gpu spaces;", len(vids), "video-ish")
 PY
 ```
 Verification harnesses: grep the `runtime.hardware.current` key — `zero-a10g` is a legacy alias ZeroGPU still answers (1,320 spaces as of 2026-11-14); the site `enzostvs/zero-gpu-spaces` enumerates the same endpoint.
+
+## Other no-login / free routes — day-017 brain-dump (boss directive: commit everything remembered)
+
+**Verified on this box:** HF ZeroGPU is the only *confirmed* anonymous route from here (census above; 12 spaces `view_api`-verified, no GPU spent). Local hardware = Intel UHD 620 only — the local open-weights lane is CLOSED on this machine (needs ≥8 GB dVRAM; Wan2.1-T2V-1.3B wants ~8 GB, TI2V-5B more).
+
+**UNVERIFIED — candidate no-login routes. Do NOT rely on any of them until probed hands-on; quotas/ToS/output-music licensing unknown; nothing ships from here without testing + license check.**
+
+| Route | What it is | Claim (as heard day-017) | Status |
+|---|---|---|---|
+| `pollinations.ai` (open-source, zero-auth) | public no-login image/video generation API (e.g. `https://image.pollinations.ai/prompt/<desc>`); no account, no API key | "unlimited, rate-limited, anonymous" | UNVERIFIED — test before use; output licence unknown; per-IP rate limits; no SLA; quality unproven for our style |
+| ModelScope 魔搭 (`modelscope.cn`) | Alibaba open-model hub; hosts Wan/Hunyuan/CogVideoX + free hosted GPU demos of them | "free GPU inference, Wan2.x free, no GPU setup" (Wan2.2 repo + 2026 guides) | UNVERIFIED from this box (CN jurisdiction/network; may wall heavy use at captcha/login); output licence = per-model licence; latency/throttling unknown |
+| `lumaaivideo.com` | third-party wrapper around Luma Dream Machine; claims free no-login | "free no-login Luma" | **AVOID** — third-party supply-chain risk: your frames/prompts flow through a stranger's server; unstable; cannot be trusted with any asset |
+| Public Gradio share links (`*.gradio.live`) | ephemeral links from community demos | wild | Wildcard only — gone in days; unknown operator; never our canonical path |
+
+**Account-required (NOT anonymous — listed so nobody re-derives them):**
+
+- `Kling AI` (klingai.com): ~66 free daily credits (≈6×5s videos/day, resets 00:00 UTC); account signup required; photorealism strong; check ToS before any publish.
+- `Haiper AI` (haiper.ai): ~10 free HD credits/day, no watermark on HD; account required.
+- `Luma Dream Machine` (lumalabs.ai): ~30 free generations/month; account required.
+- HF Inference Providers: monthly free credits per HF account (NOT anonymous; rate-limited; meant for prototypes).
+- Cloudflare Workers AI / Groq / fal.ai / Replicate / Together / Modal / DeepInfra / Lambda / Paperspace / Google Colab / Kaggle: **all account-gated** (several with genuine free tiers worth knowing about, none anonymous; Colab limits heavy GPU compute).
+- MiniMax-H3 / HunyuanVideo(1.5) / Wan2.2 / LTX-2.5 / CogVideoX **local open weights**: unlimited + zero login — but this box has NO dGPU. A 24 GB-class machine (RTX 3090/4090) running Wan2.2 TI2V-5B via ComfyUI is the real unlimited free lane — a hardware purchase, not a quota scheme.
+
+**Local hardware check (day-017, this box):** Intel UHD Graphics 620 (iGPU) only; no NVIDIA/AMD dGPU; `vulkaninfo`/CUDA absent — local open weights out of scope here.
+
+**Our confirmed anonymous lane (committed):** ZeroGPU census + the fresh-IP GitHub Actions matrix (`.github/workflows/ai-rerender.yml`; run 43608071984 still queued as of day-017 — verify account state before re-dispatch).
