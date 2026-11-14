@@ -29,3 +29,13 @@
 
 Rules: scores are TRIAGE ordering, not view promises. Corpus hit evidence: the Zack/MinutePhysics/
 MinuteEarth/Kurzgesagt corpus notes (research/video-notes/) + our own views.csv (sunsets 1153 vs 200 for black-hole).
+
+## Emotion + Trending what-ifs (2026-11-14, boss-asked; see topic-emotion-whatif.md)
+
+| What if you were the last doctor left on Earth | 9/10 Duty+Action; no person invoked; G9 epic; boss-kept candidate |
+| What if your brain kept every face you ever saw | 7/10 Awe; neuro G9-fit |
+| What if someone you loved woke up from a coma tomorrow | 8/10 Love+relief; claims brakes flagged |
+| What if you had no pain nerves at all (CIPA sufferers) | 8/10 Awe; anatomy; zero relight risk |
+| What if a doctor worked during the West African Ebola 2014 outbreak | 7/10; duty+love+fear; historical; NO real names |
+| What if you brushed your teeth but your mouth kept the taste forever | 6.5/10 wonder; viral-share care |
+| What if you were the only one left on a deserted island and the last rescue plane was descending | 6/10; seen “what if you were the last” constructs already |
