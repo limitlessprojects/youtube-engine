@@ -106,6 +106,7 @@ The ONLY anonymous GPU route listed in the repo: HF Space `alexnasa/Wan2.2-Anima
   has fresh quota — that is the whole point of the GitHub Actions matrix).
 - `tools/render_short.py --frames A B` renders a frame window only (chunk rendering on runners).
 - `tools/finish_v3.py --audio-only` rebuilds `vo/master.m4a` without video (collect step remuxes it).
+- **Full census of anonymous GPU routes: `research/anonymous-gpus.md`** — 1,320 ZeroGPU spaces (171 video-ish), 2 GPU-min/day/anon-IP (shared), fresh-IP matrix = the only multiplier; Wan2.2 FP8 AOTI (3871❤), Saravutw 4–8step (426❤), kulkas2pintu/wan777 & LTX-2-3-First-Last-Frame for loop mirrors; verify licenses (Hunyuan AVOID, MiniMax-H3 proprietary, SVD AVOID, NSFW Civitai LoRAs off-limits).
 - `.github/workflows/ai-rerender.yml` — manual dispatch only; 19 × 2 s windows re-render
   deterministically (C6), AI-re-render them anonymously on fresh runner IPs, assemble verifies
   ALL chunks exist (no silent partial cuts), upscales 1080×1920@30, concats, muxes audio,
