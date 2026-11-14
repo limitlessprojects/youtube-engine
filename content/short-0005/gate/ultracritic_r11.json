@@ -1,0 +1,86 @@
+{
+ "round": 11,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.63,
+ "frame_grand_mean": 7.27,
+ "dim_means": {
+  "frame:hook_impact": 6.0,
+  "frame:text_discipline": 8.67,
+  "frame:visual_hierarchy": 5.33,
+  "frame:contrast_legibility": 8.0,
+  "frame:production_polish": 7.33,
+  "video:pacing_rhythm": 8.0,
+  "video:character_life": 8.0,
+  "video:edit_flow": 8.0
+ },
+ "frame_means": {
+  "hook_u50": 7.0,
+  "s2_u50": 7.8,
+  "s4_u50": 7.0
+ },
+ "floor_breaches": [
+  "hook_u50",
+  "s4_u50"
+ ],
+ "video_directives": [
+  "carry_r9 D2: s6 wave keeps mid-right busy at u50 while hero is small \u2014 probe hero at 1.2 scale and the stamp moved to the crest void (upper-left) before any re-render",
+  "hold the loop mirror honestly: hook_A vs hook_B under the SAME gate (L-087) \u2014 do not re-litigate the winner",
+  "keep the night palette; D3 daylight probe measured \u22122 vh / \u22121 cl for the day variant (L-102)"
+ ],
+ "video_pass_source": "agent-judged (no video VLM backend available)",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Eliminate the massive dead zone in the upper half by scaling up the central graphic or adding atmospheric layers.",
+    "Rebalance the visual weight between the heavy text block at the bottom and the relatively small subject in the center.",
+    "Increase the 'intrigue' factor of the hook by adding more dynamic lighting or motion-blur effects to the sound waves."
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.8,
+   "words_visible": 4,
+   "top3_directives": [
+    "Eliminate the large dead zone in the lower-right quadrant by either scaling up the character or adding environmental context.",
+    "Rebalance visual weight: the oversized ear dominates while the character feels like an afterthought in the corner.",
+    "Bridge the compositional gap between the central subject (ear) and the narrative subject (character) using motion lines or particle effects."
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or crop the upper 40% of the frame to eliminate the massive dark dead zone that wastes vertical real estate.",
+    "Clarify the primary focal subject by either scaling up the character or repositioning 'BOOM' to create a tighter visual group.",
+    "Remove the isolated '1' digit near the palm trees; it looks like a stray artifact or unexplained UI element."
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

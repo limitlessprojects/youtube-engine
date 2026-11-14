@@ -62,10 +62,36 @@ NOTES = {
 def load_notes(short: Path) -> dict:
     """Per-short scene notes (gate/notes.json) override the built-in #0002 set
     (day-009: hardcoded #0002 notes made the gate flag short-0003's frames
-    against ANOTHER VIDEO's design — the verifier must know the intent)."""
+    against ANOTHER VIDEO's design — the verifier must know the intent).
+
+    Two schemas accepted:
+      old: {"notes": {"s3": "…", …}}                        (flat sid → note)
+      new: {"slug": …, "scenes": [{"id": "s3", "visual": {…}, "objects": […],
+             "wow": "…", "text_system": "…"}, …]}           (canvas-first spec)
+    Both reduce to {sid: note-string}."""
     f = short / "gate" / "notes.json"
-    if f.exists():
-        return json.loads(f.read_text())["notes"]
+    if not f.exists():
+        return NOTES
+    d = json.loads(f.read_text())
+    if isinstance(d.get("notes"), dict):
+        return d["notes"]
+    if isinstance(d.get("scenes"), list):
+        out = {}
+        for sc in d["scenes"]:
+            sid = sc.get("id")
+            if not sid:
+                continue
+            bits = []
+            if sc.get("visual"):
+                bits.append(f"visual: {sc['visual']}")
+            if sc.get("objects"):
+                bits.append("objects: " + "; ".join(sc["objects"]))
+            if sc.get("wow"):
+                bits.append(f"wow: {sc['wow']}")
+            if sc.get("text_system"):
+                bits.append(f"text_system: {sc['text_system']}")
+            out[sid] = ". ".join(bits)
+        return out or NOTES
     return NOTES
 
 

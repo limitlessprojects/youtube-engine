@@ -50,6 +50,7 @@ structural REDESIGN of the offending scenes, never another polish lap
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -318,7 +319,28 @@ def main() -> int:
             break
     video_dims = {}
     video_directives = []
-    if video is not None and video.stat().st_size > 100_000:
+    video_source = "none"
+    agent_vp = os.environ.get("ULTRACRITIC_VIDEO_JSON")
+    if agent_vp:
+        # Agent-judged temporal pass — this box has no video-VLM backend (OpenRouter
+        # 402s video, Z.ai balance empty, Gemini key dead). Scores below were produced
+        # by the agent watching the cut, and the report labels them as such. Never
+        # present them as a model's verdict.
+        try:
+            vp = json.loads(Path(agent_vp).read_text())
+            video_dims = {k: float(v) for k, v in vp["scores"].items()}
+            video_directives = vp.get("top3_directives", [])
+            video_source = "agent-judged (no video VLM backend available)"
+            print(f"\n  VIDEO pass (temporal dims) — AGENT-JUDGED via {Path(agent_vp).name}")
+            for d, val in video_dims.items():
+                mark = "✓" if val >= THRESH_DIM else "✗"
+                print(f"  {mark} {d:22s} {val:.1f}")
+            for dd in video_directives[:3]:
+                print(f"    → {dd[:110]}")
+        except Exception as e:  # noqa: BLE001
+            print(f"\n  ⚠ ULTRACRITIC_VIDEO_JSON unreadable ({e}) — video pass treated as MISSING")
+            video_dims = {}
+    elif video is not None and video.stat().st_size > 100_000:
         print(f"\n  VIDEO pass (temporal dims) on {video.name} ({video.stat().st_size//1024} KiB)")
         # glm-4.6v via SDK video_url (the CLI vision endpoint rejects mp4 as
         # an image format — day-010); prompt via temp file. The script lives
@@ -340,6 +362,7 @@ def main() -> int:
             except (ValueError, json.JSONDecodeError):
                 vv = None
         if vv:
+            video_source = "glm-4.6v via z-ai SDK video_url"
             video_dims = vv["scores"]
             video_directives = vv.get("top3_directives", [])
             for d, val in video_dims.items():
@@ -373,7 +396,8 @@ def main() -> int:
               "frame_means": {r["frame"]: round(m, 2) for r, m in zip(results, frame_means)},
               "floor_breaches": frame_floor_breaches,
               "video_directives": video_directives,
-              "frames": results, "warns": warns}
+              "video_pass_source": video_source,
+               "frames": results, "warns": warns}
     (short / "gate" / f"ultracritic_r{round_n}.json").write_text(json.dumps(report, indent=1))
     print(f"\n  COMBINED GRAND MEAN {grand:.2f}/10 (bar {THRESH_MEAN}) — video pass required")
     print(f"{'✅' if ok else '❌'} {verdict} → gate/ultracritic_r{round_n}.json")

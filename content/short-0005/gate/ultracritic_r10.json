@@ -1,0 +1,195 @@
+{
+ "round": 10,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.33,
+ "frame_grand_mean": 7.11,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 7.22,
+  "frame:visual_hierarchy": 6.33,
+  "frame:contrast_legibility": 7.56,
+  "frame:production_polish": 7.56,
+  "video:pacing_rhythm": 8.0,
+  "video:character_life": 8.0,
+  "video:edit_flow": 8.0
+ },
+ "frame_means": {
+  "hook_u50": 8.2,
+  "s0_u50": 8,
+  "s10_u50": 7.5,
+  "s2_u50": 8.0,
+  "s3_u50": 7.25,
+  "s4_u50": 5.8,
+  "s5_u50": 8.0,
+  "s6_u50": 5.25,
+  "s8_u50": 6.0
+ },
+ "floor_breaches": [
+  "s4_u50",
+  "s6_u50",
+  "s8_u50"
+ ],
+ "video_directives": [
+  "carry_r9 D2: s6 wave keeps mid-right busy at u50 while hero is small \u2014 probe hero at 1.2 scale and the stamp moved to the crest void (upper-left) before any re-render",
+  "hold the loop mirror honestly: hook_A vs hook_B under the SAME gate (L-087) \u2014 do not re-litigate the winner",
+  "keep the night palette; D3 daylight probe measured \u22122 vh / \u22121 cl for the day variant (L-102)"
+ ],
+ "video_pass_source": "agent-judged (no video VLM backend available)",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 8
+   },
+   "mean": 8.2,
+   "words_visible": 5,
+   "top3_directives": [
+    "Increase vertical compositional balance by adding subtle atmospheric detail to the upper third to offset the heavy text block at the base.",
+    "Intensify the luminosity/bloom at the pyramid's apex to ensure it remains the dominant focal point against the large typography.",
+    "Add a slight outer stroke or drop shadow to the white text to guarantee legibility should the background gradient shift during animation."
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 3,
+   "top3_directives": [
+    "Add a subtle focal element (like a moon or nebula) to the upper dark sky to eliminate the perceived dead zone.",
+    "Integrate the '1883' label more deeply into the art style\u2014perhaps as a glowing UI element or vintage plaque\u2014to match the polish of the illustration.",
+    "Soften and color-grade the character's drop shadow to reflect the cool ambient tones of the water rather than using a flat dark oval."
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the upper third dead zone (empty starry sky) with atmospheric depth, particles, or crop the canvas tighter to the subject.",
+    "Replace the hard horizontal cut between the scene and the text box with a gradient or integrated overlay for better flow.",
+    "Increase the scale of the mascot character to better balance the visual weight of the large text block."
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Increase the scale of the reaction character by 40%+ to balance the visual weight against the oversized ear; currently, the bottom half feels like an empty afterthought.",
+    "Apply a stronger localized glow or drop shadow behind the character to ensure they 'pop' against the dark blue ground as effectively as the ear does against the sky.",
+    "Reduce the vertical gap between the base of the ear and the text line to unify the primary informational cluster into a single, tighter focal unit."
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 3,
+   "top3_directives": [
+    "Relocate the character toward the center-right or add visual weight to the bottom-right quadrant to eliminate the large dead zone caused by the current bottom-left heavy composition.",
+    "Increase the font weight and tracking of 'EARDRUMS SPLIT' to ensure legibility on small, low-brightness mobile screens.",
+    "Establish a clearer visual narrative path by angling the sound rays to originate from the building and terminate near the character to bridge the spatial gap."
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 4,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 5.8,
+   "words_visible": 4,
+   "top3_directives": [
+    "Eliminate the massive upper dead zone (top 40% of frame) by scaling the central composition upward or adding environmental texture.",
+    "Consolidate the two competing text systems (the 'BOOM' header and the '3,000 MILES AWAY' caption box) into a single unified typographic treatment.",
+    "Increase the stroke weight or add a hard drop shadow to the 'BOOM' text to ensure it maintains maximum punch against the purple gradient."
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Balance the lower-third composition by either scaling up the mascot or adding a secondary graphic element to the bottom-right dead zone.",
+    "Maintain strict consistency with the 'pill' text container style across all frames in the sequence for brand cohesion.",
+    "Increase the opacity or spread of the orbital ring slightly to ensure it remains visible against darker background gradients."
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 4,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 5.25,
+   "words_visible": 7,
+   "top3_directives": [
+    "Merge the '36,000 LIVES' stat box and the 'THE SEA TOOK THEM' caption into a single unified typographic system to resolve the competing-text penalty.",
+    "Increase the overall exposure or lift the black levels; the current palette is too dark for reliable legibility on a phone screen in daylight.",
+    "Scale up the character or reposition them higher into the frame to fill the massive upper-third dead zone and create a more balanced visual hierarchy."
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 4,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 6.0,
+   "words_visible": 5,
+   "top3_directives": [
+    "Merge the dual text blocks into a single cohesive label to resolve system competition.",
+    "Add atmospheric density (nebulae, clouds, or particles) to the upper 40% of the frame to kill the dead zone.",
+    "Scale up the volcano or move the character toward the center to unify the focal point and improve vertical space utilization."
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

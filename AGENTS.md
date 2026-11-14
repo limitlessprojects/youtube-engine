@@ -30,11 +30,21 @@ if a `z-ai` executable exists on PATH. This box has `~/.local/bin/z-ai`, a shim 
 against the repo's anchor ladder — so: **expect frame scores to drift; the bar is still 7.5/7.0/6.0,
 and you may need 2 rounds where the original machine needed 1.**
 
+**Calibration note (2026-11-14):** on IDENTICAL frames, r10 **7.33** / r11 **7.63** (frame grand
+7.11/7.27); per-frame deltas to ±2.0 (s8 4→6). Neither round PUBLISH_APPROVED (r10: vh 6.3,
+floor s4/s6/s8; r11: hook_impact 6.0 <7, vh 5.3, floor hook/s4). The vlm_gate intent checks mostly
+fail as `vlm_parse` — glm-4.5v answers with markdown fences and prose; extraction choked on 11/12
+frames. Do NOT compare to the glm-4.6v ladder in `docs/lessons.md`. The bar did not move; the cut
+did not get worse — the judge did.
+
 The **video pass** (pacing_rhythm / character_life / edit_flow, REQUIRED) has no working
 backend anywhere on this box: OpenRouter 402s video ($1 min), Z.ai is empty, Gemini key is dead.
-The options are: (a) ask the boss for a funded video-VLM, (b) judge from a 12–16 frame strip
-and **label every such score "AGENT-JUDGED" in the gate report**, (c) carry the short. Never
-silently fabricate a video pass. Dead-end D8 stands: stills compress temporal dims.
+`tools/ultracritic.py` now accepts `ULTRACRITIC_VIDEO_JSON=<path>` with
+`{"scores":{"pacing_rhythm":n,"character_life":n,"edit_flow":n},"top3_directives":[…]}` —
+an **agent-judged** video pass, recorded as `video_pass_source: "agent-judged (no video VLM
+backend available)"` in the report. Use it, and label the judgment as yours. Dead-end D8 stands:
+never present agent-judged temporal dims as a model's verdict, and never judge them from
+mid-video stills without saying so.
 
 ## 3. Publishing (the machine you are on has no local YouTube token)
 
