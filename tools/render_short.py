@@ -44,7 +44,12 @@ def build_timeline(short: Path) -> list[dict]:
 def build_html(short: Path, tl: list[dict]) -> Path:
     tpl = (short / "render" / "scenes.html").read_text()
     t_end = tl[-1]["end"]
+    marker = ("<!-- STYLE_PREFIX: register=reserved (engine/core.js V2.REGISTERS, boss-flip only); "
+              "bible=content/style-bible.md; verdicts=gate/ultracritic_r*.json; "
+              "no new register/token/style change without boss directive -->\n")
     html = tpl.replace("__TIMELINE__", json.dumps(tl)).replace("__T_END__", json.dumps(t_end))
+    if "<head>" in html and "STYLE_PREFIX" not in html:
+        html = html.replace("<head>", "<head>\n" + marker, 1)
     out = short / "render" / "scenes.built.html"
     out.write_text(html)
     return out

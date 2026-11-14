@@ -91,6 +91,13 @@ judged by eye/likeness/flicker with NO objective metric — hero shots must be M
 stickman stays the backbone.
 
 **Blocked items: see `BLOCKED.md` (routes tried, verbatim errors, what unblocks each).**
+## Tooling shipped this session (2026-11-14, session A follow-up)
+- `tools/rejected_log.py` — auto-ledger from gate/ultracritic_r*.json + gate/report.json; writes research/video-notes/rejected/<slug>-<ts>.md with below-threshold frames grouped by class. Ran on short-0005 → research/video-notes/rejected/short-0005-20261114T182711Z.md (r1: 10 fails incl. s6_u50 low-contrast; r10: 5; r11: 3).
+- `tools/hero_shot_harness.py` — C16 hero-shot QA pairing check: input still (AR/format) + output video (duration [1,15]s, AR ≤2% drift, fps [8,60], codec h264/hevc/vp9/av1 ≥320x240) + optional --qa-dir requiring qa_*.mp4 artifacts; prints PASS/FAIL + explicit failures. Harness mechanical only — VLM gate + boss still gate ship.
+- `research/zack-d-films-intel.md` — boss-supplied production intel on Zack D. Films (Blender+Cascadeur+Flamenco/AE/EmberGen pipeline, cadence moat; no study repo on GitHub; VL-01..05 our reference notes).
+- `research/style-bible-github-best.md` — + boss-verified KiwiTrek/ArtBible & Pixar/DreamWorks orgs note (pattern only; never copy content).
+- `engine/core.js` — additive motion-grammar easing library (V2.backInBig etc.) + RESERVED V2.REGISTERS (boss-held C13 flip).
+
 **Pending/waiting items (not done, named):**
 - VL-16/VL-21/VL-22 analysis notes — subagent running (Wan demos + NASA/USGS frames done).
 - VL-17 reddit thread — 403 everywhere from this IP (unverifiable here; notes marked CANDIDATE).

@@ -56,3 +56,27 @@ The best GitHub "style bible" for us is not one repo — it's a **blend**:
 - our own canvas-first + VLM gate + L-097/090 floor tests (already strictly better than all of them on the verify axis)
 
 No single repo here will *change* our output on its own; all four reaffirm our order — adopt the formats, not the taste.
+
+## Addendum (boss-verified 2026-11-14, session A — include this section verbatim)
+
+Direct answer to "where are Pixar/DreamWorks' design bibles": **nowhere on GitHub.**
+- GitHub repository search returns **0 results** for both `"design bible" pixar` and `"design bible" dreamworks`.
+- The official studio GitHub orgs host technical/production tools, NOT internal art/design bibles:
+  - **PixarAnimationStudios** (github.com/PixarAnimationStudios) — OpenUSD, OpenSubdiv, RenderMan-related projects.
+  - **dreamworksanimation** — MoonRay, OpenRV, OpenEXR, USD plugins.
+- Generic community art-bible guide worth a look (structure reference, NOT license-cleared to copy
+  wholesale — tiny 2-page doc, unknown license terms, author: Guillem Álava Burgueño / @WillyTrek19 /
+  supervised by @raysan5; status: educational study material, no studio affiliation):
+  - **KiwiTrek/ArtBible** — "A useful guide around the creation and usage of art bibles for your own projects."
+  Use its section ordering (purpose → materials → palette → typography → camera/lenses) as a sanity-check
+  for our bible's organization; adopt nothing from its prose without a rewrite.
+- Verify: KiwiTrek/ArtBible is educational-only; we adopt the section pattern, not the content.
+
+Related official machinery worth tracking (technical, not art):
+- Pixar: OpenUSD (`PixarAnimationStudios/OpenUSD`) — the industry interchange we render-hatch against
+  (scene/material LOD descriptions, composition arcs); our scenes.built.html is a baby USD in HTML.
+- DreamWorks: MoonRay (open-sourced renderman-terms successor) + OpenEXR (our .png set emission is fine).
+
+**Bottom line:** the bible-annotation folk-knowledge on GitHub is agent-skills scaffolding + AI-studio
+pipelines (above), not studio glossaries. KiwiTrek is the only "read the art-bible how-to" artifact and
+is structurally useful only.
