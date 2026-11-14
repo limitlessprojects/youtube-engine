@@ -1,0 +1,245 @@
+{
+ "round": 12,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.35,
+ "frame_grand_mean": 7.36,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.17,
+  "frame:visual_hierarchy": 7.17,
+  "frame:contrast_legibility": 6.83,
+  "frame:production_polish": 7.25,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 8,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 8.4,
+  "s0_u50": 8.5,
+  "s10_u50": 7.8,
+  "s1_u50": 7.5,
+  "s2_u50": 6.8,
+  "s3_u50": 6.8,
+  "s4_u50": 6.5,
+  "s5_u50": 7.3,
+  "s6_u50": 6.5,
+  "s7_u50": 7.0,
+  "s8_u50": 7.2,
+  "s9_u50": 8.0
+ },
+ "floor_breaches": [],
+ "video_directives": [
+  "Hold the long static setup shots (0-6s volcano, 21-24s globe) slightly shorter or add a drifting camera move to keep tempo alive",
+  "Push transitions between scenes (ear\u2192ship, boom\u2192globe) with a subtle ease/overlap instead of straight swaps to let cuts breathe",
+  "Add micro-motion to label chips (number ticks, gauge flutter) so diagram beats feel energized rather than pasted in"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 8
+   },
+   "mean": 8.4,
+   "words_visible": 5,
+   "top3_directives": [
+    "Move the title band slightly higher to widen the dead dark-water zone at the very bottom or add a subtle reflection of the eruption glow there",
+    "The crater-glow focal point is strong but small \u2014 push the smoke plume and ember particles a touch larger/brighter for more mid-frame intrigue",
+    "Consider one accent color (the orange of the lava) echoed in the title stroke or an underline to bind text system to scene palette"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 9,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Lift the lower-right water zone slightly (subtle wave highlights or boat glow) to reduce the dark dead corner",
+    "Increase label contrast for JAVA/SUMATRA with a faint dark scrim or stroke behind the white text over the horizon band",
+    "Push the 1883 badge 5-8px higher off the crater rim and add a soft drop shadow so it reads as a chip, not stuck to the volcano"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 6,
+   "top3_directives": [
+    "Lift the character's contrast: the dark navy figure blends into the navy lower panel \u2014 add a subtle rim light or warm bounce from the volcano glow",
+    "Fill the dead zone below 'AGAIN.' \u2014 the bottom ~10% is empty dark panel; nudge the text block down or add a faint ground shadow/horizon detail",
+    "Strengthen the eye path: the character points at the text but the volcano flame and text compete at similar weight \u2014 slightly dim the ambient glow arcs behind the flame so the cream text owns the lower third"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the large empty star-field zone (top 25%) with subtle contextual art or shift the gauge up to rebalance vertical composition",
+    "Boost the knocked-out character's separation from the dark navy ground \u2014 currently reads muddy; add rim light or ground shadow contrast",
+    "Enlarge the caption chip slightly and add a soft drop shadow so it detaches from the purple-to-navy transition line it straddles"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fix the hard horizontal seam at the lower third \u2014 the dark character panel reads as a separate cropped scene and creates a competing focal point; blend the gradient or move the character into the main purple field",
+    "The '130 dB = PAIN' orange text sits on the lightest part of the pink glow \u2014 add a subtle dark scrim/plate behind it or reposition for guaranteed daylight contrast",
+    "Bottom-right quadrant is a large dead zone \u2014 either extend environment detail (waves, rim light) or enlarge/reposition the reacting character to anchor the composition's eye path from ear \u2192 text \u2192 reaction"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "The reaction character in the lower-left is murky and cropped at the edge \u2014 either fully light him with a rim-light/glow matching the spotlight cone or remove him; right now he reads as a dark smudge",
+    "The lower third (bottom ~35%) is a large dead zone of flat navy \u2014 add water ripple highlights, a reflection of the ship, or push the character up to occupy it",
+    "The 'EARDRUMS SPLIT' caption is monospace gray and nearly the same weight/value as the glow behind it \u2014 bump size, add a subtle dark plate or stronger contrast so it survives daylight on a 6-inch screen"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the dead upper-third: the top ~35% of frame is empty dark purple with only faint blobs \u2014 push the BOOM/explosion ring higher or crop the sky to tighten composition",
+    "Boost legibility of dark-zone elements: the palm silhouettes, debris, and windmill barely register on a 6-inch daylight screen \u2014 lift their edge contrast or rim-light them",
+    "Unify the two text treatments: rotated cream 'BOOM' header + separate beige caption pill reads as two systems \u2014 either integrate the location tag into one anchored caption bar or drop the pill styling"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 3,
+   "top3_directives": [
+    "Lift the bottom-third character and ground shadows \u2014 they sit near-black and die on a 6-inch daylight screen; add rim light or raise exposure ~20%",
+    "Close the dead zone in the lower-right ground area with subtle texture or secondary glow so the bottom third doesn't read as empty",
+    "Slightly enlarge the caption pill (or add a soft drop shadow) so the lone text element locks in as a designed layer, not a floating chip"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "The caption 'THE SEA TOOK THEM' uses dark text on a translucent light bar sitting directly over white foam \u2014 increase bar opacity to ~85% or use white text with a dark scrim for daylight-proof legibility",
+    "Consolidate the stat chip ('36,000 LIVES') and caption into a single unified text block with one style system instead of two separately-boxed elements competing for attention",
+    "The sad character bottom-right feels pasted onto the wave scene \u2014 add a ground shadow/environment tint and slightly larger presence so it reads as intentional composition rather than an overlay"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Resolve the dual focal point: the volcano (circle highlight + 'GONE.') and the character fight for attention \u2014 either shrink/reposition the character into the circle's eye path or shift the circle to bridge both.",
+    "The bottom third is a large near-black dead zone \u2014 add water reflections, ambient bounce light from the volcano glow, or push the character larger/higher to reclaim it.",
+    "The 'GONE.' text sits directly on the bright lava glow \u2014 add a stronger drop shadow or dark scrim behind it, and slightly enlarge for 6-inch daylight readability."
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 5,
+   "top3_directives": [
+    "The dark caption pill ('CHILD OF KRAKATOA') sits on a dark purple slope with no border or stroke \u2014 it will crush on a 6-inch phone in daylight; add a subtle outline or lighten the pill.",
+    "The character's warm glow bleeds softly into the ocean edge and its dark ground shadow is mushy/ambiguous \u2014 tighten the shadow shape and cut the glow at the horizon line.",
+    "The upper third is a large atmospheric dead zone; either lift the moon/star detail, add faint smoke/ash plume drifting from the summit, or raise the composition so the volcano breathes into that space."
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the large dark water foreground (bottom third) with subtle wave highlights or a reflection of the glowing crater to kill the dead zone",
+    "Strengthen the character-to-volcano eye path \u2014 the character's gesture reads ambiguously; angle the pose or add a subtle light rim from the eruption on the character",
+    "The faint arc rings crossing the volcano mid-slope read as artifacts at small sizes; either commit to bolder rings or remove them"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

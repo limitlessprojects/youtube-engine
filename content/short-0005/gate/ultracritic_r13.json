@@ -1,0 +1,245 @@
+{
+ "round": 13,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.5,
+ "frame_grand_mean": 7.54,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.58,
+  "frame:visual_hierarchy": 7.17,
+  "frame:contrast_legibility": 7.17,
+  "frame:production_polish": 7.25,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 8,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 8.2,
+  "s0_u50": 7.8,
+  "s10_u50": 7.75,
+  "s1_u50": 8.0,
+  "s2_u50": 7.2,
+  "s3_u50": 7.5,
+  "s4_u50": 6.75,
+  "s5_u50": 7.2,
+  "s6_u50": 6.3,
+  "s7_u50": 7.75,
+  "s8_u50": 7.5,
+  "s9_u50": 8.5
+ },
+ "floor_breaches": [],
+ "video_directives": [
+  "Trim the static holds at 10\u201313s (ear card) and 14\u201316s (ship card) by ~20% \u2014 the shockwave overlay repeats without new information",
+  "Give the 0\u20133s hook a faster title beat-in; two-line reveal reads slightly slow for a Short opening",
+  "Keep the looping character reactions (pose/expression shifts per beat) \u2014 this is the strongest life signal; add one more mid-frame blink pass to the static gauge section"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 7
+   },
+   "mean": 8.2,
+   "words_visible": 4,
+   "top3_directives": [
+    "Add a subtle rim-light or stronger silhouette edge to the volcano so it separates from the dark horizon band instead of blending into it",
+    "Push the smoke plume puffs with slightly more opacity/edge definition \u2014 they currently read as faint blobs and waste the upper-middle zone",
+    "Introduce one accent color (e.g., ember orange) echoed from the crater into the title or ring lines to tie foreground and background into one palette system"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "Clarify JAVA/SUMATRA labels \u2014 they float ambiguous over the horizon; anchor each to a visible landmass or connector so geography reads instantly",
+    "Fill the lower third dead zone: water is nearly empty below the character \u2014 add subtle wave animation or a glow path leading from character to volcano",
+    "Reposition the character so its pointing gesture actually aims at the volcano/1883 badge \u2014 currently the arm points off-frame left, breaking the intended eye path"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fix the character's pointing arm colliding with the 'DO' glyph \u2014 add padding or reposition the figure left so the gesture reads without touching the text block",
+    "Ground the stick figure: its shadow is barely visible and it floats against the dark blue band \u2014 deepen the contact shadow to anchor it",
+    "The volcano's white sticker-outline edge cuts off abruptly at the horizontal band line \u2014 either extend the eruption glow past the seam or add a subtle light spill so the split-screen transition feels intentional"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 5,
+   "top3_directives": [
+    "Character in lower-left is dim and reads as clutter against the wave rings \u2014 raise its rim-light or scale it 15% to justify its presence",
+    "The gauge dial interior is a large flat navy void \u2014 add a subtle tick-label arc or inner shadow to give the focal element depth",
+    "Sound-wave rings in the lower-right are faint and clip awkwardly off-frame \u2014 commit to them with slightly stronger opacity or crop them deliberately"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 3,
+   "top3_directives": [
+    "Lift the bottom scene out of the dark: the wincing character and ground are nearly crushed to black on a phone in daylight \u2014 add rim light or raise ambient exposure",
+    "Enlarge/bolden the '130 dB = PAIN' caption and add a subtle dark backing or stroke \u2014 it currently floats small against the gradient seam and could wash out",
+    "Fill the bottom-right dead zone: two-thirds of the lower panel is empty water \u2014 shift the character rightward or add a light prop/echo ripple to balance the ear's left-weighted composition"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Character in bottom-left is dark-on-dark and tiny \u2014 rim-light it brighter or enlarge so it reads as the emotional focal point on a 6-inch screen",
+    "Bottom third of the water is a large near-black dead zone \u2014 add subtle wave highlights or a glow reflection from the ship window to fill it",
+    "Push the focal competition: rays + ship + character all fight equally; dim the rays slightly or add a glow behind the character so the eye path resolves"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "The top ~30% of the frame is a dead zone of near-black starfield with faint blob shapes \u2014 push the horizon/sun composition up or add a moon/cloud layer to occupy it",
+    "Palm silhouettes and debris island in the mid-right vanish against the purple \u2014 lighten them or add a rim glow so they read on a 6-inch daylight screen",
+    "'BOOM' and the '3,000 MILES AWAY' chip sit on opposite sides with nothing connecting them \u2014 align BOOM onto the arc's axis or tilt it toward the focal path to unify the two text moments"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 3,
+   "top3_directives": [
+    "Boost the character's rim light or add a subtle local glow \u2014 he nearly vanishes against the near-black lower third on a daylight phone screen",
+    "The bottom-right two-thirds is a dead zone; either crop the composition tighter or add a faint ground/atmosphere gradient to carry the eye from planet to character",
+    "The teal ring line passes in front of AND behind the planet ambiguously at the right edge \u2014 clarify occlusion so the orbit reads as 3D"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.3,
+   "words_visible": 6,
+   "top3_directives": [
+    "The caption block sits directly on high-detail white wave foam \u2014 add a stronger scrim/darkening behind 'THE SEA TOOK THEM' or shift the whole text stack down into the flatter dark water zone for guaranteed daylight legibility.",
+    "Upper ~35% of frame is near-empty dark purple sky with a faint moon \u2014 either push the wave taller, add subtle atmospheric layers (stars, cloud silhouettes), or crop framing tighter to kill the dead zone.",
+    "The hooded character reads as a pasted sticker: unify lighting with a cool blue/purple rim light matching the scene, ground it with a contact shadow, and align its glow temperature with the moon palette."
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the top-third starfield dead zone with a subtle moon or drifting smoke plume to complete the eye path from text to character",
+    "Increase 'GONE.' stroke/drop-shadow weight so it fully separates from the bright volcano-glow bloom behind it",
+    "Tighten the decorative circle so it frames both the character and text peak intentionally \u2014 currently it clips ambiguously through the water line"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the top ~35% dead zone: enlarge the moon, add drifting ash-cloud shapes or rising ember particles so the upper frame earns its space",
+    "Create an explicit eye path from the character's pointing arm to the volcano/text \u2014 the gesture currently points into empty water; reposition character or angle the arm toward the peak",
+    "Tighten the label system: merge 'ANAK KRAKATAU' and its translation into one badge with a subtitle line, and lift both slightly above the horizon line so they don't sit on the volcano's mid-slope seam"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Character is small and anchored bottom-left; consider enlarging ~20% and rotating pose toward the volcano for a stronger eye-path read",
+    "Faint horizontal reflection dashes in the water are barely visible \u2014 either boost their opacity or remove them to avoid noise",
+    "The glow halo arc behind the volcano nearly clips frame edges; soften its outer falloff to keep the sky gradient clean"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

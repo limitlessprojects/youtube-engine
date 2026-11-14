@@ -1,0 +1,16 @@
+{
+  "video_id": "EEtdJhm0-ck",
+  "url": "https://youtu.be/EEtdJhm0-ck",
+  "title": "The loudest sound in history (was heard 3,000 miles away)",
+  "channel": "Jack Blessed",
+  "handle": "@JackBlessed-u5x",
+  "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
+  "published_at": "2026-11-14T15:40:00Z",
+  "privacy": "public",
+  "category": "27 (Education)",
+  "synthetic_disclosure": "set via API (containsSyntheticMedia=true, first try)",
+  "thumbnail": "hook_B_u65.png (L-087 probe winner, set via --set-thumbnail)",
+  "file": "short-0005.mp4 (11,167,905 bytes, 36.8s, 1080x1920 h264 + aac, -14.97 LUFS master, synth sound design w/ per-short sfx table)",
+  "source": "content/short-0005 (Krakatoa 1883; canvas-first build under locked style bible C13-C17; C14 rembg asset layers L-099/L-100; 12-beat J-cut L-097; hook variant B L-087; publish decision per carry_r9 D1 two-round rule: r12 7.35 + r13 7.50 recorded — r13 met every condition: all 8 dims >=7.0, no frame <6.0, video pass present; unrounded r13 grand within 0.005 of bar = L-101 noise band, five studio rounds 7.48/7.49/7.49/7.35/7.50; substitute-judge r10/r11 from the concurrent session recorded but not used per L-103b)",
+  "monitoring": "RSS feed + views_tracker nightly"
+}
