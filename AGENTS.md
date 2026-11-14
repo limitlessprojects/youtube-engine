@@ -142,3 +142,20 @@ words. Also never re-dispatch just to re-roll — one run eats the free plan's w
   `docs/lessons.md`, and `contextm` a `session_note` at every decision.
 - If the YouTube refresh grant is dead (`--check-token` FAIL), the fix is the boss re-verifying
   the Google app (`nura-health`) is in **Production**, not "try again".
+
+## 8. The boss's Top-10 highest-leverage upgrades (day-017, research/video-notes/TOP10-UPGRADES.md)
+
+Authority: web-swept (YouTube blog/Help; 2026 Shorts algorithm deep-dives; Artificial Analysis TTS boards;
+Springer/Heliyon/Frontiers/BMC retention science; Wan2.2/Veo/Kling/LTX comparisons) cross-checked against our corpus.
+Order = ship order. Full provenance: `research/video-notes/TOP10-UPGRADES.md` — read it first next session.
+
+1. **Measure before render** — `tools/motion_probe.py` mandatory per Short; target <3 re-render cycles per upload; log failures, don't drift.
+2. **Foreground hook** — question/promise as the first spoken line; title = promise; audio-led opens count; per upload, watch Studio "How many chose to view" (<25% → kill that premise shape).
+3. **One signature world** — same palette/register/motion grammar every Short (Kurzgesagt proof); WIP `engine/space.py` + `engine/diagram.js` icon families; no mixed vector routes.
+4. **Length discipline** — Shorts algorithm weights constant with duration; 20–40 s is the sweet spot; cut hard topics to <30 s (~150 wpm); no CTA before the premise lands.
+5. **Caption policy** — no narration captions; stamps only; never burn numbers on screen; L-090 holds.
+6. **Voice reality** — Fish Audio works; ElevenLabs Starter ($6, commercial license) is the A/B candidate; never clone before 10k words of catalog.
+7. **Silence is a feature** — silence/instrument-hits > synth-pad beds; one 2s swell per 12 beats; let the quote-time ride dry.
+8. **Clarity > novelty** — Heliyon PRISMA 40-study; TED clarity β=.339; no Short ships with a confusion point; L-097 3.2s floor enforces.
+9. **Hero-shot discipline** — community pass (reddit, CANDIDATE): Medium-Res only; AR-match input; frames-skip=0; quantization kills likeness first; C16 exceptions only.
+10. **Cadence beats spectacle** — one structural edit per publish; no delete-and-republish; re-uploads via Studio description edit only; weekly retention re-read, not merge-batch review.
