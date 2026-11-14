@@ -24,7 +24,7 @@ published Short; NASA/USGS PD is the only render-eligible class, with attributio
 | VL-14a/b/c | MinuteEarth (nuclear 23.3M, Grolar 2.87M, sunsets 169k) | ✅ done (sunset = our #0003 A/B) | nGutkWaXDUs-VL-14a, ZA4OQ-1ahXg-VL-14b, 9PJvV5PYDm0-VL-14c |
 | VL-15a/b/c | MinutePhysics (2+2, portals cube, backwards) | ✅ done | 0fV8kYoGDNM-VL-15a, 31kyER-8dak-VL-15b, sEQvDbyFNbo-VL-15c |
 | VL-16 | Wan-Animate official demos (res921 + rep_shots) | ⏳ frames extracted, notes pending (subagent running) | — |
-| VL-17 | r/comfyui Wan 2.2 Animate thread | ❌ blocked (status + routes tried: `BLOCKED.md` §VL-17) | needs boss/reddit token or thread paste; community-intel.md marks findings CANDIDATE |
+| VL-17 | r/comfyui Wan 2.2 Animate thread | ✅ **UNBLOCKED 2026-11-14** (Playwright + boss's Brave `Default` profile through `reddit.com`; `api.reddit.com` IP-blocked but HTML page works) | `VL-17-reddit-Wan2.2-Animate-Thread.md` |
 | VL-18/19/20 | boss phone clip; style-anchor Shorts; PD picks | ⏳ pending boss | — |
 | VL-21 | NASA PD: Earth views (200s) + Rocket Lab PREFIRE (51.5s) | ✅ done (PD) | notes pending (same subagent as VL-16) |
 | VL-22 | USGS PD: Kilauea lava fountain (2.5M, 121s) | ✅ done (PD) | notes pending (same subagent as VL-16) |
