@@ -75,3 +75,19 @@ Everything else in the wishlist is on GitHub: 21/22 items analyzed (research/vid
 cleansed transcripts (research/transcripts/), index + README, learning_queue seeded, community-intel
 with 12 arXiv papers, movement map, style/quality amendment proposal, motion_probe tool, L-109.
 The only intentionally-untracked files: raw videos/captions/frames/.ci-artifacts (per repo .gitignore).
+
+## Appendix 2026-11-14 (late) — exhaustion pass, boss: "unblock what is blocked"
+
+- **VL-09 Gunner (vimeo.com/758035927)** — every anonymous route exhausted:
+  yt-dlp says "The web client only works when logged-in" (login wall confirmed);
+  `player.vimeo.com/.../config` 401→403; `/reel/` page 500s; gunner.work → legacy.gunner.work → vimeo channel only; YouTube search shows no Gunner uploads (only near-miss studios: Animasia, Magic Light, Film in Finland).
+  **Status: requires boss cookie/file/token. Not unblockable from this box.**
+- **VL-17 r/comfyui thread 1nle575** — `api.reddit.com/.../1nle575.json?raw_json=1` → 403 (two hosts); `old.reddit.com` → 404; r.jina.ai proxy → upstream 403; wayback machine (`archive.org/wayback/available`) → 0 snapshots.
+  **Status: requires boss login/paste. Not unblockable from this box.**
+- **VL-21 NASA captions (.vtt/.srt)** — bucket `images-assets.nasa.gov/video/<id>/*` returns 403 AccessDenied for both extensions with browser UA/Referer AND without; egress-independent bucket policy, not a network flap; no public API serves them.
+  **Status: gone for good without a NASA grant/boss-provided export; frames analysis is complete and committed.**
+- **CI run 43608071984 (19-chunk ai-rerender matrix)** — finished **failure** at 17:34Z (never assigned a runner). Nothing to cancel; no task lost (mission was re-scoped to hero-chunk-only this session).
+- **VL-16b wan-animate rep-shots.mp4** — re-download in progress (~14.9/42.2 MB; server cuts connections; `-C -` resume loop running); will be integrity-verified by ffprobe when it lands.
+- **E11venLabs A/B** — $6, commercial license; spend requires boss sign-off only.
+- **Custom thumbnail phone verification** — Studio requires a verified number; boss must verify once in Studio; `--set-thumbnail` stays best-effort after that.
+- **VL-18/19/20** — boss-side inputs (phone clip; style anchors by their eye; PD picks).
