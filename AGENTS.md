@@ -96,7 +96,28 @@ or store the token itself in memory/docs/notes.**
 `content/*/*.mp4`. So: **a finished cut does not exist in git on a fresh clone — re-render it.**
 Frame count ≈ `(total_s + 0.45) × 30`. `--full --resume` after any interruption.
 
-## 6. Advice for whoever comes next
+## 6. The AI re-render route (ZeroGPU anonymous — day-017 boss directive)
+
+The ONLY anonymous GPU route listed in the repo: HF Space `alexnasa/Wan2.2-Animate-ZEROGPU`
+(Wan2.2-Animate `/animate_scene`, `Character Swap`, per-IP quota ~160 GPU-s, no token needed).
+
+- `tools/hero_shot/ai_rerender.py` — our own minimal gradio_client driver (NOT vendored from
+  the mr-bean repo). One 2 s chunk per call; `--attempts 2`; on quota → exit 4 (a fresh runner IP
+  has fresh quota — that is the whole point of the GitHub Actions matrix).
+- `tools/render_short.py --frames A B` renders a frame window only (chunk rendering on runners).
+- `tools/finish_v3.py --audio-only` rebuilds `vo/master.m4a` without video (collect step remuxes it).
+- `.github/workflows/ai-rerender.yml` — manual dispatch only; 19 × 2 s windows re-render
+  deterministically (C6), AI-re-render them anonymously on fresh runner IPs, assemble verifies
+  ALL chunks exist (no silent partial cuts), upscales 1080×1920@30, concats, muxes audio,
+  uploads artifact `ai-full` (7-day retention). Nothing is uploaded to YouTube, ever, by this path.
+
+Hard truth learned in probe (gate/s3, 2026-11-14): the model preserved our stickman + scene remarkably
+well BUT **text stamps DRIFT** — `180 dB` → `190 dB` — and pacing morphs subtly. This route is a
+boss-directed experiment, not a gate path: the deterministic render is the canonical cut. Never ship,
+gate, or publish an AI re-render without the boss's explicit sign-off, and never trust its on-screen
+words. Also never re-dispatch just to re-roll — one run eats the free plan's whole 20-runner quota.
+
+## 7. Advice for whoever comes next
 
 - This repo is run by MULTIPLE concurrent agent sessions (studio + fresh-machine opencode).
   Before every commit: `git fetch origin && git pull --rebase` — and re-read what changed
