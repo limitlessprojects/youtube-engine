@@ -1,0 +1,272 @@
+{
+ "round": 4,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.1,
+ "frame_grand_mean": 7.04,
+ "dim_means": {
+  "frame:hook_impact": 5.0,
+  "frame:text_discipline": 8.77,
+  "frame:visual_hierarchy": 5.77,
+  "frame:contrast_legibility": 6.77,
+  "frame:production_polish": 7.0,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 8,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 6.6,
+  "s0_u50": 6.5,
+  "s10_u50": 7,
+  "s11_u50": 6.5,
+  "s1_u50": 7.2,
+  "s2_u50": 8,
+  "s3_u50": 8,
+  "s4_u50": 7.5,
+  "s5_u50": 7.5,
+  "s6_u50": 6.5,
+  "s7_u50": 7.0,
+  "s8_u50": 6.75,
+  "s9_u50": 6.5
+ },
+ "floor_breaches": [
+  "hook_u50",
+  "s0_u50",
+  "s10_u50",
+  "s11_u50",
+  "s6_u50",
+  "s7_u50",
+  "s8_u50",
+  "s9_u50"
+ ],
+ "video_directives": [
+  "Middle section (8\u201320s) holds the suture-scene diagram too long with only minor object swaps \u2014 tighten beats or add a subtle camera push to sustain tempo.",
+  "Character life is strong (expression changes, pose swaps, arm gestures per beat); extend that reactivity to the diagram moments where he freezes into a static cutout.",
+  "Transitions between scene blocks (0s, 7s, 14s, 24s) read as hard resets; add a brief ease/hold breath or motivated wipe so cuts feel stitched rather than snapped."
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 5,
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.6,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or darken the vast empty mid-band between the wavy line and the descending path \u2014 it reads as a dead zone occupying ~40% of the vertical canvas",
+    "Establish one dominant focal point: the character's glow currently competes with the teal/orange glows; boost the character ~15-20% or dim the line glows so the eye lands first on the figure",
+    "Add a minimal text hook (3-5 words, high contrast) near the character \u2014 the frame has intrigue (edge/depth) but zero anchoring context to stop a scroll"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the dead middle: the vertical band between floor line and the orange rope is ~60% empty frame with no focal content \u2014 raise the rope/glow zone or add a midground element",
+    "The rope terminating at the bottom edge without connection or payoff reads as a severed graphic \u2014 either anchor it to something or fade it out deliberately",
+    "Boost separation of the dim background spectators and purple glow behind the ledge; currently the top-third focal cluster is fighting a muddy low-contrast backdrop on daylight screens"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill the dead middle band (~40% of frame) \u2014 the character and caption are split by a large empty void; extend the glowing seam/floor line or add a mid-frame focal element to bridge eye path",
+    "Make the character's point gesture aim at something \u2014 it currently points off-frame right into empty space; reposition or angle it toward the text block",
+    "Clarify the faint orange string in the lower third \u2014 it reads as a rendering artifact; either brighten it as a deliberate leading line or remove it"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill the dead middle third: the huge empty underwater span between the character and the caption box has no focal anchor \u2014 extend the glowing seam/rope motif upward or add subtle depth elements",
+    "Enlarge or reposition the character toward the text path \u2014 currently a tiny corner figure with no guided eye flow from title to subject",
+    "Lift midframe legibility: the faint speed-line strokes and brown seam line nearly vanish on a 6-inch daylight screen; increase their luminance or remove them"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or trim the large dead zone in the lower third \u2014 the underwater segment is murky and reads as empty runtime",
+    "Give the middle-frame glowing squiggle more compositional purpose: it currently floats between two unrelated scenes with no connective visual logic",
+    "Strengthen separation of the character from the dark sky \u2014 add a rim light or slightly lift the horizon glow so the focal subject pops on a daylight 6-inch screen"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the lower-third dead zone \u2014 the thread path runs through it but the region reads empty; add subtle anatomical texture or a micro-label to anchor it",
+    "Anchor the SUBCUTICULAR label visually to a layer \u2014 it floats mid-frame with no connector; tie it to the skin surface or thread with a thin pointer line",
+    "Strengthen the focal glow \u2014 the warm light behind the thread is soft mush; tighten it into a defined rim light so the thread reads as the hero object"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom third is a near-dead zone: the descending orange line fades into murky navy blobs \u2014 either brighten the continuation or crop the frame ~200px shorter to keep energy in-frame",
+    "Character at top-right is tiny and disconnected from the glowing teal action \u2014 add a subtle rim light or motion trail connecting him to the strike, or enlarge slightly to read at 6 inches",
+    "The glow on the teal stroke blooms asymmetrically (hotspot below the curve) \u2014 clean it to a symmetric soft halo for broadcast-grade polish"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Strengthen the focal point: the glowing orange line and the character compete for attention with no connective eye-path \u2014 add a subtle light cue (cast glow from the character onto the water/line entry point) to link them.",
+    "Fill the mid-frame dead zone (roughly the lower third above the glowing droplet) with faint depth elements \u2014 the large empty navy expanse between the surface and the drip reads as a blank stretch on a 6-inch screen.",
+    "Boost separation of the two glowing orange segments: the upper line and lower drip both glow equally, muting hierarchy \u2014 dim the upper line slightly or intensify the droplet so the eye reads a clear cause-and-effect vertical path."
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Lower third reads as a dead zone \u2014 the faint pink squiggles and blobs are barely distinguishable; either raise their contrast or push the trailing tail path through them to keep the eye moving to frame bottom.",
+    "Two competing focal subjects (walking character top-right, sperm cell center) sit on opposite axes with weak connective tissue \u2014 brighten or thicken the descending tail so the eye path from character to cell is unambiguous.",
+    "The horizon band is a hard flat slab cutting the frame; add a subtle gradient or glow bleed into the water so the two environments blend instead of colliding."
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill or compress the middle dead zone (~40% of frame) \u2014 the dashed seam walks through empty space for too long; add subtle texture, motion elements, or crop the composition",
+    "Boost contrast on the TRACKS/SEAM labels and the three dark stick figures \u2014 they nearly vanish against the purple band on a daylight phone screen",
+    "Strengthen the eye path from the character to the lower arc/seam: brighten the glows on the golden arcs so they read as intentional waypoints, not faint smudges"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Character occupies only the top-right corner; the lower two-thirds is a large dead zone \u2014 either enlarge/reframe the subject toward the rule-of-thirds sweet spot or add a secondary focal element (title card, visual anchor) in the empty midground",
+    "Add a single on-screen text hook (\u22645 words, high-contrast) to give viewers a reason to hold past the first second; the frame currently reads as an establishing shot with no payoff element",
+    "The purple glow near the character gets murky against the dark navy; increase rim-light intensity and background separation so the subject survives daylight viewing on a small phone"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the large dead zone in the middle/lower third \u2014 the empty blue expanse between the text and the bubbles gives the eye nothing to hold for ~60% of the frame",
+    "Pull the character inward from the right edge; the glow halo is clipped and the subject feels cropped rather than composed",
+    "Give the lower dark region a subtle light source or secondary focal element (e.g., glowing hook/target at line's end) to create an eye path from text \u2192 character \u2192 line \u2192 payoff"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Character is tiny and pinned to the top-right corner with a large dead middle zone \u2014 scale the figure ~2x or add a mid-frame focal element (bait/lure splash) to bridge the eye path",
+    "The thin orange fishing line spans a nearly featureless dark blue expanse \u2014 add subtle depth cues (light rays, particle drift, ripple highlights) so the 2/3 empty water doesn't read as a dead zone",
+    "Overall frame is very dark with low-contrast midtones \u2014 lift the foreground subject glow/rim light and boost separation between character, line, and background so it survives a 6-inch daylight screen"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

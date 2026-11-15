@@ -1,4 +1,4 @@
-# The 30-Day Plan — status Day 017 (Nov 14), horizon Day 037 (Dec 8)
+# The 30-Day Plan — status Day 018 (Nov 15), horizon Day 037 (Dec 8)
 
 > Reader: the next session's agent. This is the contract: what each phase proves,
 > what you owe the channel today, and the forks we pre-decided so nobody spirals
@@ -25,6 +25,11 @@
 | 4 | Carry-debt first: if a short sits BELOW_BAR, iterate its latest `gate/ultracritic_r*.json` directives, re-gate | `tools/ultracritic.py <slug> --round N+1` |
 | 5 | Advance the next short: script → VO → scenes → render → gates → publish | `docs/playbook/` |
 | 6 | Ledger line + log + commit + push | `docs/lessons.md` + `logs/` |
+
+## Status right now (Day 018 — 09:45 EAT session, 2026-11-15; end-of-Day-017 block below)
+
+- **#0006 CARRIED UNPOSTED — the budgeted r3/r4 decision executed on the new judge (carry_r2.md).** r3 7.06 / r4 7.10 combined, both BELOW_BAR (bar 7.5); vh stuck 5.5–5.8 = third confirmation of the world-template ceiling (L-085/L-112); video pass stable 7/8/7; text_discipline 8.7/8.8 best ever after the D2 residuals were fixed (s6 hood occlusion, s10/s11 glow-wash → ink plate, kineticTitle pop timing). ASR union-verify GREEN (12/12, 0 fails). Master 39.13s / −15.16 LUFS mirrored to upload/short-0006.mp4. Credits LIVE again; judge probe: glm-4.6v requests now return glm-5.3-flash (L-113 — r1/r2 vs r3/r4 not comparable). **#0007 directive: design the world ONE-DOMINANT from the first sketch (one subject ≥50% per scene, L-112 checklist + carry_r2).**
+- Views row 2026-11-15: RSS 404 ×3 (L-031 class) — no row; last 2026-11-14. AI re-render matrix run 43608071984: all 19 chunks failed at ZeroGPU — fresh-IP route confirmed dead (L-106/L-107).
 
 ## Status right now (end of Day 017 — 23:45 EAT session, 2026-11-14)
 

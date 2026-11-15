@@ -225,7 +225,10 @@ function stamp(t, x, y, text, t0, accent, dark) {
 function kineticTitle(t, lines, yTop, size, t0) {
   const gap = size * 1.09;
   for (let i = 0; i < lines.length; i++) {
-    const lt = V2.clamp01((t - SC_T0 - t0 - i * 0.22) / 0.4);
+    /* 0.12 stagger + 0.30 fade: the full 3-line block must be SOLID by ~0.55s
+       after t0 — at 0.22/0.4 the closing line ("SEE.") was still mid-pop at
+       scene midpoint AND at video end (39.13s) — it never showed solid */
+    const lt = V2.clamp01((t - SC_T0 - t0 - i * 0.12) / 0.3);
     if (lt <= 0) continue;
     const pop = V2.backOut(lt);
     V2.glow(540, yTop + gap * i, lines[i].length * 11, "Warm", 0.26 + pop * 0.26);
@@ -267,15 +270,18 @@ SCENES.hook = (u, t) => {
 
 SCENES.s0 = (u, t) => {
   skinBase(t);
-  /* MYTH frame: loops + knots sitting ON the surface (the shoelace picture) */
+  /* MYTH frame: loops + knots sitting ON the surface (the shoelace picture)
+     r3 vh nudge: the crack ensemble is THE dominant element — bigger loops
+     + one row-level bloom behind them (one-dominant, L-112 checklist) */
   const crack = V2.easeIn(V2.clamp01(u / 0.9));
+  V2.glow(540, SURF - 110, 300, "Warm", 0.30 * (1 - crack * 0.6));
   for (let i = 0; i < 4; i++) {
     const sx = 220 + i * 190;
     const wob = Math.sin(t / 9 + i * 1.7) * (3 + crack * 10);
     V2.el("path", { d: `M ${sx - 50} ${SURF + 12} Q ${sx} ${SURF - 120 + wob} ${sx + 50} ${SURF + 12}`,
-      stroke: SKIN.ink, "stroke-width": 13, fill: "none", opacity: 0.95 - crack * 0.45 });
-    V2.el("circle", { cx: sx, cy: SURF - 128 + wob, r: 19, fill: SKIN.ink, opacity: 0.95 - crack * 0.45 });
-    V2.glow(sx, SURF - 128, 52, "Warm", 0.16 * (1 - crack));
+      stroke: SKIN.ink, "stroke-width": 16, fill: "none", opacity: 0.95 - crack * 0.45 });
+    V2.el("circle", { cx: sx, cy: SURF - 128 + wob, r: 25, fill: SKIN.ink, opacity: 0.95 - crack * 0.45 });
+    V2.glow(sx, SURF - 128, 60, "Warm", 0.18 * (1 - crack));
   }
   V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: SKIN.outTop, opacity: 0.18 + crack * 0.24 });
   surfaceHero(t, 850, 0.92, "recoil");
@@ -408,14 +414,17 @@ SCENES.s6 = (u, t) => {
   V2.el("rect", { x: 167, y: SURF - 246, width: 176, height: 44, rx: 8, fill: SKIN.ink, opacity: 0.88 });
   V2.txt(255, SURF - 220, "TRACKS", { "text-anchor": "middle", "font-family": MONO,
     "font-size": 30, fill: P.cream, opacity: 0.92, "letter-spacing": 3 });
-  /* clean side: seamless line + faint amber under-seam */
+  /* clean side: seamless line + amber under-seam (r3 vh nudge: this arc is the
+     clean half's dominant element — thicker + brighter than the myth side) */
   V2.el("path", { d: `M 640 ${THREAD_Y} Q 790 ${THREAD_Y - 34} 950 ${THREAD_Y}`,
-    stroke: P.amber, "stroke-width": 8, fill: "none", opacity: 0.42 + 0.14 * Math.sin(t / 1.8) });
-  V2.glow(800, THREAD_Y - 18, 150, "Warm", 0.42);
-  V2.el("rect", { x: 715, y: SURF - 246, width: 160, height: 44, rx: 8, fill: SKIN.ink, opacity: 0.88 });
-  V2.txt(795, SURF - 220, "SEAM", { "text-anchor": "middle", "font-family": MONO,
-    "font-size": 30, fill: P.cream, opacity: 0.95, "letter-spacing": 3 });
+    stroke: P.amber, "stroke-width": 12, fill: "none", opacity: 0.55 + 0.14 * Math.sin(t / 1.8) });
+  V2.glow(800, THREAD_Y - 18, 190, "Warm", 0.5);
   surfaceHero(t, 760, 0.8, "happy");
+  /* D2: SEAM label sits RIGHT of the hero — hood (drawn after the old plate
+     position) occluded "SE"; x-center 950 clears head + glow chord entirely */
+  V2.el("rect", { x: 870, y: SURF - 246, width: 160, height: 44, rx: 8, fill: SKIN.ink, opacity: 0.88 });
+  V2.txt(950, SURF - 220, "SEAM", { "text-anchor": "middle", "font-family": MONO,
+    "font-size": 30, fill: P.cream, opacity: 0.95, "letter-spacing": 3 });
   V2.grade(t);
 };
 
@@ -449,11 +458,15 @@ SCENES.s8 = (u, t) => {
   const seal = V2.easeInOut(V2.clamp01(u / 0.7));
   const wx = 60 + seal * 960;
   V2.el("rect", { x: 0, y: SURF, width: 1080, height: 24, fill: SKIN.surfLine });
-  V2.el("rect", { x: Math.max(0, wx - 150), y: SURF - 3, width: 150, height: 30,
+  /* seal wave + springy land (r3 directive: overshoot/settle, not abrupt) */
+  const settle = u > 0.7 ? Math.sin((u - 0.7) * 22) * Math.exp(-(u - 0.7) * 7) : 0;
+  V2.el("rect", { x: Math.max(0, wx - 150), y: SURF - 3, width: 150 + settle * 14, height: 30,
     rx: 12, fill: P.cream, opacity: 0.92 });
-  V2.glow(wx, SURF + 6, 160, "Warm", 0.62);
+  V2.glow(wx, SURF + 6, 160 + settle * 34, "Warm", 0.62);
+  /* r3 directive: ~2 s cadence micro-beat — stitch-tension pulse (was 10 s sine = frozen) */
   V2.el("path", { d: `M 140 ${THREAD_Y} Q 540 ${THREAD_Y - 30} 940 ${THREAD_Y}`,
-    stroke: P.amber, "stroke-width": 8, fill: "none", opacity: 0.32 + 0.1 * Math.sin(t / 1.6) });
+    stroke: P.amber, "stroke-width": 8, fill: "none",
+    opacity: 0.3 + 0.16 * Math.pow(0.5 + 0.5 * Math.sin(t * Math.PI), 3) });
   stamp(t, 540, 360, "SEALED IN 48 HOURS", 0.42, P.amber);
   surfaceHero(t, 850, 0.85, "amazed");
   V2.grade(t);
@@ -464,7 +477,10 @@ SCENES.s9 = (u, t) => {
   /* almost no trace: the seam fades toward invisible; one sparkle */
   const fade = 0.4 - V2.easeInOut(V2.clamp01(u / 0.9)) * 0.27;
   V2.el("path", { d: `M 180 ${THREAD_Y} Q 540 ${THREAD_Y - 26} 900 ${THREAD_Y}`,
-    stroke: P.amber, "stroke-width": 7, fill: "none", opacity: fade });
+    stroke: P.amber, "stroke-width": 7, fill: "none",
+    opacity: fade * (0.72 + 0.28 * Math.pow(0.5 + 0.5 * Math.sin(t * Math.PI), 3)) });
+  /* r3 directive: ~2 s cadence breathing micro-glow near the hero (dead-air fix) */
+  V2.glow(800, THREAD_Y - 60, 90, "Warm", 0.2 + 0.14 * Math.pow(0.5 + 0.5 * Math.sin(t * Math.PI + 1), 3));
   const tw = V2.clamp01((u - 0.45) / 0.3);
   if (tw > 0 && tw < 1) {
     const sx = 640, sy = THREAD_Y - 8, r = 14 * Math.sin(tw * Math.PI);
@@ -485,7 +501,10 @@ SCENES.s10 = (u, t) => {
     V2.glow(540, THREAD_Y - 12, 210, "Warm", 0.32);
   });
   surfaceHero(t, 205, 0.82, "skygawk");
-  V2.glow(540, 1520, 320, "Warm", 0.42);
+  /* D2: the old 0.42 warm screen-glow washed the cream title (cream-on-bright);
+     ink plate behind the block + tamed ambience glow — cream + ink stroke pop */
+  V2.glow(540, 1520, 320, "Warm", 0.18);
+  V2.el("rect", { x: 190, y: 1200, width: 700, height: 470, rx: 22, fill: SKIN.ink, opacity: 0.90 });
   kineticTitle(t, ["THE SEAM", "YOU NEVER", "SEE."], 1300, 126, 0.16);
   V2.grade(t);
 };
@@ -499,7 +518,9 @@ SCENES.s11 = (u, t) => {
     V2.glow(540, THREAD_Y - 12, 210, "Warm", 0.3);
   });
   surfaceHero(t, 205, 0.82, "skygawk");
-  V2.glow(540, 1520, 320, "Warm", 0.42);
+  /* D2: same ink plate as s10 — this is the closing/loop frame, "SEE." must survive */
+  V2.glow(540, 1520, 320, "Warm", 0.18);
+  V2.el("rect", { x: 190, y: 1200, width: 700, height: 470, rx: 22, fill: SKIN.ink, opacity: 0.90 });
   kineticTitle(t, ["THE SEAM", "YOU NEVER", "SEE."], 1300, 126, 0.0);
   V2.grade(t);
 };

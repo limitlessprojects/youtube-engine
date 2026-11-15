@@ -135,7 +135,7 @@ def main() -> int:
         mp3 = vo / f"{key}.mp3"
         if not a.verify_only:
             synth_line(tts_text(ln["narration"]), mp3)
-            time.sleep(1)
+            time.sleep(float(os.environ.get("ASR_SLEEP_S", "2")))
         d = dur_of(mp3)
         heard = asr(mp3)
         w = wer(ln["narration"], heard)
@@ -149,7 +149,11 @@ def main() -> int:
                      "verdict": verdict, "audio_dur_s": d, "synced_start_s": round(t, 3)})
         print(f"[{key}] {verdict} wer={w:.2f} dur={d}s start={t:.2f}  «{heard[:60]}»")
         t = round(t + d + GAP_S, 3)
-        time.sleep(2)  # ASR service flakes when hammered (day-008)
+        # ASR service flakes when hammered (day-008; L-111: the 2 s default
+        # still trips the per-minute throttle on re-runs back-to-back —
+        # ASR_SLEEP_S lets a verify-only re-run widen the gap without
+        # editing the file, e.g. ASR_SLEEP_S=9 after a fresh throttled run)
+        time.sleep(float(os.environ.get("ASR_SLEEP_S", "2")))
 
     total_end = round(rows[-1]["synced_start_s"] + rows[-1]["audio_dur_s"], 3)
     n_fail = sum(1 for r in rows if r["verdict"] == "FAIL")

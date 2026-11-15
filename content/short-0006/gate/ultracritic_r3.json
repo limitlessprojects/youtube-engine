@@ -1,0 +1,272 @@
+{
+ "round": 3,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.06,
+ "frame_grand_mean": 7.0,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 8.69,
+  "frame:visual_hierarchy": 5.54,
+  "frame:contrast_legibility": 6.69,
+  "frame:production_polish": 7.08,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 8,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 7.2,
+  "s0_u50": 6.2,
+  "s10_u50": 7.0,
+  "s11_u50": 7.0,
+  "s1_u50": 6.75,
+  "s2_u50": 8.0,
+  "s3_u50": 7.5,
+  "s4_u50": 6.5,
+  "s5_u50": 7.3,
+  "s6_u50": 6.5,
+  "s7_u50": 7.25,
+  "s8_u50": 6.75,
+  "s9_u50": 7.0
+ },
+ "floor_breaches": [
+  "s0_u50",
+  "s10_u50",
+  "s11_u50",
+  "s1_u50",
+  "s4_u50",
+  "s6_u50",
+  "s8_u50",
+  "s9_u50"
+ ],
+ "video_directives": [
+  "Inject a micro-beat every ~2s in the 27-34s stretch: the flat healing line sits nearly static with only slow particle drift \u2014 add a subtle glow pulse or stitch-tension wiggle so the dead-air doesn't feel frozen",
+  "Give the line-drawing animations slightly more overshoot/settle easing \u2014 the wave and loop draws end abruptly instead of a springy land, which would sell each diagram 'reveal' as a beat",
+  "Alternate character pose more tightly with diagram events \u2014 he reacts at scene changes but sometimes freezes mid-gesture while the diagram does all the work; sync his head-turns to the teal needle entry/exit moments"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 0,
+   "top3_directives": [
+    "Give the glowing arcs a readable relationship to the character \u2014 right now the teal/orange squiggles read as abstract decoration; add a subtle motion trail or connection cue so the eye path travels from character to arcs",
+    "Fill the large dead zone between the middle arcs and the bottom dive line with faint background particles/depth layers \u2014 the frame sags in the lower third",
+    "Boost the teal arc's glow saturation and rim-light the character slightly more so the focal subject wins against the dim purple sky"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 6
+   },
+   "mean": 6.2,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the enormous dead zone in the lower two-thirds \u2014 the fishing line dangles into empty darkness with no payoff; bring the underwater subject/visual anchor higher or crop composition",
+    "Character is pinned to the top-right corner while 70% of frame is empty \u2014 recenter focal subject or add midground depth layers (bubbles, fish silhouettes, light rays)",
+    "Overall frame is too dark for daylight phone viewing \u2014 raise ambient fill on the water and push the glow contrast around the character"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 5,
+   "top3_directives": [
+    "Kill the large dead zone: the middle 40% of frame between the character and the caption card is empty \u2014 either enlarge the character, add the spotlighting cable/subject into that space, or raise the caption card to compress the gap",
+    "The character is parked at the very top-left edge with its gesture pointing off-frame \u2014 reposition it to upper-third right-facing so the eye path flows down into the caption",
+    "The caption card's rounded dark box is slightly off-axis from the frame margins \u2014 align its side padding to a consistent grid and tighten line spacing between 'YOU NEVER' and 'SEE.'"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 5,
+   "top3_directives": [
+    "Middle third of the frame is a large dead zone \u2014 add a secondary visual beat (glow, object, or motion trail) bridging character to text",
+    "Character is tiny and corner-anchored; scale up ~30% or reposition so the eye lands on the subject before the caption",
+    "Caption block sits hard against the bottom; lift it and balance whitespace so the composition doesn't feel bottom-loaded"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Character occupies only ~8% of frame in top-right; scale subject up or reposition to command the composition",
+    "Lower 40% is a near-empty dark dead zone with vague blobs and faint pink ticks \u2014 fill or crop; add legible secondary detail or lighten the deep layer",
+    "The orange squiggle lacks a glow rim against the mid-blue water; add subtle outer glow/shadow separation so the focal path survives daylight phone viewing"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the dead zone between the wavy orange line and the lower cell layer \u2014 even faint texture or a subtle label anchor would tighten the eye path",
+    "Anchor the SUBCUTICULAR label to the skin-layer line with a pointer/tick so its referent is unambiguous at a glance",
+    "Slightly raise the bottom cell layer's contrast so the stitch continuation reads clearly on a small daylight screen"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "The character in the top-right is too small and disconnected from the underwater focal scene \u2014 enlarge or reposition it near the horizon so it reads as part of the story",
+    "Bottom third is a large dead zone \u2014 dim vignette is fine, but the descending orange line trails into nothing with no payoff; tighten composition upward or add a subtle focal cue at the line's end",
+    "Background texture streaks and scattered dots read as noise in daylight; either increase their contrast intentionally or reduce them so the teal-glow focal point dominates unambiguously"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the large dead zone in the middle-lower third \u2014 the long vertical gap between the pier and the lower glow reads as empty runtime",
+    "Establish a stronger focal point: the character is tiny and cornered while the orange squiggle competes with two separate glow spots \u2014 pick one hero element and size/brighten it",
+    "Raise contrast in the bottom third \u2014 the muted bubbles and pink dashes sink into the dark background on a small daylight screen"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom third is a dead zone: the trailing orange line wanders into near-black with no payoff \u2014 either lead it to a focal element or crop/compose tighter",
+    "The dark cell/ring shape reads as muddy brown-on-navy at phone brightness; add a rim light or stronger glow separation so it survives daylight viewing",
+    "The dancing character top-right and the glowing center object compete with no connecting eye path \u2014 add a subtle light trail or motion vector linking them to guide the eye"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "The middle 60% of the frame is a dead zone of near-empty blue \u2014 add layered depth cues (silhouettes, texture bands, parallax shapes) or push the camera composition tighter to close the gap between the character and the wavy line",
+    "The TRACKS and SEAM labels are low-contrast grey on dark \u2014 brighten them, add a subtle glow or stronger plate contrast so they survive a 6-inch daylight screen",
+    "The visual relationship between the three black 'track' figures and the character is unclear \u2014 give the left group a faint glow or highlight tie-in so the eye path flows labels \u2192 figures \u2192 character \u2192 descending line"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the large empty mid/lower-left dead zone with a subtle depth element (faint silhouette, particle drift) so the eye has a path from character down the rope",
+    "Boost contrast on the faint purple squiggle accents and background bubbles \u2014 they vanish on a daylight phone screen",
+    "Clarify the relationship between the glowing worm line and the vertical rope \u2014 unify their palette/weight or add a subtle glow cue so they read as one narrative thread rather than two competing focal curves"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the dead middle band: the ~60% of frame between the character and the bottom bubbles is empty \u2014 add a secondary visual anchor (depth-layered silhouette, light shaft, or rising object) along the rope to guide the eye downward.",
+    "Give the wavy orange rope a purpose and terminus \u2014 it currently trails off the bottom edge ambiguously; end it on a glowing focal point or connect it to the character's world to create a real eye path.",
+    "Move the text pill closer to the action or center it \u2014 it floats awkwardly left of the character; anchor it to the horizon line or place it lower-third for stronger top-of-frame balance."
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the dead middle band (~40% of frame) \u2014 the gap between the platform character and the lower cable zone is an empty blue void; move the character lower or add depth cues (buoys, fish silhouettes, light shafts)",
+    "Strengthen the focal point: the character sits top-right with no eye path down; use the glowing hook/cable as a leading line that visibly connects character to the deep-water subject",
+    "Anchor the cable's purpose \u2014 it vanishes between two disconnected zones; add a subtle glow or motion trail so the vertical composition reads as one continuous scene rather than two stacked panels"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

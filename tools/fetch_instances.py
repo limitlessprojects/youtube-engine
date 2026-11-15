@@ -76,6 +76,11 @@ def main() -> int:
                   json.dumps(reg["piped"], separators=(",", ":")) + "'")
         return 0
     for k, v in reg.items():
+        # upstream registry sometimes returns scalars (e.g. a version float)
+        # alongside the instance lists — print scalars, iterate only lists
+        if isinstance(v, (int, float, str)):
+            print(f"{k}: {v}")
+            continue
         print(f"{k} ({len(v)}):")
         for u in v:
             print(f"  {u}")
