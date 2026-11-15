@@ -52,7 +52,7 @@ const SKIN = {
   dermisTop: "#343A6E", dermisMid: "#2C3158", dermisLow: "#232950",
   fiber: "#454C7C", fiberLit: "#525A8C",
   deep: "#1A2144", deepLow: "#131936",
-  lobule: "#37406E", lobuleCore: "#49558A",
+  lobule: "#4A5588", lobuleCore: "#5E6CA4",
   capillary: "#C2447E",
   ink: P.ink,
 };
@@ -89,11 +89,11 @@ const idleBlink = (t, seed) => (V2.rnd(seed, Math.floor(t / 2.7)) < 0.14 &&
   (t % 2.7) < 0.18 ? 1 : 0);
 const pose = (name, t, x, y, scale, extra) => {
   const base = POSES[name] || {};
-  const sway = Math.sin(t / 3.1) * 6;   /* arm sway: never-frozen idle (video pass r1) */
+  const sway = Math.sin(t / 3.1) * 10;  /* arm sway: never-frozen idle (video pass r1) */
   const out = Object.assign({}, V2.basePose, base,
-  { x, y: y + Math.sin(t / 2.6) * 14, scale,
+  { x, y: y + Math.sin(t / 2.6) * 22, scale,
     blink: idleBlink(t, 41),
-    tilt: (base.tilt || 0) + Math.sin(t / 4.3) * 3,
+    tilt: (base.tilt || 0) + Math.sin(t / 4.3) * 4,
     look: base.look !== undefined
       ? Math.max(-1, Math.min(1, base.look + Math.sin(t / 9) * 0.1)) : 0,
   }, extra || {});
@@ -128,7 +128,7 @@ function skinBase(t, dimK) {
     const cx = V2.rnd(36, i) * 1040 + 20 + Math.sin(t / 17 + i * 3) * 6;
     const cy = SURF + 60 + V2.rnd(37, i) * (DERM_BOT - SURF - 110);
     V2.el("ellipse", { cx, cy, rx: 9 + V2.rnd(38, i) * 8, ry: 7 + V2.rnd(39, i) * 6,
-      fill: "#31375C", opacity: 0.5 });
+      fill: "#31375C", opacity: 0.62 });
     V2.el("circle", { cx, cy, r: 3.2, fill: "#3D446E", opacity: 0.7 });
   }
   /* deep tissue: lobule clusters + capillaries — the lower band carries
@@ -141,31 +141,36 @@ function skinBase(t, dimK) {
     const lx = 60 + V2.rnd(46, i) * 960 + Math.sin(t / 19 + i * 2.2) * 8;
     const ly = DERM_BOT + 50 + V2.rnd(47, i) * 720;
     const lr = 30 + V2.rnd(48, i) * 40;
-    V2.el("ellipse", { cx: lx, cy: ly, rx: lr, ry: lr * 0.72, fill: SKIN.lobule, opacity: 0.55 });
-    V2.el("ellipse", { cx: lx, cy: ly, rx: lr * 0.5, ry: lr * 0.36, fill: SKIN.lobuleCore, opacity: 0.5 });
+    V2.el("ellipse", { cx: lx, cy: ly, rx: lr, ry: lr * 0.72, fill: SKIN.lobule, opacity: 0.7 });
+    V2.el("ellipse", { cx: lx, cy: ly, rx: lr * 0.5, ry: lr * 0.36, fill: SKIN.lobuleCore, opacity: 0.62 });
   }
   for (let i = 0; i < 7; i++) {
     const vx = 60 + V2.rnd(41, i) * 960;
     const vy = DERM_BOT + 40 + V2.rnd(42, i) * 620;
     V2.el("path", { d: `M ${vx} ${vy} q ${30 + V2.rnd(43, i) * 60} ${24} ${70 + V2.rnd(44, i) * 90} ${12}`,
-      stroke: SKIN.capillary, "stroke-width": 4.5, fill: "none", opacity: 0.28, "stroke-linecap": "round" });
+      stroke: SKIN.capillary, "stroke-width": 6, fill: "none", opacity: 0.5, "stroke-linecap": "round" });
   }
+  V2.el("path", { d: `M 540 ${DERM_BOT} Q 610 ${DERM_BOT + 170} 520 ${DERM_BOT + 330} Q 475 ${DERM_BOT + 520} 558 1920`,
+    stroke: SKIN.ink, "stroke-width": 15, fill: "none", opacity: 0.92, "stroke-linecap": "round" });
+  V2.el("path", { d: `M 540 ${DERM_BOT} Q 610 ${DERM_BOT + 170} 520 ${DERM_BOT + 330} Q 475 ${DERM_BOT + 520} 558 1920`,
+    stroke: P.amber, "stroke-width": 9, fill: "none", opacity: 0.75, "stroke-linecap": "round" });
+  V2.glow(545, DERM_BOT + 250, 190, "Warm", 0.4);
   V2.glow(540, 1560, 420, "Warm", 0.14 + 0.04 * Math.sin(t / 3.1));
   /* epidermis: bright cream surface line + soft under-shade */
   V2.el("rect", { x: 0, y: SURF, width: 1080, height: 20, fill: SKIN.surfLine });
-  V2.el("rect", { x: 0, y: SURF + 20, width: 1080, height: 10, fill: SKIN.surfShade, opacity: 0.5 });
+  V2.el("rect", { x: 0, y: SURF + 20, width: 1080, height: 10, fill: SKIN.surfShade, opacity: 0.62 });
   /* fine surface micro-texture (G9 detail) */
   for (let i = 0; i < 14; i++) {
     const mx = 30 + V2.rnd(45, i) * 1020;
     V2.el("path", { d: `M ${mx} ${SURF + 4} q 14 3 30 2`, stroke: SKIN.surfShade,
-      "stroke-width": 2.2, fill: "none", opacity: 0.5 });
+      "stroke-width": 2.2, fill: "none", opacity: 0.62 });
   }
   if (dimK) V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: SKIN.outTop, opacity: dimK });
 }
 function surfaceHero(t, hx, hs, name) {
   /* hero ON the skin surface (gate r1 law: hero must READ at 6 inches) */
   V2.glow(hx, SURF - 60 * hs, 210 * hs, "Warm", 0.8);
-  V2.el("ellipse", { cx: hx, cy: SURF + 8, rx: 130 * hs, ry: 22 * hs, fill: SKIN.ink, opacity: 0.9 });
+  V2.el("ellipse", { cx: hx, cy: SURF + 10, rx: 120 * hs, ry: 18 * hs, fill: SKIN.ink, opacity: 0.92 });
   V2.Hero(pose(name, t, hx, SURF - 52 * hs, hs, {}), null, "vRimR");
 }
 /* subcuticular thread path: horizontal zigzag just under the surface */
@@ -223,6 +228,7 @@ function kineticTitle(t, lines, yTop, size, t0) {
     const lt = V2.clamp01((t - SC_T0 - t0 - i * 0.22) / 0.4);
     if (lt <= 0) continue;
     const pop = V2.backOut(lt);
+    V2.glow(540, yTop + gap * i, lines[i].length * 11, "Warm", 0.26 + pop * 0.26);
     V2.txt(540, yTop + gap * i + (1 - pop) * 60, lines[i],
       { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
         "font-size": lines[i].length > 12 ? size * 0.72 : size, fill: P.cream,
@@ -262,7 +268,7 @@ SCENES.hook = (u, t) => {
 SCENES.s0 = (u, t) => {
   skinBase(t);
   /* MYTH frame: loops + knots sitting ON the surface (the shoelace picture) */
-  const crack = V2.easeIn(V2.clamp01((u - 0.45) / 0.5));
+  const crack = V2.easeIn(V2.clamp01(u / 0.9));
   for (let i = 0; i < 4; i++) {
     const sx = 220 + i * 190;
     const wob = Math.sin(t / 9 + i * 1.7) * (3 + crack * 10);
@@ -399,14 +405,16 @@ SCENES.s6 = (u, t) => {
       stroke: SKIN.ink, "stroke-width": 11, fill: "none", opacity: 0.85 });
     V2.el("circle", { cx: sx, cy: SURF - 100, r: 13, fill: SKIN.ink });
   }
+  V2.el("rect", { x: 167, y: SURF - 246, width: 176, height: 44, rx: 8, fill: SKIN.ink, opacity: 0.88 });
   V2.txt(255, SURF - 220, "TRACKS", { "text-anchor": "middle", "font-family": MONO,
-    "font-size": 30, fill: P.cream, opacity: 0.6, "letter-spacing": 3 });
+    "font-size": 30, fill: P.cream, opacity: 0.92, "letter-spacing": 3 });
   /* clean side: seamless line + faint amber under-seam */
   V2.el("path", { d: `M 640 ${THREAD_Y} Q 790 ${THREAD_Y - 34} 950 ${THREAD_Y}`,
     stroke: P.amber, "stroke-width": 8, fill: "none", opacity: 0.42 + 0.14 * Math.sin(t / 1.8) });
-  V2.glow(800, THREAD_Y - 18, 200, "Warm", 0.42);
+  V2.glow(800, THREAD_Y - 18, 150, "Warm", 0.42);
+  V2.el("rect", { x: 715, y: SURF - 246, width: 160, height: 44, rx: 8, fill: SKIN.ink, opacity: 0.88 });
   V2.txt(795, SURF - 220, "SEAM", { "text-anchor": "middle", "font-family": MONO,
-    "font-size": 30, fill: P.cream, opacity: 0.85, "letter-spacing": 3 });
+    "font-size": 30, fill: P.cream, opacity: 0.95, "letter-spacing": 3 });
   surfaceHero(t, 760, 0.8, "happy");
   V2.grade(t);
 };
@@ -509,10 +517,10 @@ function renderFrame(t) {
   const sc = TL[idx];
   SC_T0 = sc.start;
   const u = V2.clamp01((t - sc.start) / (sc.end - sc.start));
-  const entryK = V2.clamp01((t - sc.start) / 0.12);
+  const entryK = V2.clamp01((t - sc.start) / 0.20);
   /* per-cut settle: every scene lands with an eased scale-down (edit-flow r1:
      eased transitions instead of hard cuts) */
-  const settle = 1.045 - 0.045 * V2.easeOut(V2.clamp01((t - sc.start) / 0.28));
+  const settle = 1.06 - 0.055 * V2.easeOut(V2.clamp01((t - sc.start) / 0.40));
   withCam(540, 960, settle, () => (SCENES[sc.id] || SCENES.hook)(u, t));
   if (entryK < 1) V2.el("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: SKIN.outTop, opacity: (1 - entryK) * 0.55 });
   if (EMPHASIS[sc.id]) V2.caption(sc.narration, u, EMPHASIS[sc.id]);
