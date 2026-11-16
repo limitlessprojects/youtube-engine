@@ -1,0 +1,17 @@
+{
+ "id": "ttuKeS5k4Uo",
+ "duration_s": 33.0,
+ "words": 77,
+ "wpm": 140.0,
+ "hook_15s_words": 41,
+ "opener_sentence_words": 77,
+ "sentences": 1,
+ "avg_sentence_words": 77,
+ "short_sentence_ratio": 0.0,
+ "cue_word_density_per_min": 1.8,
+ "connector_starts": 0,
+ "estimated_cuts_per_min_proxy": 1.8,
+ "open_loop_markers": [],
+ "top_bigrams": [],
+ "language_note": "ci-android"
+}
