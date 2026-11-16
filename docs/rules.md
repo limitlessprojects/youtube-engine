@@ -112,7 +112,7 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 | Q4 | Mirrors are opportunistic, never infrastructure; query live registries, don't hardcode | L-037/L-050: 6/6 hardcoded mirrors dead in a day | fetch_instances.py |
 | Q5 | Outlier score (views ÷ channel average) ≥5× → blueprint its transcript the same day | L-018; MinuteEarth 8.7× picked the #0002 formula | process (rss_scout) |
 | Q6 | Steal structure, never content — transcripts are read for pacing/rhythm only | L-019 (transformative rule) | process |
-| Q7 | Bot-wall posture: GitHub-runner matrix + mirrors + proxies + (since 2026-11-16, boss directive) a residential cron on the boss laptop (`youtube-daily-loop.timer`, 23:00 EAT, `tools/daily_loop.py`); no y2mate-class sites, no cobalt | Boss directive 2026-11-16; L-031, L-054, L-057 | process (policy) |
+| Q7 | Bot-wall posture: GitHub-runner matrix + mirrors + proxies only; no residential hardware, no y2mate-class sites, no cobalt | Boss directive; L-031, L-054, L-057 | process (policy) |
 
 ## Evidence-coverage summary
 
