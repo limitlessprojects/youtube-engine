@@ -1,0 +1,147 @@
+{
+  "short": "short-0006",
+  "verified_at": "2026-11-16T04:33:18.100056+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +45%",
+  "gap_s": 0.45,
+  "total_vo_s": 35.04,
+  "timeline_end_s": 39.99,
+  "n_fail": 0,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "narration",
+      "expected": "When doctors sew you up, the most important thread never surfaces.",
+      "heard": "When doctors sew you up, the most important thread never surfaces.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.48,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "narration",
+      "expected": "Forget the shoelace picture: loops and knots on top.",
+      "heard": "Forget the shoelace picture. Loops and knots on top.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.832,
+      "synced_start_s": 3.93
+    },
+    {
+      "line": "02",
+      "role": "narration",
+      "expected": "For scars that heal flat, the thread rides under the surface.",
+      "heard": "For scars that heal flat, the thread rides under the surface.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.144,
+      "synced_start_s": 7.212
+    },
+    {
+      "line": "03",
+      "role": "narration",
+      "expected": "It's the subcuticular stitch: one thread hidden inside the skin.",
+      "heard": "It's the subcuticular stitch, one thread hidden inside the skin.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.528,
+      "synced_start_s": 10.806
+    },
+    {
+      "line": "04",
+      "role": "narration",
+      "expected": "The needle zigzags through one layer, catching both edges every pass.",
+      "heard": "The needle zigzags through one layer, catching both edges every pass.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.768,
+      "synced_start_s": 14.784
+    },
+    {
+      "line": "05",
+      "role": "narration",
+      "expected": "Each pass pulls the gap shut: a zipper under the surface.",
+      "heard": "Each pass pulls the gap shut, a zipper under the surface.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.12,
+      "synced_start_s": 19.002
+    },
+    {
+      "line": "06",
+      "role": "narration",
+      "expected": "The end knot gets buried, where your skin swallows it whole.",
+      "heard": "The end, not gets buried, where your skin swallows it whole.",
+      "wer": 0.091,
+      "accuracy": 0.909,
+      "verdict": "PASS",
+      "audio_dur_s": 2.976,
+      "synced_start_s": 22.572
+    },
+    {
+      "line": "07",
+      "role": "narration",
+      "expected": "No stitch tracks. Just a clean seam.",
+      "heard": "No stitch tracks, just a clean seam.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.112,
+      "synced_start_s": 25.998
+    },
+    {
+      "line": "08",
+      "role": "narration",
+      "expected": "The thread dissolves on its own. No removal visit.",
+      "heard": "The thread dissolves on its own. No removal visit.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.712,
+      "synced_start_s": 28.56
+    },
+    {
+      "line": "09",
+      "role": "narration",
+      "expected": "In about two days, the surface seals itself.",
+      "heard": "In about two days, the surface seals itself.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.496,
+      "synced_start_s": 31.722
+    },
+    {
+      "line": "10",
+      "role": "narration",
+      "expected": "The best-stitched skin shows almost no trace.",
+      "heard": "The best stitched skin shows almost no trace.",
+      "wer": 0.286,
+      "accuracy": 0.714,
+      "verdict": "WARN",
+      "audio_dur_s": 2.496,
+      "synced_start_s": 34.668
+    },
+    {
+      "line": "11",
+      "role": "narration",
+      "expected": "The finest seam is the one you never see.",
+      "heard": "The finest seam is the one you never see.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.376,
+      "synced_start_s": 37.614
+    }
+  ]
+}

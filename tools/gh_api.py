@@ -92,7 +92,7 @@ def main() -> int:
         txt = urllib.request.urlopen(loc, timeout=60).read().decode("utf-8", "ignore")
         key = a[2] if len(a) > 2 else "##[error]"
         k = txt.find(key)
-        print(txt[max(0, k - 2500):k + 600] if k >= 0 else txt[-3000:])
+        print(txt[max(0, k - 2500):k + 2500] if k >= 0 else txt[-3000:])
     elif cmd == "dispatch":
         inputs = dict(kv.split("=", 1) for kv in a[2:])
         st, _, d = call("POST", f"/repos/{REPO}/actions/workflows/{a[1]}/dispatches", {"ref": "main", "inputs": inputs})

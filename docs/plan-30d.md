@@ -26,7 +26,12 @@
 | 5 | Advance the next short: script → VO → scenes → render → gates → publish | `docs/playbook/` |
 | 6 | Ledger line + log + commit + push | `docs/lessons.md` + `logs/` |
 
-## Status right now (Day 018 — 09:45 EAT session, 2026-11-15; end-of-Day-017 block below)
+## Status right now (Day 019 — 2026-11-16, fresh machine)
+
+- **#0006 PUBLISHED: https://youtu.be/BHRLMfSbHBw — "The thread doctors hide under your skin"** (public, disclosure ON, thumbnail SET, CI run 43803936426). It is the **v3 rebuild** (one lit skin block, one continuous take), not the v2 cut that carried at 7.06/7.10 below. **Not model-gated:** ultracritic r5 was attempted and every frame returned VLM 402; published on the boss's direct instruction with an agent-judged record (`content/short-0006/gate/agent_review_r5.md`). Owed: a funded-judge round on the live cut; first views row.
+- Read `docs/handoff-day-018.md` for the method and new tools (contact_sheet, gh_api, render --workers, offline ASR).
+
+## Earlier status (Day 018 — 09:45 EAT session, 2026-11-15; end-of-Day-017 block below)
 
 - **#0006 CARRIED UNPOSTED — the budgeted r3/r4 decision executed on the new judge (carry_r2.md).** r3 7.06 / r4 7.10 combined, both BELOW_BAR (bar 7.5); vh stuck 5.5–5.8 = third confirmation of the world-template ceiling (L-085/L-112); video pass stable 7/8/7; text_discipline 8.7/8.8 best ever after the D2 residuals were fixed (s6 hood occlusion, s10/s11 glow-wash → ink plate, kineticTitle pop timing). ASR union-verify GREEN (12/12, 0 fails). Master 39.13s / −15.16 LUFS mirrored to upload/short-0006.mp4. Credits LIVE again; judge probe: glm-4.6v requests now return glm-5.3-flash (L-113 — r1/r2 vs r3/r4 not comparable). **#0007 directive: design the world ONE-DOMINANT from the first sketch (one subject ≥50% per scene, L-112 checklist + carry_r2).**
 - Views row 2026-11-15: RSS 404 ×3 (L-031 class) — no row; last 2026-11-14. AI re-render matrix run 43608071984: all 19 chunks failed at ZeroGPU — fresh-IP route confirmed dead (L-106/L-107).

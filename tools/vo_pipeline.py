@@ -87,6 +87,31 @@ def dur_of(f: Path) -> float:
     return round(float(r.stdout.strip()), 3)
 
 
+def asr_local(wav: Path) -> str:
+    """Offline ASR via whisper.cpp (`whisper-cli`) when it and a ggml model exist.
+
+    Model lookup: $WHISPER_MODEL, then ~/.cache/whisper/ggml-*.bin, then any
+    ggml-{small,base,medium}*.bin under ~/.local/share. Returns "" when unavailable so the
+    caller falls through to `z-ai asr`. Set VO_ASR=remote to skip it.
+    """
+    import glob, os, shutil
+    if os.environ.get("VO_ASR") == "remote" or not shutil.which("whisper-cli"):
+        return ""
+    cands = [os.environ.get("WHISPER_MODEL", "")]
+    for pat in ("~/.cache/whisper/ggml-*.bin", "~/.local/share/**/ggml-small*.bin",
+                "~/.local/share/**/ggml-base*.bin", "~/.local/share/**/ggml-medium*.bin"):
+        cands += sorted(glob.glob(os.path.expanduser(pat), recursive=True))
+    model = next((c for c in cands if c and os.path.exists(c)), "")
+    if not model:
+        return ""
+    try:
+        r = subprocess.run(["whisper-cli", "-m", model, "-f", str(wav), "-l", "en", "-nt", "-np"],
+                           capture_output=True, text=True, timeout=300)
+    except Exception:
+        return ""
+    return " ".join(r.stdout.split()).strip() if r.returncode == 0 else ""
+
+
 def asr(f: Path) -> str:
     """z-ai asr only accepts WAV/WebM — convert to 16k mono WAV first."""
     with tempfile.TemporaryDirectory() as td:
@@ -95,6 +120,9 @@ def asr(f: Path) -> str:
         subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(f), "-ar", "16000",
                         "-ac", "1", str(wav)], check=True, capture_output=True)
         txt = ""
+        local = asr_local(wav)
+        if local:            # offline whisper.cpp present: no throttle, no credits (L-118)
+            return local
         for attempt in range(3):
             subprocess.run(["z-ai", "asr", "-f", str(wav), "-o", str(out)],
                            capture_output=True, text=True, timeout=240)

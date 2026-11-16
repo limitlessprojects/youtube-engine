@@ -130,6 +130,18 @@ def load_vo(path):
              "-ar", str(SR), "-"], binary=True)
     return np.frombuffer(r.stdout, dtype=np.float32).astype(np.float64)
 
+def _sd_note(script):
+    """Describe the sound design that was ACTUALLY mixed (the old string was hardcoded for #0002)."""
+    if "sfx" in script:
+        kinds = {}
+        for e in script["sfx"]:
+            kinds[e["kind"]] = kinds.get(e["kind"], 0) + 1
+        cues = " + ".join(f"{n} {k}" for k, n in sorted(kinds.items()))
+        return f"synth bed (Aadd9 pad, peak {script.get('bed_peak', 0.16)}) + per-short sfx table: {cues}; bed ducked -9 dB under VO"
+    return "synth bed (Aadd9 pad) + riser + 2 whoosh + 7 thumps + blip (legacy table), ducked -9 dB"
+
+
+
 def main() -> int:
     slug = sys.argv[1]
     short = REPO / "content" / slug
@@ -233,7 +245,7 @@ def main() -> int:
         # CI AI-rerender path: build the mix/master only — the visual side comes
         # from the ZeroGPU chunks, which the collector remuxes with this master.
         report = {"file": str(master),
-                  "sound_design": "synth bed (Aadd9 pad) + riser + 2 whoosh + 7 thumps + blip, ducked -8dB",
+                  "sound_design": _sd_note(script),
                   "audio_only": True}
         (short / "vo" / "master_report.json").write_text(json.dumps(report, indent=2) + "\n")
         raw.unlink()
@@ -264,7 +276,7 @@ def main() -> int:
               "lufs": round(float(lm["input_i"]), 2),
               "true_peak_dbtp": round(float(lm["input_tp"]), 2),
               "size_mb": round(out.stat().st_size / 1e6, 2),
-              "sound_design": "synth bed (Aadd9 pad) + riser + 2 whoosh + 7 thumps + blip, ducked -8dB"}
+              "sound_design": _sd_note(script)}
     (short / "vo" / "master_report.json").write_text(json.dumps(report, indent=2) + "\n")
     raw.unlink()
     print(json.dumps(report, indent=2))

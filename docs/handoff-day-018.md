@@ -54,9 +54,9 @@
   record, use your own eyes for the loop.
   Sheets are downscaled — open one probe at full size before trusting small text.
 
-## 4. What I could not do — be honest about these
+## 4. What I could not do
 
-- **ASR**: I could not run it here (`faster-whisper` has no Python 3.14 wheel; the `z-ai asr` shim is unimplemented). The upstream run of 2026-11-15 on the same mp3s is 11 PASS / 1 WARN / 0 FAIL — I relied on that.
+- **ASR** — closed late in the session: `whisper-cli` (whisper.cpp) was already installed; `vo_pipeline` now uses it first. 12 lines, 0 FAIL on this box (L-118). `faster-whisper` has no Python 3.14 wheel — don't retry it.
 - **No model-judged gate ran on v3.** Frame review was done by me (the agent) from
   contact sheets. That is an agent judgment, not an ultracritic verdict (dead-end D8).
   The temporal dims in particular were judged from stills + the motion code, not from
@@ -81,3 +81,12 @@
 - Credentials: never paste a token into a command line. This harness blocks commands
   that read `~/.config/opencode/.secrets/*` into variables — use git's credential
   helper (already configured) and let the human run anything that needs the raw PAT.
+
+## 6. Outcome
+
+- Published: https://youtu.be/BHRLMfSbHBw (public, disclosure ON, thumbnail SET) via `publish.yml` run 43803936426.
+- The first real dispatch failed: hosted runners have no ffmpeg (L-119). Fixed in the workflow.
+- More tools from the wait time: `render_short.py --full --workers 4` (27 min → ~7 min here, frames byte-identical),
+  `gh_api.py logs <run>`, offline ASR in `vo_pipeline.py`.
+- While CI runs, do not edit the scene file of the short being published "to improve it" — CI renders the commit
+  it checked out, and the repo would then disagree with the live video.
