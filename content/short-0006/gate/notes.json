@@ -1,33 +1,28 @@
 {
  "short": "short-0006",
+ "version": "v3 rebuild 2026-11-16 (v1/v2 notes superseded; old scene file kept as render/scenes.v2-carried.html)",
+ "world": "ONE lit skin block in a dim operating theatre. Top face = skin surface in perspective; front face = cross-section (epidermis with rete ridges, dermis with collagen/capillary loops/hair follicle/sweat gland, vessels, fat lobules). The wound runs front-to-back. Warm flesh on navy; teal thread is the single cool accent. The front face intentionally runs off the bottom edge.",
+ "intent": {
+  "camera": "scenes are camera moves on the same object with a 0.36 s eased whip between them - not hard cuts",
+  "xray": "pink top face = the skin cover made translucent on purpose (X-RAY VIEW); it is not a colour error",
+  "text": "one text system per scene: dark chips / one big stamp; title only on hook and closer",
+  "loop": "last frame equals frame 0 (open wound, needle poised, same title)"
+ },
  "accuracy_pass": {
-  "object_lists": {
-   "hook": ["skin cross-section: epidermis line, dermis band, deep tissue", "amber thread (subcuticular path, 7 zigzag passes)", "teal curved needle entering from right", "hero surgeon (small, surface-left)", "collagen fibers, cell specks, capillary hints (G9 density)"],
-   "s0": ["myth sutures: 5 ink loops + knots ON the surface", "dimming overlay", "hero recoil"],
-   "s1": ["thread path progressive arc-wipe reveal", "wound edges below", "hero presenting"],
-   "s2": ["STAMP SUBCUTICULAR (cream chip)", "highlighted thread pulse", "hero pointing"],
-   "s3": ["teal curved needle (zoomed 1.34)", "zigzag thread track", "bite marks on both wound edges", "scatter-angle arc wipe (G9 hero)"],
-   "s4": ["V-gap wound closing", "thread zipper + ink dash teeth", "hero presenting"],
-   "s5": ["buried figure-8 ink knot", "skin-swallow closing band", "hero amazed"],
-   "s6": ["split compare: 3 myth loops + TRACKS label vs clean seam + SEAM label", "divider dashes", "hero happy"],
-   "s7": ["thread dissolving (dash fade)", "18 amber particles drifting up", "hero relaxed"],
-   "s8": ["seal wave traveling the surface", "STAMP SEALED IN 48 HOURS", "faint amber seam", "hero amazed"],
-   "s9": ["seam fading to near-invisible", "one sparkle", "hero happy"],
-   "s10": ["loop mirror cross-section", "faint seam", "kinetic title 3 lines", "hero skygawk"],
-   "s11": ["hold: title stays, seam shimmer"]
-  },
-  "reference_checks": [
-   "subcuticular path = horizontal zigzag within ONE dermal layer, short diagonal runs, bites on both wound edges — checked against limbsandthings suture tutor technique teaching + PMC9154294",
-   "needle = curved (semi-circular) surgical needle, swaged eye at tail — standard needle shape",
-   "buried knot = figure-8 loop tuck under the dermis — limbsandthings 'buried knot technique'",
-   "skin layers: epidermis (thin bright line) / dermis (thick layer with fibers) / subcutis (deep) — standard cross-section anatomy; cartoon-clean, NO gore (boss brief compliance)",
-   "sealing claim: 48 h re-epithelialization for well-approximated wounds (StatPearls NBK532977) — stamp says 48 HOURS"
+  "objects": [
+   "curved surgical needle (steel, 168 deg arc)",
+   "teal suture thread: subcuticular ladder - bite along one edge, cross, bite along the other, 8 passes",
+   "surface (interrupted) stitches with knots - the MYTH picture, s0 only",
+   "buried end knot in the dermis (s5)",
+   "epithelial cells closing over the seam (s8)",
+   "magnifier (s9)",
+   "vitals monitor ECG, lamp, instrument shelf (room)"
   ],
-  "wow_elements": {
-   "hook": "the thread visibly rides INSIDE the skin while the surface stays unbroken — the correction IS the picture",
-   "s3": "scatter-angle arc wipe tracking the needle angle (G9 hero moment, #0003 device)",
-   "s5": "the skin visually swallows the buried knot"
-  },
-  "palette_check": "amber thread = the ONE warm accent per scene; teal needle = the ONE cool accent (s3/s5 only, where the subject IS the instrument); epidermis cream = skin/light token; dermis/deep = raised/nebula world tones; NO magenta except 0.16-alpha capillary hints in deep tissue (world-token usage)"
- }
+  "wow": "rete ridges + capillary loops in the section; shaved field with hairs only at the margins"
+ },
+ "known_simplifications": [
+  "block proportions are diagrammatic, layer thickness not to scale",
+  "knot shown as one bead; real buried knots are several throws",
+  "48 h is surface re-epithelialisation of a well-approximated wound (StatPearls NBK532977), not full healing"
+ ]
 }

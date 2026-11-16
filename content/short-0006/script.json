@@ -1,13 +1,11 @@
 {
- "title": "How stitches work when doctors actually use them",
+ "title": "The thread doctors hide under your skin",
  "format": "short",
  "hook": {
   "timestamp_start": 0.0,
   "narration": "When doctors sew you up, the most important thread never surfaces.",
   "visual": {
-   "pose": "skygawk (surgeon hero tiny at frame edge, curious lean)",
-   "prop": "skin cross-section OWNS the frame: cream epidermis band, amber thread arcing UNDER the surface with 3-stop glow, teal needle tip entering; NO text on frame-0 (L-109: the image poses the question)",
-   "background": "skin-cross-section-dawn"
+   "v3": "skin BLOCK owns frame (top face = surface, front face = section); curved needle bites the left lip, rotates under, x-ray pulse shows it swallowed; title THE STITCH YOU NEVER SEE on frame 0 (loop target)"
   },
   "fact_sources": [
    "running subcuticular (intradermal) suture lies entirely WITHIN the dermis and never surfaces; first described by Halsted (Zhang, Xie & Zeng, Dermatol Surg 2022, PMC9154294); 'leaves behind practically no suture mark on the skin' (Chatterjee 2012, PubMed)"
@@ -19,9 +17,7 @@
    "timestamp_start": 3.73,
    "narration": "Forget the shoelace picture: loops and knots on top.",
    "visual": {
-    "pose": "recoil (myth cringe)",
-    "prop": "MYTH frame: surface sutures as ink loops + knots ON the cream band, dimmed and cracking = the old picture; hero steps back",
-    "background": "skin-myth-dim"
+    "v3": "5 surface stitches + knots pop on, chip WHAT YOU PICTURE gets struck, stitches fall away"
    },
    "fact_sources": [
     "belief frame: simple interrupted sutures with visible knots are one common closure, but the flat-scar closures run subcuticularly (PMC9154294) — the scene presents the assumption being corrected, not a false fact"
@@ -32,9 +28,7 @@
    "timestamp_start": 6.81,
    "narration": "For scars that heal flat, the thread rides under the surface.",
    "visual": {
-    "pose": "presenting",
-    "prop": "thread path animates beneath the bright surface line (arc wipe follows the needle path), wound edges below start to meet",
-    "background": "skin-ride"
+    "v3": "teal scan bar sweeps front to back: skin cover goes translucent (X-RAY VIEW), teal ladder thread revealed in the dermis"
    },
    "fact_sources": [
     "subcuticular suture proven to reduce scar width via tension reduction on wound edges (PMC9154294)"
@@ -45,9 +39,7 @@
    "timestamp_start": 10.21,
    "narration": "It's the subcuticular stitch: one thread hidden inside the skin.",
    "visual": {
-    "pose": "pointing",
-    "prop": "STAMP 'SUBCUTICULAR' (cream chip, ink stroke on busy zone) + thread highlighted inside the dermis band",
-    "background": "skin-name"
+    "v3": "camera drops to the cross-section: thread bridging the gap inside the dermis; stamp SUBCUTICULAR = UNDER THE SKIN; DERMIS bracket"
    },
    "fact_sources": [
     "technique name and lineage (PMC9154294) — the name lives in the STAMP (ASR cannot carry it, day-013 precedent); VO says it"
@@ -58,9 +50,7 @@
    "timestamp_start": 13.98,
    "narration": "The needle zigzags through one layer, catching both edges every pass.",
    "visual": {
-    "pose": "brace (focused)",
-    "prop": "NEEDLE CLOSE-UP OWNS the frame: teal needle zigzagging through the amber dermis band, entry/exit bites marked on both wound edges; scatter-angle arc wipe = G9 hero moment (reuse #0003 device)",
-    "background": "skin-needle-close"
+    "v3": "top-down close-up, curved needle walks the ladder, bite rings on each edge, PASS n / 8 counter"
    },
    "fact_sources": [
     "running intradermal stitch passes horizontally through the dermis taking a small bite on each side of the wound (subcuticular technique teaching, limbsandthings suture tutor; Halsted lineage PMC9154294)"
@@ -71,9 +61,7 @@
    "timestamp_start": 17.73,
    "narration": "Each pass pulls the gap shut: a zipper under the surface.",
    "visual": {
-    "pose": "presenting (hands guiding)",
-    "prop": "wound gap closes from below as the thread 'zipper' pulls: two skin edges slide together, ink dash zipper line abstract under the surface",
-    "background": "skin-zipper"
+    "v3": "hero pulls the thread tail; gap zips shut front to back with sparks"
    },
    "fact_sources": [
     "continuous intradermal suture apposes wound edges as it runs (subcuticular technique teaching, limbsandthings)"
@@ -84,9 +72,7 @@
    "timestamp_start": 21.1,
    "narration": "The end knot gets buried, where your skin swallows it whole.",
    "visual": {
-    "pose": "amazed",
-    "prop": "camera dives to the KNOT: ink knot tucked beneath the dermis band, gentle closing motion around it, teal rim on the needle tail",
-    "background": "skin-buried-knot"
+    "v3": "section close-up: knot dives into the dermis, surface ripples shut; chip BURIED KNOT"
    },
    "fact_sources": [
     "most subcuticular closures use absorbable sutures that are not removed, secured with a buried knot technique (limbsandthings suture tutor); knotless running variants also documented (ISHS 'running subcutaneous suture without knots') — VO says 'buried', never 'no knots at all'"
@@ -97,9 +83,7 @@
    "timestamp_start": 24.33,
    "narration": "No stitch tracks. Just a clean seam.",
    "visual": {
-    "pose": "happy (relieved)",
-    "prop": "compare frame: railroad-track stitch marks (myth side, dimmed) vs the clean surface line (glowing faint)",
-    "background": "skin-clean-seam"
+    "v3": "two medallions: STITCH TRACKS (struck) vs CLEAN SEAM"
    },
    "fact_sources": [
     "'practically no suture mark on the skin' (Chatterjee 2012, PubMed)"
@@ -110,9 +94,7 @@
    "timestamp_start": 26.69,
    "narration": "The thread dissolves on its own. No removal visit.",
    "visual": {
-    "pose": "relaxed (hands free)",
-    "prop": "thread dissolving into drifting amber particles (secondary motion), dermis band calm",
-    "background": "skin-dissolve"
+    "v3": "x-ray: thread breaks into drifting motes; chips ABSORBABLE THREAD / NO REMOVAL VISIT"
    },
    "fact_sources": [
     "most subcuticular closures now use absorbable sutures that are not removed (limbsandthings suture tutor)"
@@ -123,9 +105,7 @@
    "timestamp_start": 29.66,
    "narration": "In about two days, the surface seals itself.",
    "visual": {
-    "pose": "amazed",
-    "prop": "surface seals with a gentle pulse along the line; STAMP 'SEALED IN 48 HOURS' lands (digits on-screen legal; VO says words)",
-    "background": "skin-seal"
+    "v3": "epithelial cells slide over the seam; counter 00 to 48 HOURS, SURFACE SEALED"
    },
    "fact_sources": [
     "well-approximated wounds can re-epithelialize within 48 hours (StatPearls 'Physiology, Epithelialization', NBK532977) — DEVIATION from boss brief's 'CLOSED IN 24 HOURS' recorded in script.md: no source supports 24 h, 48 h is the sourced figure"
@@ -136,9 +116,7 @@
    "timestamp_start": 32.41,
    "narration": "The best-stitched skin shows almost no trace.",
    "visual": {
-    "pose": "soft smile (neutral)",
-    "prop": "skin smooth, the faint seam line fading to almost invisible; one restrained sparkle",
-    "background": "skin-fade"
+    "v3": "hero walks in with a magnifier, finds almost nothing, '?'"
    },
    "fact_sources": [
     "'practically no suture mark on the skin' (Chatterjee 2012); RCT cosmesis: patients preferred subcuticular closure for better cosmetic results (Tanaka 2014, PubMed 24439741)"
@@ -149,9 +127,7 @@
    "timestamp_start": 35.16,
    "narration": "The finest seam is the one you never see.",
    "visual": {
-    "pose": "skygawk (loop mirror of hook)",
-    "prop": "loop mirror: same cross-section as hook, thread now dissolved, only the smooth surface + faint seam remain; kinetic closer title pops = the spoken line",
-    "background": "skin-cross-section-dawn"
+    "v3": "title pops back: THE STITCH YOU NEVER SEE; hero cheers"
    },
    "fact_sources": [
     "one closer (L-077), loops to hook (day-013 structure law); no new claim"
@@ -162,9 +138,7 @@
    "timestamp_start": 37.79,
    "narration": "",
    "visual": {
-    "pose": "skygawk (loop mirror, held)",
-    "prop": "closer hold: smooth skin + faint seam shimmer continues, title stays; visual-only pacing beat for L-097 headroom (day-015/#0005 precedent)",
-    "background": "skin-cross-section-dawn"
+    "v3": "loop mirror: seam unzips, needle swings back to its frame-0 pose"
    },
    "fact_sources": [
     "visual-only pacing beat (day-015 law): 13 beats vs ceil(38.69/3.2)=13 PASS with margin; J-cut over the s10 closer"
@@ -179,5 +153,177 @@
   "words": 114,
   "wpm_note": "measured post-synth (L-003): VO spans 34.79 s (37.79 minus 12 gaps x 0.25), 114 words = 196.6 WPM canon — in-band 185-215. L-097: 12 beats vs ceil(37.79/3.2)=12 PASS, mean scene 3.15 s (at floor). ASR verify throttled this session (12/12 empty, L-081 class) — union re-verify --verify-only BEFORE render is a carry liability.",
   "wpm_measured": 196.6
- }
+ },
+ "title_history": [
+  "How stitches work when doctors actually use them (boss brief, day-017)"
+ ],
+ "sfx": [
+  {
+   "kind": "whoosh",
+   "at": 0.45,
+   "gain": 0.7,
+   "f_lo": 500,
+   "f_hi": 2400
+  },
+  {
+   "kind": "thump",
+   "at": 3.85,
+   "gain": 0.35,
+   "seed": 20
+  },
+  {
+   "kind": "thump",
+   "at": 3.98,
+   "gain": 0.35,
+   "seed": 21
+  },
+  {
+   "kind": "thump",
+   "at": 4.11,
+   "gain": 0.35,
+   "seed": 22
+  },
+  {
+   "kind": "thump",
+   "at": 4.24,
+   "gain": 0.35,
+   "seed": 23
+  },
+  {
+   "kind": "thump",
+   "at": 4.37,
+   "gain": 0.35,
+   "seed": 24
+  },
+  {
+   "kind": "thump",
+   "at": 5.48,
+   "gain": 0.8,
+   "seed": 7
+  },
+  {
+   "kind": "whoosh",
+   "at": 7.06,
+   "gain": 0.8,
+   "seed": 4,
+   "f_lo": 700,
+   "f_hi": 4200
+  },
+  {
+   "kind": "riser",
+   "at": 9.46,
+   "gain": 0.45
+  },
+  {
+   "kind": "thump",
+   "at": 10.76,
+   "gain": 0.95,
+   "seed": 9
+  },
+  {
+   "kind": "blip",
+   "at": 14.33,
+   "gain": 0.4
+  },
+  {
+   "kind": "blip",
+   "at": 14.74,
+   "gain": 0.4
+  },
+  {
+   "kind": "blip",
+   "at": 15.15,
+   "gain": 0.4
+  },
+  {
+   "kind": "blip",
+   "at": 15.56,
+   "gain": 0.4
+  },
+  {
+   "kind": "blip",
+   "at": 15.97,
+   "gain": 0.4
+  },
+  {
+   "kind": "blip",
+   "at": 16.38,
+   "gain": 0.4
+  },
+  {
+   "kind": "blip",
+   "at": 16.79,
+   "gain": 0.4
+  },
+  {
+   "kind": "blip",
+   "at": 17.2,
+   "gain": 0.4
+  },
+  {
+   "kind": "whoosh",
+   "at": 18.08,
+   "gain": 0.75,
+   "seed": 5,
+   "f_lo": 400,
+   "f_hi": 3000
+  },
+  {
+   "kind": "thump",
+   "at": 22.25,
+   "gain": 0.9,
+   "seed": 11
+  },
+  {
+   "kind": "thump",
+   "at": 24.41,
+   "gain": 0.6,
+   "seed": 12
+  },
+  {
+   "kind": "thump",
+   "at": 25.41,
+   "gain": 0.7,
+   "seed": 13
+  },
+  {
+   "kind": "whoosh",
+   "at": 26.89,
+   "gain": 0.45,
+   "seed": 6,
+   "f_lo": 1500,
+   "f_hi": 5200
+  },
+  {
+   "kind": "thump",
+   "at": 31.36,
+   "gain": 0.9,
+   "seed": 14
+  },
+  {
+   "kind": "blip",
+   "at": 33.91,
+   "gain": 0.6
+  },
+  {
+   "kind": "thump",
+   "at": 35.28,
+   "gain": 0.8,
+   "seed": 15
+  },
+  {
+   "kind": "thump",
+   "at": 35.48,
+   "gain": 0.8,
+   "seed": 16
+  },
+  {
+   "kind": "whoosh",
+   "at": 37.84,
+   "gain": 0.6,
+   "seed": 8,
+   "f_lo": 500,
+   "f_hi": 2400
+  }
+ ]
 }
