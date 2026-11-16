@@ -55,3 +55,4 @@ content/*/vo/master.m4a
 research/cache/*
 !research/cache/instances.json
 content/_watch/
+content/*/render/_sheet/
