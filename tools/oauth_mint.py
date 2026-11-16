@@ -28,7 +28,10 @@ from pathlib import Path
 SECRETS_CLIENT = "/home/z/my-project/upload/client_secret.json"
 TOKEN_MIRROR = "/home/z/my-project/upload/token.json"
 TOKEN_WORKING = "/home/z/my-project/.secrets/token.json"
-SCOPE = "https://www.googleapis.com/auth/youtube.upload"
+SCOPE = "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly"
+# day-019: upload-only grants cannot call videos.list (403 insufficient scope) —
+# the views lane needs youtube.readonly. Both scopes request in ONE consent screen;
+# upload keeps working, views_api.py unlocks. --scope overrides for special cases.
 REDIRECT = "http://localhost"  # registered Desktop-client loopback redirect
 TOKEN_URI = "https://oauth2.googleapis.com/token"
 
@@ -43,6 +46,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", action="store_true", help="print the consent URL")
     ap.add_argument("--code", default="", help="authorization code pasted back by the boss")
+    ap.add_argument("--scope", default=SCOPE, help="space-separated OAuth scopes (default: upload + readonly)")
     a = ap.parse_args()
     if not a.url and not a.code:
         ap.error("need --url or --code")
@@ -53,7 +57,7 @@ def main() -> int:
             "client_id": cid,
             "redirect_uri": REDIRECT,
             "response_type": "code",
-            "scope": SCOPE,
+            "scope": a.scope,
             "access_type": "offline",   # force a refresh token
             "prompt": "consent",        # force a FRESH grant (old one is dead)
         })
