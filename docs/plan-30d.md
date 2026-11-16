@@ -1,4 +1,4 @@
-# The 30-Day Plan — status Day 018 (Nov 15), horizon Day 037 (Dec 8)
+# The 30-Day Plan — status Day 019 (Nov 16), horizon Day 037 (Dec 8)
 
 > Reader: the next session's agent. This is the contract: what each phase proves,
 > what you owe the channel today, and the forks we pre-decided so nobody spirals
