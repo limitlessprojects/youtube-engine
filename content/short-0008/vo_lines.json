@@ -1,0 +1,65 @@
+{
+  "short": "short-0008",
+  "lines": [
+    {
+      "key": "hook",
+      "role": "narration",
+      "narration": "The deadliest hunter on Earth is a virus shaped like a moon lander."
+    },
+    {
+      "key": "s0",
+      "role": "narration",
+      "narration": "It's called a bacteriophage, and it only hunts bacteria."
+    },
+    {
+      "key": "s1",
+      "role": "narration",
+      "narration": "It lands on one, legs first, and grips the surface."
+    },
+    {
+      "key": "s2",
+      "role": "narration",
+      "narration": "Then it squats, and punches a needle through the wall."
+    },
+    {
+      "key": "s3",
+      "role": "narration",
+      "narration": "Its DNA shoots inside, and takes over the cell."
+    },
+    {
+      "key": "s4",
+      "role": "narration",
+      "narration": "The bacterium stops living, and starts building phages."
+    },
+    {
+      "key": "s5",
+      "role": "narration",
+      "narration": "In half an hour, it is packed with a hundred copies."
+    },
+    {
+      "key": "s6",
+      "role": "narration",
+      "narration": "Then they dissolve the wall from inside. Pop."
+    },
+    {
+      "key": "s7",
+      "role": "narration",
+      "narration": "Every one flies off to find another."
+    },
+    {
+      "key": "s8",
+      "role": "narration",
+      "narration": "In the oceans, viruses kill a fifth of all microbes, every day."
+    },
+    {
+      "key": "s9",
+      "role": "narration",
+      "narration": "And they can't touch you. Human cells are not on the menu."
+    },
+    {
+      "key": "s10",
+      "role": "narration",
+      "narration": "The deadliest hunter on Earth is not hunting you."
+    }
+  ]
+}

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#070A18;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0008 — "The deadliest hunter on Earth looks like a moon lander"
+   Topic-pull experiment: topic taken from Kurzgesagt's most-viewed list
+   (bacteriophage); script, structure, drawings and audio are ours (Q6).
+   Pattern = #0006 v3 (docs/handoff-day-018.md): ONE lit object, ONE take —
+   a bacterium whose dome fills the lower frame like a moon, the phage
+   lands on it. Rule C18 from the first line: every event is timed on u
+   (fraction of the scene) and lands at u >= 0.8; no fixed-seconds pops.
+   Deterministic: pure function of t (C6).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+const TITLE_FONT = "'Bricolage Grotesque', sans-serif";
+const MONO = "'Fragment Mono', monospace";
+const E = V2.el, cl = V2.clamp01, lerp = V2.lerp;
+const _ctx = document.createElement("canvas").getContext("2d");
+const meas = (s, font) => { _ctx.font = font; return _ctx.measureText(s).width; };
+const sstep = (a, b, v) => { const x = cl((v - a) / (b - a)); return x * x * (3 - 2 * x); };
+const seg = (u, a, b) => cl((u - a) / (b - a));           /* C18 helper: progress of an event occupying [a,b] of the scene */
+const pathOf = (a, close) => "M " + a.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L ") + (close ? " Z" : "");
+const pr = (x, z) => [x, z];   /* hero helper expects pr(); here x,z are already screen px */
+
+const K = {
+  cellTop: "#FFC873", cellLow: "#F08E3A", wallO: "#D9702A", wallI: "#FFD79A", cyto0: "#FFE6B0", cyto1: "#F7B25A",
+  ribo: "#C77A3A", host: P.blue, dna: "#E0457F", dnaHi: "#FF9CC4",
+  head: "#F6EFE3", headS: "#D2C4AD", sheath: P.teal, sheathD: "#1E9C92", plate: "#2A6FB8", steel: "#DDE7F6",
+  human: "#F3B7A8", humanS: "#D98A86", nucleus: "#8E5BB5",
+};
+const D = { cx: 540, cy: 2330, rx: 980, ry: 1230, wall: 36 };
+const surfY = (x, k) => D.cy - (D.ry * (k || 1)) * Math.sqrt(Math.max(0, 1 - Math.pow((x - D.cx) / (D.rx * (k || 1)), 2)));
+const LAND = [540, surfY(540) - 18];      /* baseplate rest position */
+
+/* ---------- water (screen space, parallax) ---------- */
+function water(t, cam, day) {
+  const bs = 1 + (cam[2] - 1) * 0.25;
+  const g = E("g", { transform: `translate(540 960) scale(${bs}) translate(${-540 - (cam[0] - 540) * 0.25} ${-960 - (cam[1] - 940) * 0.25})` });
+  const lg = E("linearGradient", { id: "kSea", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#236C9A"], ["30%", P.earthSea2], ["70%", "#10264E"], ["100%", P.bgDeep]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, lg));
+  E("rect", { x: -500, y: -500, width: 2080, height: 2920, fill: "url(#kSea)" }, g);
+  const sg = E("linearGradient", { id: "kShaft", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#CFF3FF", 0.42], ["100%", "#CFF3FF", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, sg));
+  for (let i = 0; i < 5; i++) {   /* light shafts from the surface: the visible source */
+    const x = 120 + i * 220 + Math.sin(t * 0.5 + i * 1.7) * 40, w = 90 + (i % 2) * 60, lean = -160 + Math.sin(t * 0.4 + i) * 30;
+    E("path", { d: `M ${x} -200 L ${x + w} -200 L ${x + w * 2.2 + lean} 1500 L ${x - w + lean} 1500 Z`, fill: "url(#kShaft)", opacity: (0.5 + 0.2 * Math.sin(t * 0.9 + i * 2)) * (day === undefined ? 1 : day), style: "mix-blend-mode:screen" }, g);
+  }
+  for (let i = 0; i < 46; i++) {  /* drifting plankton + bubbles */
+    const sp = 0.4 + V2.rnd(3, i), x = ((V2.rnd(1, i) * 1400 - 160 + Math.sin(t * 0.7 * sp + i) * 26 - t * 14 * sp) % 1400 + 1400) % 1400 - 160;
+    const y = ((V2.rnd(2, i) * 2100 - t * 46 * sp) % 2100 + 2100) % 2100 - 90, r = 2 + V2.rnd(4, i) * 5;
+    if (i % 5 === 0) E("circle", { cx: x, cy: y, r: r + 5, fill: "none", stroke: "#CFF3FF", "stroke-width": 2.5, opacity: 0.45 }, g);
+    else E("circle", { cx: x, cy: y, r, fill: i % 3 ? "#9FD8F0" : "#7DF0E4", opacity: 0.2 + V2.rnd(5, i) * 0.3 }, g);
+  }
+}
+
+/* ---------- the phage (origin = baseplate centre) ---------- */
+function phage(parent, x, y, s, o) {
+  o = o || {};
+  const land = o.land === undefined ? 1 : o.land, q = o.squat || 0, dna = o.dna === undefined ? 1 : o.dna;
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${o.rot || 0}) scale(${s})`, opacity: o.alpha === undefined ? 1 : o.alpha }, parent);
+  const Ls = lerp(172, 92, q), tubeB = lerp(-6, 86, q);
+  const leg = (side, depth, i) => {
+    const w = (o.wig || 0) * Math.sin((o.t || 0) * 5 + i * 1.9) * 16 * (1 - land);
+    const hip = [side * 30 * depth, -6], knee = [side * lerp(64, 128, land) * depth + w, lerp(-150, -92 + q * 34, land)],
+      foot = [side * lerp(88, 196, land) * depth + w * 1.6, lerp(-44, 26 + Math.abs(side) * 4 * (1 - depth), land)];
+    const d = `M ${hip[0]} ${hip[1]} L ${knee[0]} ${knee[1]} L ${foot[0]} ${foot[1]}`;
+    E("path", { d, stroke: P.ink, "stroke-width": 15, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round", opacity: depth < 1 ? 0.75 : 1 }, g);
+    E("path", { d, stroke: depth < 1 ? "#7FB6C9" : K.steel, "stroke-width": 7.5, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, g);
+    E("circle", { cx: knee[0], cy: knee[1], r: 7, fill: K.sheath, stroke: P.ink, "stroke-width": 4 }, g);
+  };
+  [[-1, 0.62, 0], [1, 0.62, 1]].forEach((a) => leg(...a));           /* far pair */
+  /* tail tube (the needle) */
+  E("path", { d: `M -9 ${-Ls} L 9 ${-Ls} L 9 ${tubeB - 16} L 0 ${tubeB} L -9 ${tubeB - 16} Z`, fill: K.steel, stroke: P.ink, "stroke-width": 5, "stroke-linejoin": "round" }, g);
+  /* contractile sheath with rings */
+  E("rect", { x: -27, y: -Ls, width: 54, height: Ls - 10, rx: 10, fill: K.sheath, stroke: P.ink, "stroke-width": 6 }, g);
+  for (let i = 1; i < 9; i++) E("path", { d: `M -24 ${-Ls + (i / 9) * (Ls - 10)} L 24 ${-Ls + (i / 9) * (Ls - 10)}`, stroke: K.sheathD, "stroke-width": 5 }, g);
+  E("rect", { x: -20, y: -Ls + 4, width: 9, height: Ls - 20, rx: 4, fill: "#B8FFF6", opacity: 0.7 }, g);
+  /* baseplate */
+  E("path", { d: "M -46 -12 L 46 -12 L 34 6 L -34 6 Z", fill: K.plate, stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, g);
+  [-26, 0, 26].forEach((sx) => E("path", { d: `M ${sx} 6 l 0 ${10 + q * 6}`, stroke: P.ink, "stroke-width": 6, "stroke-linecap": "round" }, g));
+  [[-1, 1, 2], [1, 1, 3], [-0.45, 0.9, 4], [0.45, 0.9, 5]].forEach((a) => leg(...a));   /* near legs */
+  /* collar + head */
+  const hy = -Ls - 16;
+  E("rect", { x: -19, y: hy, width: 38, height: 18, rx: 6, fill: K.plate, stroke: P.ink, "stroke-width": 5 }, g);
+  const H = [[0, hy], [78, hy - 54], [78, hy - 156], [0, hy - 210], [-78, hy - 156], [-78, hy - 54]];
+  E("path", { d: pathOf(H, true), fill: K.head, stroke: P.ink, "stroke-width": 7, "stroke-linejoin": "round" }, g);
+  const id = V2.uid("hd"), cp = E("clipPath", { id }, V2.defsHold); E("path", { d: pathOf(H, true) }, cp);
+  const hc = E("g", { "clip-path": `url(#${id})` }, g);
+  E("path", { d: pathOf([[0, hy], [78, hy - 54], [78, hy - 156], [0, hy - 210]], true), fill: K.headS, opacity: 0.8 }, hc);
+  if (dna > 0.01) {   /* packed genome, drains from the top as it is injected */
+    const top = hy - 200 + (1 - dna) * 190;
+    let dd = "";
+    for (let i = 0; i < 9; i++) { const yy = hy - 14 - i * 21; if (yy < top) break; dd += `M -52 ${yy} q 26 -16 52 0 t 52 0 `; }
+    E("path", { d: dd, stroke: K.dna, "stroke-width": 11, fill: "none", "stroke-linecap": "round" }, hc);
+    E("path", { d: dd, stroke: K.dnaHi, "stroke-width": 3, fill: "none", "stroke-linecap": "round", transform: "translate(0 -3)" }, hc);
+  }
+  E("path", { d: `M 0 ${hy} L 0 ${hy - 210} M -78 ${hy - 54} L 0 ${hy - 105} L 78 ${hy - 54}`, stroke: P.ink, "stroke-width": 3, fill: "none", opacity: 0.35 }, g);
+  E("path", { d: `M -60 ${hy - 140} L -30 ${hy - 180}`, stroke: "#FFFFFF", "stroke-width": 9, "stroke-linecap": "round", opacity: 0.8 }, g);
+  return g;
+}
+/* cheap copy for crowds */
+function mini(parent, x, y, s, rot, o) {
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${rot}) scale(${s})`, opacity: o === undefined ? 1 : o }, parent);
+  E("path", { d: "M 0 0 L -40 30 M 0 0 L 40 30 M 0 0 L -22 34 M 0 0 L 22 34", stroke: P.ink, "stroke-width": 13, "stroke-linecap": "round" }, g);
+  E("path", { d: "M 0 0 L -40 30 M 0 0 L 40 30", stroke: K.steel, "stroke-width": 6, "stroke-linecap": "round" }, g);
+  E("rect", { x: -13, y: -92, width: 26, height: 92, rx: 7, fill: K.sheath, stroke: P.ink, "stroke-width": 9 }, g);
+  E("path", { d: "M 0 -92 L 46 -124 L 46 -186 L 0 -218 L -46 -186 L -46 -124 Z", fill: K.head, stroke: P.ink, "stroke-width": 10, "stroke-linejoin": "round" }, g);
+  E("path", { d: "M 0 -92 L 46 -124 L 46 -186 L 0 -218 Z", fill: K.headS, opacity: 0.8 }, g);
+  E("circle", { cx: 0, cy: -155, r: 17, fill: K.dna }, g);
+}
+
+/* ---------- the bacterium (a dome that runs off the bottom edge) ---------- */
+function dome(S, t) {
+  const k = 1 + (S.bulge || 0);
+  const ell = (dr) => `M ${D.cx - (D.rx + dr) * k} ${D.cy} A ${(D.rx + dr) * k} ${(D.ry + dr) * k} 0 0 1 ${D.cx + (D.rx + dr) * k} ${D.cy} L ${D.cx + 1400} 2600 L ${D.cx - 1400} 2600 Z`;
+  V2.glow(D.cx, surfY(D.cx, k) + 120, 760, "Warm", 0.3 * (1 - (S.gone || 0)));
+  if ((S.gone || 0) >= 1) return;
+  const g = E("g", { opacity: 1 - (S.gone || 0) });
+  const cg = E("linearGradient", { id: "kCyto", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", K.cyto0], ["60%", K.cyto1]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, cg));
+  const sg = E("linearGradient", { id: "kCell", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", K.cellTop], ["55%", K.cellLow]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, sg));
+  const inId = "kIn", icp = E("clipPath", { id: inId }, V2.defsHold); E("path", { d: ell(-D.wall) }, icp);
+  /* wall: outer membrane / periplasm / inner membrane */
+  E("path", { d: ell(0), fill: K.wallO, stroke: P.ink, "stroke-width": 7 }, g);
+  E("path", { d: ell(-10), fill: K.wallI }, g);
+  E("path", { d: ell(-D.wall + 8), fill: K.wallO }, g);
+  /* interior */
+  const inn = E("g", { "clip-path": `url(#${inId})` }, g);
+  E("path", { d: ell(-D.wall), fill: "url(#kCyto)" }, inn);
+  for (let i = 0; i < 90; i++) {
+    const x = 90 + V2.rnd(11, i) * 900, y = 1170 + V2.rnd(12, i) * 780;
+    if (y < surfY(x) + 60) continue;
+    E("circle", { cx: x + Math.sin(t * 1.5 + i) * 5, cy: y + Math.cos(t * 1.2 + i * 2) * 5, r: 6 + V2.rnd(13, i) * 4, fill: lerp(0, 1, S.hijack || 0) > V2.rnd(14, i) ? K.dna : K.ribo, opacity: 0.6 }, inn);
+  }
+  if (S.inside) S.inside(inn);
+  /* opaque surface (x-ray thins it) */
+  const cov = E("g", { opacity: 1 - 0.9 * (S.xray || 0), "clip-path": `url(#${inId})` }, g);
+  E("path", { d: ell(-D.wall), fill: "url(#kCell)" }, cov);
+  for (let i = 0; i < 70; i++) {
+    const x = 60 + V2.rnd(21, i) * 960, y = 1140 + V2.rnd(22, i) * 820;
+    if (y < surfY(x) + 50) continue;
+    E("ellipse", { cx: x, cy: y, rx: 13 + V2.rnd(23, i) * 12, ry: 7 + V2.rnd(24, i) * 6, fill: "#FFE0A6", opacity: 0.4 }, cov);
+    E("circle", { cx: x + 30, cy: y + 34, r: 5, fill: K.wallO, opacity: 0.45 }, cov);
+  }
+  E("ellipse", { cx: D.cx - 190, cy: 1260, rx: 300, ry: 70, fill: "#FFF3D6", opacity: 0.35, transform: `rotate(-9 ${D.cx - 190} 1260)` }, cov);
+  /* pili along the horizon */
+  for (let i = 0; i < 26; i++) {
+    const x = 40 + i * 40 + V2.rnd(31, i) * 16; if (Math.abs(x - 540) < 230) continue;
+    const y = surfY(x, k), l = 34 + V2.rnd(32, i) * 40, sw = Math.sin(t * 1.6 + i) * 8, nx = (x - D.cx) / D.rx;
+    E("path", { d: `M ${x} ${y} q ${nx * 30 + sw} ${-l * 0.6} ${nx * 50 + sw * 1.8} ${-l}`, stroke: P.ink, "stroke-width": 9, fill: "none", "stroke-linecap": "round" }, g);
+    E("path", { d: `M ${x} ${y} q ${nx * 30 + sw} ${-l * 0.6} ${nx * 50 + sw * 1.8} ${-l}`, stroke: K.cellTop, "stroke-width": 4, fill: "none", "stroke-linecap": "round" }, g);
+  }
+  /* lysis: bright cracks eating the wall from inside */
+  const c = S.cracks || 0;
+  if (c > 0) for (let i = 0; i < 11; i++) {
+    const x = 70 + i * 94, y = surfY(x, k), kk = cl(c * 1.4 - V2.rnd(41, i) * 0.4), L = 150 * kk + 420 * kk * kk;
+    if (kk <= 0) continue;
+    const d = `M ${x} ${y + 6} l ${10} ${L * 0.3} l ${-16} ${L * 0.3} l ${12} ${L * 0.4}`;
+    E("path", { d, stroke: "#FFFFFF", "stroke-width": 16, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0.9 }, g);
+    E("path", { d, stroke: K.dna, "stroke-width": 6, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, g);
+    V2.glow(x, y + 10, 90 * kk, "Warm", 0.7, g);
+  }
+}
+const COPY = []; for (let i = 0; i < 100; i++) {
+  let x, y, n = 0; do { x = 110 + V2.rnd(51, i + n * 100) * 860; y = 1230 + V2.rnd(52, i + n * 100) * 640; n++; } while (y < surfY(x) + 130 && n < 30);
+  COPY.push([x, y, V2.rnd(53, i) * 360]);
+}
+function dnaPath(p) {
+  const pts = [], N = 90, upto = Math.floor(N * cl(p));
+  for (let i = 0; i <= upto; i++) {
+    const s = i / N;
+    if (s < 0.3) pts.push([540 + Math.sin(s * 40) * 18, LAND[1] + 100 + (s / 0.3) * 236]);
+    else { const a = (s - 0.3) * 26, r = 30 + (s - 0.3) * 250; pts.push([540 + Math.cos(a + 1.57) * r, LAND[1] + 400 + Math.sin(a + 1.57) * r * 0.62]); }
+  }
+  return pts;
+}
+function strand(parent, pts, col, hi, w) {
+  if (pts.length < 2) return;
+  E("path", { d: pathOf(pts), stroke: P.ink, "stroke-width": w + 8, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, parent);
+  E("path", { d: pathOf(pts), stroke: col, "stroke-width": w, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }, parent);
+  E("path", { d: pathOf(pts), stroke: hi, "stroke-width": w * 0.28, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0.8 }, parent);
+}
+function hostDNA(parent, t, takeover, shatter) {
+  const c = [540, LAND[1] + 400];
+  if (shatter >= 1) return;
+  for (let j = 0; j < 7; j++) {
+    const pts = [], a0 = j * 0.9, fly = V2.easeOut(shatter) * (120 + j * 30);
+    for (let i = 0; i <= 12; i++) { const a = a0 + i * 0.075, r = 120 + Math.sin(a * 7 + j + t * 1.2) * 34; pts.push([c[0] + Math.cos(a) * (r + fly), c[1] + Math.sin(a) * (r + fly) * 0.6]); }
+    const g = E("g", { opacity: 1 - shatter }, parent);
+    strand(g, pts, takeover > j / 7 ? K.dna : K.host, takeover > j / 7 ? K.dnaHi : "#BFE0FF", 15);
+  }
+}
+/* ---------- hero ---------- */
+const POSES = {
+  skygawk: { tilt: -4, headTilt: -14, look: -0.6, expr: "shock", armL: { a: 30, b: -34 }, armR: { a: 148, b: -100 }, legL: { a: -14, b: 4 } },
+  recoil:  { tilt: 11, headTilt: 10, look: -0.7, expr: "oops", armL: { a: 70, b: -120 }, armR: { a: 118, b: -118 }, legR: { a: -24, b: 26 } },
+  point:   { tilt: -5, headTilt: -8, look: -0.6, expr: "happy", armL: { a: 74, b: -14 }, armR: { a: -8, b: -6 } },
+  amazed:  { tilt: 0, headTilt: -12, look: -0.5, expr: "shock", armL: { a: 44, b: -44 }, armR: { a: 132, b: -92 } },
+  pull:    { tilt: 14, headTilt: 4, look: -0.6, expr: "smug", armL: { a: 62, b: -12 }, armR: { a: -52, b: -34 }, legL: { a: 24, b: -4 }, legR: { a: -22, b: 22 } },
+  inspect: { tilt: -16, headTilt: -16, look: -0.8, expr: "neutral", armL: { a: 52, b: 6 }, armR: { a: -24, b: -18 }, legL: { a: 10, b: 0 }, legR: { a: -14, b: 10 } },
+  happy:   { tilt: -3, headTilt: 6, look: -0.3, expr: "happy", armL: { a: 150, b: -24 }, armR: { a: 150, b: -24 } },
+};
+const blinkAt = (t) => (V2.rnd(41, Math.floor(t / 2.3)) < 0.5 && (t % 2.3) < 0.14 ? 1 : 0);
+function hero(t, name, x, z, sc, extra) {
+  const [fx, fy] = pr(x, z), base = POSES[name] || {}, sw = Math.sin(t * 2.2) * 5;
+  const p = Object.assign({}, V2.basePose, base, { x: fx, y: fy - 140 * sc - 6 * sc + Math.sin(t * 2.6) * 3 * sc, scale: sc, blink: blinkAt(t),
+    tilt: (base.tilt || 0) + Math.sin(t * 1.7) * 2, squash: 0.014 * Math.sin(t * 2.6), sway: Math.sin(t * 2.2) * 6 }, extra || {});
+  p.armL = Object.assign({}, p.armL, { a: p.armL.a + sw });
+  p.armR = Object.assign({}, p.armR, { a: p.armR.a - sw * 0.7 });
+  E("ellipse", { cx: fx, cy: fy + 4, rx: 92 * sc, ry: 20 * sc, fill: "#7A3340", opacity: 0.42 });
+  V2.Hero(p, null, "vRimL", 0);
+  return p;
+}
+const handOf = (p, arm) => V2.toWorld(p, V2.joints(p)[arm].end);
+
+/* ---------- text systems (screen space; ONE per scene, ≤8 words — C1) ---------- */
+function title(lines, y, size, kf) {
+  lines.forEach((ln, i) => {
+    const k = kf(i); if (k <= 0.001) return;
+    const pop = V2.backOut(cl(k));
+    V2.txt(540, y + i * size * 1.06 + (1 - pop) * 50, ln, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+      "font-size": size, fill: P.cream, stroke: P.ink, "stroke-width": 16, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
+  });
+}
+function chip(k, x, y, text, accent, size, strike) {
+  if (k <= 0.001) return;
+  size = size || 44;
+  const pop = V2.backOutBig(cl(k)), w = text.length * size * 0.6 + 86, h = size * 1.75;
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(${x} ${y}) scale(${0.7 + 0.3 * pop})` });
+  E("rect", { x: -w / 2, y: -h / 2 + 7, width: w, height: h, rx: h * 0.28, fill: "#000", opacity: 0.35 }, g);
+  E("rect", { x: -w / 2, y: -h / 2, width: w, height: h, rx: h * 0.28, fill: P.ink, stroke: P.cream, "stroke-width": 4 }, g);
+  E("rect", { x: -w / 2 + 18, y: -h * 0.25, width: 10, height: h * 0.5, rx: 5, fill: accent || P.teal }, g);
+  V2.txt(14, size * 0.34, text, { "text-anchor": "middle", "font-family": MONO, "font-size": size, fill: P.cream, "letter-spacing": 1 }, g);
+  if (strike > 0) E("path", { d: `M ${-w / 2 + 34} 0 L ${-w / 2 + 34 + (w - 56) * cl(strike)} -6`, stroke: "#FF5A4A", "stroke-width": 9, "stroke-linecap": "round" }, g);
+}
+function bigStamp(k, y, text, sub, subK) {
+  if (k <= 0.001) return;
+  const pop = V2.backOutBig(cl(k)), size = 104, font = `800 ${size}px ${TITLE_FONT}`;
+  const w = Math.min(1000, meas(text, font) + 90), h = sub ? 250 : 170;
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(540 ${y}) scale(${0.6 + 0.4 * pop}) rotate(${(1 - pop) * -5})` });
+  E("rect", { x: -w / 2, y: -86 + 10, width: w, height: h, rx: 30, fill: "#000", opacity: 0.4 }, g);
+  E("rect", { x: -w / 2, y: -86, width: w, height: h, rx: 30, fill: P.ink, stroke: P.amber, "stroke-width": 6 }, g);
+  V2.txt(0, 34, text, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": size, fill: P.amber,
+    textLength: Math.min(w - 80, meas(text, font)), lengthAdjust: "spacingAndGlyphs" }, g);
+  if (sub && subK > 0.001) V2.txt(0, 118 + (1 - V2.easeOut(subK)) * 16, sub, { "text-anchor": "middle", "font-family": MONO, "font-size": 46, fill: P.cream, opacity: cl(subK * 2), "letter-spacing": 1.5 }, g);
+}
+
+
+function plate(k, y, big, sub, col, bump) {
+  if (k <= 0.001) return;
+  const pop = V2.backOutBig(cl(k)), font = `800 112px ${TITLE_FONT}`, w = Math.max(meas(big, font), sub.length * 28) + 110;
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(540 ${y}) scale(${(0.7 + 0.3 * pop) * (1 + 0.14 * Math.sin(cl(bump || 0) * Math.PI))})` });
+  E("rect", { x: -w / 2, y: -98 + 10, width: w, height: 252, rx: 30, fill: "#000", opacity: 0.4 }, g);
+  E("rect", { x: -w / 2, y: -98, width: w, height: 252, rx: 30, fill: P.ink, stroke: col, "stroke-width": 6 }, g);
+  V2.txt(0, 36, big, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 112, fill: col }, g);
+  V2.txt(0, 116, sub, { "text-anchor": "middle", "font-family": MONO, "font-size": 44, fill: P.cream, "letter-spacing": 2 }, g);
+}
+const ring = (x, y, k, col) => { if (k > 0 && k < 1) E("ellipse", { cx: x, cy: y, rx: 16 + k * 90, ry: 6 + k * 30, fill: "none", stroke: col || "#FFF6EA", "stroke-width": 8 * (1 - k), opacity: 1 - k }); };
+
+const TITLE = ["THE DEADLIEST", "HUNTER ON EARTH"];
+const P0 = { x: 540, y: 800, s: 1.08 };
+const PS = 1.2;                                  /* landed phage scale */            /* frame-0 phage pose (loop target) */
+const SC = {};
+
+SC.hook = { cam: [[540, 900, 1.0], [540, 940, 1.2]],
+  world(lt, u, t) {
+    const a = u;
+    return { over: () => { for (let i = 0; i < 3; i++) ring(540, LAND[1] + 20, (lt * 0.9 + i * 0.4) % 1.2, K.dnaHi); phage(V2.root, P0.x + Math.sin(t * 1.3) * 26, lerp(P0.y, 930, a), lerp(P0.s, PS, a), { land: 0.12 * a, wig: 2.2, t, rot: Math.sin(t * 1.6) * 7 }); } };
+  },
+  over(lt, u) { const out = seg(u, 0.74, 0.9); if (out < 1) { const g = E("g", { opacity: 1 - out, transform: `translate(0 ${-out * 70})` }); const h = V2.root; V2.root = g; title(TITLE, 215, 104, () => 1); V2.root = h; } } };
+
+SC.s0 = { cam: [[540, 940, 1.2], [540, 965, 1.28]],
+  world(lt, u, t) {
+    const a = V2.easeInOut(u), tg = seg(u, 0.45, 0.95);
+    return { over: () => {
+      /* it has found its target: rings sweep the landing site through the back half of the line */
+      for (let i = 0; i < 3; i++) ring(540, LAND[1] + 20, (lt * 0.9 + i * 0.4) % 1.2, K.dnaHi);
+      phage(V2.root, 540 + Math.sin(t * 1.3) * 22 * (1 - a), lerp(930, 985, a), PS, { land: lerp(0.12, 0.72, a), wig: 1, t, rot: Math.sin(t * 1.1) * 5 * (1 - a) });
+    } };
+  },
+  over(lt, u) { bigStamp(seg(u, 0.06, 0.2), 290, "BACTERIOPHAGE", "= BACTERIA EATER", seg(u, 0.5, 0.64)); } };
+
+SC.s1 = { cam: [[540, 1010, 1.42], [540, 1040, 1.6]],
+  world(lt, u, t) {
+    const d = V2.easeInOut(seg(u, 0.0, 0.5)), grip = V2.backOut(seg(u, 0.62, 0.84));
+    return { over: () => {
+      const y = lerp(985, LAND[1] - 34, d) + (1 - grip) * 0 + lerp(0, 34, grip);
+      /* six feet plant one after another, then the baseplate seats */
+      [[-235, 0.30], [235, 0.38], [-106, 0.46], [106, 0.54], [-146, 0.58], [146, 0.62]].forEach(([dx, at], i) => ring(540 + dx, surfY(540 + dx) + 4, seg(u, at, at + 0.22), "#FFF6EA"));
+      ring(540, LAND[1] + 14, seg(u, 0.78, 1.0), K.dnaHi);
+      phage(V2.root, 540, y, PS, { land: lerp(0.72, 1, V2.easeOut(seg(u, 0.1, 0.5))), wig: 1 - d, t });
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.72, 0.84), 540, 300, "LOCKED ON", P.teal, 58); } };
+
+SC.s2 = { cam: [[540, 1090, 1.9], [540, 1120, 2.15]],
+  world(lt, u, t) {
+    const wind = Math.sin(seg(u, 0.12, 0.42) * Math.PI) * -0.12, q = V2.easeIn(seg(u, 0.42, 0.62)), hit = seg(u, 0.6, 0.95);
+    const shake = Math.sin(lt * 70) * 9 * (hit > 0 && hit < 0.35 ? 1 - hit / 0.35 : 0);
+    return { xray: 0.85 * sstep(0.0, 0.3, u), shake, over: () => {
+      phage(V2.root, 540, LAND[1], PS, { land: 1, squat: Math.max(0, q + wind) , t });
+      if (hit > 0) { [0, 0.22, 0.44].forEach((o) => ring(540, LAND[1] + 60, cl(hit * 1.5 - o), "#FFFFFF")); V2.glow(540, LAND[1] + 84, 150 * (1 - hit * 0.6), "Warm", 0.9 * (1 - hit)); }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.64, 0.76), 540, 300, "THROUGH THE WALL", "#FF5A4A", 54); } };
+
+SC.s3 = { cam: [[540, 1200, 1.3], [540, 1330, 1.08]],
+  world(lt, u, t) {
+    const flow = V2.easeInOut(seg(u, 0.04, 0.62)), take = seg(u, 0.55, 0.95);
+    return { xray: 0.85, hijack: take * 0.5, inside: (g) => { hostDNA(g, t, take, 0); strand(g, dnaPath(flow), K.dna, K.dnaHi, 16); },
+      over: () => phage(V2.root, 540, LAND[1], PS, { land: 1, squat: 1, dna: 1 - flow, t }) };
+  },
+  over(lt, u) { chip(seg(u, 0.1, 0.22), 540, 300, "VIRUS DNA", K.dna, 58); chip(seg(u, 0.66, 0.78), 540, 410, "CELL HIJACKED", "#FF5A4A", 54); } };
+
+SC.s4 = { cam: [[540, 1400, 1.22], [540, 1470, 1.36]],
+  world(lt, u, t) {
+    return { xray: 0.88, hijack: 0.5 + 0.5 * u, inside: (g) => {
+      hostDNA(g, t, 1, seg(u, 0.0, 0.42));
+      strand(g, dnaPath(1), K.dna, K.dnaHi, 16);
+      /* assembly line: heads appear, tails slide in, one after another until the line ends */
+      for (let i = 0; i < 6; i++) {
+        const at = 0.22 + i * 0.115, hk = V2.backOut(seg(u, at, at + 0.12)), tk = V2.easeOut(seg(u, at + 0.08, at + 0.2));
+        if (hk <= 0) continue;
+        const x = 230 + (i % 3) * 300 + (i > 2 ? 90 : 0), y = 1330 + Math.floor(i / 3) * 290;
+        const gg = E("g", { transform: `translate(${x} ${y}) scale(${0.62 * hk})` }, g);
+        E("rect", { x: -13, y: -92 + (1 - tk) * 120, width: 26, height: 92, rx: 7, fill: K.sheath, stroke: P.ink, "stroke-width": 9, opacity: tk }, gg);
+        E("path", { d: `M 0 ${(1 - tk) * 120} L -40 ${30 + (1 - tk) * 120} M 0 ${(1 - tk) * 120} L 40 ${30 + (1 - tk) * 120}`, stroke: K.steel, "stroke-width": 8, "stroke-linecap": "round", opacity: tk }, gg);
+        E("path", { d: "M 0 -92 L 46 -124 L 46 -186 L 0 -218 L -46 -186 L -46 -124 Z", fill: K.head, stroke: P.ink, "stroke-width": 10, "stroke-linejoin": "round" }, gg);
+        E("circle", { cx: 0, cy: -155, r: 17 * seg(u, at + 0.1, at + 0.2), fill: K.dna }, gg);
+        ring(x, y - 90, seg(u, at + 0.16, at + 0.3), K.dnaHi);
+      }
+    }, over: () => phage(V2.root, 540, LAND[1], PS, { land: 1, squat: 1, dna: 0, t }) };
+  },
+  over(lt, u) { chip(seg(u, 0.3, 0.42), 540, 300, "NOW A PHAGE FACTORY", P.amber, 50); } };
+
+SC.s5 = { cam: [[540, 1470, 1.22], [540, 1430, 1.0]],
+  world(lt, u, t) {
+    const n = Math.round(100 * V2.easeInOut(seg(u, 0.02, 0.86)));
+    return { xray: 0.9, hijack: 1, bulge: 0.035 * seg(u, 0.3, 1) + 0.006 * Math.sin(t * 9) * seg(u, 0.6, 1), inside: (g) => {
+      for (let i = 0; i < n; i++) { const c = COPY[i], age = cl((n - i) / 6); mini(g, c[0] + Math.sin(t * 2 + i) * 6, c[1] + Math.cos(t * 1.7 + i) * 6, 0.3 * V2.backOut(age), c[2] + Math.sin(t + i) * 12); }
+    }, n, over: () => phage(V2.root, 540, LAND[1], PS, { land: 1, squat: 1, dna: 0, t, alpha: 1 - seg(u, 0.5, 0.8) }) };
+  },
+  over(lt, u) { const n = Math.round(100 * V2.easeInOut(seg(u, 0.02, 0.86))), done = seg(u, 0.86, 0.98); plate(seg(u, 0.02, 0.14), 290, String(n).padStart(2, "0") + " COPIES", "IN 30 MINUTES", done > 0 ? "#FF5A4A" : P.amber, done); } };
+
+const POP = 0.7;
+SC.s6 = { cam: [[540, 1430, 1.0], [540, 1300, 1.16]],
+  world(lt, u, t) {
+    const b = seg(u, POP, 1), pre = seg(u, 0, POP);
+    return { xray: 0.9, hijack: 1, cracks: pre, bulge: 0.035 + 0.1 * pre * pre + 0.016 * Math.sin(lt * 40) * pre, gone: cl(b * 6), shake: Math.sin(lt * 80) * 14 * (b > 0 && b < 0.3 ? 1 - b / 0.3 : 0),
+      inside: (g) => { if (b <= 0) COPY.forEach((c, i) => mini(g, c[0] + Math.sin(lt * 30 + i) * 16 * pre, c[1] + Math.cos(lt * 26 + i * 2) * 14 * pre, 0.3 + 0.06 * pre, c[2] + Math.sin(lt * 20 + i) * 30 * pre)); },
+      over: () => { if (b > 0) burst(b, t); } };
+  },
+  over(lt, u) { const b = seg(u, POP, 1); if (b > 0 && b < 0.25) E("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: "#FFFFFF", opacity: 0.85 * (1 - b / 0.25) }); chip(seg(u, 0.1, 0.22) * (1 - seg(u, POP - 0.05, POP)), 540, 300, "WALL DISSOLVING", "#FF5A4A", 54); } };
+function burst(b, t, base) {
+  base = base || 0;
+  for (let i = 0; i < 16; i++) {   /* wall shreds */
+    const a = -Math.PI * (0.05 + 0.9 * (i / 15)), r = 300 + (b + base) * (500 + V2.rnd(61, i) * 500);
+    const x = 540 + Math.cos(a) * r * 1.1, y = 1500 + Math.sin(a) * r * 0.9 + (b + base) * (b + base) * 260;
+    E("path", { d: "M -60 0 q 60 -44 120 0 q -60 20 -120 0 Z", fill: K.wallO, stroke: P.ink, "stroke-width": 6, opacity: 1 - cl((b + base) * 0.9), transform: `translate(${x} ${y}) rotate(${i * 47 + (b + base) * 300})` });
+  }
+  COPY.forEach((c, i) => {
+    const a = Math.atan2(c[1] - 1700, c[0] - 540) , sp = 500 + V2.rnd(62, i) * 1100, k = V2.easeOut(cl(b + base));
+    mini(V2.root, c[0] + Math.cos(a) * sp * k * 0.9 + Math.sin(t * 2 + i) * 10, c[1] + Math.sin(a) * sp * k - (b + base) * 320, 0.42 + V2.rnd(63, i) * 0.2, c[2] + (b + base) * (200 + i * 5));
+  });
+}
+
+SC.s7 = { cam: [[540, 1250, 0.9], [540, 1040, 0.84]],
+  world(lt, u, t) {
+    return { gone: 1, over: () => {
+      burst(u * 0.9, t, 1);
+      /* one copy sweeps past the lens across the whole line */
+      const k = V2.easeInOut(u);
+      phage(V2.root, lerp(-260, 1280, k), lerp(1500, 520, k) + Math.sin(u * 9) * 30, lerp(1.2, 2.3, Math.sin(u * Math.PI)), { land: 0.2, wig: 1, t, rot: 62 });
+      for (let i = 0; i < 9; i++) { const p = (u * 1.4 + V2.rnd(71, i)) % 1; mini(V2.root, V2.rnd(72, i) * 1080 + p * 240, 1900 - p * 2300, 0.34 + V2.rnd(73, i) * 0.3, 20 + V2.rnd(74, i) * 30, 0.9); }
+    } };
+  },
+  over() {} };
+
+const OC = []; for (let i = 0; i < 20; i++) OC.push([150 + (i % 4) * 262 + (Math.floor(i / 4) % 2) * 60 + (V2.rnd(81, i) - 0.5) * 70, 560 + Math.floor(i / 4) * 235 + (V2.rnd(82, i) - 0.5) * 60, (V2.rnd(83, i) - 0.5) * 70]);
+const POPPED = [2, 7, 13, 16];
+SC.s8 = { cam: [[540, 960, 1.0], [540, 960, 1.06]], ocean: true,
+  world(lt, u, t) {
+    return { noDome: true, day: 0.55 + 0.45 * Math.cos(u * Math.PI * 2), over: () => {
+      OC.forEach((c, i) => {
+        const pi = POPPED.indexOf(i), at = 0.2 + pi * 0.17, b = pi < 0 ? 0 : seg(u, at, at + 0.2);
+        const x = c[0] + Math.sin(t * 0.8 + i) * 16, y = c[1] + Math.cos(t * 0.6 + i * 2) * 12, enter = V2.backOut(seg(u, 0.0 + (i % 5) * 0.012, 0.12 + (i % 5) * 0.012));
+        if (pi >= 0 && b > 0) {
+          if (b < 1) { V2.glow(x, y, 260 * (1 - b) + 60, "Warm", 0.95 * (1 - b)); ring(x, y, b, "#FFFFFF"); ring(x, y, cl(b * 1.6), "#FF5A4A");
+            for (let j = 0; j < 11; j++) { const a = j * 0.6 + i; mini(V2.root, x + Math.cos(a) * b * 230, y + Math.sin(a) * b * 190, 0.26, a * 57 + b * 200, 1 - b * 0.6); } }
+          const m = V2.backOut(cl(b * 2.5));
+          E("path", { d: `M ${x - 36} ${y - 36} l 72 72 M ${x + 36} ${y - 36} l -72 72`, stroke: P.ink, "stroke-width": 24, "stroke-linecap": "round", transform: `rotate(${(1 - m) * 40} ${x} ${y})`, opacity: m });
+          E("path", { d: `M ${x - 36} ${y - 36} l 72 72 M ${x + 36} ${y - 36} l -72 72`, stroke: "#FF5A4A", "stroke-width": 13, "stroke-linecap": "round", transform: `rotate(${(1 - m) * 40} ${x} ${y})`, opacity: m });
+          return;
+        }
+        const warn = pi >= 0 ? seg(u, at - 0.14, at) : 0;
+        const g = E("g", { transform: `translate(${x} ${y}) rotate(${c[2] + Math.sin(t + i) * 5}) scale(${enter * (1 + warn * 0.16)})` });
+        E("rect", { x: -78, y: -36, width: 156, height: 72, rx: 36, fill: warn > 0 ? "#FFE3A6" : K.cellTop, stroke: P.ink, "stroke-width": 7 }, g);
+        E("rect", { x: -62, y: -24, width: 124, height: 22, rx: 11, fill: "#FFF3D6", opacity: 0.6 }, g);
+        E("path", { d: "M -40 8 q 20 -16 40 0 t 40 0", stroke: warn > 0 ? K.dna : K.host, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, g);
+        E("path", { d: "M 78 0 q 40 -20 70 6", stroke: P.ink, "stroke-width": 5, fill: "none", "stroke-linecap": "round", opacity: 0.6 }, g);
+      });
+    } };
+  },
+  over(lt, u) { const done = seg(u, 0.74, 0.9); plate(seg(u, 0.14, 0.26), 250, "1 IN 5", done > 0 ? "EVERY DAY" : "KILLED...", done > 0 ? "#FF5A4A" : P.amber, done); } };
+
+SC.s9 = { cam: [[540, 960, 1.0], [540, 990, 1.1]], ocean: true,
+  world(lt, u, t) {
+    return { noDome: true, over: () => {
+      const cx = 540, cy = 1230, r = 400;
+      V2.glow(cx, cy, 620, "Warm", 0.3);
+      E("circle", { cx, cy, r, fill: K.human, stroke: P.ink, "stroke-width": 8 });
+      E("circle", { cx, cy, r: r - 22, fill: "none", stroke: K.humanS, "stroke-width": 10, opacity: 0.6 });
+      E("ellipse", { cx: cx - 120, cy: cy - 190, rx: 150, ry: 60, fill: "#FFE3DA", opacity: 0.55, transform: `rotate(-24 ${cx - 120} ${cy - 190})` });
+      E("circle", { cx: cx + 40, cy: cy + 70, r: 150 + Math.sin(t * 2) * 4, fill: K.nucleus, stroke: P.ink, "stroke-width": 7 });
+      E("circle", { cx: cx + 10, cy: cy + 40, r: 46, fill: "#B88AD8", opacity: 0.8 });
+      for (let i = 0; i < 12; i++) E("ellipse", { cx: cx + Math.cos(i * 1.9) * (230 + (i % 3) * 40), cy: cy + Math.sin(i * 1.9) * (230 + (i % 3) * 40), rx: 26, ry: 12, fill: K.humanS, opacity: 0.6, transform: `rotate(${i * 40} ${cx + Math.cos(i * 1.9) * 250} ${cy + Math.sin(i * 1.9) * 250})` });
+      /* three phages try, one after another, and slide off: no receptor to grip */
+      [[-0.9, 0.06], [0.8, 0.3], [-0.25, 0.54]].forEach(([dir, at], i) => {
+        const k = seg(u, at, at + 0.36); if (k <= 0 || k >= 1) return;
+        const inn = V2.easeIn(cl(k / 0.45)), out = V2.easeOut(cl((k - 0.45) / 0.55)), a = -1.57 + dir * 0.9;
+        const rr = r + 40 + (1 - inn) * 520 + out * 560, ang = a + out * dir * 1.3;
+        phage(V2.root, cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr, 0.62, { land: 0.6 - out * 0.4, wig: 1, t, rot: (ang * 180) / Math.PI - 90 + out * dir * 200 });
+        if (k > 0.42 && k < 0.7) { const q = (k - 0.42) / 0.28, sx = cx + Math.cos(a) * (r + 6), sy = cy + Math.sin(a) * (r + 6); ring(sx, sy, q, "#FFFFFF");
+          E("path", { d: `M ${sx - 34} ${sy - 34} l 68 68 M ${sx + 34} ${sy - 34} l -68 68`, stroke: "#FF5A4A", "stroke-width": 14, "stroke-linecap": "round", opacity: 1 - q }); }
+      });
+      const relief = seg(u, 0.72, 0.86);
+      hero(t, relief > 0 ? "happy" : "recoil", cx + 250, cy - 318, 0.62, { facing: -1 });
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.05, 0.17), 300, 420, "HUMAN CELL", P.amber, 50); chip(seg(u, 0.5, 0.62), 540, 300, "NO WAY IN", P.teal, 58); } };
+
+SC.s10 = { cam: [[540, 940, 1.1], [540, 900, 1.0]],
+  world(lt, u, t) {
+    return { over: () => { for (let i = 0; i < 12; i++) { const p = (u * 0.9 + V2.rnd(91, i)) % 1; mini(V2.root, ((V2.rnd(92, i) * 1300 - 100 - p * 900) % 1300 + 1300) % 1300 - 110, 600 + V2.rnd(93, i) * 400 + Math.sin(t * 2.4 + i) * 34, 0.3 + V2.rnd(94, i) * 0.22, -24 + V2.rnd(95, i) * 48, 0.85); } } };
+  },
+  over(lt, u) {
+    title(TITLE, 215, 104, (i) => seg(u, 0.04 + i * 0.1, 0.2 + i * 0.1));
+    const k = seg(u, 0.52, 0.66), ul = V2.easeInOut(seg(u, 0.72, 0.98));
+    if (ul > 0) E("path", { d: `M ${540 - 400} 508 L ${540 - 400 + 800 * ul} 508`, stroke: P.amber, "stroke-width": 12, "stroke-linecap": "round" });
+    if (k > 0) V2.txt(540, 470 + (1 - V2.backOut(k)) * 50, "IS NOT HUNTING YOU", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 98, fill: P.amber, stroke: P.ink, "stroke-width": 16, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
+  } };
+
+SC.s11 = { cam: [[540, 900, 1.0], [540, 900, 1.0]],
+  world(lt, u, t) {
+    const a = V2.easeOut(seg(u, 0.25, 1));
+    return { over: () => phage(V2.root, P0.x + Math.sin(t * 1.3) * 26, lerp(-200, P0.y, a), P0.s, { land: 0, wig: 2.2, t, rot: Math.sin(t * 1.6) * 7 }) };
+  },
+  over(lt, u) {
+    title(TITLE, 215, 104, () => 1);
+    const k = 1 - seg(u, 0.0, 0.3);
+    if (k > 0) V2.txt(540, 470, "IS NOT HUNTING YOU", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 98, fill: P.amber, stroke: P.ink, "stroke-width": 16, "stroke-linejoin": "round", "paint-order": "stroke", opacity: k });
+  } };
+
+function withCam(cam, fn) {
+  const hold = V2.root;
+  V2.root = E("g", { transform: V2.cam(cam[0], cam[1], cam[2]) }, hold);
+  fn();
+  V2.root = hold;
+}
+function camOf(idx, lt, dur) {
+  const sc = SC[TL[idx].id], a = sc.cam[0], b = sc.cam[1], u = V2.easeInOut(cl(lt / dur) * 0.85 + 0.075);
+  let c = [lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u)];
+  if (idx > 0 && lt < 0.36) {   /* whip in from the previous scene's last camera: one continuous take */
+    const pv = SC[TL[idx - 1].id].cam[1], k = V2.easeOutQuint(lt / 0.36);
+    c = [lerp(pv[0], c[0], k), lerp(pv[1], c[1], k), lerp(pv[2], c[2], k)];
+  }
+  return c;
+}
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  V2.defsHold = E("defs", {}, V2.root);
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++) if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx], def = SC[sc.id] || SC.hook;
+  const lt = Math.max(0, t - sc.start), dur = sc.end - sc.start, u = cl(lt / dur);
+  const cam = camOf(idx, lt, dur);
+  const S = def.world(lt, u, t, dur);
+  if (S.shake) cam[1] += S.shake;
+  water(t, cam, S.day);
+  withCam(cam, () => { if (!S.noDome) dome(S, t); if (S.over) S.over(); });
+  def.over(lt, u, t, dur, cam);
+  const vg = E("radialGradient", { id: "kVig" }, V2.defsHold);
+  [["62%", "#05050A", 0], ["100%", "#05050A", 0.5]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, vg));
+  E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#kVig)" });
+  E("rect", { x: 0, y: 0, width: 1080, height: 1920, filter: "url(#vGrain)", opacity: 0.5, transform: `translate(${(Math.floor(t * 15) % 2) * 3} ${Math.floor(t * 15) % 3})` });
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>

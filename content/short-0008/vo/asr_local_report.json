@@ -1,0 +1,147 @@
+{
+  "short": "short-0008",
+  "verified_at": "2026-11-16T04:52:14.863440+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +25%",
+  "gap_s": 0.25,
+  "total_vo_s": 32.904,
+  "timeline_end_s": 35.654,
+  "n_fail": 0,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "narration",
+      "expected": "The deadliest hunter on Earth is a virus shaped like a moon lander.",
+      "heard": "The deadliest hunter on earth is a virus shaped like a moon lander.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.24,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "narration",
+      "expected": "It's called a bacteriophage, and it only hunts bacteria.",
+      "heard": "It's called a bacteriophage, and it only hunts bacteria.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.76,
+      "synced_start_s": 3.49
+    },
+    {
+      "line": "02",
+      "role": "narration",
+      "expected": "It lands on one, legs first, and grips the surface.",
+      "heard": "It lands on one, legs first, and grips the surface.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.216,
+      "synced_start_s": 6.5
+    },
+    {
+      "line": "03",
+      "role": "narration",
+      "expected": "Then it squats, and punches a needle through the wall.",
+      "heard": "then it squats and punches a needle through the wall.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.424,
+      "synced_start_s": 9.966
+    },
+    {
+      "line": "04",
+      "role": "narration",
+      "expected": "Its DNA shoots inside, and takes over the cell.",
+      "heard": "It's DNA shoots inside and takes over the cell.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.688,
+      "synced_start_s": 12.64
+    },
+    {
+      "line": "05",
+      "role": "narration",
+      "expected": "The bacterium stops living, and starts building phages.",
+      "heard": "The bacterium stops living and starts building phages.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.88,
+      "synced_start_s": 15.578
+    },
+    {
+      "line": "06",
+      "role": "narration",
+      "expected": "In half an hour, it is packed with a hundred copies.",
+      "heard": "In half an hour, it is packed with 100 copies.",
+      "wer": 0.182,
+      "accuracy": 0.818,
+      "verdict": "WARN",
+      "audio_dur_s": 2.544,
+      "synced_start_s": 18.708
+    },
+    {
+      "line": "07",
+      "role": "narration",
+      "expected": "Then they dissolve the wall from inside. Pop.",
+      "heard": "Then they dissolve the wall from inside. Pop!",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.448,
+      "synced_start_s": 21.502
+    },
+    {
+      "line": "08",
+      "role": "narration",
+      "expected": "Every one flies off to find another.",
+      "heard": "Everyone flies off to find another.",
+      "wer": 0.286,
+      "accuracy": 0.714,
+      "verdict": "WARN",
+      "audio_dur_s": 1.92,
+      "synced_start_s": 24.2
+    },
+    {
+      "line": "09",
+      "role": "narration",
+      "expected": "In the oceans, viruses kill a fifth of all microbes, every day.",
+      "heard": "In the oceans, viruses kill a fifth of all microbes every day.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.696,
+      "synced_start_s": 26.37
+    },
+    {
+      "line": "10",
+      "role": "narration",
+      "expected": "And they can't touch you. Human cells are not on the menu.",
+      "heard": "and they can't touch you. Human cells are not on the menu.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.664,
+      "synced_start_s": 30.316
+    },
+    {
+      "line": "11",
+      "role": "narration",
+      "expected": "The deadliest hunter on Earth is not hunting you.",
+      "heard": "The deadliest hunter on earth is not hunting you.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.424,
+      "synced_start_s": 33.23
+    }
+  ]
+}

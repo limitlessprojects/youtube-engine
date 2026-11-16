@@ -1,0 +1,11 @@
+{
+ "short": "short-0008",
+ "world": "ONE lit object: a bacterium whose dome fills the lower frame and runs off the bottom edge, in sunlit sea water. A T4-type bacteriophage (cream head packed with magenta DNA, teal contractile sheath, steel tail fibres) lands on it like a lander.",
+ "intent": {
+  "xray": "from s2 the cell surface is deliberately translucent so the interior is visible",
+  "text": "one text system per scene (chips, one stamp, counter plates); title on hook and closer only",
+  "timing": "rule C18: every event is timed on u (fraction of the line); nothing holds on idle motion",
+  "loop": "last frame equals frame 0"
+ },
+ "simplifications": ["only 4 near + 2 far tail fibres drawn clearly (T4 has six long fibres)", "100 copies drawn as simplified icons", "human-cell scene is schematic: phages lack receptors for human cells", "1 in 5 is Suttle's ~20% of ocean microbial biomass per day, an estimate that varies by system"]
+}

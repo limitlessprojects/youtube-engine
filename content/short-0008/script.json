@@ -1,0 +1,367 @@
+{
+ "title": "The deadliest hunter on Earth looks like a moon lander",
+ "format": "short",
+ "hook": {
+  "timestamp_start": 0.0,
+  "narration": "The deadliest hunter on Earth is a virus shaped like a moon lander.",
+  "visual": {
+   "v1": ""
+  },
+  "fact_sources": [
+   "suttle + t4: 'deadliest' = most kills per day of any biological entity (framing, supported by the ~20%/day estimate); T4 morphology resembles a lunar lander (head, tail, six fibres)"
+  ],
+  "audio_dur_s": 3.24
+ },
+ "scenes": [
+  {
+   "timestamp_start": 3.49,
+   "narration": "It's called a bacteriophage, and it only hunts bacteria.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4 + host"
+   ],
+   "audio_dur_s": 2.76
+  },
+  {
+   "timestamp_start": 6.5,
+   "narration": "It lands on one, legs first, and grips the surface.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4"
+   ],
+   "audio_dur_s": 3.216
+  },
+  {
+   "timestamp_start": 9.966,
+   "narration": "Then it squats, and punches a needle through the wall.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4"
+   ],
+   "audio_dur_s": 2.424
+  },
+  {
+   "timestamp_start": 12.64,
+   "narration": "Its DNA shoots inside, and takes over the cell.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4"
+   ],
+   "audio_dur_s": 2.688
+  },
+  {
+   "timestamp_start": 15.578,
+   "narration": "The bacterium stops living, and starts building phages.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4: host machinery is redirected to phage production"
+   ],
+   "audio_dur_s": 2.88
+  },
+  {
+   "timestamp_start": 18.708,
+   "narration": "In half an hour, it is packed with a hundred copies.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4: ~30 min, ~100-150 per cell (VO says 'a hundred')"
+   ],
+   "audio_dur_s": 2.544
+  },
+  {
+   "timestamp_start": 21.502,
+   "narration": "Then they dissolve the wall from inside. Pop.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4: holin + endolysin lyse the wall from inside"
+   ],
+   "audio_dur_s": 2.448
+  },
+  {
+   "timestamp_start": 24.2,
+   "narration": "Every one flies off to find another.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "t4: released phages diffuse to new hosts"
+   ],
+   "audio_dur_s": 1.92
+  },
+  {
+   "timestamp_start": 26.37,
+   "narration": "In the oceans, viruses kill a fifth of all microbes, every day.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "suttle"
+   ],
+   "audio_dur_s": 3.696
+  },
+  {
+   "timestamp_start": 30.316,
+   "narration": "And they can't touch you. Human cells are not on the menu.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "host"
+   ],
+   "audio_dur_s": 2.664
+  },
+  {
+   "timestamp_start": 33.23,
+   "narration": "The deadliest hunter on Earth is not hunting you.",
+   "visual": {
+    "v1": ""
+   },
+   "fact_sources": [
+    "host + suttle"
+   ],
+   "audio_dur_s": 2.424
+  },
+  {
+   "timestamp_start": 35.9,
+   "narration": "",
+   "visual": {
+    "v1": "loop hold: phage descends to its frame-0 pose"
+   },
+   "fact_sources": [
+    "visual-only pacing/loop beat"
+   ]
+  }
+ ],
+ "timeline": {
+  "fps": 30,
+  "total_s": 36.8,
+  "gap_s": 0.25,
+  "voice": "edge-tts en-US-AndrewNeural rate +25%",
+  "words": 118,
+  "wpm_measured": 215.2
+ },
+ "sources": {
+  "suttle": "Suttle CA, 'Marine viruses - major players in the global ecosystem', Nat Rev Microbiol 5:801-812 (2007), doi:10.1038/nrmicro1750: viruses kill ~20% of ocean microbial biomass per day (an estimate; varies by system)",
+  "t4": "Escherichia virus T4 (textbook biology; en.wikipedia.org/wiki/Escherichia_virus_T4): long tail fibres attach, baseplate seats, contractile sheath drives the tail tube through the envelope, DNA enters; lytic cycle ~30 min at 37 C; burst ~100-150 phages; lysis needs holin + endolysin (PMC93561)",
+  "host": "bacteriophages infect bacteria only; they do not infect human cells (host range is set by bacterial surface receptors)"
+ },
+ "bed_peak": 0.05,
+ "origin": "Topic chosen from Kurzgesagt's most-viewed list (bacteriophage video, ~35M views) as a topic-pull experiment vs #0006. Script, structure, visuals and audio are original; their video was not downloaded, cut or referenced frame-by-frame (rule Q6).",
+ "sfx": [
+  {
+   "kind": "whoosh",
+   "at": 0.1,
+   "gain": 0.4,
+   "f_lo": 300,
+   "f_hi": 1500
+  },
+  {
+   "kind": "thump",
+   "at": 3.67,
+   "gain": 0.55,
+   "seed": 9
+  },
+  {
+   "kind": "blip",
+   "at": 7.54,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 7.82,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 8.09,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 8.37,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 8.51,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 8.65,
+   "gain": 0.3
+  },
+  {
+   "kind": "thump",
+   "at": 9.0,
+   "gain": 0.4,
+   "seed": 3
+  },
+  {
+   "kind": "riser",
+   "at": 10.27,
+   "gain": 0.4
+  },
+  {
+   "kind": "thump",
+   "at": 11.57,
+   "gain": 0.65,
+   "seed": 5
+  },
+  {
+   "kind": "whoosh",
+   "at": 12.76,
+   "gain": 0.4,
+   "seed": 4,
+   "f_lo": 600,
+   "f_hi": 3600
+  },
+  {
+   "kind": "thump",
+   "at": 14.58,
+   "gain": 0.4,
+   "seed": 6
+  },
+  {
+   "kind": "blip",
+   "at": 16.77,
+   "gain": 0.25
+  },
+  {
+   "kind": "blip",
+   "at": 17.13,
+   "gain": 0.25
+  },
+  {
+   "kind": "blip",
+   "at": 17.49,
+   "gain": 0.25
+  },
+  {
+   "kind": "blip",
+   "at": 17.85,
+   "gain": 0.25
+  },
+  {
+   "kind": "blip",
+   "at": 18.21,
+   "gain": 0.25
+  },
+  {
+   "kind": "blip",
+   "at": 18.57,
+   "gain": 0.25
+  },
+  {
+   "kind": "thump",
+   "at": 21.11,
+   "gain": 0.5,
+   "seed": 7
+  },
+  {
+   "kind": "riser",
+   "at": 22.09,
+   "gain": 0.5
+  },
+  {
+   "kind": "thump",
+   "at": 23.39,
+   "gain": 0.7,
+   "seed": 11
+  },
+  {
+   "kind": "whoosh",
+   "at": 23.39,
+   "gain": 0.5,
+   "seed": 8,
+   "f_lo": 300,
+   "f_hi": 2600
+  },
+  {
+   "kind": "whoosh",
+   "at": 24.42,
+   "gain": 0.4,
+   "seed": 6,
+   "f_lo": 900,
+   "f_hi": 4200
+  },
+  {
+   "kind": "thump",
+   "at": 27.16,
+   "gain": 0.4,
+   "seed": 12
+  },
+  {
+   "kind": "thump",
+   "at": 27.83,
+   "gain": 0.4,
+   "seed": 13
+  },
+  {
+   "kind": "thump",
+   "at": 28.5,
+   "gain": 0.4,
+   "seed": 14
+  },
+  {
+   "kind": "thump",
+   "at": 29.17,
+   "gain": 0.4,
+   "seed": 15
+  },
+  {
+   "kind": "thump",
+   "at": 29.29,
+   "gain": 0.5,
+   "seed": 17
+  },
+  {
+   "kind": "blip",
+   "at": 30.96,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 31.66,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 32.36,
+   "gain": 0.3
+  },
+  {
+   "kind": "thump",
+   "at": 33.34,
+   "gain": 0.45,
+   "seed": 15
+  },
+  {
+   "kind": "thump",
+   "at": 34.56,
+   "gain": 0.5,
+   "seed": 16
+  },
+  {
+   "kind": "whoosh",
+   "at": 36.08,
+   "gain": 0.4,
+   "seed": 8,
+   "f_lo": 500,
+   "f_hi": 2400
+  }
+ ]
+}
