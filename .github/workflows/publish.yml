@@ -111,9 +111,15 @@ jobs:
         if: env.DRY_RUN != 'true'
         run: python3 -m playwright install --with-deps chromium
 
-      - name: Render (full)
+      - name: ffmpeg (the hosted runner image does not ship it — run 43802270479 died here)
         if: env.DRY_RUN != 'true'
-        run: python3 tools/render_short.py "$SLUG" --full
+        run: |
+          command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          ffmpeg -version | head -1
+
+      - name: Render (full, parallel — frames are pure functions of t)
+        if: env.DRY_RUN != 'true'
+        run: python3 tools/render_short.py "$SLUG" --full --workers 4
 
       - name: Finish (sound design + loudnorm + mux)
         if: env.DRY_RUN != 'true'

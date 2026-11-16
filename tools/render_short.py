@@ -6,12 +6,17 @@ Usage:
   tools/render_short.py <slug> --full        # every frame at FPS
   tools/render_short.py <slug> --times 3.2 7.9   # arbitrary probe frames
   tools/render_short.py <slug> --frames 0 60     # render frames [0, 60) (AI-rerender chunks)
+  tools/render_short.py <slug> --full --workers 4   # same frames, N chromium processes in parallel
+                                                    # (day-018: 27 min -> a few min; frames are pure
+                                                    # functions of t, so chunks are byte-identical; C6)
 
 Builds render/scenes.built.html by injecting the synced timeline from
 script.json into render/scenes.html, then drives renderFrame(t) via
 Playwright (chromium, 1080x1920 — Shorts vertical).
 """
 import json
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -66,6 +71,24 @@ def main() -> int:
     tl = build_timeline(short)
     html = build_html(short, tl)
     mode = sys.argv[2] if len(sys.argv) > 2 else "--keyframes"
+
+    if mode == "--full" and "--workers" in sys.argv:
+        nw = max(1, int(sys.argv[sys.argv.index("--workers") + 1]))
+        n = int(round((tl[-1]["end"] + 0.45) * FPS))
+        frames = short / "render" / "frames"
+        frames.mkdir(parents=True, exist_ok=True)
+        todo = [i for i in range(n) if not ("--resume" in sys.argv and (frames / f"f{i:04d}.png").exists()
+                                             and (frames / f"f{i:04d}.png").stat().st_size > 1000)]
+        if not todo:
+            print(f"DONE 0 frames (all {n} on disk)"); return 0
+        lo, hi = todo[0], todo[-1] + 1
+        step = -(-(hi - lo) // nw)
+        procs = [subprocess.Popen([sys.executable, __file__, slug, "--frames", str(a), str(min(hi, a + step))],
+                                  stdout=subprocess.DEVNULL) for a in range(lo, hi, step)]
+        rc = max(p.wait() for p in procs)
+        got = sum(1 for i in range(n) if (frames / f"f{i:04d}.png").exists())
+        print(f"DONE workers={len(procs)} frames on disk {got}/{n} rc={rc}")
+        return 0 if (rc == 0 and got == n) else 1
 
     if mode == "--times":
         times = [float(x) for x in sys.argv[3:]]
