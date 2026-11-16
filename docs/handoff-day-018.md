@@ -56,15 +56,13 @@
 
 ## 4. What I could not do — be honest about these
 
-- **ASR verification of the VO is still open.** `faster-whisper` does not install on
-  this box (Python 3.14, ctranslate2 has no wheel); the `z-ai asr` shim is not
-  implemented. The mp3s are the day-017 set and were never ASR-verified (12/12 empty
-  that night). Nobody — human or model — has confirmed the words by ear in a logged way.
+- **ASR**: I could not run it here (`faster-whisper` has no Python 3.14 wheel; the `z-ai asr` shim is unimplemented). The upstream run of 2026-11-15 on the same mp3s is 11 PASS / 1 WARN / 0 FAIL — I relied on that.
 - **No model-judged gate ran on v3.** Frame review was done by me (the agent) from
   contact sheets. That is an agent judgment, not an ultracritic verdict (dead-end D8).
   The temporal dims in particular were judged from stills + the motion code, not from
-  watching the video.
-- See §6 for the publish state at the end of the session.
+  watching the video. The model gate was attempted and failed with HTTP 402 (OpenRouter
+  credits). Record: `content/short-0006/gate/agent_review_r5.md`.
+- Publish state: see `content/short-0006/published.json` (written by publish.yml if it ran) and `logs/2026-11-16.md`.
 
 ## 5. Advice
 

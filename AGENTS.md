@@ -178,3 +178,14 @@ Your first job is not a new Short — it is a 90-minute honest audit of `docs/pl
 correct what's verifiable today, archive what's obsolete (`docs/_archive/` with date), delete what's wrong, and
 **stop before** the style bible / C13 / Voices-spend / engine flips — those are boss-held. Commit as one atomic
 `docs(audit):` commit; ask the boss BEFORE changing the plan's arc or phases themselves.
+
+## 10. Day-018 addendum (2026-11-16) — read `docs/handoff-day-018.md`
+
+- No `gh` CLI here: use `python3 tools/gh_api.py whoami|secrets|runs|run <id>|dispatch <wf> k=v…`. It pulls the
+  token from git's credential helper per call. §4's `~/.config/opencode/.secrets/*` copies are STALE (another
+  account, pull-only) — the live credential is the one in git's helper; check `whoami` first.
+- `tools/contact_sheet.py <slug> out.jpg --scenes|--every 1.5|t1 t2… [--errors]` — review a short by eye in one image.
+- `script.json` may set `bed_peak` (finish_v3) and an `sfx` table; measure VO-vs-gap RMS after finishing (L-116).
+- OpenRouter is at 402 again: `ultracritic.py` returns "VLM FAILED" on every frame on this box (L-115).
+- #0006 is now the v3 rebuild (`render/scenes.html`); older designs are `scenes.v2-carried.html` / `scenes.v2r4-carried.html`.
+- Full render of #0006 v3 took ~27 min on this box (8 threads, no GPU).

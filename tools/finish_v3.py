@@ -39,7 +39,7 @@ def _noise(n, seed):
     rng = np.random.default_rng(seed)
     return rng.standard_normal(n)
 
-def bed(total):
+def bed(total, peak=0.16):
     """warm Aadd9 pad: A2 E3 A3 C#4 B3, detuned pairs, slow tremolo, air."""
     n = int(total * SR)
     t = np.arange(n) / SR
@@ -69,7 +69,7 @@ def bed(total):
     env = np.ones(n)
     env[:fi] = np.linspace(0, 1, fi)
     env[-fo:] = np.linspace(1, 0.0, fo)
-    out *= env * 0.16
+    out *= env * peak
     return out
 
 def whoosh(dur=0.7, seed=3, f_lo=300, f_hi=1600):
@@ -158,7 +158,7 @@ def main() -> int:
     # gain=1 during VO made the multiplier 1.0, so the pad was LOUDEST under
     # the voice and -8 dB in the gaps. Duck = LOW during VO, FULL in gaps.)
     # gain = 1 inside VO spans (with 150 ms ramps) → bed scaled to -9 dB there.
-    b = bed(total)
+    b = bed(total, peak=float(script.get("bed_peak", 0.16)))  # per-short calibration (L-098): set script.json bed_peak
     t = np.arange(N) / SR
     gain = np.zeros(N)
     GAP = 0.15

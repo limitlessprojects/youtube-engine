@@ -161,50 +161,50 @@
   {
    "kind": "whoosh",
    "at": 0.45,
-   "gain": 0.7,
+   "gain": 0.42,
    "f_lo": 500,
    "f_hi": 2400
   },
   {
    "kind": "thump",
    "at": 3.85,
-   "gain": 0.35,
+   "gain": 0.21,
    "seed": 20
   },
   {
    "kind": "thump",
    "at": 3.98,
-   "gain": 0.35,
+   "gain": 0.21,
    "seed": 21
   },
   {
    "kind": "thump",
    "at": 4.11,
-   "gain": 0.35,
+   "gain": 0.21,
    "seed": 22
   },
   {
    "kind": "thump",
    "at": 4.24,
-   "gain": 0.35,
+   "gain": 0.21,
    "seed": 23
   },
   {
    "kind": "thump",
    "at": 4.37,
-   "gain": 0.35,
+   "gain": 0.21,
    "seed": 24
   },
   {
    "kind": "thump",
    "at": 5.48,
-   "gain": 0.8,
+   "gain": 0.48,
    "seed": 7
   },
   {
    "kind": "whoosh",
    "at": 7.06,
-   "gain": 0.8,
+   "gain": 0.48,
    "seed": 4,
    "f_lo": 700,
    "f_hi": 4200
@@ -212,58 +212,58 @@
   {
    "kind": "riser",
    "at": 9.46,
-   "gain": 0.45
+   "gain": 0.27
   },
   {
    "kind": "thump",
    "at": 10.76,
-   "gain": 0.95,
+   "gain": 0.57,
    "seed": 9
   },
   {
    "kind": "blip",
    "at": 14.33,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "blip",
    "at": 14.74,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "blip",
    "at": 15.15,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "blip",
    "at": 15.56,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "blip",
    "at": 15.97,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "blip",
    "at": 16.38,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "blip",
    "at": 16.79,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "blip",
    "at": 17.2,
-   "gain": 0.4
+   "gain": 0.24
   },
   {
    "kind": "whoosh",
    "at": 18.08,
-   "gain": 0.75,
+   "gain": 0.45,
    "seed": 5,
    "f_lo": 400,
    "f_hi": 3000
@@ -271,25 +271,25 @@
   {
    "kind": "thump",
    "at": 22.25,
-   "gain": 0.9,
+   "gain": 0.54,
    "seed": 11
   },
   {
    "kind": "thump",
    "at": 24.41,
-   "gain": 0.6,
+   "gain": 0.36,
    "seed": 12
   },
   {
    "kind": "thump",
    "at": 25.41,
-   "gain": 0.7,
+   "gain": 0.42,
    "seed": 13
   },
   {
    "kind": "whoosh",
    "at": 26.89,
-   "gain": 0.45,
+   "gain": 0.27,
    "seed": 6,
    "f_lo": 1500,
    "f_hi": 5200
@@ -297,33 +297,34 @@
   {
    "kind": "thump",
    "at": 31.36,
-   "gain": 0.9,
+   "gain": 0.54,
    "seed": 14
   },
   {
    "kind": "blip",
    "at": 33.91,
-   "gain": 0.6
+   "gain": 0.36
   },
   {
    "kind": "thump",
    "at": 35.28,
-   "gain": 0.8,
+   "gain": 0.48,
    "seed": 15
   },
   {
    "kind": "thump",
    "at": 35.48,
-   "gain": 0.8,
+   "gain": 0.48,
    "seed": 16
   },
   {
    "kind": "whoosh",
    "at": 37.84,
-   "gain": 0.6,
+   "gain": 0.36,
    "seed": 8,
    "f_lo": 500,
    "f_hi": 2400
   }
- ]
+ ],
+ "bed_peak": 0.05
 }
