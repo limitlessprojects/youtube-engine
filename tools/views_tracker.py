@@ -13,6 +13,7 @@ from __future__ import annotations
 import csv
 import datetime as dt
 import re
+import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -28,7 +29,6 @@ NS = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/sche
 def fetch() -> list[dict]:
     # bot-wall ladder (L-031): a 404/429 on one attempt is NOT a verdict —
     # rotate UA + backoff before giving up (curl-verified feed works most nights)
-    import time
     uas = ["Mozilla/5.0 (rss-scout/1)",
            "Mozilla/5.0 (X11; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0",
            "curl/8.5.0"]
@@ -56,32 +56,46 @@ def fetch() -> list[dict]:
     return rows
 
 
+def read_history() -> list[list[str]]:
+    """Every captured row except the header, deduped per (date, video_id).
+
+    HISTORY IS KEPT (day-019 fix): the pre-019 merge dropped all older rows of
+    every video in today's feed, so the CSV held only the latest row per video
+    and the plan's 24 h/48 h comparisons had no time series to read.
+    """
+    seen: dict[tuple[str, str], list[str]] = {}
+    if CSV.exists():
+        with CSV.open() as f:
+            for r in csv.reader(f):
+                if len(r) >= 5 and r[0] and r[0] != "date":
+                    seen[(r[0], r[1])] = r
+    return list(seen.values())
+
+
+def write_rows(all_rows: list[list[str]]) -> None:
+    with CSV.open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["date", "video_id", "title", "views", "published"])
+        w.writerows(sorted(all_rows, key=lambda r: (r[0], r[1]), reverse=True))
+
+
+def merge_today(fresh: list[list[str]], today: str) -> list[list[str]]:
+    """Idempotent per day: today's rows are REPLACED, every other day stays."""
+    return [r for r in read_history() if r[0] != today] + fresh
+
+
 def main() -> None:
     today = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
     rows = fetch()
     if not rows:
         print("[views] RSS returned no entries — leaving CSV untouched")
         return
-    existing: dict[tuple[str, str], list[str]] = {}
-    if CSV.exists():
-        with CSV.open() as f:
-            for r in csv.reader(f):
-                if len(r) >= 5 and r[0] and r[0] != "date":
-                    existing[(r[0], r[1])] = r  # (date, video_id) -> row
-    out = []
-    seen_today = set()
+    fresh = []
     for v in rows:
-        row = [today, v["video_id"], v["title"], str(v["views"]), v["published"]]
-        out.append(row)
-        seen_today.add(v["video_id"])
+        fresh.append([today, v["video_id"], v["title"], str(v["views"]), v["published"]])
         print(f"[views] {v['video_id']}  {v['views']:>7,}  {v['title'][:60]}")
-    # drop stale duplicates of today, keep history, sort by date desc then id
-    merged = [r for k, r in existing.items() if k[0] != today and k[1] not in seen_today]
-    all_rows = sorted(out + merged, key=lambda r: (r[0], r[1]), reverse=True)
-    with CSV.open("w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["date", "video_id", "title", "views", "published"])
-        w.writerows(all_rows)
+    all_rows = merge_today(fresh, today)
+    write_rows(all_rows)
     print(f"[views] wrote {len(all_rows)} rows -> {CSV.relative_to(REPO)} ({today})")
 
 

@@ -1,0 +1,58 @@
+name: Views Row
+
+# Twice-daily views capture (Phase B signal proof — the 24 h/48 h comparisons
+# need a time series). The studio sandbox IP class is hard-walled from
+# youtube.com (feed 404s + yt-dlp "sign in" walls, day-019), but GitHub-hosted
+# runners are fresh IPs: the daily-loop transcribe matrix wins there most days
+# and publish.yml's oEmbed probe returns 200.
+#
+#   06:30 UTC = 09:30 EAT  -> the 09:45 EAT agent session pulls a fresh row
+#   20:30 UTC = 23:30 EAT  -> the 23:45 EAT agent session pulls a fresh row
+#
+# Capture: RSS first (views_tracker.py), then the yt-dlp player-client ladder
+# (views_ytdlp.py — L-049). Total failure exits red so the session sees the
+# owed row in the Actions tab instead of assuming.
+
+on:
+  schedule:
+    - cron: "30 6 * * *"
+    - cron: "30 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: views-row
+  cancel-in-progress: false
+
+jobs:
+  views:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bootstrap (single source of env truth, L-051; yt-dlp + node)
+        run: bash bootstrap.sh --ci
+
+      - name: Views row (RSS first, yt-dlp client ladder as fallback)
+        run: python tools/views_tracker.py || python tools/views_ytdlp.py
+
+      - name: Git identity
+        run: |
+          git config user.name "youtube-engine bot"
+          git config user.email "341060791+limitlessprojects@users.noreply.github.com"
+
+      - name: Push (retry-safe)
+        run: |
+          git add logs/views.csv
+          git diff --cached --quiet && echo "no views change" && exit 0
+          git commit -m "chore(views): row $(date -u +%F)"
+          git push || (sleep 5 && git pull --rebase && git push) || echo "::warning::push failed; row owed to next run"
