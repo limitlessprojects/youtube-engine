@@ -54,3 +54,4 @@ content/*/vo/master.m4a
 !content/*/gate/carry_*.md
 research/cache/*
 !research/cache/instances.json
+content/_watch/

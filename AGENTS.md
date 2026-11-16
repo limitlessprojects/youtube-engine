@@ -188,4 +188,7 @@ correct what's verifiable today, archive what's obsolete (`docs/_archive/` with 
 - `script.json` may set `bed_peak` (finish_v3) and an `sfx` table; measure VO-vs-gap RMS after finishing (L-116).
 - OpenRouter is at 402 again: `ultracritic.py` returns "VLM FAILED" on every frame on this box (L-115).
 - #0006 is now the v3 rebuild (`render/scenes.html`); older designs are `scenes.v2-carried.html` / `scenes.v2r4-carried.html`.
-- Full render of #0006 v3 took ~27 min on this box (8 threads, no GPU).
+- Full render of #0006 v3 took ~27 min single-process; use `render_short.py <slug> --full --workers 4` (~7 min, byte-identical).
+- `tools/watch_video.py <slug|file|youtube-url>` — 10 fps filmstrip sheets + dead seconds + loudness. Run it BEFORE publish (rule C18/G10, L-120); I ran it after and found holds that stills hid.
+- Offline ASR: `whisper-cli` + `~/.local/share/com.pais.handy/models/ggml-small.bin`; `vo_pipeline.py --verify-only` uses it automatically (L-118).
+- `publish.yml` now installs ffmpeg; before day-019 it had only ever succeeded as a dry run (L-119).

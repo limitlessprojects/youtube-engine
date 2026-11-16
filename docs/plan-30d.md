@@ -28,8 +28,27 @@
 
 ## Status right now (Day 019 — 2026-11-16, fresh machine)
 
-- **#0006 PUBLISHED: https://youtu.be/BHRLMfSbHBw — "The thread doctors hide under your skin"** (public, disclosure ON, thumbnail SET, CI run 43803936426). It is the **v3 rebuild** (one lit skin block, one continuous take), not the v2 cut that carried at 7.06/7.10 below. **Not model-gated:** ultracritic r5 was attempted and every frame returned VLM 402; published on the boss's direct instruction with an agent-judged record (`content/short-0006/gate/agent_review_r5.md`). Owed: a funded-judge round on the live cut; first views row.
-- Read `docs/handoff-day-018.md` for the method and new tools (contact_sheet, gh_api, render --workers, offline ASR).
+- **Live: 5 Shorts.** #0001 KKyrNUGZXcU · #0002 CZbJmmeyUc4 · #0003 DeaEvEduh88 · #0005 EEtdJhm0-ck · **#0006 BHRLMfSbHBw "The thread doctors hide under your skin"** (public 2026-11-16 04:32Z, disclosure ON, thumbnail SET, CI run 43803936426). #0004 closed unposted (L-085).
+- **#0006 is the v3 rebuild** (one lit skin block, one continuous take — `docs/handoff-day-018.md`), not the v2 cut that carried at 6.72 / 6.61 / 7.06 / 7.10. **It has no model score:** ultracritic r5 returned VLM 402 on all frames; published on the boss's direct instruction with `gate/agent_review_r5.md`.
+- **Post-publish watch (`gate/watch_r5.md`):** clear and well-composed, under-animated. motion_probe median 0.0051 (target ≥ 0.01; #0005 was 0.0013), 4 dead seconds, action ends early in 9 of 13 scenes (L-120 → rule C18). Not re-uploaded (no delete-and-republish).
+- **Views:** last row is 2026-11-14 (#0005 631 · #0003 1,153 · #0002 1,142 · #0001 201). No row yet for #0006 — owed at the next session.
+- **Quality scoreboard (what each number is):**
+
+| Short | Judge verdict | Motion median / dead s | Status |
+|---|---|---|---|
+| #0003 | ultracritic 5.20 | not measured | live |
+| #0004 | 7.53 best, vh 6.9 | not measured | closed unposted |
+| #0005 | r13 7.50 | 0.0013 / 18 of 36 | live |
+| #0006 v2 | 7.10 best (r4) | not measured | superseded |
+| #0006 v3 | none (VLM 402); agent review only | 0.0051 / 4 of 39 | live |
+
+- **Tooling that changed the loop this session:** `contact_sheet.py` (review by eye), `watch_video.py` (10 fps filmstrip + dead seconds), `render_short.py --workers` (27 → ~7 min), offline ASR in `vo_pipeline.py`, `gh_api.py`, `publish.yml` now completes on a hosted runner (ffmpeg). Rules C18 and G10 added.
+
+### What the next session owes (in order)
+1. Views row for all five (`views_tracker.py`); note #0006's first-24 h number against #0005's 631-in-5-h.
+2. If a judge is funded: `ultracritic.py short-0006 --round 5` on the live cut; file the number in the table above.
+3. **#0007** on the v3 pattern with rule C18 from the first draft: one lit object, camera moves, events timed as fractions of the line, hook moving by 0.3 s. Pre-publish: `watch_video.py` shows 0 dead seconds and median ≥ 0.01.
+4. Phase B's Nov 21 fork still stands and now has a cleaner test: #0006 v3 vs #0005 is a format change on comparable topics.
 
 ## Earlier status (Day 018 — 09:45 EAT session, 2026-11-15; end-of-Day-017 block below)
 
@@ -61,6 +80,7 @@
 **Question: does anything we make actually get watched?**
 
 - Cadence non-negotiable (it's the sample size).
+- **Day-019 note:** cadence slipped — 2 publishes in the 5 days Nov 12–16 (#0005, #0006). The slip was gate laps on one format (#0006 v2, four rounds). Pre-decided response from here: a cut that misses the bar twice gets a format rebuild or is dropped, never a third polish lap (L-114).
 - Add: A/B hooks every 3rd day (two cuts of one script, 48h apart, compare 24h retention + swipe-away).
 - Add: `views_tracker.py` nightly with 7-day rolling comparison in the ledger.
 - **Pre-decided fork (Nov 21):** best Short quality <8/10 OR median 24h views <1K → **pivot WITHIN YouTube** (new format/topic family per outlier formulas), not away from video. Executes at the Nov 21 session; no renegotiation.

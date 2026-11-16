@@ -58,6 +58,7 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 | C15 | **Motion design carries the professional feel**: parallax depth, easing, squash & stretch, secondary motion (hair/cloth/particles), slow camera pushes, subtle grain + vignette | Boss directive 2026-11-13; C4/C5 already cover idle micro-motion and eased transitions | render motion pass; video dims `pacing_rhythm`/`edit_flow` |
 | C16 | Image-to-video is for HERO SHOTS ONLY (explosions, fluids, space), fed approved keyframes so style stays consistent; never whole scenes | Boss directive 2026-11-13; free-GPU route assessed in `research/free-gpu-video.md` | process |
 | C17 | **Accuracy pass before animating**: list every object in a scene, check against real references (shape, scale, colour), add one detailed "wow" element per scene | Boss directive 2026-11-13 | process (script→scenes handoff checklist) |
+| C18 | **Action spans the line:** time each scene's main event as a fraction of the scene (`u`), so the last meaningful change lands at u ≥ 0.8; a second event (label, reaction, camera move) covers any remainder. No hold > 0.8 s on idle motion alone. The first visible change of the hook starts by 0.3 s | L-120: #0006 v3 held 1–2 s after the action in 9/13 scenes; motion_probe median 0.0051, 4 dead seconds | `tools/watch_video.py` (filmstrip + dead seconds) before publish; dim `pacing_rhythm` |
 
 ## Audio (stage: `docs/playbook/audio.md`)
 
@@ -90,6 +91,7 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 | G7 | Temporal dimensions are judged on the VIDEO (glm-4.6v video pass), never on stills | day-010: pacing scored 5.4 from PNGs (structurally capped) but 8.0 from the video | ultracritic B2 (required for pass) |
 | G8 | Two VLM layers: contact-sheet autopsy (systemic) THEN per-frame gate (verification) | L-062: #0002 loop 3.5 → 5 → 7 → 8/10 | process (playbook) |
 | G9 | **Ultracritic judges style consistency, detail density, depth and motion quality; any scene that reads as "basic shapes" is rejected regardless of mean** | Boss directive 2026-11-13; L-085 (the format ceiling the judge never had words for) | `tools/ultracritic.py` — new dims land with the next rubric revision; bars calibrated on first run per G6 (existing 7.5/7.0/6.0 untouched) |
+| G10 | **No judge ≠ no gate.** When the VLM is unavailable, the pre-publish minimum is: linter PASS, ASR 0 FAIL (offline whisper), bed 6–22 dB under VO (measured), `watch_video.py` on the final mp4 with dead seconds listed, and a written agent review labelled as agent-judged. Publishing without a model verdict needs the boss's explicit instruction, recorded in the review | L-115/L-120: #0006 v3 published on boss instruction with VLM 402; the watch was done after, and found what stills missed | `gate/agent_review_r*.md` + `gate/watch_r*.md` (process) |
 
 ## Publish (stage: `docs/playbook/publish.md`)
 
@@ -114,7 +116,7 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 
 ## Evidence-coverage summary
 
-- 55 rules total. Tool-enforced (linter / A1–A5 / vo_pipeline / gate dims /
+- 57 rules total (C18, G10 added day-019; both process-enforced). Tool-enforced (linter / A1–A5 / vo_pipeline / gate dims /
   upload / preflight / render+finish artifacts): 38 (69%) — preflight
   (`tools/preflight.py`, self-tested per L-066) newly covers S7, G2, the C1
   keyword cap, the S1 scan and a C6 Math.random guard. Process-only: 17 —

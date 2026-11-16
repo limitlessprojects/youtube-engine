@@ -90,3 +90,21 @@
   `gh_api.py logs <run>`, offline ASR in `vo_pipeline.py`.
 - While CI runs, do not edit the scene file of the short being published "to improve it" — CI renders the commit
   it checked out, and the repo would then disagree with the live video.
+
+## 7. After publishing I watched it — and should have before
+
+`tools/watch_video.py https://youtu.be/BHRLMfSbHBw` (10 fps filmstrip of the live file + motion numbers) showed
+what contact sheets could not: in 9 of 13 scenes the action ends early and the frame holds for 1–2 s on idle
+motion. Full notes: `content/short-0006/gate/watch_r5.md`; lesson L-120; rule C18.
+
+For the next scene file, write timings as fractions of the scene, not seconds from its start:
+
+```js
+// v3 did this — finishes 0.5 s in, then holds for the rest of a 3.4 s line:
+chip(cl((lt - 0.2) / 0.3), ...)
+// do this — the event occupies the line, and a second beat covers the tail:
+const p = V2.easeInOut(cl((u - 0.08) / 0.72));     // main action lands at u = 0.8
+const tail = cl((u - 0.8) / 0.15);                 // reaction / label / camera nudge
+```
+
+Then run `watch_video.py` on the finished mp4 and read the sheets in order before dispatching anything.

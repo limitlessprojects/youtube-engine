@@ -56,3 +56,21 @@ pixel-probe arbitration before code changes (rule G3).
 - `BELOW_BAR_NO_POST` after 3 rounds → STOP. Commit the report, write the
   carry note (3 named directives) into the ledger line, and hand the debt to
   the next session (rule 7 of the standing rules).
+
+## When no model judge is available (rule G10, day-019)
+
+`ultracritic.py` printing "VLM FAILED (3 attempts)" on every frame is a backend failure (credits, 402),
+not a verdict and not a creative round. Do this instead, in order, and commit the outputs:
+
+```bash
+python3 tools/script_linter.py content/<slug>/script.json --duration-s <VO seconds>   # PASS
+python3 tools/vo_pipeline.py <slug> --verify-only          # offline whisper.cpp, 0 FAIL (L-118)
+python3 tools/contact_sheet.py <slug> /tmp/s.jpg --scenes --errors   # read it; fix; repeat
+python3 tools/render_short.py <slug> --full --workers 4 && python3 tools/finish_v3.py <slug>
+python3 tools/watch_video.py <slug>                        # READ THE SHEETS IN ORDER; note dead seconds
+```
+
+Write `gate/agent_review_r<N>.md` (what was measured, what you saw, what you did not fix) and
+`gate/watch_r<N>.md`. Label both as agent-judged. Reference numbers so far (motion_probe, 1 s bins):
+#0005 median 0.0013 / 18 dead of 36 · #0006 v3 median 0.0051 / 4 dead of 39 · probe target ≥ 0.01.
+A funded judge later runs the missing round on the live cut and files the number next to these.
