@@ -28,10 +28,11 @@
 
 ## Status right now (Day 019 — 2026-11-16, fresh machine)
 
-- **Live: 5 Shorts.** #0001 KKyrNUGZXcU · #0002 CZbJmmeyUc4 · #0003 DeaEvEduh88 · #0005 EEtdJhm0-ck · **#0006 BHRLMfSbHBw "The thread doctors hide under your skin"** (public 2026-11-16 04:32Z, disclosure ON, thumbnail SET, CI run 43803936426). #0004 closed unposted (L-085).
+- **Live: 6 Shorts.** #0001 KKyrNUGZXcU · #0002 CZbJmmeyUc4 · #0003 DeaEvEduh88 · #0005 EEtdJhm0-ck · #0006 BHRLMfSbHBw "The thread doctors hide under your skin" (public 2026-11-16 04:32Z, disclosure ON, thumbnail SET, CI run 43803936426) · **#0008 hJOOVLWMKns "The deadliest hunter on Earth looks like a moon lander"** (public 2026-11-16 05:27Z, disclosure ON, CI run 43809538033 — the number skips #0007, still owed below). #0004 closed unposted (L-085).
 - **#0006 is the v3 rebuild** (one lit skin block, one continuous take — `docs/handoff-day-018.md`), not the v2 cut that carried at 6.72 / 6.61 / 7.06 / 7.10. **It has no model score:** ultracritic r5 returned VLM 402 on all frames; published on the boss's direct instruction with `gate/agent_review_r5.md`.
 - **Post-publish watch (`gate/watch_r5.md`):** clear and well-composed, under-animated. motion_probe median 0.0051 (target ≥ 0.01; #0005 was 0.0013), 4 dead seconds, action ends early in 9 of 13 scenes (L-120 → rule C18). Not re-uploaded (no delete-and-republish).
-- **Views:** last row is 2026-11-14 (#0005 631 · #0003 1,153 · #0002 1,142 · #0001 201). No row yet for #0006 — owed at the next session.
+- **#0008 (bacteriophage) is the topic-pull test** from the Kurzgesagt most-viewed list (their phage video ~35M views; nothing of theirs downloaded — script/drawings/voice/audio ours, rule Q6). v3 pattern with rule C18 from the first draft, and this time the filmstrip watch ran BEFORE publish (L-120 applied): **0 dead seconds** of 37, motion median 0.0087 (target ≥0.01 — just under, but 1.7× #0006's 0.0051); lint PASS (118 w / 215 WPM / 13 beats, max 3.95 s); offline ASR 12/0; bed 9.2 dB under VO; master 37.27 s / −15.3 LUFS / −1.35 dBTP. Agent-judged only (`gate/agent_review_r1.md`; VLM still 402). Facts: Suttle 2007 (~20%/day of ocean microbial biomass), T4 lytic ~30 min / burst 100–150 (PMC93561).
+- **Views: BLOCKED on two fronts (day-019).** (a) the channel RSS feed 404s from every IP class — studio 11-15, sandbox AND a GitHub runner 11-16 (runs 43812073786 + 43812748742; the uploads-playlist rung 2 404s too): a channel-side break, not a bot-wall. (b) the Data API 403s — the grant is upload-only; `tools/views_api.py` is written and waits on `youtube.readonly`. **Boss action: one consent URL re-mints the grant with both scopes** (`python3 tools/oauth_mint.py --url`). Last good row: 2026-11-14. The twice-daily Actions lane (`.github/workflows/views.yml`, 06:30 + 20:30 UTC) captures the moment any route opens; `logs/views.csv` now keeps history (day-019 fix) so the 24 h/48 h series exists.
 - **Quality scoreboard (what each number is):**
 
 | Short | Judge verdict | Motion median / dead s | Status |
@@ -41,14 +42,16 @@
 | #0005 | r13 7.50 | 0.0013 / 18 of 36 | live |
 | #0006 v2 | 7.10 best (r4) | not measured | superseded |
 | #0006 v3 | none (VLM 402); agent review only | 0.0051 / 4 of 39 | live |
+| #0008 | none (VLM 402); agent review r1 | 0.0087 / 0 of 37 | live |
 
 - **Tooling that changed the loop this session:** `contact_sheet.py` (review by eye), `watch_video.py` (10 fps filmstrip + dead seconds), `render_short.py --workers` (27 → ~7 min), offline ASR in `vo_pipeline.py`, `gh_api.py`, `publish.yml` now completes on a hosted runner (ffmpeg). Rules C18 and G10 added.
 
 ### What the next session owes (in order)
-1. Views row for all five (`views_tracker.py`); note #0006's first-24 h number against #0005's 631-in-5-h.
-2. If a judge is funded: `ultracritic.py short-0006 --round 5` on the live cut; file the number in the table above.
-3. **#0007** on the v3 pattern with rule C18 from the first draft: one lit object, camera moves, events timed as fractions of the line, hook moving by 0.3 s. Pre-publish: `watch_video.py` shows 0 dead seconds and median ≥ 0.01.
-4. Phase B's Nov 21 fork still stands and now has a cleaner test: #0006 v3 vs #0005 is a format change on comparable topics.
+1. **Views row** — check the latest `Views Row` Actions run: if the playlist rung opened the feed, or the boss re-minted the grant (consent URL handed over day-019), capture the first rows for #0006 + #0008 (published 04:32Z / 05:27Z on 11-16).
+2. **The 24 h / 48 h comparison, #0008 vs #0006 (BHRLMfSbHBw)** — same engine pattern and voice, different topic AND better pacing, so a gap cannot be pinned on topic alone (the handoff's exact framing). 24 h checkpoints land 11-17 ~04:32/05:27Z → the 06:30 UTC views run catches them; 48 h on 11-18. File both in the ledger with the numbers.
+3. If a judge is funded: `ultracritic.py short-0008 --round 2` on the live cut (r1 was agent-judged, D8-labelled); same debt for #0006 r5.
+4. **#0007** (boss-pitched "last doctor on Earth", emotion-whatif) — still owed on the v3 pattern + C18 from draft one. #0008's weak spots are its lessons: the "hundred copies" reads as texture not countable phages, s7's fly-by phage is rotated with tangled legs, the hero appears in one scene only, and the stage-one hook is a descent rather than a surprise (`gate/agent_review_r1.md`).
+5. Phase B's Nov 21 fork now has two tests: #0006 v3 vs #0005 (format change on comparable topics) and #0008 vs #0006 (pacing upgrade on one engine pattern).
 
 ## Earlier status (Day 018 — 09:45 EAT session, 2026-11-15; end-of-Day-017 block below)
 
@@ -83,6 +86,7 @@
 - **Day-019 note:** cadence slipped — 2 publishes in the 5 days Nov 12–16 (#0005, #0006). The slip was gate laps on one format (#0006 v2, four rounds). Pre-decided response from here: a cut that misses the bar twice gets a format rebuild or is dropped, never a third polish lap (L-114).
 - Add: A/B hooks every 3rd day (two cuts of one script, 48h apart, compare 24h retention + swipe-away).
 - Add: `views_tracker.py` nightly with 7-day rolling comparison in the ledger.
+- **Day-019 pair:** #0008 (topic-pull, C18 pacing) published 55 min after #0006 (boss-topic, pre-C18 v3) — the cleanest same-engine comparison yet; 24 h / 48 h checkpoints = the 11-17 and 11-18 early sessions.
 - **Pre-decided fork (Nov 21):** best Short quality <8/10 OR median 24h views <1K → **pivot WITHIN YouTube** (new format/topic family per outlier formulas), not away from video. Executes at the Nov 21 session; no renegotiation.
 
 ## Phase C — Scale what works (Day 022–030, Nov 22–Dec 1)
