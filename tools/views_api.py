@@ -79,12 +79,21 @@ def fetch_stats(ids: list[str], access: str) -> dict[str, dict]:
 
 
 def rewrite_today(rows: list[list], today: str, fresh: list[list]) -> None:
-    """Drop today's existing rows, append the fresh ones, keep date order."""
-    kept = [r for r in rows if r and r[0] != today]
+    """Drop today's existing rows, append the fresh ones, keep date order.
+
+    L-123: the header row must never enter the sort — under string comparison
+    "date" > "2026-…", so it used to land at EOF (the recurring mangle). Filter
+    it out, write it first, newest date block on top, LF line endings.
+    """
+    header = ["date", "video_id", "title", "views", "published"]
+    kept = [r for r in rows if r and r[0] != today and r[0] != "date" and len(r) == 5]
     kept.extend(fresh)
     kept.sort(key=lambda r: (r[0], r[1]))
+    kept.reverse()  # newest date block first; video-id order within a date is arbitrary
     with CSV_PATH.open("w", newline="", encoding="utf-8") as f:
-        csv.writer(f, quoting=csv.QUOTE_MINIMAL).writerows(kept)
+        w = csv.writer(f, quoting=csv.QUOTE_MINIMAL, lineterminator="\n")
+        w.writerow(header)
+        w.writerows(kept)
 
 
 def main() -> int:

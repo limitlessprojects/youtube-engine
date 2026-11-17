@@ -5,8 +5,9 @@ Usage: python tools/finish_v3.py <slug>
 
 v3 spec #2 (docs/engine-v3-spec.md): music bed + 3 SFX classes per video.
 All audio is SYNTHESIZED (numpy) — original, license-free, $0:
-  · bed    — warm Aadd9 pad (detuned voices, slow tremolo, air noise),
-             faded in/out, ducked -8 dB under VO spans (150 ms ramps)
+  · bed    — soft high pad + room-tone air (L-124 redesign: NO energy below
+             400 Hz, no detune pairs, no tanh — the old Aadd9 low drone read
+             as constant buzz/static), faded in/out, ducked under VO
   · riser  — noise+sine sweep into the insight beat (s3)
   · whoosh — bandpass noise bursts at motion payoffs (ripple, flyby)
   · thump  — soft stamp impacts at word-timed card beats
@@ -39,32 +40,39 @@ def _noise(n, seed):
     rng = np.random.default_rng(seed)
     return rng.standard_normal(n)
 
-def bed(total, peak=0.16):
-    """warm Aadd9 pad: A2 E3 A3 C#4 B3, detuned pairs, slow tremolo, air."""
+def bed(total, peak=0.05):
+    """soft high pad (A4/C#5/E5) + room-tone air — L-124 redesign.
+
+    The day-007..019 Aadd9 drone (110-277 Hz detuned pairs through tanh)
+    read as constant 'buzzing/static' under every video: its 100-300 Hz band
+    measured 13 dB OVER the speech band on the #0006 master and every voice
+    pair beat at ~0.13 Hz. Measured laws (tools/audio_forensics.py, L-124):
+      - no bed energy below ~400 Hz — that band belongs to the voice;
+        detuned clusters there buzz on phone speakers
+      - no tanh on beds (intermodulation grit), no detune pairs (beating)
+      - air = band-limited room tone ~100-600 Hz, no sub rumble, ~10 dB
+        under the pad
+      - accept nothing you cannot measure: gap pad-zone <= -38 dB band RMS
+    """
     n = int(total * SR)
     t = np.arange(n) / SR
-    freqs = [110.0, 164.81, 220.0, 277.18, 246.94, 110.0 * 2]
     out = np.zeros(n)
-    for i, f in enumerate(freqs):
-        det = 1 + (0.0012 if i % 2 else -0.0012)
-        voice = np.sin(2 * np.pi * f * t) + 0.55 * np.sin(2 * np.pi * f * det * t)
-        voice *= 0.8 + 0.2 * np.sin(2 * np.pi * (0.05 + 0.013 * i) * t + i)
-        out += voice / (2.2 + 0.5 * i)
-    # air: gentle lowpassed noise
-    air = _noise(n, 7)
-    kern = np.ones(480) / 480
-    air = np.convolve(air, kern, mode="same")
-    out += 0.16 * air / (np.abs(air).max() + 1e-9) * (np.abs(out).max())
-    # soft waveshape + normalize to an AUDIBLE-but-polite bed level
-    # (L-074: 0.062 peak ≈ -24 dBFS was inaudible under VO — boss heard
-    # "no bed at all"; autopsy confirmed. 0.16 peak ≈ -16 dBFS pre-duck.)
-    out = np.tanh(1.6 * out)
+    # gentle A-major voicing, one pure sine per voice (no detune -> no beats)
+    for i, (f, amp) in enumerate([(440.0, 0.9), (554.37, 0.7), (659.25, 0.45)]):
+        voice = np.sin(2 * np.pi * f * t + 0.35 * i)
+        # slow per-voice swell (8-14 s periods) so it breathes, never drones
+        voice *= 0.72 + 0.28 * np.sin(2 * np.pi * (0.07 + 0.021 * i) * t + 1.7 * i)
+        out += amp * voice
     out /= np.abs(out).max() + 1e-9
-    # A5-calibrated bed level (day-015): 0.16 peak measured only 1.3 dB under
-    # VO RMS (mud). 0.075 peak (-6.6 dB) ≈ 7.9 dB under VO — inside the 6–22
-    # band with margin; bed stays present in gaps (L-074's real bug was the
-    # inverted duck, fixed day-010, not the level).
-    # fades: in 0.8s, out last 1.2s, and dip the very end to silence
+    # room-tone air: difference of two box lowpasses -> ~100-600 Hz band noise
+    air = _noise(n, 7)
+    lo = np.convolve(air, np.ones(480) / 480, mode="same")   # < 100 Hz
+    mid = np.convolve(air, np.ones(80) / 80, mode="same")    # < 600 Hz
+    band = mid - lo
+    band /= np.abs(band).max() + 1e-9
+    out = out + 0.28 * band
+    out /= np.abs(out).max() + 1e-9
+    # fades: in 0.8 s, out last 1.2 s
     fi, fo = int(0.8 * SR), int(1.2 * SR)
     env = np.ones(n)
     env[:fi] = np.linspace(0, 1, fi)
@@ -137,8 +145,10 @@ def _sd_note(script):
         for e in script["sfx"]:
             kinds[e["kind"]] = kinds.get(e["kind"], 0) + 1
         cues = " + ".join(f"{n} {k}" for k, n in sorted(kinds.items()))
-        return f"synth bed (Aadd9 pad, peak {script.get('bed_peak', 0.16)}) + per-short sfx table: {cues}; bed ducked -9 dB under VO"
-    return "synth bed (Aadd9 pad) + riser + 2 whoosh + 7 thumps + blip (legacy table), ducked -9 dB"
+        return (f"synth bed (L-124 high pad A4/C#5/E5 + room-tone air, peak "
+                f"{script.get('bed_peak', 0.05)}) + per-short sfx table: {cues}; "
+                "bed ducked -12 dB under VO")
+    return "synth bed (L-124 high pad + room-tone air) + riser + 2 whoosh + 7 thumps + blip (legacy table), ducked -12 dB"
 
 
 
@@ -169,14 +179,14 @@ def main() -> int:
     # ---- bed with CORRECT ducking (L-074: the old formula was inverted —
     # gain=1 during VO made the multiplier 1.0, so the pad was LOUDEST under
     # the voice and -8 dB in the gaps. Duck = LOW during VO, FULL in gaps.)
-    # gain = 1 inside VO spans (with 150 ms ramps) → bed scaled to -9 dB there.
-    b = bed(total, peak=float(script.get("bed_peak", 0.16)))  # per-short calibration (L-098): set script.json bed_peak
+    # gain = 1 inside VO spans (with 150 ms ramps) → bed scaled to -12 dB there.
+    b = bed(total, peak=float(script.get("bed_peak", 0.05)))  # per-short calibration (L-098): set script.json bed_peak
     t = np.arange(N) / SR
     gain = np.zeros(N)
     GAP = 0.15
     for s, e in vo_spans:
         gain = np.maximum(gain, np.clip((t - (s - GAP)) / GAP, 0, 1) * np.clip(((e + GAP) - t) / GAP, 0, 1))
-    DUCK_DB = -9
+    DUCK_DB = -12
     b *= 1.0 + ((10 ** (DUCK_DB / 20)) - 1.0) * gain
     mix += b
 

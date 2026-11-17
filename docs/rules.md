@@ -68,6 +68,7 @@ Legend — Enforced by: **linter** = `tools/script_linter.py` exit code;
 | A2 | Master to −14 LUFS integrated / −1.5 dBTP, two-pass loudnorm | vendor what-if-animation master recipe; #0001 −13.96, #0003 −15.25 | finish_v3 (`master_report.json`) |
 | A3 | An illustrative SFX lands in the pause AFTER its word, never on it | vendor sound.md/traps.md ("a pop on a word covers the word") | process (ear check on master) |
 | A4 | All music/SFX synthesized in-repo (numpy) — license-free at $0 | day-008 (v3-spec #2 closed: no download lottery) | process (finish_v3 synth) |
+| A5 | **Beds never enter the voice band:** no bed energy below ~400 Hz, no detune pairs (beating), no waveshaping on beds; gap pad-zone (100–300 Hz) must measure ≤ −38 dB band RMS on the master | L-124: the Aadd9 drone (110–277 Hz detuned pairs through tanh) was A1-compliant ("8.3 dB under VO") yet read as constant buzzing/static — its 100–300 Hz band sat 13 dB OVER the speech band on every published master | `tools/audio_forensics.py` on the finished master |
 
 ## Render & encode (stage: `docs/playbook/render-encode.md`)
 

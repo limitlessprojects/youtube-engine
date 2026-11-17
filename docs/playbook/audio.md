@@ -18,9 +18,12 @@ python3 tools/ultracritic.py <slug> --skip-mechanical   # frame pass needs gate/
 What finish_v3 does (all parameters: docs/parameters.md §Audio):
 
 1. Decodes VO lines, places each at its `timestamp_start` (rule V1 made these real).
-2. Synthesizes the bed: warm Aadd9 pad, detuned voices, air noise — **0.16 peak**
-   (the old 0.062 was inaudible), **−9 dB duck under VO spans** with 150 ms ramps
-   (the old formula was INVERTED — loudest under the voice; L-074).
+2. Synthesizes the bed (L-124 redesign): soft high pad — pure sines A4/C#5/E5
+   (440–659 Hz, one voice each, no detune pairs, no tanh) + band-limited
+   room-tone air (~100–600 Hz), **0.05 peak** default (`bed_peak` in
+   script.json), **−12 dB duck under VO spans** with 150 ms ramps. The old
+   Aadd9 drone (110–277 Hz detuned + tanh) read as constant buzz on every
+   published short — beds never enter the voice band (rule A5).
 3. Places the per-short `sfx` table from script.json (riser/whoosh/thump/blip,
    numpy-synthesized, license-free — rule A4). No table → the #0002 legacy
    fallback (don't rely on it; write the table).
