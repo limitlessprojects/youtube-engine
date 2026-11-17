@@ -1,0 +1,147 @@
+{
+  "short": "short-0007",
+  "verified_at": "2026-11-17T12:17:05.278611+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +10%",
+  "gap_s": 0.25,
+  "total_vo_s": 32.304,
+  "timeline_end_s": 35.054,
+  "n_fail": 0,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "narration",
+      "expected": "You're the last doctor on Earth. Nobody is coming.",
+      "heard": "You're the last doctor on Earth, nobody is coming.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.712,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "narration",
+      "expected": "One patient is still breathing in your dark ward.",
+      "heard": "One patient is still breathing in your dark ward.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.76,
+      "synced_start_s": 2.962
+    },
+    {
+      "line": "02",
+      "role": "narration",
+      "expected": "The blood bank keeps for a few weeks. Then it's empty.",
+      "heard": "The blood bank keeps for a few weeks, then it's empty.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.832,
+      "synced_start_s": 5.972
+    },
+    {
+      "line": "03",
+      "role": "narration",
+      "expected": "Insulin survives only in the cold. The power died last night.",
+      "heard": "Insulin survives only in the cold. The power died last night.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.72,
+      "synced_start_s": 9.054
+    },
+    {
+      "line": "04",
+      "role": "narration",
+      "expected": "Triage is simple now. Save the ones you can reach.",
+      "heard": "Triage is simple now, save the ones you can reach.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.952,
+      "synced_start_s": 13.024
+    },
+    {
+      "line": "05",
+      "role": "narration",
+      "expected": "Your hands remember what the machines used to know.",
+      "heard": "Your hands remember what the machines used to know.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.424,
+      "synced_start_s": 16.226
+    },
+    {
+      "line": "07",
+      "role": "narration",
+      "expected": "Out there, whole towns are still waiting for help.",
+      "heard": "Out there, whole towns are still waiting for help.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.688,
+      "synced_start_s": 18.9
+    },
+    {
+      "line": "08",
+      "role": "narration",
+      "expected": "The last supply truck never made it.",
+      "heard": "The last supply truck never made it.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 1.944,
+      "synced_start_s": 21.838
+    },
+    {
+      "line": "09",
+      "role": "narration",
+      "expected": "You mark every town you couldn't reach.",
+      "heard": "You mark every town you couldn't reach.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.088,
+      "synced_start_s": 24.032
+    },
+    {
+      "line": "10",
+      "role": "narration",
+      "expected": "At dawn, you still have one patient, one job.",
+      "heard": "At dawn, you still have one patient, one job.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.904,
+      "synced_start_s": 26.37
+    },
+    {
+      "line": "11",
+      "role": "narration",
+      "expected": "Because someone always has to stitch.",
+      "heard": "Because someone always has to stitch.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 1.968,
+      "synced_start_s": 29.524
+    },
+    {
+      "line": "12",
+      "role": "narration",
+      "expected": "So you wash your hands, check the lamp, and begin again.",
+      "heard": "So you wash your hands, check the lamp and begin again.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.312,
+      "synced_start_s": 31.742
+    }
+  ]
+}

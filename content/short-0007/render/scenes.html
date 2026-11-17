@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#070A18;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0007 — "What if you were the last doctor on Earth?"
+   Compassion+dread+duty register (brief 9/10 alignment). Pattern
+   = #0008 v3: ONE lit subject in the dark — a single hospital
+   bed under a surgical lamp — one continuous take. C18: every
+   event is timed on u (fraction of the scene) and lands u>=0.8;
+   no fixed-seconds pops. Deterministic: pure function of t (C6).
+   r1-r5 directives baked in from line one: title ON frame-0;
+   exposure reads DARK-AND-LIT not void (floor band, ambient
+   lift, vignette eased to 0.45); tighter cameras on the small
+   count scenes (s1/s2/s3); s7 truck dominant; labels inside
+   safe margins; blood-colour cue clearly visible in s1.
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+const TITLE_FONT = "'Bricolage Grotesque', sans-serif";
+const MONO = "'Fragment Mono', monospace";
+const E = V2.el, cl = V2.clamp01, lerp = V2.lerp;
+const _ctx = document.createElement("canvas").getContext("2d");
+const meas = (s, font) => { _ctx.font = font; return _ctx.measureText(s).width; };
+const sstep = (a, b, v) => { const x = cl((v - a) / (b - a)); return x * x * (3 - 2 * x); };
+const seg = (u, a, b) => cl((u - a) / (b - a));
+const pathOf = (a, close) => "M " + a.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L ") + (close ? " Z" : "");
+const pr = (x, z) => [x, z];
+
+/* ---------- ward palette + layout (single source of truth — no magic 518s) ---------- */
+const K = {
+  sheet: "#F3ECDD", sheetDim: "#39415E", mattress: "#DCCFB6", rail: "#8B93B8",
+  steel: "#DDE7F6", blood: "#B3392E", bloodHi: "#E06550", frost: "#CFE8FF",
+  vial: "#EAF3FF", ice: "#9FC4E8", townLit: "#FFB054", sign: "#F6EFE3",
+};
+const BED = { x: 540, y: 1150, w: 470, sheetTop: 1042 };   /* the ONE lit bed */
+const LAMP = { x: 540, headY: 556, coneR: 320 };           /* the only light source */
+const WOUND = { x: 512, y: 1258, w: 300 };                 /* s4/s5 wound zone (arm on the bed) */
+const FLOOR_Y = 1436;
+const WIN_R = { x: 782, y: 648, w: 212, h: 356 };          /* the feature window (s6/s9) */
+
+/* ---------- the doctor (recurring hero — r1 directive) ---------- */
+const DOC_LOOK = {
+  skin: "#F6EFE3", skinShade: "#E2D3BE", hand: "#F6EFE3",
+  jacket: "#1E6E66", jacketShade: "#154F4A", accent: "#FFB054",
+  limb: "#EFE2CC", line: "#121019", shoe: "#2FB7A6",
+  face: "#1D2033", hair: "#1D2033", extra: "none",
+};
+const DPOSE = {
+  watch: { tilt: -2, headTilt: 7, look: 0.5, expr: "neutral", armL: { a: 16, b: -10 }, armR: { a: 12, b: -6 } },
+  reach: { tilt: 6, headTilt: 10, look: 0.6, expr: "worried", armR: { a: 64, b: -38 }, armL: { a: 20, b: -8 } },
+  steady: { tilt: 0, headTilt: 9, look: 0.55, expr: "neutral", armL: { a: 14, b: -6 }, armR: { a: 40, b: -30 } },
+  walkaway: { tilt: 3, headTilt: 4, look: 0.3, expr: "neutral", armL: { a: 22, b: -14 }, armR: { a: -6, b: -10 } },
+  scribe: { tilt: -8, headTilt: 12, look: 0.7, expr: "tired", armR: { a: 58, b: -70 }, armL: { a: 30, b: -30 } },
+};
+const blinkAt = (t) => (V2.rnd(41, Math.floor(t / 2.3)) < 0.5 && (t % 2.3) < 0.14 ? 1 : 0);
+function doctor(t, pose, x, y, sc, extra) {
+  const base = DPOSE[pose] || {}, sw = Math.sin(t * 1.9) * 7;
+  /* r8: idle life a 10fps filmstrip can SEE — weight-shift bob, deeper sway,
+     breathing squash, slow head drift (character_life directive, round 7) */
+  const p = Object.assign({}, V2.basePose, base, { x: x + Math.sin(t * 0.55) * 7 * sc,
+    y: y - 6 * sc + Math.sin(t * 2.4) * 3 * sc + Math.sin(t * 0.8) * 5 * sc,
+    scale: sc, facing: (extra && extra.facing) || -1, blink: blinkAt(t),
+    tilt: (base.tilt || 0) + Math.sin(t * 1.6) * 1.8 + Math.sin(t * 0.7) * 1.2,
+    headTilt: (base.headTilt || 0) + Math.sin(t * 0.5) * 2.2,
+    squash: 0.021 * Math.sin(t * 2.4), sway: Math.sin(t * 1.9) * 9 }, extra || {});
+  p.armL = Object.assign({}, p.armL, { a: p.armL.a + sw });
+  p.armR = Object.assign({}, p.armR, { a: p.armR.a - sw * 0.7 });
+  V2.Hero(p, DOC_LOOK, "vRimR", 1);
+  /* stethoscope: a small arc + chestpiece at the torso — the doctor mark */
+  const j = V2.joints(p), ch = j.head;
+  E("path", { d: `M ${ch.x - 20 * sc} ${ch.y + 66 * sc} q ${-14 * sc} ${44 * sc} ${26 * sc} ${58 * sc}`, stroke: P.ink, "stroke-width": 7, fill: "none", "stroke-linecap": "round" });
+  E("circle", { cx: ch.x + 6 * sc, cy: ch.y + 126 * sc, r: 11 * sc, fill: P.teal, stroke: P.ink, "stroke-width": 5 });
+  return p;
+}
+const handOf = (p, arm) => V2.toWorld(p, V2.joints(p)[arm].end);
+
+/* ---------- text systems (screen space; ≤8 words — C1) ---------- */
+function title(lines, y, size, kf) {
+  lines.forEach((ln, i) => {
+    const k = kf(i); if (k <= 0.001) return;
+    const pop = V2.backOut(cl(k));
+    V2.txt(540, y + i * size * 1.06 + (1 - pop) * 50, ln, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+      "font-size": size, fill: P.cream, stroke: P.ink, "stroke-width": 16, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
+  });
+}
+function chip(k, x, y, text, accent, size) {
+  if (k <= 0.001) return;
+  size = size || 44;
+  const pop = V2.backOutBig(cl(k)), w = text.length * size * 0.6 + 86, h = size * 1.75;
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(${x} ${y}) scale(${0.7 + 0.3 * pop})` });
+  E("rect", { x: -w / 2, y: -h / 2 + 7, width: w, height: h, rx: h * 0.28, fill: "#000", opacity: 0.35 }, g);
+  E("rect", { x: -w / 2, y: -h / 2, width: w, height: h, rx: h * 0.28, fill: P.ink, stroke: P.cream, "stroke-width": 4 }, g);
+  E("rect", { x: -w / 2 + 18, y: -h * 0.25, width: 10, height: h * 0.5, rx: 5, fill: accent || P.teal }, g);
+  V2.txt(14, size * 0.34, text, { "text-anchor": "middle", "font-family": MONO, "font-size": size, fill: P.cream, "letter-spacing": 1 }, g);
+}
+function stamp2(k, y, l1, l2, sub, subK) {
+  if (k <= 0.001) return;
+  const pop = V2.backOutBig(cl(k)), size = 96, font = `800 ${size}px ${TITLE_FONT}`;
+  const w = Math.min(1000, Math.max(meas(l1, font), meas(l2, font)) + 90);
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(540 ${y}) scale(${0.6 + 0.4 * pop}) rotate(${(1 - pop) * -4})` });
+  E("rect", { x: -w / 2, y: -158 + 12, width: w, height: 316, rx: 30, fill: "#000", opacity: 0.4 }, g);
+  E("rect", { x: -w / 2, y: -158, width: w, height: 316, rx: 30, fill: P.ink, stroke: P.amber, "stroke-width": 6 }, g);
+  V2.txt(0, -56, l1, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": size, fill: P.amber,
+    textLength: Math.min(w - 80, meas(l1, font)), lengthAdjust: "spacingAndGlyphs" }, g);
+  V2.txt(0, 64, l2, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": size, fill: P.amber,
+    textLength: Math.min(w - 80, meas(l2, font)), lengthAdjust: "spacingAndGlyphs" }, g);
+  if (sub && subK > 0.001) V2.txt(0, 134, sub, { "text-anchor": "middle", "font-family": MONO, "font-size": 40, fill: P.cream, opacity: cl(subK * 2), "letter-spacing": 1.5 }, g);
+}
+const ring = (x, y, k, col) => { if (k > 0 && k < 1) E("ellipse", { cx: x, cy: y, rx: 16 + k * 90, ry: 6 + k * 30, fill: "none", stroke: col || "#FFF6EA", "stroke-width": 8 * (1 - k), opacity: 1 - k }); };
+
+/* ---------- the ward (walls, floor band, windows, distant beds) ---------- */
+function wardBase(t, o) {
+  o = o || {};
+  E("rect", { x: -500, y: -500, width: 2080, height: 2920, fill: P.bgDeep });
+  /* wainscot panels + horizon band */
+  E("rect", { x: -500, y: 880, width: 2080, height: FLOOR_Y - 880, fill: "#0C1230" });
+  for (let i = 0; i < 8; i++) E("rect", { x: -60 + i * 160, y: 906, width: 128, height: FLOOR_Y - 946, rx: 10, fill: P.bgRaised, opacity: 0.8 });
+  E("rect", { x: -500, y: FLOOR_Y - 26, width: 2080, height: 26, fill: "#05060F" });
+  /* floor with tiles + a soft catchlight streak under the lit bed */
+  E("rect", { x: -500, y: FLOOR_Y, width: 2080, height: 2920 - FLOOR_Y, fill: "#0B0F24" });
+  E("rect", { x: -500, y: FLOOR_Y, width: 2080, height: 6, fill: "#1A2138", opacity: 0.8 });
+  for (let i = 0; i < 7; i++) E("path", { d: `M ${-260 + i * 270} 2920 L ${140 + i * 140} ${FLOOR_Y}`, stroke: "#141B33", "stroke-width": 5, fill: "none" });
+  E("rect", { x: 248, y: FLOOR_Y, width: 584, height: 300, fill: "url(#wFloorGlow)" });
+  /* windows: left small, right = the feature window; night state unless o.dawn */
+  const win = (x, y, w, h, big) => {
+    const id = V2.uid("wGlass"), cp = E("clipPath", { id }, V2.defsHold);
+    E("rect", { x, y, width: w, height: h, rx: 8 }, cp);
+    const gg = E("g", { "clip-path": `url(#${id})` });
+    const lg = o.dawn ? "wDawn" : "wNight";
+    E("rect", { x, y, width: w, height: h, fill: `url(#${lg})` }, gg);
+    if (o.dawn) {
+      E("circle", { cx: x + w * 0.42, cy: y + h * 0.62, r: 30, fill: "#FFE9C4" }, gg);
+      V2.glow(x + w * 0.42, y + h * 0.62, w * 1.1, "Warm", 0.65, gg);
+    } else {
+      for (let i = 0; i < (big ? 7 : 4); i++) E("circle", { cx: x + 20 + V2.rnd(3, i) * (w - 40), cy: y + 20 + V2.rnd(4, i) * (h - 120), r: 1.6 + V2.rnd(5, i) * 1.6, fill: "#DDE7F6", opacity: 0.7 }, gg);
+      if (big) { /* the night town: silhouettes + a handful of lit windows (s6 pays this off) */
+        for (let i = 0; i < 6; i++) {
+          const bw = w * (0.14 + V2.rnd(6, i) * 0.1), bh = h * (0.16 + V2.rnd(7, i) * 0.3), bx = x + 6 + i * (w / 6);
+          E("rect", { x: bx, y: y + h - 26 - bh, width: bw, height: bh, fill: "#0A0D22" }, gg);
+          E("rect", { x: bx, y: y + h - 26 - bh, width: bw, height: 4, fill: "#161B38" }, gg);
+        }
+        [[0.2, 0.72], [0.45, 0.6], [0.66, 0.78], [0.84, 0.55]].forEach((p, i) => {
+          const on = o.townLights === undefined || o.townLights[i] !== 0;
+          if (on) E("rect", { x: x + w * p[0], y: y + h * p[1], width: 9, height: 12, fill: K.townLit, opacity: 0.85 + 0.15 * Math.sin(t * 2 + i) }, gg);
+        });
+      } else E("circle", { cx: x + w * 0.7, cy: y + h * 0.3, r: 14, fill: "#E8EFFA", opacity: 0.85 }, gg);
+    }
+    E("rect", { x: x - 10, y: y - 10, width: w + 20, height: h + 20, rx: 12, fill: "none", stroke: P.ink, "stroke-width": 14 }, gg);
+    E("path", { d: `M ${x + w / 2} ${y} L ${x + w / 2} ${y + h} M ${x} ${y + h / 2} L ${x + w} ${y + h / 2}`, stroke: P.ink, "stroke-width": 9 }, gg);
+    return gg;
+  };
+  win(128, 668, 150, 250, false);
+  win(WIN_R.x, WIN_R.y, WIN_R.w, WIN_R.h, true);
+  /* distant empty beds: the ward has scale, and only ONE bed is lit */
+  bedDark(196, 1298, 0.6, t); bedDark(884, 1298, 0.6, t); bedDark(36, 1272, 0.48, t);
+  /* ceiling: the dead strip lights (s2 kills them) */
+  o.strips !== 0 && [0, 1, 2, 3].forEach((i) => {
+    const dead = o.strips || 0, k = seg(dead, i * 0.25, i * 0.25 + 0.55);
+    const flick = (i === 3 && dead > 0.3 && dead < 0.62) ? (Math.sin(t * 46) > 0 ? 1 : 0.15) : 1;
+    E("rect", { x: 130 + i * 230, y: 168, width: 150, height: 16, rx: 8, fill: "#1B2242", opacity: 1 }, V2.root);
+    E("rect", { x: 130 + i * 230, y: 168, width: 150, height: 16, rx: 8, fill: "#BFD2EE", opacity: 0.30 * (1 - k) * flick }, V2.root);
+  });
+}
+function bedDark(x, y, sc, t) {
+  const g = E("g", { transform: `translate(${x} ${y}) scale(${sc})`, opacity: 0.9 });
+  E("rect", { x: -150, y: -46, width: 300, height: 60, rx: 12, fill: "#232B4C", stroke: P.ink, "stroke-width": 7 }, g);
+  E("path", { d: "M -150 -30 q 40 -26 90 -20 q 70 8 130 -6 l 0 26 l -220 0 Z", fill: "#2A3358", stroke: P.ink, "stroke-width": 6 }, g);
+  E("path", { d: "M -160 -40 L -160 40 M 160 -40 L 160 40", stroke: "#39415E", "stroke-width": 10 }, g);
+  E("circle", { cx: -96, cy: 44, r: 12, fill: "none", stroke: "#39415E", "stroke-width": 7 }, g);
+  E("circle", { cx: 96, cy: 44, r: 12, fill: "none", stroke: "#39415E", "stroke-width": 7 }, g);
+}
+/* floor detail: light pool + props that occupy the bottom third (r1-vh fix) */
+function floorDressing() {
+  E("rect", { x: 208, y: FLOOR_Y, width: 664, height: 340, fill: "url(#wFloorGlow)" });
+  /* r9: the bed's reflection — a soft cream column + horizontal seams the eye
+     reads as a polished lit floor (kills the bottom-third dead zone globally) */
+  E("rect", { x: 320, y: FLOOR_Y, width: 440, height: 330, fill: "url(#wRefl)" });
+  E("path", { d: `M 300 ${FLOOR_Y + 96} L 780 ${FLOOR_Y + 96} M 340 ${FLOOR_Y + 186} L 740 ${FLOOR_Y + 186}`, stroke: "#FFD7A0", "stroke-width": 4, opacity: 0.10 }, V2.root);
+  E("path", { d: `M 380 ${FLOOR_Y + 280} L 700 ${FLOOR_Y + 280}`, stroke: "#FFD7A0", "stroke-width": 3, opacity: 0.07 }, V2.root);
+  E("ellipse", { cx: BED.x, cy: FLOOR_Y + 120, rx: 420, ry: 90, fill: "#FFB054", opacity: 0.07, style: "mix-blend-mode:screen" });
+  /* IV stand right of the bed */
+  E("path", { d: `M ${BED.x + 352} ${FLOOR_Y - 12} L ${BED.x + 352} ${FLOOR_Y - 300}`, stroke: "#59628C", "stroke-width": 9 }, V2.root);
+  E("circle", { cx: BED.x + 352, cy: FLOOR_Y - 318, r: 22, fill: "none", stroke: "#59628C", "stroke-width": 8 }, V2.root);
+  E("rect", { x: BED.x + 326, y: FLOOR_Y - 296, width: 52, height: 70, rx: 12, fill: K.blood, stroke: P.ink, "stroke-width": 5 }, V2.root);
+  /* a dropped blanket near the left beds */
+  E("path", { d: `M 96 ${FLOOR_Y + 88} q 44 -30 96 -6 q 52 22 88 -10 l -12 44 q -86 26 -160 2 Z`, fill: "#232B4C", stroke: P.ink, "stroke-width": 6 }, V2.root);
+  for (let i = 0; i < 5; i++) E("circle", { cx: 140 + V2.rnd(51, i) * 320, cy: FLOOR_Y + 220 + V2.rnd(52, i) * 60, r: 2.5 + V2.rnd(53, i) * 3, fill: "#39415E", opacity: 0.6 }, V2.root);
+}
+/* ---------- the lit bed: frame, patient under a breathing sheet, rails ---------- */
+function bedLit(t, breath) {
+  const bx = BED.x, top = BED.sheetTop, w = BED.w;
+  V2.glow(bx, top + 130, 420, "Warm", 0.55);
+  const g = E("g", {});
+  E("rect", { x: bx - w / 2 - 14, y: top + 148, width: w + 28, height: 26, rx: 10, fill: "#39415E", stroke: P.ink, "stroke-width": 7 }, g);
+  E("path", { d: `M ${bx - w / 2 - 6} ${top + 150} L ${bx - w / 2 - 6} ${top - 40} M ${bx + w / 2 + 6} ${top + 150} L ${bx + w / 2 + 6} ${top - 40}`, stroke: "#59628C", "stroke-width": 12 }, g);
+  /* mattress + the patient hump (breath: the sheet slowly rises and falls) */
+  const br = (breath === undefined ? 1 : breath) * Math.sin(t * 1.05) * 0.5 + 0.5;
+  E("rect", { x: bx - w / 2, y: top + 66, width: w, height: 70, rx: 14, fill: K.mattress, stroke: P.ink, "stroke-width": 7 }, g);
+  E("path", { d: `M ${bx - w / 2} ${top + 70} q ${w * 0.16} ${-44 - br * 14} ${w * 0.30} ${-40 - br * 12} q ${w * 0.24} ${6} ${w * 0.40} ${-6} q ${w * 0.16} ${-10} ${w * 0.30} ${-16} L ${bx + w / 2} ${top + 70} Z`,
+    fill: K.sheet, stroke: P.ink, "stroke-width": 8, "stroke-linejoin": "round" }, g);
+  /* head on the pillow (right end) */
+  E("circle", { cx: bx + w * 0.34, cy: top + 44 - br * 4, r: 34, fill: P.cream, stroke: P.ink, "stroke-width": 7 }, g);
+  E("rect", { x: bx + w * 0.36, y: top + 96, width: 108, height: 34, rx: 14, fill: K.sheet, stroke: P.ink, "stroke-width": 6 }, g);
+  /* side rail */
+  E("path", { d: `M ${bx - w / 2 + 24} ${top + 96} L ${bx + w / 2 - 24} ${top + 96}`, stroke: K.rail, "stroke-width": 9 }, g);
+  [0.25, 0.75].forEach((p) => E("path", { d: `M ${bx - w / 2 + p * w} ${top + 96} L ${bx - w / 2 + p * w} ${top + 150}`, stroke: K.rail, "stroke-width": 8 }, g));
+  /* wheels */
+  [-w / 2 - 6, w / 2 + 6].forEach((dx) => E("circle", { cx: bx + dx, cy: top + 186, r: 15, fill: "#232B4C", stroke: P.ink, "stroke-width": 6 }, g));
+  return g;
+}
+/* ---------- the surgical lamp: the ward's only light ---------- */
+function lamp(t, k) {
+  k = k === undefined ? 1 : k;
+  const g = E("g", { opacity: 1 });
+  E("path", { d: `M ${LAMP.x + 190} 0 L ${LAMP.x + 60} ${LAMP.headY - 92} M ${LAMP.x - 190} 0 L ${LAMP.x - 60} ${LAMP.headY - 92}`, stroke: "#39415E", "stroke-width": 14 }, g);
+  E("path", { d: `M ${LAMP.x} ${LAMP.headY - 96} L ${LAMP.x} ${LAMP.headY - 40}`, stroke: "#39415E", "stroke-width": 18 }, g);
+  E("rect", { x: LAMP.x - 108, y: LAMP.headY - 42, width: 216, height: 52, rx: 18, fill: "#2E3A66", stroke: P.ink, "stroke-width": 7 }, g);
+  [-66, -22, 22, 66].forEach((dx) => E("circle", { cx: LAMP.x + dx, cy: LAMP.headY - 16, r: 12, fill: "#FFE9C4", opacity: 0.9 * k }, g));
+  /* the cone */
+  const cg = E("linearGradient", { id: "wCone", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#FFE9C4", 0.34 * k], ["70%", "#FFD7A0", 0.10 * k], ["100%", "#FFD7A0", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, cg));
+  E("path", { d: `M ${LAMP.x - 84} ${LAMP.headY + 8} L ${LAMP.x + 84} ${LAMP.headY + 8} L ${LAMP.x + LAMP.coneR} ${FLOOR_Y} L ${LAMP.x - LAMP.coneR} ${FLOOR_Y} Z`, fill: "url(#wCone)" }, g);
+  V2.glow(LAMP.x, LAMP.headY + 10, 300 * k, "Warm", 0.8 * k, g);
+  V2.glow(LAMP.x, BED.sheetTop + 120, 480 * k, "Warm", 0.5 * k, g);
+  return g;
+}
+/* ---------- ECG: deterministic scrolling heartbeat on the rail ---------- */
+function ecg(t, x, y, w, h, alive) {
+  const g = E("g", {});
+  E("rect", { x: x - 14, y: y - h / 2 - 14, width: w + 28, height: h + 28, rx: 14, fill: "#0A0E20", stroke: P.ink, "stroke-width": 7 }, g);
+  let d = "";
+  const period = 0.95, scroll = (t / period) * 46;
+  for (let i = 0; i <= w; i += 4) {
+    const ph = ((i + scroll) % 46) / 46, cyc = ph * period;
+    let v = 0;
+    if (cyc < 0.06) v = -Math.sin((cyc / 0.06) * Math.PI) * 0.35;
+    else if (cyc < 0.16) v = Math.sin(((cyc - 0.06) / 0.10) * Math.PI) * 1.0;
+    else if (cyc < 0.24) v = -Math.sin(((cyc - 0.16) / 0.08) * Math.PI) * 0.42;
+    d += (i ? " L " : "M ") + (x + i).toFixed(1) + " " + (y + v * h * 0.42 * (alive === 0 ? 0.12 : 1)).toFixed(1);
+  }
+  E("path", { d, stroke: P.teal, "stroke-width": 7, fill: "none", "stroke-linecap": "round", opacity: 0.95 }, g);
+  E("path", { d, stroke: "#B8FFF6", "stroke-width": 2.5, fill: "none", "stroke-linecap": "round", opacity: 0.8 }, g);
+  E("circle", { cx: x + w, cy: y - h / 2 + 6, r: 7, fill: P.teal, opacity: 0.4 + 0.6 * Math.abs(Math.sin(t * 2)) }, g);
+  return g;
+}
+
+const TITLE = ["YOU'RE THE LAST", "DOCTOR ON EARTH"];
+const SC = {};
+
+/* ---------- HOOK: frame-0 title, one heartbeat, the lit bed ---------- */
+SC.hook = { cam: [[540, 1010, 1.0], [540, 1064, 1.14]],
+  world(lt, u, t) {
+    const beat = seg(u, 0.42, 0.58), bloom = 1 + beat * 0.28;
+    return { over: () => {
+      lamp(t, bloom);
+      bedLit(t);
+      floorDressing();
+      ecg(t, BED.x - 250, BED.sheetTop + 118, 120, 44);
+      doctor(t, "watch", BED.x + 344, 1252, 0.74);
+      if (beat > 0 && beat < 1) { ring(BED.x, BED.sheetTop + 110, beat, "#FFE9C4"); V2.glow(BED.x, BED.sheetTop + 110, 200 * (1 - beat), "Warm", 0.6 * (1 - beat)); }
+      const b2 = seg(u, 0.8, 0.94);
+      if (b2 > 0 && b2 < 1) ring(BED.x, BED.sheetTop + 110, b2, "#FFE9C4");
+    } };
+  },
+  over(lt, u) { title(TITLE, 205, 102, () => 1); } };
+
+/* ---------- s0: the breathing patient, the hand lands on the rail ---------- */
+SC.s0 = { cam: [[540, 1128, 1.45], [540, 1150, 1.56]],
+  world(lt, u, t) {
+    const hand = seg(u, 0.58, 0.74);
+    return { over: () => {
+      lamp(t);
+      bedLit(t);
+      floorDressing();
+      ecg(t, BED.x - 232, BED.sheetTop + 116, 116, 42);
+      const p = doctor(t, "reach", BED.x + 306, 1256, 0.78);
+      if (hand > 0) ring(BED.x + 118, BED.sheetTop + 100, seg(u, 0.70, 0.9), "#FFE9C4");
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.30, 0.44), 540, 300, "ONE PATIENT LEFT", P.teal, 52); } };
+
+/* ---------- s1: the blood cart — three bags grey out one by one ---------- */
+const CART = { x: 322, y: 1082 };
+SC.s1 = { cam: [[430, 1076, 1.5], [396, 1096, 1.62]],
+  world(lt, u, t) {
+    return { over: () => {
+      lamp(t, 0.92);
+      E("rect", { x: 96, y: 636, width: 214, height: 316, fill: P.bgDeep, opacity: 0.62 });   /* window steps back */
+      /* the doctor behind the cart, half-lit: the emotional anchor mid-video */
+      { const hold = V2.root, dim = E("g", { opacity: 0.7 }, hold); V2.root = dim; doctor(t, "watch", 520, 1292, 0.74); V2.root = hold; }
+      /* the bed is context here: dimmed as a group so the cart owns the frame */
+      { const hold = V2.root, dim = E("g", { opacity: 0.34 }, hold); V2.root = dim; bedLit(t, 0.25); V2.root = hold; }
+      floorDressing();
+      /* the cart: a pole, a shelf, three hanging bags */
+      const g = E("g", {});
+      E("path", { d: `M ${CART.x} ${CART.y - 250} L ${CART.x} ${CART.y + 60}`, stroke: "#59628C", "stroke-width": 12 }, g);
+      E("rect", { x: CART.x - 92, y: CART.y + 44, width: 184, height: 18, rx: 8, fill: "#39415E", stroke: P.ink, "stroke-width": 6 }, g);
+      E("circle", { cx: CART.x - 56, cy: CART.y + 74, r: 11, fill: "none", stroke: "#39415E", "stroke-width": 7 }, g);
+      E("circle", { cx: CART.x + 56, cy: CART.y + 74, r: 11, fill: "none", stroke: "#39415E", "stroke-width": 7 }, g);
+      V2.glow(CART.x, CART.y - 40, 260, "Warm", 0.35, g);
+      /* local floor: the cart pool + a gauze roll + a tray (bottom third carries) */
+      E("ellipse", { cx: CART.x, cy: CART.y + 132, rx: 220, ry: 40, fill: "#FFB054", opacity: 0.08, style: "mix-blend-mode:screen" }, g);
+      E("circle", { cx: CART.x + 196, cy: CART.y + 150, r: 22, fill: K.sheet, stroke: P.ink, "stroke-width": 6 }, g);
+      E("path", { d: `M ${CART.x - 236} ${CART.y + 128} l 96 18 l -10 34 l -96 -18 Z`, fill: "#2E3A66", stroke: P.ink, "stroke-width": 6 }, g);
+      E("path", { d: `M ${CART.x - 300} ${CART.y + 196} L ${CART.x + 300} ${CART.y + 196} M ${CART.x - 260} ${CART.y + 252} L ${CART.x + 260} ${CART.y + 252}`, stroke: "#1A2138", "stroke-width": 6 }, g);
+      E("ellipse", { cx: CART.x + 40, cy: CART.y + 236, rx: 260, ry: 54, fill: "#FFB054", opacity: 0.10, style: "mix-blend-mode:screen" }, g);
+      const labels = ["O-", "A+", "B-"];
+      for (let i = 0; i < 3; i++) {
+        const grey = seg(u, 0.44 + i * 0.17, 0.58 + i * 0.17);
+        const bx = CART.x - 74 + i * 74, by = CART.y - 190 + grey * 16;
+        const swing = Math.sin(t * 1.3 + i * 1.4) * 3 + grey * 7;   /* r8: always swinging */
+        const fcol = grey > 0.5 ? "#5A6178" : (i === 0 ? K.blood : i === 1 ? "#C24A48" : "#D0605A");
+        E("path", { d: `M ${bx} ${by - 26} q 4 -12 0 -24`, stroke: "#59628C", "stroke-width": 6, fill: "none" }, g);
+        E("rect", { x: bx - 26, y: by, width: 52, height: 92, rx: 14, fill: fcol, stroke: P.ink, "stroke-width": 6, transform: `rotate(${swing} ${bx} ${by - 24})`, opacity: 1 - grey * 0.25 }, g);
+        E("path", { d: `M ${bx - 14} ${by + 76} L ${bx + 14} ${by + 76} L ${bx + 14} ${by + 76 - 56 * (1 - grey * 0.8)} L ${bx - 14} ${by + 76 - 56 * (1 - grey * 0.8)} Z`, fill: grey > 0.5 ? "#454B66" : "#D86A5E", opacity: 0.9 - grey * 0.4, transform: `rotate(${swing} ${bx} ${by - 24})` }, g);
+        V2.txt(bx, by + 85, labels[i], { "text-anchor": "middle", "font-family": MONO, "font-size": 38, fill: "#0A0E20", opacity: 0.55, transform: `rotate(${swing} ${bx} ${by - 24})` }, g);
+        V2.txt(bx, by + 82, labels[i], { "text-anchor": "middle", "font-family": MONO, "font-size": 38, fill: grey > 0.5 ? "#8A90AC" : P.cream, stroke: P.ink, "stroke-width": 6, "paint-order": "stroke", transform: `rotate(${swing} ${bx} ${by - 24})` }, g);
+        if (grey > 0 && grey < 1) { ring(bx, by + 46, grey, "#FFF6EA");
+          E("rect", { x: bx - 34, y: by - 8, width: 68, height: 108, rx: 18, fill: "none", stroke: "#FFE9C4", "stroke-width": 5, opacity: (1 - Math.abs(grey - 0.5) * 2) * 0.9, transform: `rotate(${swing} ${bx} ${by - 24})` }, g); }
+      }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.14, 0.28), 540, 300, "WEEKS, NOT YEARS", P.amber, 50); } };
+
+/* ---------- s2: insulin cooler + the back lights die ---------- */
+const COOL = { x: 806, y: 1128 };
+SC.s2 = { cam: [[742, 1130, 1.5], [766, 1140, 1.62]],
+  world(lt, u, t) {
+    const dead = seg(u, 0.42, 0.72);
+    return { strips: dead, over: () => {
+      lamp(t, 1 - dead * 0.22); bedLit(t);
+      floorDressing();
+      const g = E("g", {});
+      E("rect", { x: COOL.x - 118, y: COOL.y - 38, width: 236, height: 108, rx: 16, fill: "#2E3A66", stroke: P.ink, "stroke-width": 8 }, g);
+      E("rect", { x: COOL.x - 118, y: COOL.y - 148, width: 236, height: 118, rx: 16, fill: "#232B4C", stroke: P.ink, "stroke-width": 8, transform: `rotate(-24 ${COOL.x - 118} ${COOL.y - 40})` }, g);
+      E("rect", { x: COOL.x - 92, y: COOL.y - 10, width: 184, height: 64, rx: 10, fill: K.ice, opacity: 0.55 }, g);
+      for (let i = 0; i < 3; i++) {
+        const vx = COOL.x - 66 + i * 62, vy = COOL.y - 18;
+        E("rect", { x: vx, y: vy - 54, width: 34, height: 58, rx: 9, fill: K.vial, stroke: P.ink, "stroke-width": 5 }, g);
+        E("rect", { x: vx + 10, y: vy - 74, width: 14, height: 22, rx: 5, fill: "#B8C6DE", stroke: P.ink, "stroke-width": 4 }, g);
+        E("rect", { x: vx + 6, y: vy - 26, width: 22, height: 26, rx: 4, fill: K.frost, opacity: 0.85 }, g);
+        /* r8: a specular glint crawls down each vial — always something moving */
+        const gy = vy - 50 + ((t * 26 + i * 40) % 52);
+        E("path", { d: `M ${vx + 8} ${gy} L ${vx + 16} ${gy + 7} L ${vx + 24} ${gy + 2}`, stroke: "#FFFFFF", "stroke-width": 3.5, fill: "none", "stroke-linecap": "round", opacity: 0.8 }, g);
+      }
+      for (let i = 0; i < 4; i++) {  /* frost breath rising off the ice */
+        const fp = (t * 0.22 + V2.rnd(9, i)) % 1;
+        E("circle", { cx: COOL.x - 80 + V2.rnd(8, i) * 160 + Math.sin(t + i) * 10, cy: COOL.y - 24 - fp * 130, r: 6 + fp * 14, fill: "none", stroke: K.frost, "stroke-width": 3, opacity: (1 - fp) * 0.65 }, g);
+      }
+      V2.glow(COOL.x, COOL.y - 30, 240, "Cool", 0.30, g);
+      if (dead > 0 && dead < 1) { const q = (t * 30) % 1; E("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: "#0A0D22", opacity: 0.16 * (1 - q) * Math.sin(dead * Math.PI) }); }
+      ring(COOL.x, COOL.y - 40, seg(u, 0.72, 0.92), "#9FC0FF");
+      /* r9: the doctor kneels at the cooler, turning a vial (mid-video anchor) */
+      { const kp = Object.assign({}, V2.basePose, DPOSE.scribe, { x: COOL.x + 150, y: 1168, scale: 0.62, facing: -1,
+          blink: blinkAt(t), tilt: 10 + Math.sin(t * 1.5) * 2, headTilt: 14, look: 0.7,
+          squash: 0.02 * Math.sin(t * 2.2), sway: Math.sin(t * 1.9) * 8,
+          legL: { a: 88, b: -96 }, legR: { a: -74, b: 84 } });
+        V2.Hero(kp, DOC_LOOK, "vRimR", 1);
+        const j = V2.joints(kp), hd = j.head;
+        E("path", { d: `M ${hd.x - 13} ${hd.y + 44} q ${-9} ${29} ${17} ${38}`, stroke: P.ink, "stroke-width": 5, fill: "none", "stroke-linecap": "round" }, V2.root);
+        E("circle", { cx: hd.x + 4, cy: hd.y + 84, r: 7, fill: P.teal, stroke: P.ink, "stroke-width": 4 }, V2.root); }
+      /* rim light on the cooler box: separation from the dark room */
+      E("path", { d: `M ${COOL.x - 112} ${COOL.y - 30} L ${COOL.x - 112} ${COOL.y + 62}`, stroke: "#BFD2EE", "stroke-width": 5, opacity: 0.7 }, g);
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.10, 0.24), 540, 300, "KEEP IT COLD", "#4AA8FF", 50); } };
+
+/* ---------- s3: the corridor — beds recede, two grey out, one stays warm ---------- */
+SC.s3 = { cam: [[540, 1198, 0.94], [540, 1302, 1.04]],
+  world(lt, u, t) {
+    const g1 = seg(u, 0.36, 0.5), g2 = seg(u, 0.52, 0.66);
+    return { over: () => {
+      /* corridor walls to a dark doorway */
+      E("rect", { x: -500, y: -500, width: 2080, height: 2920, fill: P.bgDeep });
+      E("path", { d: `M 240 2920 L 452 900 L 628 900 L 840 2920 Z`, fill: "#0C1230" }, V2.root);
+      E("rect", { x: 452, y: 770, width: 176, height: 132, rx: 10, fill: "#05060F" }, V2.root);
+      E("path", { d: `M 240 2920 L 452 900 M 840 2920 L 628 900`, stroke: "#1A2138", "stroke-width": 10, fill: "none" }, V2.root);
+      for (let i = 0; i < 3; i++) E("path", { d: `M ${214 + i * 326} 2920 L ${502 + i * 38} 1032`, stroke: "#12182E", "stroke-width": 6, fill: "none" }, V2.root);
+      E("rect", { x: -500, y: 1620, width: 2080, height: 30, fill: "#05060F" }, V2.root);
+      /* six beds: two near (greying), two far-left dim, two far-right dim; the farthest keeps a warm glow */
+      const beds = [[214, 1460, 0.72, g1], [876, 1460, 0.72, g2], [330, 1210, 0.52, 0], [764, 1210, 0.52, 0], [418, 1052, 0.38, 1], [678, 1052, 0.38, 1]];
+      beds.forEach(([x, y, sc, grey], i) => {
+        const gg = E("g", { transform: `translate(${x} ${y}) scale(${sc})`, opacity: 0.92 - grey * 0.45 });
+        E("rect", { x: -150, y: -46, width: 300, height: 60, rx: 12, fill: grey > 0.5 ? "#2A3050" : "#374272", stroke: P.ink, "stroke-width": 7 }, gg);
+        E("path", { d: "M -150 -30 q 40 -26 90 -20 q 70 8 130 -6 l 0 26 l -220 0 Z", fill: grey > 0.5 ? "#2A335A" : "#3D4A80", stroke: P.ink, "stroke-width": 6 }, gg);
+        E("circle", { cx: 58, cy: -52, r: 24, fill: grey > 0.5 ? "#39415E" : "#4A5480", stroke: P.ink, "stroke-width": 6 }, gg);
+        if (i >= 4) V2.glow(x, y - 40, 150 * sc, "Warm", 0.5 * (1 - grey));
+        if (grey > 0 && grey < 1) ring(x, y - 20, grey, "#FFF6EA");
+      });
+      /* atmospheric fog: separates the doctor from the flat dark */
+      E("rect", { x: 300, y: 900, width: 480, height: 560, fill: "url(#wFog)" }, V2.root);
+      /* r9: he WALKS away down the corridor — legs cycle, body bobs (visible life) */
+      { const wp = Object.assign(V2.walkPose(lerp(520, 566, u), t * 2.1, 1470, 0.7, {}, 1), { expr: "tired" });
+        V2.Hero(wp, DOC_LOOK, "vRimR", 1);
+        const j = V2.joints(wp), ch = j.head;
+        E("path", { d: `M ${ch.x - 20 * 0.7} ${ch.y + 66 * 0.7} q ${-14 * 0.7} ${44 * 0.7} ${26 * 0.7} ${58 * 0.7}`, stroke: P.ink, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, V2.root);
+        E("circle", { cx: ch.x + 6 * 0.7, cy: ch.y + 126 * 0.7, r: 11 * 0.7, fill: P.teal, stroke: P.ink, "stroke-width": 5 }, V2.root); }
+      E("rect", { x: 588, y: 1408, width: 54, height: 68, rx: 8, fill: "#232B4C", stroke: P.ink, "stroke-width": 5 }, V2.root);
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.12, 0.26), 540, 300, "SAVE WHO YOU CAN", P.amber, 50); } };
+
+/* ---------- s4: the machines ghost out; the hands flex ---------- */
+SC.s4 = { cam: [[566, 1236, 1.85], [540, 1240, 1.97]],
+  world(lt, u, t) {
+    const fade = 1 - sstep(0.12, 0.5, u);
+    const flex = Math.sin(u * Math.PI * 2.2) * 0.5 + 0.5;
+    return { over: () => {
+      lamp(t, 0.95);
+      const g = E("g", {});
+      /* ONE ghost machine only — the monitor — gone by mid-line (clean, no clutter) */
+      E("rect", { x: 286, y: 930, width: 200, height: 140, rx: 14, fill: "#0A0E20", stroke: "#BFD2EE", "stroke-width": 5, "stroke-dasharray": "16 12", opacity: 0.55 * fade }, g);
+      ecg(t, 310, 1000, 152, 42, fade > 0.35 ? 1 : 0);
+      /* the patient's arm across the bed, the wound site centred — THE hero */
+      armAndWound(g, t, 0);
+      V2.glow(WOUND.x, WOUND.y, 300, "Warm", 0.35, g);
+      ring(WOUND.x, WOUND.y + 20, seg(u, 0.55, 0.8), "#FFE9C4");
+      /* the bed rail runs across the bottom foreground with a lit suture tray */
+      E("path", { d: "M 240 1650 L 880 1668", stroke: K.rail, "stroke-width": 13 }, g);
+      E("path", { d: "M 300 1652 L 300 1740 M 820 1666 L 820 1752", stroke: K.rail, "stroke-width": 11 }, g);
+      E("rect", { x: 470, y: 1560, width: 200, height: 58, rx: 12, fill: "#2E3A66", stroke: P.ink, "stroke-width": 6 }, g);
+      for (let i = 0; i < 4; i++) E("path", { d: `M ${492 + i * 44} 1589 q 16 -16 30 0`, stroke: P.teal, "stroke-width": 5, fill: "none", "stroke-linecap": "round" }, g);
+      E("ellipse", { cx: 570, cy: 1600, rx: 200, ry: 40, fill: "#FFB054", opacity: 0.09, style: "mix-blend-mode:screen" }, g);
+      /* the doctor's two gloved hands from below, flexing */
+      const hy = 1460 + Math.sin(t * 1.6) * 8, curl = 0.5 + flex * 0.5;
+      [[420, 1], [660, -1]].forEach((pair, dir) => {
+        const hx = pair;
+        const hg = E("g", { transform: `translate(${hx} ${hy}) rotate(${dir * (6 - flex * 12)})` }, g);
+        E("rect", { x: -46, y: -58, width: 92, height: 70, rx: 26, fill: K.sheet, stroke: P.ink, "stroke-width": 8 }, hg);
+        for (let f = 0; f < 3; f++) E("path", { d: `M ${-30 + f * 30} -58 q ${dir * 4} ${-20 - curl * 16} ${dir * -2} ${-30 - curl * 22}`, stroke: K.sheet, "stroke-width": 16, fill: "none", "stroke-linecap": "round", opacity: 0.95 }, hg);
+        for (let f = 0; f < 3; f++) E("path", { d: `M ${-30 + f * 30} -58 q ${dir * 4} ${-20 - curl * 16} ${dir * -2} ${-30 - curl * 22}`, stroke: P.ink, "stroke-width": 5, fill: "none", "stroke-linecap": "round", opacity: 0.4 }, hg);
+      });
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.36, 0.5), 540, 300, "HANDS REMEMBER", P.amber, 50); } };
+
+/* the patient's forearm + the wound (s4 baseline, s5 close-up) */
+function armAndWound(g, t, closeup) {
+  const y = WOUND.y, x0 = WOUND.x - WOUND.w / 2 - 120, x1 = WOUND.x + WOUND.w / 2 + 120;
+  const lift = closeup ? 26 : 0;
+  /* a real forearm: thick rounded band, elbow off-frame left, wrist right */
+  E("path", { d: `M ${x0} ${y + 52 + lift} L ${x1} ${y + 58 + lift} L ${x1} ${y - 56 - lift} Q ${(x0 + x1) / 2} ${y - 118 - lift * 1.4} ${x0} ${y - 74 - lift} Z`, fill: P.cream, stroke: P.ink, "stroke-width": 10, "stroke-linejoin": "round" }, g);
+  E("path", { d: `M ${x1 - 4} ${y + 54 + lift} L ${x1 - 4} ${y - 54 - lift} Q ${(x0 + x1) / 2} ${y - 114 - lift * 1.4} ${x0 + 4} ${y - 72 - lift}`, stroke: "#FFFFFF", "stroke-width": 3, fill: "none", opacity: 0.5 }, g);
+  E("path", { d: `M ${x0 + 30} ${y - 60 - lift} Q ${(x0 + x1) / 2} ${y - 108 - lift} ${x1 - 40} ${y - 46 - lift}`, stroke: "#E2D3BE", "stroke-width": 8, fill: "none", "stroke-linecap": "round", opacity: 0.8 }, g);
+  E("path", { d: `M ${x1} ${y + 6} q 52 16 58 52`, stroke: P.cream, "stroke-width": 40, fill: "none", "stroke-linecap": "round" }, g);
+  E("path", { d: `M ${x1} ${y + 6} q 52 16 58 52`, stroke: P.ink, "stroke-width": 47, fill: "none", "stroke-linecap": "round", opacity: 0.10 }, g);
+  E("ellipse", { cx: x0 - 72, cy: y - 8, rx: 38, ry: 52, fill: P.cream, stroke: P.ink, "stroke-width": 9 }, g);
+  /* the gash + a visible blood cue */
+  const wx0 = WOUND.x - WOUND.w / 2, wx1 = WOUND.x + WOUND.w / 2;
+  E("path", { d: `M ${wx0} ${y - 8 + lift} q ${WOUND.w * 0.25} ${30} ${WOUND.w * 0.5} ${8} q ${WOUND.w * 0.25} ${-20} ${WOUND.w * 0.5} ${4}`, stroke: K.blood, "stroke-width": 23, fill: "none", "stroke-linecap": "round" }, g);
+  E("path", { d: `M ${wx0} ${y - 8 + lift} q ${WOUND.w * 0.25} ${30} ${WOUND.w * 0.5} ${8} q ${WOUND.w * 0.25} ${-20} ${WOUND.w * 0.5} ${4}`, stroke: K.bloodHi, "stroke-width": 9, fill: "none", "stroke-linecap": "round" }, g);
+  V2.glow(WOUND.x, y + lift, 130, "Red", 0.3, g);
+  E("circle", { cx: WOUND.x + WOUND.w * 0.2, cy: y + 40 + lift, r: 7, fill: K.blood }, g);
+  /* light pool + sheet folds under the arm: the band sits in lit space, bottom third carries */
+  E("ellipse", { cx: WOUND.x, cy: y + 130 + lift, rx: 340, ry: 80, fill: "#FFB054", opacity: 0.20, style: "mix-blend-mode:screen" }, g);
+  E("path", { d: `M ${x0 - 60} ${y + 120} q 200 42 400 0 q 210 -40 420 6`, stroke: "#EFE2CC", "stroke-width": 10, fill: "none", opacity: 0.35, "stroke-linecap": "round" }, g);
+  E("path", { d: `M ${x0 - 40} ${y + 168} q 220 36 420 -4 q 190 -32 400 8`, stroke: "#EFE2CC", "stroke-width": 8, fill: "none", opacity: 0.22, "stroke-linecap": "round" }, g);
+  E("path", { d: `M ${x0 - 20} ${y + 218} q 210 30 420 -8 q 180 -28 380 10`, stroke: "#EFE2CC", "stroke-width": 7, fill: "none", opacity: 0.16, "stroke-linecap": "round" }, g);
+}
+
+/* ---------- s5 (VISUAL-ONLY): five stitches close the wound ---------- */
+SC.s5 = { cam: [[540, 1250, 2.26], [540, 1240, 2.58]],
+  world(lt, u, t) {
+    const us = [0.18, 0.34, 0.50, 0.66, 0.82];
+    return { over: () => {
+      lamp(t, 1.0);
+      const g = E("g", {});
+      armAndWound(g, t, 1);
+      /* corner lift: the cone's edge glow keeps the top-left corner alive */
+      V2.glow(WOUND.x - 320, WOUND.y - 330, 300, "Warm", 0.12, g);
+      /* thread path grows stitch by stitch */
+      const done = us.filter((x) => u >= x).length;
+      let d = "";
+      for (let i = 0; i < done; i++) d += (i ? " L " : "M ") + (WOUND.x - WOUND.w / 2 + (i * WOUND.w) / 4).toFixed(1) + " " + (WOUND.y + 26 + (i % 2 ? 8 : -8)).toFixed(1);
+      if (d) { E("path", { d, stroke: P.ink, "stroke-width": 11, fill: "none", "stroke-linecap": "round" }, g); E("path", { d, stroke: "#FFF6EA", "stroke-width": 5, fill: "none", "stroke-linecap": "round" }, g); }
+      /* the five stitches */
+      for (let i = 0; i < 5; i++) {
+        const k = seg(u, us[i], us[i] + 0.1); if (k <= 0) continue;
+        const sx = WOUND.x - WOUND.w / 2 + (i * WOUND.w) / 4, pop = V2.backOut(cl(k));
+        const gg = E("g", { transform: `translate(${sx} ${WOUND.y - 2}) scale(${0.5 + 0.5 * pop}) rotate(${(1 - pop) * 20})` }, g);
+        E("path", { d: "M -20 -16 L 20 16 M 20 -16 L -20 16", stroke: P.ink, "stroke-width": 17, "stroke-linecap": "round" }, gg);
+        E("path", { d: "M -20 -16 L 20 16 M 20 -16 L -20 16", stroke: "#FFF6EA", "stroke-width": 8, "stroke-linecap": "round" }, gg);
+        ring(sx, WOUND.y + 10, seg(u, us[i], us[i] + 0.16), "#FFE9C4");
+      }
+      /* needle holder hands at the working stitch + a needle glint (THE focal point) */
+      if (done > 0 && done < 6) {
+        const wx = WOUND.x - WOUND.w / 2 + ((done - 1) * WOUND.w) / 4;
+        E("rect", { x: wx - 34, y: WOUND.y - 120, width: 68, height: 54, rx: 22, fill: K.sheet, stroke: P.ink, "stroke-width": 7, transform: `rotate(${-14} ${wx} ${WOUND.y - 90})` }, g);
+        E("rect", { x: wx + 8, y: WOUND.y - 190, width: 60, height: 46, rx: 20, fill: K.sheet, stroke: P.ink, "stroke-width": 7, transform: `rotate(${16} ${wx} ${WOUND.y - 160})` }, g);
+        E("path", { d: `M ${wx - 6} ${WOUND.y - 66} q 18 -14 34 -4`, stroke: K.steel, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, g);
+        E("path", { d: `M ${wx + 26} ${WOUND.y - 70} l 16 -10`, stroke: "#FFFFFF", "stroke-width": 6, "stroke-linecap": "round" }, g);
+        V2.glow(wx + 26, WOUND.y - 66, 56, "Cool", 0.55, g);
+        V2.glow(wx, WOUND.y + 4, 110, "Warm", 0.6, g);
+        { const pk = (t * 1.4) % 1; if (pk < 0.4) ring(wx, WOUND.y + 2, pk / 0.4, "#FFE9C4"); }
+      }
+      /* the doctor leaning in from the top of frame */
+      const hg = E("g", { transform: `translate(${WOUND.x - 190} ${WOUND.y - 320}) rotate(10)` }, g);
+      E("circle", { cx: 0, cy: 0, r: 62, fill: P.cream, stroke: P.ink, "stroke-width": 8 }, hg);
+      E("path", { d: "M -64 -12 q 64 -44 128 0 l -8 -34 q -60 -34 -112 0 Z", fill: "#1E6E66", stroke: P.ink, "stroke-width": 7 }, hg);
+      E("path", { d: "M -12 -8 q 12 -10 24 0 M -34 14 q 34 16 68 0", stroke: P.ink, "stroke-width": 6, fill: "none", "stroke-linecap": "round" }, hg);
+      E("path", { d: "M -66 34 q 66 30 132 0 l 6 46 q -72 26 -144 0 Z", fill: "#1E6E66", stroke: P.ink, "stroke-width": 8 }, hg);
+      /* pulse telemetry patch on the wrist — muted dressing, not a focal */
+      { const tp = E("g", { opacity: 0.55 }, g);
+        E("rect", { x: WOUND.x + 148, y: WOUND.y - 44, width: 40, height: 26, rx: 8, fill: "#0A0E20", stroke: P.teal, "stroke-width": 3 }, tp);
+        E("path", { d: `M ${WOUND.x + 154} ${WOUND.y - 31} l 7 -6 l 5 10 l 6 -13 l 5 9 l 5 -4 l 5 4`, stroke: P.teal, "stroke-width": 2.5, fill: "none", "stroke-linecap": "round" }, tp); }
+      /* foreground depth: the doctor forearm enters bottom-left holding tension */
+      E("path", { d: `M ${WOUND.x - 430} ${WOUND.y + 240} q 130 -66 230 -124 q 62 -36 128 -46`, stroke: "#1E6E66", "stroke-width": 76, fill: "none", "stroke-linecap": "round", opacity: 0.96 }, g);
+      E("path", { d: `M ${WOUND.x - 430} ${WOUND.y + 240} q 130 -66 230 -124 q 62 -36 128 -46`, stroke: P.ink, "stroke-width": 84, fill: "none", "stroke-linecap": "round", opacity: 0.12 }, g);
+    } };
+  },
+  over(lt, u) {} };
+
+/* ---------- s6: pull back to the window — the towns out there ---------- */
+SC.s6 = { cam: [[742, 900, 1.58], [806, 868, 0.96]],
+  world(lt, u, t) {
+    return { over: () => {
+      lamp(t, 0.9); bedLit(t, 0.4);
+      const g = E("g", {});
+      V2.glow(WIN_R.x + WIN_R.w / 2, WIN_R.y + WIN_R.h / 2, 320, "Cool", 0.22, g);
+      for (let i = 0; i < 5; i++) { const p = (u * 0.7 + V2.rnd(19, i)) % 1; ring(WIN_R.x + 40 + V2.rnd(18, i) * 130, WIN_R.y + 300 - p * 160, p, "#9FC0FF"); }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.34, 0.48), 540, 300, "TOWNS WAITING", P.amber, 50); } };
+
+/* ---------- s7: the road — the truck dominates, headlights die ---------- */
+SC.s7 = { cam: [[540, 1000, 1.0], [540, 982, 1.06]],
+  world(lt, u, t) {
+    const dim = seg(u, 0.30, 0.72);
+    return { over: () => {
+      E("rect", { x: -500, y: -500, width: 2080, height: 2920, fill: P.bgDeep });
+      const sky = E("linearGradient", { id: "wSky", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", "#0A0E22"], ["100%", "#1A2138"]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, sky));
+      E("rect", { x: -500, y: -500, width: 2080, height: 1736, fill: "url(#wSky)" }, V2.root);
+      for (let i = 0; i < 14; i++) E("circle", { cx: -100 + V2.rnd(28, i) * 1280, cy: 80 + V2.rnd(29, i) * 800, r: 1.4 + V2.rnd(30, i) * 1.8, fill: "#DDE7F6", opacity: 0.5 + V2.rnd(31, i) * 0.4 }, V2.root);
+      /* the moon + a treeline: the sky band between chip and truck carries the eye down */
+      E("circle", { cx: 828, cy: 348, r: 54, fill: "#E8EFFA", opacity: 0.92 }, V2.root);
+      E("circle", { cx: 810, cy: 338, r: 54, fill: "#1A2138", opacity: 0.55 }, V2.root);
+      V2.glow(828, 348, 200, "Cool", 0.5, V2.root);
+      for (let i = 0; i < 16; i++) { const tx = -80 + i * 84, th = 60 + V2.rnd(33, i) * 90;
+        E("path", { d: `M ${tx} 1238 L ${tx + 42} ${1238 - th} L ${tx + 84} 1238 Z`, fill: "#0A0D22", opacity: 0.9 }, V2.root); }
+      /* r10: a fog gradient band fills the mid gap with atmosphere */
+      E("rect", { x: -500, y: 760, width: 2080, height: 420, fill: "url(#wFogBand)" }, V2.root);
+      /* mid-ground: rolling hills + a fence line carry the eye down to the truck */
+      E("path", { d: "M -500 1236 q 180 -96 380 -30 q 220 70 420 6 q 240 -80 460 -12 q 200 60 320 4 L 1580 1236 Z", fill: "#0D1326", opacity: 0.95 }, V2.root);
+      for (let i = 0; i < 11; i++) { const fx = -40 + i * 108;
+        E("path", { d: `M ${fx} 1218 L ${fx} 1168`, stroke: "#1A2138", "stroke-width": 7 }, V2.root); }
+      E("path", { d: "M -40 1176 Q 500 1150 1140 1180", stroke: "#1A2138", "stroke-width": 5, fill: "none" }, V2.root);
+      E("rect", { x: -500, y: 1236, width: 2080, height: 2920, fill: "#10182E" }, V2.root);
+      E("rect", { x: -500, y: 1236, width: 2080, height: 8, fill: "#1A2138" }, V2.root);
+      for (let i = 0; i < 6; i++) { const yy = 1244 + i * i * 42; E("rect", { x: 522 - i * 12, y: yy, width: 16 + i * 22, height: 8 + i * 5, rx: 4, fill: "#39415E", opacity: 0.5 }, V2.root); }
+      E("path", { d: "M 200 2920 L 540 1300 M 880 2920 L 540 1300", stroke: "#141B33", "stroke-width": 8, fill: "none" }, V2.root);
+      /* the road sign — fully in frame, left of the edge */
+      E("path", { d: "M 900 1330 L 900 1180", stroke: "#59628C", "stroke-width": 12 }, V2.root);
+      E("rect", { x: 806, y: 1084, width: 190, height: 104, rx: 16, fill: "#232B4C", stroke: P.ink, "stroke-width": 7 }, V2.root);
+      E("rect", { x: 818, y: 1096, width: 166, height: 44, rx: 8, fill: "#2E3A66" }, V2.root);
+      V2.txt(901, 1146, "HOSPITAL", { "text-anchor": "middle", "font-family": MONO, "font-size": 38, fill: K.sign }, V2.root);
+      E("path", { d: "M 866 1096 L 866 1176", stroke: P.teal, "stroke-width": 6 }, V2.root);
+      /* foreground road texture: cracks, gravel, reflectors (fills the bottom) */
+      for (let i = 0; i < 9; i++) E("circle", { cx: -60 + V2.rnd(57, i) * 1200, cy: 1560 + V2.rnd(58, i) * 340, r: 2 + V2.rnd(59, i) * 3.4, fill: "#39415E", opacity: 0.55 }, V2.root);
+      [[240, 1600, 90], [640, 1740, 130], [420, 1870, 110]].forEach(([cx, cy, L]) => E("path", { d: `M ${cx} ${cy} l ${L * 0.4} 22 l ${L * 0.6} -10`, stroke: "#1A2138", "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, V2.root));
+      [[318, 1520], [762, 1500]].forEach(([cx, cy]) => { E("rect", { x: cx - 7, y: cy, width: 14, height: 20, rx: 3, fill: "#B3392E", opacity: 0.8 }, V2.root); V2.glow(cx, cy + 10, 40, "Red", 0.25, V2.root); });
+      /* THE TRUCK — dominant: cab left, open hood, cargo box right; pushed low + big */
+      const g = E("g", { transform: "translate(540 1236) scale(1.1)" });
+      V2.glow(0, -10, 520, "Warm", 0.16, g);   /* backlight halo: the truck separates from the night */
+      E("ellipse", { cx: 0, cy: 236, rx: 430, ry: 46, fill: "#000", opacity: 0.4 }, g);
+      E("rect", { x: -424, y: -120, width: 470, height: 250, rx: 22, fill: "#46538C", stroke: P.ink, "stroke-width": 9 }, g);   /* cargo box */
+      for (let i = 0; i < 4; i++) E("rect", { x: -404 + i * 112, y: -96, width: 92, height: 200, rx: 10, fill: "#39456F", stroke: P.ink, "stroke-width": 5 }, g);
+      E("rect", { x: 66, y: -196, width: 300, height: 240, rx: 26, fill: "#DCCFB6", stroke: P.ink, "stroke-width": 9 }, g);     /* cab */
+      E("path", { d: "M -420 -116 q 210 180 420 0", stroke: "#BFD2EE", "stroke-width": 8, fill: "none", opacity: 0.85 }, g);   /* rim light over the cargo box */
+      E("path", { d: "M 80 -192 q 140 60 286 0", stroke: "#FFF3D6", "stroke-width": 9, fill: "none", opacity: 0.85 }, g);      /* rim light over the cab */
+      E("rect", { x: 116, y: -160, width: 130, height: 96, rx: 12, fill: "#0A0E20", stroke: P.ink, "stroke-width": 6 }, g);     /* windshield */
+      E("path", { d: "M 356 -186 L 452 -116 L 448 -20 L 356 -30 Z", fill: "#39415E", stroke: P.ink, "stroke-width": 8, transform: `rotate(${-6 * (1 - dim)} 356 -100)` }, g);  /* open hood */
+      E("rect", { x: 350, y: -92, width: 84, height: 52, rx: 8, fill: "#0A0E20", stroke: P.ink, "stroke-width": 6 }, g);        /* engine bay */
+      for (let i = 0; i < 5; i++) E("rect", { x: 362, y: -84 + i * 10, width: 60, height: 5, rx: 2, fill: "#59628C" }, g);
+      /* steam wisp out of the bay */
+      for (let i = 0; i < 2; i++) { const p = (t * 0.3 + V2.rnd(35, i)) % 1; E("circle", { cx: 392 + i * 26 + Math.sin(t + i) * 8, cy: -112 - p * 110, r: 7 + p * 16, fill: "none", stroke: "#9FB3D8", "stroke-width": 3, opacity: (1 - p) * 0.38 * (1 - dim * 0.6) }, g); }
+      /* wheels */
+      [[-300, 168], [78, 168], [302, 168]].forEach(([wx, wy]) => {
+        E("circle", { cx: wx, cy: wy, r: 66, fill: "#0A0E20", stroke: P.ink, "stroke-width": 10 }, g);
+        E("circle", { cx: wx, cy: wy, r: 26, fill: "#39415E", stroke: P.ink, "stroke-width": 7 }, g);
+      });
+      /* headlights + cones forward; they dim to dark */
+      const hl = 1 - dim;
+      if (hl > 0.02) {
+        [[196, -44], [236, -28]].forEach((pair, i) => {
+          const hx = pair[0], hyL = pair[1];
+          E("circle", { cx: hx, cy: hyL, r: 17, fill: "#FFE9C4", opacity: hl }, g);
+          E("path", { d: `M ${hx} ${hyL} L ${hx + 260} ${hyL + 150 + i * 46} L ${hx + 60} ${hyL + 210 + i * 40} Z`, fill: "#FFE9C4", opacity: 0.22 * hl }, g);
+          V2.glow(hx, hyL, 120 * hl, "Warm", 0.8 * hl, g);
+        });
+      }
+      if (dim > 0.55 && dim < 0.75) { const q = Math.sin(t * 34) > 0 ? 1 : 0; E("circle", { cx: 210, cy: -40, r: 10, fill: "#FF5A4A", opacity: 0.6 * q }, g); }
+      ring(240, -40, seg(u, 0.72, 0.94), "#FF5A4A");
+    } };
+  },
+  over(lt, u) {
+    const k = seg(u, 0.16, 0.30);
+    if (k > 0.01) { const lg2 = E("linearGradient", { id: "wShaft", x1: 0, y1: 0, x2: 0.4, y2: 1 }, V2.defsHold);
+      [["0%", "#9FC0FF", 0.10 * k], ["100%", "#9FC0FF", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, lg2));
+      E("path", { d: "M 500 380 L 620 380 L 780 1080 L 360 1080 Z", fill: "url(#wShaft)" }); }
+    chip(k, 540, 420, "NO SUPPLIES", "#FF5A4A", 52); } };
+
+/* ---------- s8: the map — X-marks land while the camera slides ---------- */
+const TOWNS = [["ASHFORD", 250, 980], ["MILLBROOK", 462, 1080], ["CREEK", 690, 1000], ["NORTON", 792, 1198], ["DELTA", 352, 1276]];
+SC.s8 = { cam: [[540, 1150, 1.3], [648, 1150, 1.4]],
+  world(lt, u, t) {
+    return { over: () => {
+      E("rect", { x: -500, y: -500, width: 2080, height: 2920, fill: "#0B0F24" }, V2.root);
+      for (let i = 0; i < 6; i++) E("path", { d: `M ${-200 + i * 300} 2920 L ${80 + i * 190} -500`, stroke: "#141B33", "stroke-width": 6, fill: "none" }, V2.root);
+      /* desk lamp pool on the paper */
+      V2.glow(540, 1150, 700, "Warm", 0.22, V2.root);
+      /* the paper map, slightly rotated, scaled to fill the 9:16 */
+      const g = E("g", { transform: "translate(540 1150) rotate(-3.2) scale(1.22)" });
+      E("rect", { x: -452, y: -452, width: 904, height: 904, rx: 18, fill: "#EFE6D2", stroke: P.ink, "stroke-width": 10 }, g);
+      E("rect", { x: -418, y: -418, width: 836, height: 836, rx: 10, fill: "none", stroke: "#C9B896", "stroke-width": 5, "stroke-dasharray": "18 12" }, g);
+      E("path", { d: "M -418 -180 q 200 60 380 -20 q 160 -70 436 40", stroke: "#B9CCD8", "stroke-width": 26, fill: "none", opacity: 0.7 }, g);  /* the river */
+      E("path", { d: "M -418 140 L 0 60 L 418 210", stroke: "#C9B896", "stroke-width": 10, fill: "none" }, g);
+      E("path", { d: "M -120 -418 L 40 0 L -60 418", stroke: "#C9B896", "stroke-width": 8, fill: "none" }, g);
+      /* towns + labels (safe margins) + X-marks */
+      const marks = [seg(u, 0.34, 0.5), seg(u, 0.54, 0.7), seg(u, 0.74, 0.9)];
+      TOWNS.forEach(([name, tx, ty], i) => {
+        const X = tx - 540, Y = ty - 1150;
+        E("circle", { cx: X, cy: Y, r: 11, fill: "#8B93B8", stroke: "#6A7292", "stroke-width": 4, opacity: 0.9 }, g);
+        V2.txt(X + 22, Y + 8, name, { "font-family": MONO, "font-size": 32, fill: "#3A4260", stroke: "#F5EDDC", "stroke-width": 6, "paint-order": "stroke" }, g);
+        if (i < 3 && marks[i] > 0) {
+          const pop = V2.backOut(cl(marks[i])), m = 30 + pop * 4;
+          E("path", { d: `M ${X - m} ${Y - m} L ${X + m} ${Y + m} M ${X + m} ${Y - m} L ${X - m} ${Y + m}`, stroke: P.ink, "stroke-width": 13, "stroke-linecap": "round", opacity: pop }, g);
+          E("path", { d: `M ${X - m} ${Y - m} L ${X + m} ${Y + m} M ${X + m} ${Y - m} L ${X - m} ${Y + m}`, stroke: P.amber, "stroke-width": 6, "stroke-linecap": "round", opacity: pop }, g);
+          V2.glow(X, Y, 90 * pop, "Warm", 0.5 * pop, g);
+          ring(X, Y, marks[i], "#FFF6EA");
+        }
+      });
+      /* the pen + the doctor's hand reach from the bottom-right, tip up to the working town (never over a label) */
+      const target = marks.findIndex((m) => m > 0 && m < 1);
+      const penI = target >= 0 ? target : Math.min(2, Math.floor(u / 0.34));
+      const px = TOWNS[penI][1] - 540 + 74, py = TOWNS[penI][2] - 1150 + 148;
+      const pg = E("g", { transform: `translate(${px} ${py}) rotate(52)` }, g);
+      E("rect", { x: -16, y: -110, width: 92, height: 120, rx: 24, fill: K.sheet, stroke: P.ink, "stroke-width": 7 }, pg);
+      E("path", { d: "M -16 4 L 76 4 L 30 66 Z", fill: "#DCCFB6", stroke: P.ink, "stroke-width": 6 }, pg);
+      E("path", { d: "M 30 66 L 30 40", stroke: P.amber, "stroke-width": 7 }, pg);
+      if (u > 0.2) { const hold = seg(u, 0.2, 0.3); E("rect", { x: -10, y: -186, width: 96, height: 74, rx: 26, fill: K.sheet, stroke: P.ink, "stroke-width": 7, opacity: hold }, pg); }
+    } };
+  },
+  over(lt, u) {} };
+
+/* ---------- s9: dawn — the window turns gold, first warm light ---------- */
+SC.s9 = { cam: [[762, 878, 1.12], [748, 902, 1.22]],
+  world(lt, u, t) {
+    return { dawn: true, over: () => {
+      lamp(t, 0.55);
+      bedLit(t, 0.5);
+      /* long amber streaks across the floor */
+      const g = E("g", {});
+      V2.glow(WIN_R.x + WIN_R.w * 0.42, WIN_R.y + WIN_R.h * 0.62, 560, "Warm", 0.55 * seg(u, 0.2, 0.7), g);
+      for (let i = 0; i < 3; i++) E("path", { d: `M ${WIN_R.x - 60} ${FLOOR_Y + 40 + i * 120} L ${WIN_R.x + 480} ${FLOOR_Y + 190 + i * 130} L ${WIN_R.x + 430} ${FLOOR_Y + 250 + i * 130} L ${WIN_R.x - 110} ${FLOOR_Y + 100 + i * 120} Z`, fill: "#FFB054", opacity: 0.10 * seg(u, 0.15, 0.6), style: "mix-blend-mode:screen" }, g);
+      for (let i = 0; i < 8; i++) { const p = (t * 0.1 + V2.rnd(45, i)) % 1; E("circle", { cx: WIN_R.x + 60 + V2.rnd(46, i) * 300 + Math.sin(t * 0.8 + i) * 16, cy: 900 + p * 480, r: 2 + V2.rnd(47, i) * 3, fill: "#FFE9C4", opacity: 0.5 * (1 - p) }, g); }
+      /* the doctor silhouette at the window */
+      doctor(t, "steady", WIN_R.x + 130, 1076, 0.72, { facing: 1 });
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.30, 0.44), 540, 300, "ONE JOB", P.amber, 52); } };
+
+/* ---------- s10: the quiet bedside close-up (the Because line lands alone) ---------- */
+SC.s10 = { cam: [[540, 1188, 1.92], [540, 1196, 2.04]],
+  world(lt, u, t) {
+    return { over: () => {
+      lamp(t, 0.6);
+      /* ceiling: the lamp mount + cone descend into the top of the frame */
+      E("path", { d: "M 720 640 L 660 760", stroke: "#39415E", "stroke-width": 16 }, V2.root);
+      E("rect", { x: 604, y: 752, width: 128, height: 34, rx: 12, fill: "#2E3A66", stroke: P.ink, "stroke-width": 6 }, V2.root);
+      [-36, 0, 36].forEach((dx) => E("circle", { cx: 668 + dx, cy: 770, r: 9, fill: "#FFE9C4", opacity: 0.9 }, V2.root));
+      V2.glow(668, 772, 220, "Warm", 0.55, V2.root);
+      const p = doctor(t, "steady", 428, 1218, 1.06, { facing: 1 });
+      const hh = V2.joints(p).head;
+      V2.glow(hh.x, hh.y, 200, "Warm", 0.3);
+      /* the patient: head on a pillow, sheet over the form — one read, grounded */
+      E("path", { d: "M 600 1240 q 60 -34 150 -16 q 70 14 130 -4 l 0 40 q -140 22 -280 0 Z", fill: K.sheet, stroke: P.ink, "stroke-width": 7 }, V2.root);
+      E("path", { d: "M 604 1238 q 62 -32 148 -14 q 68 13 126 -4", stroke: "#FFFFFF", "stroke-width": 3, fill: "none", opacity: 0.4, "stroke-linecap": "round" }, V2.root);
+      E("ellipse", { cx: 668, cy: 1236, rx: 64, ry: 30, fill: "#FFF9EC", stroke: P.ink, "stroke-width": 6 }, V2.root);
+      E("circle", { cx: 676, cy: 1218, r: 40, fill: P.cream, stroke: P.ink, "stroke-width": 8 }, V2.root);
+      E("path", { d: "M 660 1226 q 6 5 14 0 M 690 1226 q 6 5 14 0", stroke: P.ink, "stroke-width": 4, fill: "none", "stroke-linecap": "round", opacity: 0.7 }, V2.root);
+      E("path", { d: `M 470 1258 q 90 -26 170 -6`, stroke: K.sheet, "stroke-width": 44, fill: "none", "stroke-linecap": "round", opacity: 0.9 }, V2.root);
+      /* the suture tray on the rail: foreground anchor at right */
+      E("rect", { x: 668, y: 1300, width: 180, height: 46, rx: 10, fill: "#2E3A66", stroke: P.ink, "stroke-width": 6 }, V2.root);
+      for (let i = 0; i < 4; i++) E("path", { d: `M ${686 + i * 40} 1323 q 14 -14 28 0`, stroke: P.teal, "stroke-width": 5, fill: "none", "stroke-linecap": "round" }, V2.root);
+      ecg(t, 300, 1490, 380, 58);
+      ring(700, 1240, seg(u, 0.6, 0.82), "#FFE9C4");
+    } };
+  },
+  over(lt, u) {} };
+
+/* ---------- s11: the loop — washed hands, lamp back ON, the STAMP ---------- */
+SC.s11 = { cam: [[540, 1012, 1.06], [540, 1002, 1.0]],
+  world(lt, u, t) {
+    const flick = u < 0.5 ? (Math.sin(t * 44) > 0 || u < 0.28 ? 1 : 0.35) : 1;
+    const bloom = 1 + sstep(0.5, 0.62, u) * 0.3;
+    return { over: () => {
+      lamp(t, flick * bloom);
+      bedLit(t);
+      floorDressing();
+      ecg(t, BED.x - 250, BED.sheetTop + 118, 120, 44);
+      const p = doctor(t, "watch", BED.x + 344, 1252, 0.74);
+      /* water glints on the washed hands */
+      if (u > 0.24 && u < 0.5) {
+        const hR = handOf(p, "armR"), hL = handOf(p, "armL");
+        [[hR, 0], [hL, 1]].forEach((pair, i) => {
+          const h = pair[0];
+          const gp = ((u - 0.24) * 3 + i * 0.5) % 1;
+          E("path", { d: `M ${h[0]} ${h[1] - 10 - gp * 14} l 4 6 l -8 0 Z M ${h[0] - 2 + gp * 8} ${h[1] - 14 - gp * 14} l 2 10 l -6 -6`, stroke: "#FFFFFF", "stroke-width": 3, fill: "none", opacity: (1 - gp) * 0.9 }, V2.root);
+        });
+      }
+      if (u >= 0.5 && u < 0.62) { const q = seg(u, 0.5, 0.62); E("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: "#FFE9C4", opacity: 0.22 * (1 - q) }, V2.root); ring(LAMP.x, LAMP.headY + 20, q, "#FFE9C4"); }
+    } };
+  },
+  over(lt, u) {
+    stamp2(seg(u, 0.52, 0.68), 620, "SOMEONE ALWAYS", "HAS TO STITCH.", "YOU'RE THE LAST DOCTOR ON EARTH", seg(u, 0.72, 0.84));
+    title(TITLE, 205, 102, (i) => seg(u, 0.86 + i * 0.05, 0.96 + i * 0.05));
+  } };
+
+/* ---------- engine tail (the #0008 v3 pattern) ---------- */
+function withCam(cam, fn) {
+  const hold = V2.root;
+  V2.root = E("g", { transform: V2.cam(cam[0], cam[1], cam[2]) }, hold);
+  fn();
+  V2.root = hold;
+}
+function camOf(idx, lt, dur) {
+  const sc = SC[TL[idx].id], a = sc.cam[0], b = sc.cam[1], u = V2.easeInOut(cl(lt / dur) * 0.85 + 0.075);
+  let c = [lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u)];
+  if (idx > 0 && lt < 0.36) {   /* whip in from the previous scene's last camera: one continuous take */
+    const pv = SC[TL[idx - 1].id].cam[1], k = V2.easeOutQuint(lt / 0.36);
+    c = [lerp(pv[0], c[0], k), lerp(pv[1], c[1], k), lerp(pv[2], c[2], k)];
+  }
+  return c;
+}
+
+/* gradient defs used above (declared before renderFrame runs them lazily) */
+function gradientDefs() {
+  const rf = E("linearGradient", { id: "wRefl", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#F3ECDD", 0.16], ["60%", "#F3ECDD", 0.06], ["100%", "#F3ECDD", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, rf));
+  const fog = E("linearGradient", { id: "wFog", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#243058", 0.0], ["55%", "#243058", 0.14], ["100%", "#243058", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, fog));
+  const fb = E("linearGradient", { id: "wFogBand", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#243058", 0], ["50%", "#243058", 0.10], ["100%", "#243058", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, fb));
+  const fg = E("linearGradient", { id: "wFloorGlow", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#FFB054", 0.10], ["100%", "#FFB054", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, fg));
+  const ng = E("linearGradient", { id: "wNight", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#1A1038"], ["55%", "#0C1230"], ["100%", "#0A0D22"]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, ng));
+  const dg = E("linearGradient", { id: "wDawn", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#FFD7A0"], ["40%", "#FFB054"], ["100%", "#3A2470"]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, dg));
+}
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  V2.defsHold = E("defs", {}, V2.root);
+  V2.defs(V2.root);
+  gradientDefs();
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++) if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx], def = SC[sc.id] || SC.hook;
+  const lt = Math.max(0, t - sc.start), dur = sc.end - sc.start, u = cl(lt / dur);
+  const cam = camOf(idx, lt, dur);
+  const S = def.world(lt, u, t, dur);
+  /* ambient lift: dark ward reads DARK-AND-LIT, never a void (r3/r4) */
+  const amb = E("linearGradient", { id: "wAmb", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#243058", 0.16], ["60%", "#1A2444", 0.06], ["100%", "#05060F", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, amb));
+  E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#wAmb)" });
+  withCam(cam, () => {
+    if (S.strips !== undefined) wardBase(t, { strips: S.strips, dawn: S.dawn });
+    else if (S.dawn) wardBase(t, { dawn: true });
+    else if (def !== SC.s7 && def !== SC.s8) wardBase(t, {});
+    if (S.over) S.over();
+  });
+  def.over(lt, u, t, dur, cam);
+  const vg = E("radialGradient", { id: "wVig", cx: "50%", cy: "46%" }, V2.defsHold);
+  [["60%", "#05050A", 0], ["100%", "#05050A", 0.45]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, vg));
+  E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#wVig)" });
+  E("rect", { x: 0, y: 0, width: 1080, height: 1920, filter: "url(#vGrain)", opacity: 0.5, transform: `translate(${(Math.floor(t * 15) % 2) * 3} ${Math.floor(t * 15) % 3})` });
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>

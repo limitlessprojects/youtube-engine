@@ -161,8 +161,23 @@ def main() -> int:
     for i, ln in enumerate(LINES):
         key = f"{i:02d}"
         mp3 = vo / f"{key}.mp3"
-        if not a.verify_only:
-            synth_line(tts_text(ln["narration"]), mp3)
+        if not a.verify_only and not (mp3.exists() and mp3.stat().st_size > 1000):
+            # L-111 (made structural): NoAudioReceived is a per-line flake, not a
+            # script bug — retry the LINE instead of restarting the whole table,
+            # and never re-synth lines already on disk (resume after flake/kill).
+            ok = False
+            for attempt in range(4):
+                try:
+                    synth_line(tts_text(ln["narration"]), mp3)
+                    ok = True
+                    break
+                except Exception as e:
+                    print(f"[{key}] synth flake attempt {attempt + 1}/4: {type(e).__name__}", flush=True)
+                    mp3.unlink(missing_ok=True)
+                    time.sleep(3)
+            if not ok:
+                print(f"[{key}] SYNTH FAILED after 4 attempts — abort (re-run resumes from here)", flush=True)
+                return 1
             time.sleep(float(os.environ.get("ASR_SLEEP_S", "2")))
         d = dur_of(mp3)
         heard = asr(mp3)

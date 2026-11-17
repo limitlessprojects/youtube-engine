@@ -83,8 +83,15 @@ def main() -> int:
             print(f"DONE 0 frames (all {n} on disk)"); return 0
         lo, hi = todo[0], todo[-1] + 1
         step = -(-(hi - lo) // nw)
-        procs = [subprocess.Popen([sys.executable, __file__, slug, "--frames", str(a), str(min(hi, a + step))],
-                                  stdout=subprocess.DEVNULL) for a in range(lo, hi, step)]
+        procs = []
+        # L-EPIPE (day-020, re-applied day-021 after the wipe): spawning all
+        # workers at once makes N chromiums race the same Profile lock ->
+        # EPIPE on the pipe children. Stagger each launch by 2.5 s.
+        import time as _t
+        for a in range(lo, hi, step):
+            procs.append(subprocess.Popen([sys.executable, __file__, slug, "--frames", str(a), str(min(hi, a + step))],
+                                          stdout=subprocess.DEVNULL))
+            _t.sleep(2.5)
         rc = max(p.wait() for p in procs)
         got = sum(1 for i in range(n) if (frames / f"f{i:04d}.png").exists())
         print(f"DONE workers={len(procs)} frames on disk {got}/{n} rc={rc}")

@@ -1,0 +1,262 @@
+{
+ "round": 2,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.36,
+ "frame_grand_mean": 7.36,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.38,
+  "frame:visual_hierarchy": 6.69,
+  "frame:contrast_legibility": 7.15,
+  "frame:production_polish": 7.15
+ },
+ "frame_means": {
+  "hook_u50": 7.8,
+  "s0_u50": 7.5,
+  "s10_u50": 7.2,
+  "s11_u50": 7.8,
+  "s1_u50": 7.5,
+  "s2_u50": 7.5,
+  "s3_u50": 7.75,
+  "s4_u50": 7.0,
+  "s5_u50": 6.0,
+  "s6_u50": 8,
+  "s7_u50": 6.5,
+  "s8_u50": 6.8,
+  "s9_u50": 8.3
+ },
+ "floor_breaches": [
+  "s5_u50",
+  "s7_u50"
+ ],
+ "video_directives": [],
+ "video_pass_source": "none",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 9,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill or crop the bottom ~25% of the frame \u2014 the empty dark floor is a dead zone that dilutes the spotlight composition",
+    "Give the doctor character slightly more size/positioning toward the bed so the eye path title\u2192lamp\u2192bed\u2192character reads as one connected story beat",
+    "Add a subtle rim light or warmer glow on the EKG monitor so the secondary focal element doesn't compete flatly with the bed under the spotlight"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill or darken the bottom third: it's a dead zone of empty dark floor \u2014 crop the scene up or add subtle depth elements",
+    "The character at right edge is clipped mid-body; either fully frame him or remove him",
+    "The EKG monitor overlaps the bed frame ambiguously \u2014 add a slight shadow/offset to separate it as a foreground layer"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the large dead zone on the left half of frame \u2014 the spotlight beam illuminates empty space; push character toward center or add environmental detail/artifact to balance composition",
+    "Anchor the character to the floor: feet currently float above the platform edge with no contact shadow, creating a weightless look",
+    "The EKG widget clips off the left edge with no clear purpose \u2014 either fully frame it as a deliberate UI element or remove it; right arm also crops awkwardly at frame edge"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the dead bottom-third floor zone with subtle floor detail (reflection of the lamp glow or foreground prop) to balance vertical composition",
+    "Anchor the character's feet to a visible floor line \u2014 he currently floats ambiguously near the wall/floor seam",
+    "Boost the dark background windows slightly so the two side silhouettes read on a 6-inch daylight screen"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill or crop the bottom third \u2014 the dark floor/wall band is a dead zone; raise the composition or add subtle depth detail",
+    "The highlight ellipse around the O\u2212 bag is faint and reads as a stray smear \u2014 strengthen it into a deliberate pulse/outline",
+    "The hospital bed bleeds off-frame at right with no anchor \u2014 either fully compose it or push it further into shadow so the crop reads intentional"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Lift ambient light ~15% in the lower third so the floor gurney and floorboards aren't a dead zone on a daylight phone",
+    "Add a subtle rim light or glow behind the vaccine cooler to sharpen the focal subject against the window background",
+    "Increase caption text size ~20% and add a soft drop shadow to guarantee legibility at 6-inch daylight viewing"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "The dim hospital-bed platforms flanking the beam are nearly invisible on a small screen \u2014 raise their rim light or drop them so the beam + character carries the frame alone",
+    "Large near-black dead zones top (~third of frame above header) and bottom (below floor line) \u2014 either fill with subtle atmospheric gradient/vignette detail or tighten the composition vertically",
+    "Add a faint key-light falloff or shadow under the character's feet to seat him on the floor plane; he currently floats slightly against the backdrop"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 7.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill or crop-intentionally the dead lower third \u2014 the bottom ~40% is empty floor planks with no subject, glow, or text anchoring it",
+    "Resolve the clipped edge elements (dashed selection box, teal waveform pill, white blob) \u2014 they read as accidental bleed-offs, not deliberate composition; either pull them fully into frame or remove them",
+    "Strengthen the eye path from the 'HANDS REMEMBER' header down to the red squiggle card with a subtle connecting element (light beam already helps \u2014 add a dim secondary accent along the path)"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 4,
+    "contrast_legibility": 5,
+    "production_polish": 6
+   },
+   "mean": 6.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Kill the dead zones: bottom third is featureless dark mush and top half is empty \u2014 frame the band/sushi action into the middle band or add layered foreground depth",
+    "Establish a single focal subject: the white glowing blob, the XX marks, and the teal circle all compete with no clear eye path \u2014 emphasize one and mute the rest",
+    "Boost separation and contrast: the subject blends into the low-contrast background; add rim light, stronger vignette control, and lift the dim floor tiles so they don't read as noise on a 6-inch screen"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 2,
+   "top3_directives": [
+    "Lift the right-side window/orange-ring elements out of the murk slightly \u2014 they currently read as mush and create a near-dead zone at mid-right",
+    "Anchor the header to a scene element or add a subtle glow so the floating pill doesn't detach from the composition",
+    "Deepen foreground floor detail at bottom so the lower third doesn't fall into empty dark bands"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "Lift the truck off the background: the navy trailer and dark wheels sit at nearly the same value as the ground/night sky \u2014 rim-light or backlight the vehicle so the subject separates on a 6-inch daylight screen",
+    "Fill the huge dead sky band between the header pill (~y=300) and the truck (~y=1000) \u2014 a moon, silhouette treeline, or moving star layer would close the visual gap and guide the eye downward",
+    "Boost the headlight beam into a readable compositional element (soft volumetric cone on the ground) so the truck's direction and the eye path toward frame-right is intentional, not muddy"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 6.8,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fix the 'MILLBROOK' label being occluded by the pencil icon \u2014 shift icon or label so the full word reads",
+    "Pull the 'NORTH...' label off the right crop edge so it isn't truncated mid-word",
+    "Add a subtle drop shadow or outline to map labels for stronger separation from the cream background"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.3,
+   "words_visible": 2,
+   "top3_directives": [
+    "Tie the warm window glow and the surgical light cone together with a subtle shared color grade so the two light sources don't compete for focal dominance",
+    "Give the character a slightly stronger rim-light or ground contact shadow so the eye locks onto him first instead of the bright window",
+    "Nudge the 'ONE JOB' badge down-left so it reads as connected to the scene composition rather than floating in dead ceiling space"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Because'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}

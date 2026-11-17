@@ -1,0 +1,268 @@
+{
+ "round": 10,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.58,
+ "frame_grand_mean": 7.57,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.62,
+  "frame:visual_hierarchy": 6.92,
+  "frame:contrast_legibility": 7.46,
+  "frame:production_polish": 7.23,
+  "video:pacing_rhythm": 8,
+  "video:character_life": 7,
+  "video:edit_flow": 8
+ },
+ "frame_means": {
+  "hook_u50": 7.8,
+  "s0_u50": 7.5,
+  "s10_u50": 8.0,
+  "s11_u50": 8.2,
+  "s1_u50": 6.8,
+  "s2_u50": 7.5,
+  "s3_u50": 7.5,
+  "s4_u50": 7.5,
+  "s5_u50": 7.3,
+  "s6_u50": 7.5,
+  "s7_u50": 7.0,
+  "s8_u50": 7.75,
+  "s9_u50": 8.0
+ },
+ "floor_breaches": [
+  "s1_u50"
+ ],
+ "video_directives": [
+  "Pacing is genuinely good \u2014 every 2-4s a new beat, transitions are eased cross-dissolves with hold-time, the suture-action micro-beats (gauze pop-ins, X stitches appearing) land rhythmically",
+  "Character life is the weak axis: poses/expressions change per scene (worried, exhausted, shivering pale, walking) but within-scene movement is minimal idle \u2014 add breathing sway, blink loops, subtle weight shifts to stop cutout feel",
+  "Edit flow works: dissolves are motivated by light-beam continuity and the final return to the hook composition (bed + spotlight + character + title card) closes the loop cleanly; keep that mirror-structure discipline"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 6,
+   "top3_directives": [
+    "The doctor character appears to float \u2014 ground his feet with a contact shadow so he doesn't look pasted on",
+    "Bottom third is a large dead zone of dark empty floor; either push the scene down or add subtle foreground detail (drips, wires, shadow shapes) to occupy it",
+    "Title's light-gray fill on the hazy dark background loses some snap \u2014 add a slight warm rim or stronger drop shadow so it reads instantly in daylight"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Nurse at right edge is cropped by frame \u2014 either pull him fully into frame or let the crop read as intentional",
+    "Bed sits center-low leaving a large empty dead zone in the lower third \u2014 add floor-level detail or reframe subject higher",
+    "Heart-monitor overlay partially overlaps the bed silhouette \u2014 add a subtle separation shadow or lift it off the mattress line for cleaner stacking"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the empty bottom third (dark floor band under the monitor) \u2014 it reads as a dead zone on a 9:16 frame",
+    "Add subtle rim-light or color separation where the white bed sheet blends into the dark background on the right edge",
+    "Vary palette temperature slightly in mid-ground (wall panel on right is near-invisible) to add depth layers behind the walking figure"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.2,
+   "words_visible": 0,
+   "top3_directives": [
+    "The bright figure floating beside the bed reads as a rendering error (no anchor shadow, glow halo ambiguous) \u2014 ground it with contact shadow or clear intent (ghost/translucent treatment)",
+    "The faint object silhouette in the bottom-left floor area is a muddy dead-zone artifact \u2014 either resolve it as a prop or remove it",
+    "Light pool hits the bed but the standing figure sits just outside the key light with a strong self-glow; unify the lighting logic so the eye path bed\u2192figure feels intentional"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 6,
+   "top3_directives": [
+    "Bottom third (reflection/floor zone) is a large dead zone \u2014 either extend the spotlight pool and character lower into it or crop/tighten the frame to kill the empty band",
+    "Resolve the collision zone on the left: the circled O\u2212 tag, IV pole and window overlap into mush \u2014 shift the tag cluster right or drop the circle highlight for one clean focal accent",
+    "The character is the emotional focal point but sits low-center and small; raise scale/position so the eye path reads header \u2192 tags \u2192 character without the mid-frame competing props"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Character's orange glow outline competes with vial cooler for focal attention \u2014 dim one or stage the character more clearly as secondary",
+    "Lower third has a large dead zone; lift the composition or add subtle floor detail/light pool to fill it",
+    "Title chip sits over the window/shape seam; nudge it or add slight drop shadow for cleaner separation"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 4,
+   "top3_directives": [
+    "Bottom third of frame is a large dead zone \u2014 the road extends into pure darkness; lift ambient fill or add a subtle horizon/vignette interest to anchor the lower frame",
+    "Sleeping figures flanking the character are nearly invisible against the background \u2014 raise their rim-light/key tone ~15-20% so the storytelling props read on a 6-inch daylight screen",
+    "Title chip sits high-center with dead air between it and the subject \u2014 pull it slightly tighter to the character or drop ~10% frame height to shorten the eye path"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "Clarify the floating teal waveform pod top-left \u2014 it reads as unanchored UI noise; either connect it to the scene or remove it",
+    "The bottom third (dark platform + arcs chip) is murky with two dead zones \u2014 add subtle rim light or depth cues so the lower frame earns its space",
+    "Give the red squiggle focal point a slight glow/emphasis pass so the eye locks to it immediately before wandering to the pods"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fill or crop the bottom ~30% dark dead zone \u2014 it carries zero visual information and drains retention on a 9:16 frame",
+    "Unify the glowing white brush stroke under the stitch line: it currently reads as a random smudge competing with the X-X focal marks",
+    "Enlarge or move the teal heartbeat icon closer to the action \u2014 right-edge placement is orphaned and slightly clipped by the panel curve"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "Clarify or remove the mid-right window/bubble cluster \u2014 it reads as muddy overlapping shapes with no purpose and competes with the bed focal point",
+    "Fill the large dead zone in the right third (below the header) with a subtle secondary element or extend the light cone/floor gradient to balance the composition",
+    "Boost the floating bubbles' and window's contrast slightly or cut them \u2014 as rendered they sit in a mushy low-contrast band that looks unresolved rather than intentionally dim"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill or compress the large dead sky zone between the title badge and the truck \u2014 the vertical gap eats ~40% of the frame with nothing guiding the eye downward",
+    "Clarify the headlight beam geometry: the light cone appears to emanate upward from behind the title, reading as a stray gradient rather than motivated truck lighting \u2014 anchor it to the headlight and aim it down/forward on the road",
+    "Unify foreground emphasis: the empty blue trailer is visually as heavy as the cream cab, splitting the focal point \u2014 add cargo detail or rim light to the cab so the eye lands once, then travels"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 5,
+   "top3_directives": [
+    "Resolve or fully crop the 'NORTO' label \u2014 the half-clipped name at frame edge reads as an accident rather than intentional crop",
+    "Strengthen the vignette's darkest corners slightly so the dark top/bottom bars blend into the map edge instead of reading as flat voids",
+    "Add a subtle drop shadow under the pencil mark to lift it off the map plane and deepen the layering"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "Tighten the shadowed gurney mid-ground: it reads as a murky blob \u2014 raise its rim light or push it further back for cleaner depth layering",
+    "Character's warm glow is slightly clipped against the window silhouette; add subtle ground contact shadow to seat him in the scene",
+    "Ceiling pipes at top crop awkwardly at frame edge \u2014 either fade them out or align their exit points deliberately"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Because'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}

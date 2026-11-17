@@ -1,0 +1,284 @@
+{
+  "title": "What if you were the last doctor on Earth?",
+  "format": "short",
+  "hook": {
+    "timestamp_start": 0.0,
+    "narration": "You're the last doctor on Earth. Nobody is coming.",
+    "visual": {
+      "v1": "dark ward at night; ONE bed lit by the surgical lamp cone (the only light source); title ON frame-0; one heartbeat pulse in the glow; hero doctor small at the bed rail"
+    },
+    "fact_sources": [
+      "premise"
+    ],
+    "audio_dur_s": 2.712
+  },
+  "scenes": [
+    {
+      "timestamp_start": 2.962,
+      "narration": "One patient is still breathing in your dark ward.",
+      "visual": {
+        "v1": "tighter on the bed: the sheet rises and falls twice (breathing); the doctor's hand lands on the rail late in the line; ECG teal line steady"
+      },
+      "fact_sources": [
+        "narrative"
+      ],
+      "audio_dur_s": 2.76
+    },
+    {
+      "timestamp_start": 5.972,
+      "narration": "The blood bank keeps for a few weeks. Then it's empty.",
+      "visual": {
+        "v1": "the blood cart: three blood bags hang labelled; they grey out one by one as the line ends (countable, colour cue visible)"
+      },
+      "fact_sources": [
+        "fda_aabb"
+      ],
+      "audio_dur_s": 2.832
+    },
+    {
+      "timestamp_start": 9.054,
+      "narration": "Insulin survives only in the cold. The power died last night.",
+      "visual": {
+        "v1": "insulin cooler open: vials on an ice pack, frost breath; the ward's back ceiling lights flicker and die on 'power'"
+      },
+      "fact_sources": [
+        "who_insulin"
+      ],
+      "audio_dur_s": 3.72
+    },
+    {
+      "timestamp_start": 13.024,
+      "narration": "Triage is simple now. Save the ones you can reach.",
+      "visual": {
+        "v1": "corridor of empty beds receding in the dark; two beds grey out, one stays warm-lit; doctor at the doorway with a clipboard"
+      },
+      "fact_sources": [
+        "atls"
+      ],
+      "audio_dur_s": 2.952
+    },
+    {
+      "timestamp_start": 16.226,
+      "narration": "Your hands remember what the machines used to know.",
+      "visual": {
+        "v1": "close on the bed: patient monitor + ventilator ghost-fade out of frame; the doctor's gloved hands flex, ready"
+      },
+      "fact_sources": [
+        "narrative"
+      ],
+      "audio_dur_s": 2.424
+    },
+    {
+      "timestamp_start": 18.9,
+      "narration": "",
+      "visual": {
+        "v1": "VISUAL-ONLY: THE OPERATION \u2014 under the lamp, five stitches close the wound left to right, each with a tick ring; the last lands u>=0.8; doctor leaning in, ECG steady"
+      },
+      "fact_sources": [
+        "visual-only event beat"
+      ]
+    },
+    {
+      "timestamp_start": 21.55,
+      "narration": "Out there, whole towns are still waiting for help.",
+      "visual": {
+        "v1": "pull back through the ward window: a dark town skyline at night, a handful of lit windows, one road out"
+      },
+      "fact_sources": [
+        "narrative"
+      ],
+      "audio_dur_s": 2.688
+    },
+    {
+      "timestamp_start": 24.488,
+      "narration": "The last supply truck never made it.",
+      "visual": {
+        "v1": "the road at night: ONE truck dominates the frame, hood up, headlights dim to dark as the line lands"
+      },
+      "fact_sources": [
+        "narrative"
+      ],
+      "audio_dur_s": 1.944
+    },
+    {
+      "timestamp_start": 26.682,
+      "narration": "You mark every town you couldn't reach.",
+      "visual": {
+        "v1": "a paper map on the desk: labelled town dots; the pen X-marks land one after another while the camera slides right"
+      },
+      "fact_sources": [
+        "narrative"
+      ],
+      "audio_dur_s": 2.088
+    },
+    {
+      "timestamp_start": 29.02,
+      "narration": "At dawn, you still have one patient, one job.",
+      "visual": {
+        "v1": "the window turns gold; first warm light fills the ward (G9 pivot); doctor silhouette at the window, patient bed behind"
+      },
+      "fact_sources": [
+        "narrative"
+      ],
+      "audio_dur_s": 2.904
+    },
+    {
+      "timestamp_start": 32.174,
+      "narration": "Because someone always has to stitch.",
+      "visual": {
+        "v1": "quiet close-up: the doctor steady at the bedside, hand on the sheet; ECG steady teal; no chip - the line lands alone"
+      },
+      "fact_sources": [
+        "narrative",
+        "imprint"
+      ],
+      "audio_dur_s": 1.968
+    },
+    {
+      "timestamp_start": 34.392,
+      "narration": "So you wash your hands, check the lamp, and begin again.",
+      "visual": {
+        "v1": "loop scene: the hook's wide ward frame; water glints off the washed hands; the lamp flickers back ON; STAMP: SOMEONE ALWAYS HAS TO STITCH"
+      },
+      "fact_sources": [
+        "narrative",
+        "imprint"
+      ],
+      "audio_dur_s": 3.312
+    }
+  ],
+  "timeline": {
+    "fps": 30,
+    "total_s": 37.704,
+    "gap_s": 0.25,
+    "voice": "edge-tts en-US-AndrewNeural rate +10%",
+    "words": 108,
+    "wpm_measured": 200.6
+  },
+  "sources": {
+    "premise": "What-if premise (no factual claim beyond the counterfactual); register = compassion + dread + duty per research/video-notes/alignment-emotion-whatif.md (9/10 alignment).",
+    "fda_aabb": "FDA/CBER + AABB standards: stored red blood cells remain transfusable for weeks depending on anticoagulant (platelets only days). Narration keeps it qualitative: 'a few weeks'.",
+    "who_insulin": "WHO / MedlinePlus storage guidance: insulin must stay refrigerated (~2-8 deg C); heat exposure degrades potency. Narration keeps it qualitative: 'only in the cold'.",
+    "atls": "ATLS / START triage doctrine (American College of Surgeons): in mass-casualty conditions, treat the survivable - greatest good for the greatest number. Narration: 'save the ones you can reach'.",
+    "narrative": "Narrative beat; no factual claim.",
+    "imprint": "Deliberate callback to #0006's closer word ('stitch') - the channel-imprint stitch motif."
+  },
+  "bed_peak": 0.05,
+  "origin": "Boss-commissioned pitch (research/video-notes/alignment-emotion-whatif.md, 9/10 alignment). Rebuild of the day-020 build that died in a sandbox failure before commit; re-authored with the r1-r5 gate directives baked in. Compassion+dread+duty register, Zack-lane anatomy spectacle, no politics (brief scrub), no digits in narration (L-090).",
+  "sfx": [
+    {
+      "kind": "thump",
+      "at": 0.9,
+      "gain": 0.4,
+      "seed": 21
+    },
+    {
+      "kind": "thump",
+      "at": 1.85,
+      "gain": 0.3,
+      "seed": 22
+    },
+    {
+      "kind": "thump",
+      "at": 5.562,
+      "gain": 0.35,
+      "seed": 23
+    },
+    {
+      "kind": "blip",
+      "at": 7.522,
+      "gain": 0.3
+    },
+    {
+      "kind": "blip",
+      "at": 8.022,
+      "gain": 0.3
+    },
+    {
+      "kind": "blip",
+      "at": 8.522,
+      "gain": 0.3
+    },
+    {
+      "kind": "thump",
+      "at": 11.474,
+      "gain": 0.45,
+      "seed": 24
+    },
+    {
+      "kind": "thump",
+      "at": 15.724,
+      "gain": 0.35,
+      "seed": 25
+    },
+    {
+      "kind": "whoosh",
+      "at": 20.900000000000002,
+      "gain": 0.4,
+      "f_lo": 300,
+      "f_hi": 1400
+    },
+    {
+      "kind": "thump",
+      "at": 25.838,
+      "gain": 0.5,
+      "seed": 26
+    },
+    {
+      "kind": "blip",
+      "at": 27.782,
+      "gain": 0.3
+    },
+    {
+      "kind": "blip",
+      "at": 28.182,
+      "gain": 0.3
+    },
+    {
+      "kind": "blip",
+      "at": 28.581999999999997,
+      "gain": 0.3
+    },
+    {
+      "kind": "riser",
+      "at": 27.72,
+      "gain": 0.55
+    },
+    {
+      "kind": "blip",
+      "at": 35.592000000000006,
+      "gain": 0.35
+    },
+    {
+      "kind": "thump",
+      "at": 36.292,
+      "gain": 0.6,
+      "seed": 27
+    },
+    {
+      "kind": "blip",
+      "at": 19.332,
+      "gain": 0.3
+    },
+    {
+      "kind": "blip",
+      "at": 19.716,
+      "gain": 0.33999999999999997
+    },
+    {
+      "kind": "blip",
+      "at": 20.1,
+      "gain": 0.38
+    },
+    {
+      "kind": "blip",
+      "at": 20.484,
+      "gain": 0.42
+    },
+    {
+      "kind": "blip",
+      "at": 20.868,
+      "gain": 0.45999999999999996
+    }
+  ]
+}

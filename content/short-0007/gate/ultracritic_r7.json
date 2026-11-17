@@ -1,0 +1,269 @@
+{
+ "round": 7,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.35,
+ "frame_grand_mean": 7.51,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.62,
+  "frame:visual_hierarchy": 6.85,
+  "frame:contrast_legibility": 7.46,
+  "frame:production_polish": 7.08,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 6,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 7.8,
+  "s0_u50": 7.8,
+  "s10_u50": 8.0,
+  "s11_u50": 7.5,
+  "s1_u50": 7.0,
+  "s2_u50": 7.5,
+  "s3_u50": 7.0,
+  "s4_u50": 8.25,
+  "s5_u50": 6.75,
+  "s6_u50": 8.0,
+  "s7_u50": 6.75,
+  "s8_u50": 7.25,
+  "s9_u50": 8.0
+ },
+ "floor_breaches": [
+  "s5_u50",
+  "s7_u50"
+ ],
+ "video_directives": [
+  "Give the doctor visible life in idle scenes \u2014 blink cycles, breathing bob, or weight-shifts; he reads as a static cutout in ~6 of 12 scenes",
+  "Tighten the two flat middle holds (blood-bag scene ~6-8s, cooler ~10-13s): animate the diagram elements continuously (bag fill, bubbles rising) instead of near-static cards",
+  "Add subtle camera drift or parallax inside scenes between cuts so transitions feel continuous rather than long static holds joined by soft wipes"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the bottom-third dead zone: the empty dark floor below the bed wastes ~25% of frame height \u2014 add subtle floor details (cables, papers, a monitor glow) or raise the scene composition",
+    "The character is oddly separated from the bed's light pool \u2014 step him into the spotlight or connect him to the bed with his gaze/pose for a stronger narrative focal cluster",
+    "Title sits close to the ceiling rig lines \u2014 nudge text block down slightly or fade the top pipes to reduce clutter behind the headline"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "Nurse figure is clipped at right edge \u2014 either fully in frame or fully out; the half-body crop reads as an error",
+    "Foreground bed occupies center but lower third is a near-empty dead zone; extend floor detail/light pool to earn that space",
+    "Heart-monitor glow is the only saturated accent \u2014 push a subtle rim light or vignette on the bed to tighten the focal path from title to patient"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the dead bottom ~15% of frame \u2014 the dark empty band under the EKG strip reads as wasted real estate on a 9:16 Short",
+    "Add a subtle rim-light or secondary glow (teal, matching palette) behind the character to separate him from the spotlight cone and add depth layering",
+    "Anchor the right-side platform elements (ball, pill shape) with a soft ground shadow so they stop floating ambiguously mid-frame"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the bottom ~30% dead zone \u2014 push the scene down or add subtle foreground detail (floor shadow under character, vignette texture) so the lower frame isn't empty",
+    "The character's white glow halo is blooming/burnt-out against the dark wall; reduce glow radius and opacity for a cleaner rim light",
+    "The character's leg-to-floor connection is ambiguous (thin vertical line, no shadow/ground contact) \u2014 add a soft contact shadow to anchor him in the scene"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 6,
+   "top3_directives": [
+    "Boost contrast on the blood bag labels (O\u2212/A+/B\u2212): the dark-red text on red bags drops out on a small daylight screen \u2014 add a cream outline plate or lighten label fills.",
+    "Clarify the glowing white circle on the character's torso \u2014 it reads as a random hole, not an object; shape/glow it to read as an IV port or remove it.",
+    "Unify accent colors: the gold pill in the header and the gold oval around O\u2212 compete as two highlight systems; pick one accent for emphasis."
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Raise foreground separation: the vial tray and cooler lid sit mid-dark blue on dark navy \u2014 add a subtle rim light or stronger shadow under the focal cooler to pop it from the background shelf",
+    "Fill the large dead zone in the lower third (empty floor planks below the stretcher) with a light pool, frost vapor, or push the composition down slightly",
+    "Tighten label cursor bar alignment: the blue caret sits flush against the 'K' \u2014 add left padding inside the pill for balanced spacing"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Lift ambient luminance of beds/background slightly or add rim glow to prevent mushy separation in daylight viewing",
+    "Remove or clarify the stray dark rectangle near the character's shoulder (reads as an artifact)",
+    "Move header title tighter to the action zone or scale character up ~15% to strengthen the eye path from title to subject"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.25,
+   "words_visible": 2,
+   "top3_directives": [
+    "Relocate the floating audio-waveform UI chip so it anchors to a screen edge instead of hovering ambiguously mid-left over the spotlight",
+    "Strengthen the top dead zone (upper third is mostly empty gray cone) \u2014 extend atmospheric texture or move header lower into the cone's widest area",
+    "Add a subtle rim-light or glow separation on the dark floorboards/UI panel bottom-right so that corner doesn't read as muddy black on 6-inch phones"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 6.75,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill or crop the large dark dead zones in the top third and bottom third \u2014 nearly 50% of the frame carries no visual information",
+    "Reframe the character so the face isn't awkwardly cut off at the top-left edge; either show it fully or exclude it",
+    "Strengthen the eye path: the small heartbeat icon floats detached at the right; anchor it to the action or enlarge it as a secondary beat"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "The upper-right quadrant is a near-dead zone of mushy navy blobs (window, faint circles) \u2014 either sharpen those silhouettes or extend the lamp cone/light spill to guide the eye there",
+    "The faint background gurney and window details sit at ~10% contrast and read as compression artifacts on a phone \u2014 raise their base luminance slightly so they read as intentional set dressing",
+    "The header pill floats mid-frame overlapping the lamp cables \u2014 anchor it to a consistent safe-zone (upper third grid) or attach it visually to the lamp for a tighter composition"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 2,
+   "top3_directives": [
+    "Kill the dead zone: the entire vertical middle (~y 400-950) is empty sky \u2014 either raise the truck composition, shrink canvas to content, or add a midground layer (hills/treeline) to bridge label and subject",
+    "Fix cab geometry: the awning/roof shape and the gray hood attachment read as misaligned clip-art seams \u2014 clean the joins and align the headlight beam origin with the lamp",
+    "Anchor the header to the subject: 'NO SUPPLIES' floats at 20% height with the moon crammed against its edge \u2014 move the label directly above the truck or attach it to the trailer for a single guided eye path"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 7.25,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fix the 'NORTO...' label bleeding off the right edge \u2014 either crop the whole map intentionally or pull labels inside frame",
+    "The pencil/marker icon dominates center but has no caption or highlight ring anchoring it as the focal point \u2014 add a subtle pulse ring or drop shadow to separate it from the flat map",
+    "Top and bottom dark navy bands are large dead zones \u2014 extend the map texture into them or add a vignette/frame treatment so the letterbox reads as intentional"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "The bottom third (floor/silhouette bed area) is a large dead zone \u2014 crop composition or add subtle depth detail so the vertical frame doesn't go empty below the character",
+    "Character and surgical lamp compete for focal attention; push the lamp cone slightly dimmer or rim-light the character harder to make him the unambiguous focal point",
+    "The 'ONE JOB' pill floats mid-air with no anchor; align it to a compositional line (e.g. over the character or lamp) to tighten eye path"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Because'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}

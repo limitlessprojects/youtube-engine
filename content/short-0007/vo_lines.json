@@ -1,0 +1,65 @@
+{
+  "short": "short-0007",
+  "lines": [
+    {
+      "key": "hook",
+      "role": "narration",
+      "narration": "You're the last doctor on Earth. Nobody is coming."
+    },
+    {
+      "key": "s0",
+      "role": "narration",
+      "narration": "One patient is still breathing in your dark ward."
+    },
+    {
+      "key": "s1",
+      "role": "narration",
+      "narration": "The blood bank keeps for a few weeks. Then it's empty."
+    },
+    {
+      "key": "s2",
+      "role": "narration",
+      "narration": "Insulin survives only in the cold. The power died last night."
+    },
+    {
+      "key": "s3",
+      "role": "narration",
+      "narration": "Triage is simple now. Save the ones you can reach."
+    },
+    {
+      "key": "s4",
+      "role": "narration",
+      "narration": "Your hands remember what the machines used to know."
+    },
+    {
+      "key": "s6",
+      "role": "narration",
+      "narration": "Out there, whole towns are still waiting for help."
+    },
+    {
+      "key": "s7",
+      "role": "narration",
+      "narration": "The last supply truck never made it."
+    },
+    {
+      "key": "s8",
+      "role": "narration",
+      "narration": "You mark every town you couldn't reach."
+    },
+    {
+      "key": "s9",
+      "role": "narration",
+      "narration": "At dawn, you still have one patient, one job."
+    },
+    {
+      "key": "s10",
+      "role": "narration",
+      "narration": "Because someone always has to stitch."
+    },
+    {
+      "key": "s11",
+      "role": "narration",
+      "narration": "So you wash your hands, check the lamp, and begin again."
+    }
+  ]
+}
