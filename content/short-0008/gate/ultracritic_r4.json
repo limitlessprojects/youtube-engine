@@ -1,0 +1,265 @@
+{
+ "round": 4,
+ "verdict": "PUBLISH_APPROVED",
+ "grand_mean": 7.61,
+ "frame_grand_mean": 7.67,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 8.62,
+  "frame:visual_hierarchy": 7.15,
+  "frame:contrast_legibility": 7.85,
+  "frame:production_polish": 7.08,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 7,
+  "video:edit_flow": 8
+ },
+ "frame_means": {
+  "hook_u50": 7.6,
+  "s0_u50": 7.5,
+  "s10_u50": 7.5,
+  "s11_u50": 6.8,
+  "s1_u50": 8.5,
+  "s2_u50": 7.5,
+  "s3_u50": 8.0,
+  "s4_u50": 7.3,
+  "s5_u50": 8.25,
+  "s6_u50": 7.5,
+  "s7_u50": 8.25,
+  "s8_u50": 7.3,
+  "s9_u50": 7.75
+ },
+ "floor_breaches": [],
+ "video_directives": [
+  "Inject more sub-beat micro-motion (capsid wobble, twitching legs) during the 1.5-2s holds on label cards like 'LOCKED ON' and 'VIRUS DNA' so nothing fully settles",
+  "Speed up the release montage (17-21s): the copy-count progression could stack in 3 quicker beats for punchier rhythm",
+  "The stick-figure character (30-33s) needs a reaction arc timed to the phage's failed lunge \u2014 a startle beat before the cheer would tie the edit together"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.6,
+   "words_visible": 5,
+   "top3_directives": [
+    "The phage subject reads small and floats in dead space mid-frame \u2014 scale it up ~30% and drop it closer to the cell so the predator-prey tension fills the composition",
+    "Add a drop shadow or subtle glow under the phage so it separates from the flat blue background instead of looking pasted on",
+    "Title contrast is good but flat \u2014 give the header a slight scale/tilt or accent color on 'DEADLIEST' to add hook energy"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 7.5,
+   "words_visible": 1,
+   "top3_directives": [
+    "The title box has a large empty band below the word \u2014 tighten the badge height so 'BACTERIOPHAGE' fills it, eliminating the dead space that reads as an unfinished caption card",
+    "The phage's capsid is cropped by the title badge and its legs float with no landing-state tension; nudge the phage down or angle it toward the pink receptor ring so the eye path connects subject \u2192 target instead of subject \u2192 empty gap",
+    "Unify the landing mark: the pink receptor ring is the only storytelling element but it's tiny and low-contrast against the orange membrane \u2014 enlarge/brighten it so the focal subject and destination read as one composition"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill the dead middle zone (y~950-1250) with a subtle motion element or drift particles \u2014 the eye jumps from title straight to the bacterium with nothing guiding it",
+    "Give the bacterium a stronger attraction cue (glow rim or highlight on the pili side facing the phages) to sell the 'hunter closing in' story",
+    "Vary phage scale more aggressively \u2014 the two clusters are near-identical sizes; push one group 30% larger/closer for depth layering"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 6.8,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fix the collision: the bacteriophage's pink head sits directly behind/overlapping the word 'ON' in the headline \u2014 either push the phage below the text block or raise the text and add a subtle dark scrim behind it so nothing occludes glyphs",
+    "Fill the dead zone: the middle ~45% of the frame is empty blue water with only three tiny phages \u2014 scale the drifting phages up 2-3x, add a light-ray gradient or particle drift, and create an eye path from headline to the bacteria mass at bottom",
+    "Anchor the composition: the headline is top-center and the bacteria is bottom-center but they read as two disconnected halves \u2014 bias the phage placement along a diagonal descent path (upper-left to lower-right) so the story 'injection' reads in one glance"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Frame is text-free \u2014 keep it that way or overlay a single \u22646-word caption with a strong box/stroke to preserve this cleanliness",
+    "Lower third (orange cell body) occupies ~40% with soft texture detail but no focal event \u2014 add a glow, ripple, or puncture highlight where the legs contact the membrane to sharpen the eye path",
+    "Bottom half is a large warm-toned dead zone; tighten composition or add depth cues (background bacteria, particles) to earn the 9-10 tier"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Compose the illustration so the virus capsid isn't cropped by the top edge \u2014 give it breathing room and a margin cap",
+    "Fill the lower ~40% tan cell mass with subtle detail (organelle hints, inner membrane line) to kill the large flat dead zone",
+    "Add a soft rim light or glow behind the phage to separate the teal tail from the mid-blue background and lift focal pop"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "Bottom ~30% of the cell interior is a large empty dead zone \u2014 crop composition or add subtle detail/glow to balance the vertical frame",
+    "Label chip 'VIRUS DNA' slightly collides with the capsid head below \u2014 add 8-12px breathing room",
+    "Pink DNA strand against warm orange cell interior could gain a thin dark outline or drop shadow for extra daylight legibility on small screens"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or compress the bottom ~30% of frame \u2014 it's a large dead zone of empty cytoplasm with no focal interest; either push composition down, add subtle secondary action (new phages assembling), or crop framing tighter",
+    "Add a subtle vignette or gradient behind the DNA spiral so the pink helix pops harder against the warm background \u2014 currently it blends slightly at the edges",
+    "Give the caption pill a stronger drop shadow or outline so it fully separates from the light-gray capsid head directly behind it"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.25,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill the bottom ~25% dead zone: the lower orange gradient has no content \u2014 add subtle inner-cell texture or vignette detail to complete the frame",
+    "Increase separation between the header plaque and the dark teal background \u2014 the dark card reads slightly mushy at a glance; add a stronger outline or outer glow",
+    "Dim or reduce the small pink dots' opacity so the phage virions remain the unambiguous secondary focal layer"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the bottom ~25% dead zone \u2014 the empty orange gradient under the antibody clusters reads as a large dead area; extend the molecular activity or add a subtle vignette/particle detail there",
+    "Give the pink dissolving strands a slightly stronger glow or tip highlight so the eye reads them as the action (the 'dissolving') rather than equal-weight decoration against the antibodies",
+    "Tighten the label treatment: the pill's dark plate floats slightly detached from the action \u2014 anchor it closer to the membrane edge or echo its red accent bar in one element below to unify the composition"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the empty lower third: the focal phage sits entirely in the upper half, leaving a large dead zone \u2014 either recenter the hero subject or add a mid-ground element/motion trail to guide the eye downward",
+    "Increase size/edge contrast on the background mini-phages \u2014 several near-mid-frame silhouettes (e.g., ~700px and ~1100px marks) read as noise rather than depth layering; dim or blur them for clearer parallax",
+    "Add a subtle rim light or glow behind the hero phage's dark outline \u2014 against the deep navy it currently blends at the tail fibers, costing focal snap on small phone screens"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 7.3,
+   "words_visible": 4,
+   "top3_directives": [
+    "The red X at the right edge is half-cropped off-frame \u2014 either fully contain it or remove it; a severed glyph reads as a rendering error",
+    "Bottom third of the frame is a near-empty dead zone \u2014 distribute the bacteria field full-height or push the header card down toward optical center",
+    "Add a subtle glow/outline on the two X marks so the 'killed' state reads instantly against the mid-blue background at 6-inch daylight distance"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the bottom third dead zone \u2014 the cell floats with empty navy space below; push composition down or add subtle depth elements (foreground particles/gradient vignette)",
+    "Label chip 'HUMAN CELL' is high-left with weak connection to subject \u2014 anchor it with a leader line or move it adjacent to the cell edge",
+    "Character and red X marker overlap awkwardly at the cell rim; separate the annotation from the figure so theX reads as a deliberate callout, not a collision"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}

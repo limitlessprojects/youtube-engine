@@ -391,10 +391,18 @@ SC.s7 = { cam: [[540, 1250, 0.9], [540, 1040, 0.84]],
   world(lt, u, t) {
     return { gone: 1, over: () => {
       burst(u * 0.9, t, 1);
-      /* one copy sweeps past the lens across the whole line */
+      /* one copy sweeps past the lens across the whole line (r2: pulled fully into frame, rides lower) */
       const k = V2.easeInOut(u);
-      phage(V2.root, lerp(-260, 1280, k), lerp(1500, 520, k) + Math.sin(u * 9) * 30, lerp(1.2, 2.3, Math.sin(u * Math.PI)), { land: 0.2, wig: 1, t, rot: 62 });
+      const gx = lerp(-320, 1120, k), gy = lerp(1560, 640, k) + Math.sin(u * 9) * 30;
+      if (!document.getElementById("s7glow")) {
+        const sg = E("radialGradient", { id: "s7glow" }, V2.defsHold);
+        [["0%", "#DDE7F6", 0.26], ["70%", "#DDE7F6", 0.08], ["100%", "#DDE7F6", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, sg));
+      }
+      E("circle", { cx: gx, cy: gy, r: 460, fill: "url(#s7glow)" }, V2.root);
+      phage(V2.root, gx, gy, lerp(1.2, 2.05, Math.sin(u * Math.PI)), { land: 0.2, wig: 1, t, rot: 46 });
       for (let i = 0; i < 9; i++) { const p = (u * 1.4 + V2.rnd(71, i)) % 1; mini(V2.root, V2.rnd(72, i) * 1080 + p * 240, 1900 - p * 2300, 0.34 + V2.rnd(73, i) * 0.3, 20 + V2.rnd(74, i) * 30, 0.9); }
+      /* r2 depth layer: dimmer far copies spanning the bottom third (fills the dead lower half) */
+      for (let i = 0; i < 7; i++) { const p = (u * 0.45 + V2.rnd(175, i)) % 1; mini(V2.root, V2.rnd(176, i) * 1080, 760 + p * 1240, 0.2 + V2.rnd(177, i) * 0.2, 15 + V2.rnd(178, i) * 35, 0.42); }
     } };
   },
   over() {} };
@@ -466,7 +474,12 @@ SC.s10 = { cam: [[540, 940, 1.1], [540, 900, 1.0]],
 SC.s11 = { cam: [[540, 900, 1.0], [540, 900, 1.0]],
   world(lt, u, t) {
     const a = V2.easeOut(seg(u, 0.25, 1));
-    return { over: () => phage(V2.root, P0.x + Math.sin(t * 1.3) * 26, lerp(-200, P0.y, a), P0.s, { land: 0, wig: 2.2, t, rot: Math.sin(t * 1.6) * 7 }) };
+    return { over: () => {
+      /* r3 depth layer: dim far copies in the mid-water band, fading before the landing frame (loop-safe) */
+      const kf = 1 - seg(u, 0.7, 1);
+      if (kf > 0) for (let i = 0; i < 6; i++) { const p = (u * 0.3 + V2.rnd(185, i)) % 1; mini(V2.root, V2.rnd(186, i) * 1080, 560 + p * 620, 0.16 + V2.rnd(187, i) * 0.18, 15 + V2.rnd(188, i) * 30, 0.4 * kf); }
+      phage(V2.root, P0.x + Math.sin(t * 1.3) * 26, lerp(-200, P0.y, a), P0.s, { land: 0, wig: 2.2, t, rot: Math.sin(t * 1.6) * 7 });
+    } };
   },
   over(lt, u) {
     title(TITLE, 215, 104, () => 1);
