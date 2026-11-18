@@ -1,0 +1,281 @@
+{
+ "title": "In this town, everyone has a price over their head",
+ "format": "narrative what-if (Larptuber 'In this town' one-rule world; fiction lane test #1)",
+ "hook": {
+  "timestamp_start": 0.0,
+  "narration": "In this town, the number over your head is the bounty on your life.",
+  "visual": {
+   "v1": "dusk town square wide; every NPC carries a floating amber price tag ($10,000 / $50,000 / $2,500); the hero stands dead-center with a gray $0 tag; title 'IN THIS TOWN,' / 'EVERYONE HAS A PRICE' on frame-0; warm windows, long shadows"
+  },
+  "fact_sources": [
+   "narrative"
+  ],
+  "audio_dur_s": 3.36
+ },
+ "scenes": [
+  {
+   "timestamp_start": 3.61,
+   "narration": "My number said zero. Everyone laughed.",
+   "visual": {
+    "v1": "closer on the hero; two-three NPCs point and double over laughing; hero's face 100% neutral; the $0 tag pulses once; big gray $0 stamp"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.136
+  },
+  {
+   "timestamp_start": 5.996,
+   "narration": "Until the Red Purge sirens blared.",
+   "visual": {
+    "v1": "sky flips to night; a red wash sweeps left-to-right; siren rings ripple out from the town hall; NPCs freeze mid-laugh"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.04
+  },
+  {
+   "timestamp_start": 8.286,
+   "narration": "And every steel door in town slammed shut.",
+   "visual": {
+    "v1": "a row of four steel doors slams in sequence (dust puffs, shudder frames); red light strobes; the street empties"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.184
+  },
+  {
+   "timestamp_start": 10.72,
+   "narration": "So I ran door to door, screaming.",
+   "visual": {
+    "v1": "hero sprints down the red-lit street (motion lines, coat trail), fists on doors"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 1.872
+  },
+  {
+   "timestamp_start": 12.842,
+   "narration": "Please — the monsters are right behind me. My face never moved.",
+   "visual": {
+    "v1": "the deadpan close-up: hero hammers a door, mouth open in a scream-shape, but the face is stone neutral; quote stamp 'THE MONSTERS ARE RIGHT BEHIND ME'; this frame is the rewatch bait"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.24
+  },
+  {
+   "timestamp_start": 16.332,
+   "narration": "Worth zero means harmless. Armed neighbors stepped out to enjoy the show.",
+   "visual": {
+    "v1": "the mansion row: bolts slide, four steel doors open, armed silhouettes (bat, pipe, pitchfork) step out smirking; stamp '$0 = HARMLESS'"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.48
+  },
+  {
+   "timestamp_start": 20.062,
+   "narration": "The last door clicked open. I stopped running.",
+   "visual": {
+    "v1": "mid-street: hero skids to a stop, head turns slowly back over the shoulder; the last mansion door swings; a click ring"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.304
+  },
+  {
+   "timestamp_start": 22.616,
+   "narration": "And peeled the zero off my head.",
+   "visual": {
+    "v1": "THE PEEL (money shot): close on the hero's hand reaching above the head, gripping the $0 sticker, peeling it up (bend, rotate, fall); a glass-shatter flash"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 1.872
+  },
+  {
+   "timestamp_start": 24.738,
+   "narration": "Underneath — a billion-dollar bounty.",
+   "visual": {
+    "v1": "THE REVEAL: $999,999,999 blazes blood-red above the hero, red light floods the street (bed_peak); every NPC tag flips red"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 1.92
+  },
+  {
+   "timestamp_start": 26.908,
+   "narration": "The monsters were never hunting me. They were here to collect.",
+   "visual": {
+    "v1": "shadow monsters drop from the rooftops (three-four tall ink giants, ember eyes, landing rings); the armed neighbors freeze mid-smirk"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.832
+  },
+  {
+   "timestamp_start": 29.99,
+   "narration": "Monsters can't break steel doors. They just needed someone dumb enough to beg them open.",
+   "visual": {
+    "v1": "hero walks calm through the open mansion door; the steel door swings shut, bolt slams (clank); through the window: shadows swarm the street; smash cut to black on the last word — hard loop, no CTA"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.84
+  }
+ ],
+ "timeline": {
+  "fps": 30,
+  "total_s": 33.83,
+  "gap_s": 0.25,
+  "voice": "edge-tts en-US-AndrewNeural rate +25%",
+  "words": 110,
+  "wpm_measured": 212.3
+ },
+ "sources": {
+  "premise": "Boss day-022 brief 'The Zero-Dollar Bait' (Fang Yuan archetype: weaponized helplessness + town-wide Trojan Horse lure; double twist: fake $0 -> $999,999,999; monsters collect, never hunt).",
+  "format_research": "research/larpniverse-sweep-2026-11-18.md — measured intown specs applied: premise+exact rule in sentence one; kicker sentences ('My face never moved.'); escalation ladder; 4-6-word twist ('They were here to collect.'); rule re-read closer; hard cut, no CTA; 232 WPM inside the measured 229-285 band.",
+  "deviations": "House canvas-vector world (not Roblox/Blender renders); house voice Andrew +45% deadpan vs the spec's young-light register (logged); 31.6s vs the 35-55s band (house 20-40s rule wins; shorter = easier high %viewed)."
+ },
+ "bed_peak": 0.06,
+ "origin": "Boss-commissioned format test (day-022 evening): first fiction-lane Short, testing whether the Larptuber one-rule-world retention engineering transfers to the Jack Blessed canvas pipeline. Category Entertainment (24). Gate + watch per usual; 48h/7d rows feed the Nov 21 fork.",
+ "sfx": [
+  {
+   "kind": "thump",
+   "at": 0.4,
+   "gain": 0.3,
+   "seed": 31
+  },
+  {
+   "kind": "riser",
+   "at": 6.0,
+   "gain": 0.4,
+   "seed": 32
+  },
+  {
+   "kind": "thump",
+   "at": 8.45,
+   "gain": 0.42,
+   "seed": 33
+  },
+  {
+   "kind": "thump",
+   "at": 8.9,
+   "gain": 0.42,
+   "seed": 34
+  },
+  {
+   "kind": "thump",
+   "at": 9.35,
+   "gain": 0.45,
+   "seed": 35
+  },
+  {
+   "kind": "thump",
+   "at": 9.8,
+   "gain": 0.48,
+   "seed": 36
+  },
+  {
+   "kind": "thump",
+   "at": 11.2,
+   "gain": 0.3,
+   "seed": 37
+  },
+  {
+   "kind": "thump",
+   "at": 13.1,
+   "gain": 0.38,
+   "seed": 38
+  },
+  {
+   "kind": "thump",
+   "at": 13.7,
+   "gain": 0.36,
+   "seed": 39
+  },
+  {
+   "kind": "thump",
+   "at": 14.3,
+   "gain": 0.34,
+   "seed": 40
+  },
+  {
+   "kind": "blip",
+   "at": 16.6,
+   "gain": 0.25,
+   "seed": 41
+  },
+  {
+   "kind": "thump",
+   "at": 17.9,
+   "gain": 0.3,
+   "seed": 42
+  },
+  {
+   "kind": "blip",
+   "at": 20.3,
+   "gain": 0.2,
+   "seed": 43
+  },
+  {
+   "kind": "riser",
+   "at": 22.8,
+   "gain": 0.42,
+   "seed": 44
+  },
+  {
+   "kind": "thump",
+   "at": 24.74,
+   "gain": 0.55,
+   "seed": 45
+  },
+  {
+   "kind": "whoosh",
+   "at": 25.05,
+   "gain": 0.4,
+   "seed": 46
+  },
+  {
+   "kind": "thump",
+   "at": 27.2,
+   "gain": 0.45,
+   "seed": 47
+  },
+  {
+   "kind": "thump",
+   "at": 27.7,
+   "gain": 0.42,
+   "seed": 48
+  },
+  {
+   "kind": "thump",
+   "at": 28.2,
+   "gain": 0.4,
+   "seed": 49
+  },
+  {
+   "kind": "thump",
+   "at": 33.0,
+   "gain": 0.5,
+   "seed": 50
+  },
+  {
+   "kind": "blip",
+   "at": 33.3,
+   "gain": 0.3,
+   "seed": 51
+  }
+ ]
+}

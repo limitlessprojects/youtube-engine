@@ -1,0 +1,67 @@
+{
+ "short": "short-0010",
+ "voice": "edge-tts en-US-AndrewNeural rate +25%",
+ "note": "The Zero-Dollar Bait (boss day-022 brief) refined to the measured intown specs: premise+exact rule in sentence one, kicker sentences, escalation ladder, 4-6-word twist, rule re-read closer, no CTA, 0 exclamation marks. Digits written as words (L-090); $ values live on STAMPS only.",
+ "lines": [
+  {
+   "key": "hook",
+   "role": "narration",
+   "narration": "In this town, the number over your head is the bounty on your life."
+  },
+  {
+   "key": "s0",
+   "role": "narration",
+   "narration": "My number said zero. Everyone laughed."
+  },
+  {
+   "key": "s1",
+   "role": "narration",
+   "narration": "Until the Red Purge sirens blared."
+  },
+  {
+   "key": "s2",
+   "role": "narration",
+   "narration": "And every steel door in town slammed shut."
+  },
+  {
+   "key": "s3",
+   "role": "narration",
+   "narration": "So I ran door to door, screaming."
+  },
+  {
+   "key": "s4",
+   "role": "narration",
+   "narration": "Please — the monsters are right behind me. My face never moved."
+  },
+  {
+   "key": "s5",
+   "role": "narration",
+   "narration": "Worth zero means harmless. Armed neighbors stepped out to enjoy the show."
+  },
+  {
+   "key": "s6",
+   "role": "narration",
+   "narration": "The last door clicked open. I stopped running."
+  },
+  {
+   "key": "s7",
+   "role": "narration",
+   "narration": "And peeled the zero off my head."
+  },
+  {
+   "key": "s8",
+   "role": "narration",
+   "narration": "Underneath — a billion-dollar bounty."
+  },
+  {
+   "key": "s9",
+   "role": "narration",
+   "narration": "The monsters were never hunting me. They were here to collect."
+  },
+  {
+   "key": "s10",
+   "role": "narration",
+   "narration": "Monsters can't break steel doors. They just needed someone dumb enough to beg them open."
+  }
+ ]
+}

@@ -1,0 +1,148 @@
+{
+ "short": "short-0010",
+ "verified_at": "2026-11-18T19:42:11.842937+00:00",
+ "voice": "edge-tts en-US-AndrewNeural rate +25%",
+ "gap_s": 0.25,
+ "total_vo_s": 31.08,
+ "timeline_end_s": 33.83,
+ "n_fail": 0,
+ "thresholds": {
+  "pass_wer": 0.15,
+  "warn_wer": 0.3
+ },
+ "lines": [
+  {
+   "line": "00",
+   "role": "narration",
+   "expected": "In this town, the number over your head is the bounty on your life.",
+   "heard": "In this town, the number over your head is the bounty on your life.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 3.36,
+   "synced_start_s": 0.0
+  },
+  {
+   "line": "01",
+   "role": "narration",
+   "expected": "My number said zero. Everyone laughed.",
+   "heard": "My number said zero, everyone laughed.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.136,
+   "synced_start_s": 3.61
+  },
+  {
+   "line": "02",
+   "role": "narration",
+   "expected": "Until the Red Purge sirens blared.",
+   "heard": "Until the red purge sirens blared.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.04,
+   "synced_start_s": 5.996
+  },
+  {
+   "line": "03",
+   "role": "narration",
+   "expected": "And every steel door in town slammed shut.",
+   "heard": "And every steel door in town slammed shut.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.184,
+   "synced_start_s": 8.286
+  },
+  {
+   "line": "04",
+   "role": "narration",
+   "expected": "So I ran door to door, screaming.",
+   "heard": "So I ran door to door, screaming.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 1.872,
+   "synced_start_s": 10.72
+  },
+  {
+   "line": "05",
+   "role": "narration",
+   "expected": "Please — the monsters are right behind me. My face never moved.",
+   "heard": "Please, the monsters are right behind me. My face never moved.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 3.24,
+   "synced_start_s": 12.842
+  },
+  {
+   "line": "06",
+   "role": "narration",
+   "expected": "Worth zero means harmless. Armed neighbors stepped out to enjoy the show.",
+   "heard": "Worth zero means harmless, Armed neighbors stepped out to enjoy the show.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 3.48,
+   "synced_start_s": 16.332
+  },
+  {
+   "line": "07",
+   "role": "narration",
+   "expected": "The last door clicked open. I stopped running.",
+   "heard": "The last door clicked open, I stopped running.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.304,
+   "synced_start_s": 20.062
+  },
+  {
+   "line": "08",
+   "role": "narration",
+   "expected": "And peeled the zero off my head.",
+   "heard": "And peel the zero off my head.",
+   "wer": 0.143,
+   "accuracy": 0.857,
+   "verdict": "PASS",
+   "audio_dur_s": 1.872,
+   "synced_start_s": 22.616
+  },
+  {
+   "line": "09",
+   "role": "narration",
+   "expected": "Underneath — a billion-dollar bounty.",
+   "heard": "Underneath a billion dollar bounty.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 1.92,
+   "synced_start_s": 24.738,
+   "verify_source": "pipeline transcript 'Underneath a billion dollar bounty.' == expected modulo em-dash/hyphen tokenization (WER 0.50 is a tokenizer artifact, audibly exact)"
+  },
+  {
+   "line": "10",
+   "role": "narration",
+   "expected": "The monsters were never hunting me. They were here to collect.",
+   "heard": "The monsters were never hunting me; they were here to collect.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.832,
+   "synced_start_s": 26.908
+  },
+  {
+   "line": "11",
+   "role": "narration",
+   "expected": "Monsters can't break steel doors. They just needed someone dumb enough to beg them open.",
+   "heard": "Monsters can't break steel doors, they just needed someone dumb enough to beg them open.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 3.84,
+   "synced_start_s": 29.99
+  }
+ ]
+}
