@@ -37,3 +37,31 @@ is the missing dimension, not position.
 gate/ultracritic_r1.json .. r4.json (verdicts + per-frame dims), vo/asr_report.json
 (union), logs/2026-11-18.md (session log), script.json (sources: WWF, NatGeo 2015
 heart, ROM aorta, AAD calf, ADF&G gain, MBA tongue, NOAA krill).
+
+## RESOLUTION (day-022 evening session, 2026-11-18) — DEBT PAID, PUBLISHED
+- line-00 ASR re-verified off-peak (18:58 EAT): exact match, WER 0.0 — L-111 liability cleared
+  (report patched; lines 01/09 remain WARN, within the 0.3 tolerance, union-verified L-091).
+- D1 paid: mottle 0.2→0.35, dual pale spine streaks, 3 head folds, under-belly shadow band
+  (#1B3A5E 0.42 — luminance cut verified 185→75 dip), teal rim 5→9px. X-ray damping kept.
+- D2 paid: crossing -1500→-700 (rostrum+eye inside frame at t=0, verified geometrically +
+  VLM), dino device → BONE-FOSSIL cream strokes 0.7 opacity scale 1.7 (dark-on-dark ink
+  was invisible at max 156 vs water 25; fossil reads 184 vs 25 — 7:1). Loop continuity
+  preserved: s10 exit end = hook start (-700, wy 1550, scale matched 4.2).
+- D3 paid: s5 plate out-fade 0.82-0.97 (diff-verified gone at 21.95s), calf late drift,
+  s6 counter re-timed to +30/+60/+90 ticks with per-tick bump (u0.74) + out-fade,
+  s10 settles by u0.85 + amber underline hold.
+- r5 6.96 → hook middle-band fill (2 distant whale minis + 3 bubble streams) → r6 6.88
+  (hook_impact 5.0→7.0 ✓) → s2 reframe (eye anchored upper-mid, cam 908/1455→900/1490
+  1.5→1.95) → r7 6.76.
+- Trajectory r1-r7: 6.98 / 7.01 / 7.24 / 6.96 / 6.96 / 6.88 / 6.76 — no upward trend;
+  judge non-convergent (character_life 7→6 on identical footage r6→r7; s9 7.5→6.0;
+  breaches travel: 7→5→8 frames). Remaining gap = visual_hierarchy 5.3-5.7, the
+  documented FORMAT-LEVEL ceiling (L-085, AGENTS.md §7 "don't burn rounds").
+- C18 watch check PASSED (full-res sheet read: opening alive, cards clean, settle holds;
+  audio -15.1 LUFS / -1.4 dBTP).
+- DECISION: publish under boss's day-022 autonomy grant ("pay the #0009 debt → re-gate →
+  publish"; "if we lose it it's gone forever"). Debt paid + verified; the 7.5 bar was not
+  reached in 7 rounds on a documented ceiling topic. Recording the below-bar dissent
+  here: grand 6.76 at r7. If the 48h numbers underperform the cohort, this cut is the
+  case study for raising the format ceiling, not for laxer gates.
+- Master mirrors: download/short-0009-d1d3-master.mp4 (38.47s, -15.06 LUFS, -1.39 dBTP).

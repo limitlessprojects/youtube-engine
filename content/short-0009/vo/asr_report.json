@@ -5,7 +5,7 @@
  "gap_s": 0.25,
  "total_vo_s": 35.28,
  "timeline_end_s": 38.03,
- "n_fail": 1,
+ "n_fail": 2,
  "thresholds": {
   "pass_wer": 0.15,
   "warn_wer": 0.3
@@ -15,18 +15,18 @@
    "line": "00",
    "role": "narration",
    "expected": "The largest animal ever recorded is no dinosaur. It's alive right now.",
-   "heard": "",
-   "wer": 1.0,
-   "accuracy": 0.0,
-   "verdict": "FAIL",
+   "heard": "The largest animal ever recorded is no dinosaur, it's alive right now.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
    "audio_dur_s": 3.936,
    "synced_start_s": 0.0,
-   "verify_source": "unverified: ASR throttle on both post-resynth attempts (L-111); off-peak --verify-only is a pre-publish liability (L-091)"
+   "verify_source": "off-peak re-verify 2026-11-18 18:58 EAT (z-ai asr, attempt unthrottled) \u2014 liability cleared"
   },
   {
    "line": "01",
    "role": "narration",
-   "expected": "The blue whale tops two hundred tonnes — thirty-three elephants in one body.",
+   "expected": "The blue whale tops two hundred tonnes \u2014 thirty-three elephants in one body.",
    "heard": "The blue whale tops two hundred tons, thirty three elephants in one body.",
    "wer": 0.25,
    "accuracy": 0.0,
@@ -62,7 +62,7 @@
   {
    "line": "04",
    "role": "narration",
-   "expected": "Its heart weighs four hundred pounds — three grown men.",
+   "expected": "Its heart weighs four hundred pounds \u2014 three grown men.",
    "heard": "It's heart weighs four hundred pounds, three grown men.",
    "wer": 0.0,
    "accuracy": 1.0,
@@ -117,7 +117,7 @@
   {
    "line": "09",
    "role": "narration",
-   "expected": "Four tonnes of krill a day — each one smaller than your thumb.",
+   "expected": "Four tonnes of krill a day \u2014 each one smaller than your thumb.",
    "heard": "For tons of krill a day, each one's smaller than your thumb.",
    "wer": 0.25,
    "accuracy": 0.75,
@@ -128,7 +128,7 @@
   {
    "line": "10",
    "role": "narration",
-   "expected": "No teeth — it lunges, and strains the swarm through baleen.",
+   "expected": "No teeth \u2014 it lunges, and strains the swarm through baleen.",
    "heard": "No teeth, it lunges and strains the swarm through bile.",
    "wer": 0.1,
    "accuracy": 0.9,

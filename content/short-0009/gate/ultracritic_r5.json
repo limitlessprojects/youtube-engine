@@ -1,0 +1,255 @@
+{
+ "round": 5,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 6.96,
+ "frame_grand_mean": 6.78,
+ "dim_means": {
+  "frame:hook_impact": 5.0,
+  "frame:text_discipline": 8.5,
+  "frame:visual_hierarchy": 5.33,
+  "frame:contrast_legibility": 6.58,
+  "frame:production_polish": 6.75,
+  "video:pacing_rhythm": 8,
+  "video:character_life": 7,
+  "video:edit_flow": 8
+ },
+ "frame_means": {
+  "hook_u50": 6.4,
+  "s0_u50": 7.0,
+  "s10_u50": 7.3,
+  "s1_u50": 7.0,
+  "s2_u50": 6.0,
+  "s3_u50": 6.25,
+  "s4_u50": 6.75,
+  "s5_u50": 6.5,
+  "s6_u50": 7.3,
+  "s7_u50": 7.8,
+  "s8_u50": 6.3,
+  "s9_u50": 6.8
+ },
+ "floor_breaches": [
+  "hook_u50",
+  "s1_u50",
+  "s2_u50",
+  "s3_u50",
+  "s5_u50",
+  "s8_u50",
+  "s9_u50"
+ ],
+ "video_directives": [
+  "Whale stays alive via subtle drift, fin flicks, blinks and repositioning between comparison beats \u2014 keep this consistency through the school-bus/tongue scenes where it is more static",
+  "The +30/+60/+90 KG escalation and 1\u21922\u21924 tonnes counter are the strongest rhythmic engine \u2014 reserve cuts and badge pops for those beats so the pacing feels intentional, not metronomic",
+  "Text badges enter and exit crisply but several holds (elephants, one tongue) linger a beat long \u2014 trim ~0.3s each to tighten the muted-watch rhythm"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 5,
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.4,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the dead middle ~40% of the frame \u2014 the gap between title and whale is empty black; add depth cues (bubble streams, distant silhouette, light particles) or push the whale up so subject and title connect",
+    "Show more of the whale \u2014 cropping it to a fragment at the bottom edge kills the focal point and the payoff of 'largest animal'; let the full body read so scale communicates",
+    "Strengthen title treatment \u2014 white-on-dark stripes cause intermittent contrast mush across the gradient beams; add a subtle drop shadow/scrim behind text or move it to the highest-contrast band"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the large empty middle zone (y\u2248450-950) \u2014 it's a dead expanse of vertical streaks separating title from subjects; pull the elephant chain higher or add a subtle midground element",
+    "Scale up the focal subjects: the three elephants are small relative to the frame and the giant whale mass dominates \u2014 enlarge or spotlight the elephant chain as the eye's first stop",
+    "Strengthen the eye path from title \u2192 elephants \u2192 whale with a light beam or glow targeting the elephant cluster, since the diagonal streaks currently point nowhere"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill the ~40% dead middle zone between headline and whale \u2014 a scale-comparison silhouette (human diver, bus) would add depth and reinforce the hook",
+    "Bring the whale larger into frame or raise it so the focal subject isn't cropped against the bottom edge; the eye reads 'accidental crop' not 'intentional scale'",
+    "Add subtle rim-light or particle motes around the whale head to separate it from the dark water and give the vector art a second layer of depth"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the ~45% dead dark zones: the top spotlight void and bottom empty water do nothing \u2014 reframe so the whale fills more of the 9:16 canvas or add depth elements (particles, parallax layers) in those bands.",
+    "Resolve the awkward edge composition: the cropped bus on the far left and the hard-cut whale tail at right frame-edge look accidental \u2014 either pull the whale fully into frame or intentionally bleed it with cleaner cropping.",
+    "Strengthen the focal point: the three identical buses and the whale compete at equal contrast \u2014 spotlight or slightly scale the hero bus (or add a subtle vignette) so the eye lands on one subject first."
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 4,
+    "contrast_legibility": 5,
+    "production_polish": 6
+   },
+   "mean": 6.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Reframe the composition: the anglerfish/subject is cropped off the bottom-right edge and occupies <25% of frame \u2014 push subject to center or upper-third so the focal point exists before 8s of dead scroll",
+    "Fill the top ~60% dead zone: the empty light-shaft water column has no subject, no motion anchor, and no text \u2014 add a hook element, title, or silhouette detail in the upper half",
+    "Increase subject/background separation: the pale blue fish belly blends into the muted background spots and dark shapes read as noise \u2014 add rim light or darken background contrast around the subject silhouette"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 4,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Top ~55% of frame is a near-empty dark dead zone \u2014 raise subject group and add layered mid-ground elements (stage props, secondary lights) to fill vertical real estate",
+    "Foreground figures sit too low and cropped at edges (left figure half-cut) \u2014 reframe so the dancing trio is a complete, centered focal cluster",
+    "Large red blob shape is ambiguous at a glance \u2014 sharpen its silhouette or push it back in value so it reads as background, not a competing focal point"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "The focal circle is an empty dark void \u2014 fill it with a legible subject, number, or payoff graphic or the frame has no reason to exist",
+    "Large dead zones top (~35%) and bottom (~35%) are near-black with barely-visible debris; crop the composition or add graded atmospheric elements so the 9:16 canvas is used",
+    "Background shapes are too close in value to the dark ground \u2014 lift midtone separation so the scene reads on a 6-inch daylight screen"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "The subject is badly cropped \u2014 the whale shark's body bleeds off both left and right edges with no clear head/eye anchor; pull the full silhouette into frame or compose a deliberate extreme-close-up so the eye reads as the focal point",
+    "Top ~55% of the frame is a near-black dead zone with faint rays and barely-visible bubbles; add a subtle light gradient, particulate density, or title-safe graphic element to give the upper half purpose",
+    "The dark remora/silhouette shapes in the background sit at nearly the same value as the background and read as smudges \u2014 either lift their edge contrast by 15-20% or remove them"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 4,
+   "top3_directives": [
+    "Recompose the focal subject: the fish is cropped awkwardly off both left/right edges and sits low \u2014 center it or frame it deliberately so the whale shark reads as the hero, not a slice",
+    "Fill the large empty mid-frame dead zone (between badge and fish) with depth cues \u2014 light shafts reaching down, silhouettes of pilot fish, or subtle particles \u2014 or push the fish up into that space",
+    "Add a soft dark vignette/gradient behind the badge or a slight glow on the fish's teal highlight to glue the eye path from text \u2192 subject and unify the two zones"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Whale is cropped hard at both frame edges with its nose and tail cut off \u2014 either shrink it to fit inside safe margins or commit to a deliberate extreme close-up composition; current crop reads accidental",
+    "Upper third is a scattered, low-density fish field with no anchoring \u2014 cluster the small fish into a tighter bait-ball shape to create a secondary eye path toward the whale",
+    "Add a subtle rim-light or gradient lift on the whale's belly edge so the blue body separates more cleanly from the near-black lower half on small screens"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.3,
+   "words_visible": 5,
+   "top3_directives": [
+    "The whale mouth is cropped so abstractly it reads as a dark blob \u2014 pull the head fully into frame or add a rim-light edge so the subject is instantly legible",
+    "The middle third is a large dead zone between header and buoy \u2014 scale the mouth/krill swarm up to fill the compositional gap",
+    "Krill particles and background fish silhouettes are nearly invisible on dark screens \u2014 lift their value ~20% or add subtle glow so the feeding action reads"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or activate the top ~55% dark dead zone \u2014 either raise whale to center or add silhouetted marine snow/light rays with more luminance so the upper frame earns its space",
+    "Boost key light on the whale (rim light or stronger backlight halo) so it separates from the near-black background on a dim 6-inch screen",
+    "Clarify the small dark fin/silhouette shapes \u2014 they read as muddy smears against the midground; increase their contrast or remove them"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}
