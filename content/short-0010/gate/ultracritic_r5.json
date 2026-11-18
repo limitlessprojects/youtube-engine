@@ -1,0 +1,251 @@
+{
+ "round": 5,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.58,
+ "frame_grand_mean": 7.64,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.33,
+  "frame:visual_hierarchy": 7.42,
+  "frame:contrast_legibility": 7.33,
+  "frame:production_polish": 7.33,
+  "video:pacing_rhythm": 8,
+  "video:character_life": 7,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 6.8,
+  "s0_u50": 8.0,
+  "s10_u50": 8,
+  "s1_u50": 7.3,
+  "s2_u50": 8.0,
+  "s3_u50": 7.75,
+  "s4_u50": 8.0,
+  "s5_u50": 7.0,
+  "s6_u50": 8.0,
+  "s7_u50": 8.0,
+  "s8_u50": 8.3,
+  "s9_u50": 6.5
+ },
+ "floor_breaches": [
+  "hook_u50"
+ ],
+ "video_directives": [
+  "Scene-to-scene tempo is solid (~2-3s beats, no dead holds); keep the mid-scene camera push-ins but add one micro-beat more per card so diagram panels don't outstay their read.",
+  "Main character reads alive (pose shifts, walking, pointing, reactions at purge beat) \u2014 but secondary crowd characters are near-static cutouts between poses; add subtle idle sway/blink loops to everyone on screen.",
+  "Transitions breathe well (fade/zoom eases, sky color shifts to red are motivated), but the cut from fridge-door assembly back to crowd-shields could carry motion continuity \u2014 match the door-slam gesture across the cut."
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 5,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 9,
+   "top3_directives": [
+    "Trim header to \u22645 words (e.g. 'EVERYONE HAS A PRICE') so total on-screen text drops to \u22647 and text_discipline can score 8+",
+    "Enlarge the $50,000 tag or thicken its type \u2014 at 6-inch daylight scale the small script numerals on the right crowd will blur; match the $0 tag's stroke weight",
+    "Fill the dead sky zone mid-left with a foreground silhouette layer (streetlight, crane, or distant figure) to strengthen depth and close the empty purple gap between header and skyline"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Nudge the $50,000 label and its pointer fully in-bounds \u2014 it kisses the right edge and the partial third character reads as a crop error, not intent",
+    "Differentiate the three figures' silhouettes slightly (size/pose already vary, but the twin hoodies blur who the $2,500 vs $50,000 tags belong to \u2014 a subtle rim-light or color step on the $50k group would clarify the eye path",
+    "The giant sun/orb's glow halo is soft but the lower third is a large dark dead zone \u2014 add a faint ground reflection of the moon or street light pools to activate it"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Character's dark navy robe blends into the dark building silhouettes behind it \u2014 add rim light or a subtle darker halo behind the full body, not just the head/feet glow",
+    "The red concentric ellipse rings occupy the top third as a dead decorative zone \u2014 either tie them to the character (grounding shadow/light source) or add a minimal motion/title element there",
+    "The brown map panel on the left is cropped hard at frame edge with no visual connection to the character \u2014 pull it fully in-frame or add a subtle glow/scale pulse so it reads as a story prop rather than a compositional accident"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 5,
+   "top3_directives": [
+    "The '$0' header floats ambiguously above the center figure \u2014 anchor it to the character with a pointer/tab or place it as part of the same UI system as the $2,500/$50,000 tags",
+    "Fill the large dead zone between the 'RED PURGE' title and the characters (mid-frame ellipse ring reads as empty space) \u2014 compress vertical spacing or add a subtle glow/beam connecting title to scene",
+    "The red light-beam split on the right edge cuts awkwardly through the right character's price tag \u2014 either align the beam to frame center behind the main figure or dim it so it doesn't compete with the focal subject"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Tighten the $0 badge clearance above the head \u2014 it nearly kisses the hood outline and will clip if the character bobs in motion",
+    "Resolve the tan/wood-tone panels colliding behind the tilted doors on the right \u2014 two backdrops overlap with no separation edge, muddying depth",
+    "Add a subtle ground reflection/contact shadow under the character's feet stronger than the current blob to anchor the glow against the dark floor"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the dead zones: top ~25% (empty sky) and bottom ~20% (empty floor) carry nothing \u2014 either extend the city skyline higher or add subtle atmospheric particles/set dressing",
+    "Separate the $0 sign from the character's head \u2014 it nearly merges with the hood glow, muddying the two focal elements; raise it ~60px or add a drop shadow",
+    "Character pose reads as a floating wedge with detached leg \u2014 tighten silhouette overlap so the leg/kick anatomy connects cleanly to the body"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "The dark navy robe nearly merges with the dark background mid-torso \u2014 strengthen the warm rim-light along the right edge or lift background luminance slightly behind the body",
+    "Lower-left door and lower-right foot area read as dim dead zones; add a subtle bounce-light or floor highlight to guide the eye around the full frame",
+    "The '$0' sign is the only text \u2014 give its badge a faint glow or brighter face so it pops as a deliberate focal beat rather than floating decor"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Lift the mid-band brightness around the characters \u2014 foreground figures and doors sit too close to the dark background values for daylight phone viewing",
+    "Fill the large dead zone in the upper-middle third (red rings + empty sky occupy ~40% of frame with no subject); tighten composition or add a secondary light source",
+    "Give the $50,000 tag a stronger tie to the action \u2014 a subtle glow or pointer line connecting label to characters would clarify the focal point"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "The orange '$8,000' tag's pointer tip and the right-edge character are clipped by the frame \u2014 pull the tag ~40px left so its full shape and the stick figure's head sit inside safe margins.",
+    "Bottom third of the frame is a near-empty dark dead zone with only faint pavement marks \u2014 either lift a subtle rim-light/floor reflection under the focal figure or extend ambient building silhouettes to occupy it.",
+    "The secondary moon/orbit rings in the top-left are muddy and half-lost against the background; either brighten them one value step for a clear depth layer or remove them entirely to clean the upper field."
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "The tilt-sign '$0' sits slightly off-center and overlaps the head awkwardly \u2014 snap it to a cleaner floating anchor above the head with a drop shadow for depth",
+    "Lower third and top edge are dead zones with murky background texture \u2014 add subtle rim lighting or atmospheric particles to fill the frame edge-to-edge",
+    "The stray blue dash marks near the face read as unintended artifacts \u2014 remove or convert them into intentional motion/stress lines"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.3,
+   "words_visible": 1,
+   "top3_directives": [
+    "Give the $999,999,999 banner a subtle drop shadow or darker plate edge so it fully separates from the red ring lines crossing behind it",
+    "Add slight atmospheric haze or rim light between character and background buildings to deepen layering of the mid-ground",
+    "Break the dead zone at the very bottom (empty pavement strip) with a small reflection of the character's glow on the ground"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Relieve the top-third dead zone: the moon/ring motif occupies ~35% of frame with no narrative or focal weight \u2014 either drop the ceiling lower, add subtle animated glow/parallax, or crop to tighten vertical space",
+    "Separate dark-on-dark subjects: the tall hooded figure and black-market silhouettes nearly melt into the background; add rim-light, warm ground shadow, or a subtle backdrop panel behind each figure for clean foreground separation",
+    "Fix tag collisions and alignment: the $12,000 chip overlaps the tall character's hood and the $8,000 chip sits on a character's face \u2014 give each price tag a consistent offset, matching corner radius, and a small pointer stem so price-owner mapping is instant"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['They'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Monsters', 'They'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}

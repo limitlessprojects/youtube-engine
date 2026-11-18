@@ -106,9 +106,11 @@ function townscape(t, phase, cam, sweepU) {
     E("rect", { x: bx, y: 1500 - bh, width: bw, height: bh + 460, fill: K.bldg, stroke: P.ink, "stroke-width": 4 }, g);
     E("rect", { x: bx, y: 1500 - bh, width: 18, height: bh + 460, fill: K.bldgShade }, g);
     for (let wy = 0; wy < Math.floor(bh / 150); wy++) for (let wx = 0; wx < 3; wx++) {
-      const lit = phase === 0 ? V2.rnd(209, i * 11 + wy * 3 + wx) > 0.4 : V2.rnd(209, i * 11 + wy * 3 + wx) > 0.85;
+      /* L-127: windows must NOT compete with the money-amber tag system —
+         dusk windows rare + muted, purge windows rarer + dimmer. Tags own the amber. */
+      const lit = phase === 0 ? V2.rnd(209, i * 11 + wy * 3 + wx) > 0.8 : V2.rnd(209, i * 11 + wy * 3 + wx) > 0.88;
       E("rect", { x: bx + 30 + wx * (bw - 55) / 2.4, y: 1500 - bh + 46 + wy * 150, width: 34, height: 52, rx: 4,
-        fill: lit ? (phase === 2 ? K.red : K.win) : K.winOff, opacity: lit ? 0.95 : 1 }, g);
+        fill: lit ? (phase === 2 ? K.red : phase === 0 ? "#C08A50" : "#6E5238") : K.winOff, opacity: lit ? 0.72 : 1 }, g);
     }
     E("rect", { x: bx + bw * 0.3, y: 1500, width: bw * 0.4, height: 26, fill: K.bldgShade, opacity: 0.7 }, g);
   }
@@ -116,6 +118,30 @@ function townscape(t, phase, cam, sweepU) {
   E("rect", { x: -300, y: 1500, width: 1680, height: 620, fill: K.street }, g);
   E("rect", { x: -300, y: 1500, width: 1680, height: 16, fill: K.streetFar }, g);
   for (let i = 0; i < 7; i++) E("rect", { x: -240 + i * 260, y: 1560 + V2.rnd(210, i) * 300, width: 120, height: 10, fill: "#3A4272", opacity: 0.5 }, g);
+  /* L-127 street life: the bottom third must carry content. Far-side lampposts
+     (correct occlusion: they sit at the far curb, y=1500), wet reflections,
+     curb line, crosswalk, manhole — all flat markings or far-side verticals. */
+  const refC = phase === 0 ? "#C08A50" : phase === 1 ? K.red : K.bounty;
+  for (let i = 0; i < 9; i++) {
+    const sx2 = -180 + i * 160 + V2.rnd(240, i) * 50;
+    E("rect", { x: sx2, y: 1512 + V2.rnd(241, i) * 130, width: 16, height: 50 + V2.rnd(242, i) * 90, rx: 8,
+      fill: refC, opacity: 0.09, style: "mix-blend-mode:screen" }, g);
+  }
+  E("rect", { x: -300, y: 1500, width: 1680, height: 12, fill: "#3A4272", opacity: 0.8 }, g);
+  for (let i = 0; i < 4; i++) E("rect", { x: 140 + i * 190, y: 1800, width: 96, height: 13, rx: 3, fill: "#3A4272", opacity: 0.55 }, g);
+  for (let i = 0; i < 3; i++) E("rect", { x: 240 + i * 260, y: 1856, width: 120, height: 15, rx: 3, fill: "#333B66", opacity: 0.45 }, g);
+  [[150, 1], [935, -1]].forEach(([lx, sd]) => {
+    E("rect", { x: lx - 6, y: 1082, width: 12, height: 424, fill: "#0C0F22", stroke: P.ink, "stroke-width": 3 }, g);
+    E("path", { d: `M ${lx} 1092 L ${lx} 1064 L ${lx + sd * 34} 1072`, stroke: "#0C0F22", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }, g);
+    E("circle", { cx: lx + sd * 38, cy: 1078, r: 13, fill: "#FFD9A0", opacity: 0.95 }, g);
+    E("circle", { cx: lx + sd * 38, cy: 1078, r: 26, fill: "#FFD9A0", opacity: 0.25 }, g);
+    E("path", { d: `M ${lx + sd * 20} 1082 L ${lx + sd * 92} 1500 L ${lx - sd * 30} 1500 Z`, fill: "#FFD9A0", opacity: 0.07, style: "mix-blend-mode:screen" }, g);
+    E("ellipse", { cx: lx + sd * 30, cy: 1516, rx: 130, ry: 24, fill: "#FFD9A0", opacity: 0.12, style: "mix-blend-mode:screen" }, g);
+  });
+  E("ellipse", { cx: 560, cy: 1688, rx: 44, ry: 13, fill: "#101426", stroke: "#3A4272", "stroke-width": 4 }, g);
+  if (phase > 0) E("ellipse", { cx: 560, cy: 1688, rx: 30, ry: 8, fill: K.ember, opacity: 0.35 }, g);
+  E("rect", { x: -300, y: 1908, width: 1680, height: 212, fill: "#141833" }, g);
+  E("rect", { x: -300, y: 1908, width: 1680, height: 8, fill: "#232A52", opacity: 0.8 }, g);
   /* the purge: red wash + sweep + siren rings */
   if (phase > 0) {
     const rg = E("radialGradient", { id: "kRed", cx: 0.5, cy: 0.42 }, V2.defsHold);
@@ -147,7 +173,10 @@ function npc(parent, x, y, s, o) {
   }, o.extra || {});
   if (o.laugh) { p.armL = { a: 150 + Math.sin(t * 9 + x) * 14, b: -30 }; p.armR = { a: 150 + Math.cos(t * 9 + x) * 14, b: -30 }; p.headTilt = -10; }
   if (o.point) { p.armR = { a: 135, b: -25 }; p.headTilt = 6; }
-  V2.Hero(p, o.look2 || "kip", "vRimR", 0.6, parent);
+  if (!o.noShadow) E("ellipse", { cx: x + 5, cy: y + 4, rx: 46 * s, ry: 12 * s, fill: "#04040A", opacity: 0.48 }, parent);
+  /* look OBJECT, not name string — a string made every look value undefined:
+     black heads/hands, no faces, no limbs (the r1/r2 "stick figure" read) */
+  V2.Hero(p, o.look2 || V2.LOOKS.kip, "vRimR", 0.6, parent);
   /* weapon silhouette for the armed neighbors */
   if (o.weapon) {
     const wg = E("g", { transform: `translate(${x + (o.wepSide === undefined ? 52 : o.wepSide) * s * (o.facing || 1)} ${y - (o.wepHigh ? 265 : 150) * s}) rotate(${o.wrot || -20}) scale(${s})` }, parent);
@@ -174,6 +203,9 @@ function hero2(parent, x, y, s, o) {
     legL: o.legL || { a: 4, b: 0 }, legR: o.legR || { a: -4, b: 0 },
     handL: o.handL || "open", handR: o.handR || "open",
   });
+  /* grounding + separation: contact shadow, then a soft streetlight pool behind the figure (L-127) */
+  if (!o.noShadow) E("ellipse", { cx: x + 8, cy: y + 6, rx: 62 * s, ry: 15 * s, fill: "#04040A", opacity: 0.5 }, parent);
+  if (!o.noPool) V2.glow(x + (o.poolDX || 0), y - 180 * s, 230 * s, "Warm", o.poolOp || 0.13, parent);
   /* long coat: back cape (behind rig) + front panel (over torso, under arms) */
   const capeK = o.cape || 0;
   if (capeK > 0.01) {
@@ -182,7 +214,7 @@ function hero2(parent, x, y, s, o) {
     E("path", { d: `M -34 -96 C -44 -20 ${-flare - 18} 70 ${-flare} 150 L ${flare * 0.7} 148 C ${flare * 0.55} 60 ${flare * 0.4} -20 30 -96 Z`,
       fill: "#10121F", stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round", opacity: 0.97 }, cg);
   }
-  V2.Hero(p, "vigil", "vRimL", 0.65, parent);
+  V2.Hero(p, V2.LOOKS.vigil, "vRimL", 0.65, parent);
   if (!o.noCoat) {
     const fg = E("g", { transform: `translate(${x} ${y - 150 * s}) rotate(${p.tilt} 0 -40) scale(${s})` }, parent);
     E("path", { d: "M -40 -100 C -48 -30 -40 40 -30 108 L 30 108 C 42 40 48 -30 40 -100 C 14 -110 -14 -110 -40 -100 Z",
@@ -190,23 +222,30 @@ function hero2(parent, x, y, s, o) {
     E("path", { d: "M 0 -104 L 4 104", stroke: P.ink, "stroke-width": 3, opacity: 0.5 }, fg);
     E("path", { d: "M -34 -92 L -26 96", stroke: "#2A2F52", "stroke-width": 5, opacity: 0.8 }, fg);
     E("path", { d: "M 34 -92 L 26 96", stroke: "#10121F", "stroke-width": 5, opacity: 0.8 }, fg);
+    /* warm rim on the lit edge so the black coat survives the night backdrop (L-127) */
+    E("path", { d: "M 40 -100 C 48 -30 42 40 30 108", stroke: "#FFB054", "stroke-width": 6, opacity: 0.5, fill: "none", "stroke-linecap": "round" }, fg);
+    E("path", { d: "M -40 -100 C -14 -114 16 -114 40 -100", stroke: "#FFD7A0", "stroke-width": 7, opacity: 0.55, fill: "none", "stroke-linecap": "round" }, fg);
   }
   /* the $0 sticker: floats clear above the head; peels in s7 (peel 0..1) */
   const sx = x + (o.stickerDX || 0), sy = y - 440 * s + Math.sin(t * 2) * 6;
   if (o.bounty) {
     const bScale = s * (o.bountyS || 1.15);
-    const bg = E("g", { transform: `translate(${sx} ${y - 500 * s}) scale(${bScale})` }, parent);
-    V2.glow(0, 0, 300, "Warm", 0.55, bg);
     let bfont = 76, w = meas("$999,999,999", `700 ${bfont}px ${MONO}`) + 70;
     if (w * bScale > 940) { bfont = Math.floor(bfont * 940 / (w * bScale)); w = meas("$999,999,999", `700 ${bfont}px ${MONO}`) + 70; }
+    /* keep the banner fully in frame regardless of hero x (L-127: no clipped money) */
+    const halfW = (w * bScale) / 2;
+    const cx = Math.max(60 + halfW, Math.min(sx, 1020 - halfW));
+    const bg = E("g", { transform: `translate(${cx} ${y - 500 * s}) scale(${bScale})` }, parent);
+    V2.glow(0, 0, 300, "Warm", 0.7, bg);
     E("rect", { x: -w / 2, y: -50, width: w, height: 100, rx: 18, fill: "#1A0402", stroke: K.bounty, "stroke-width": 7 }, bg);
-    V2.txt(0, 18, "$999,999,999", { "text-anchor": "middle", "font-family": MONO, "font-size": bfont, "font-weight": 700, fill: K.bounty, stroke: "#FFE8E0", "stroke-width": 1.5 }, bg);
+    V2.txt(0, 18, "$999,999,999", { "text-anchor": "middle", "font-family": MONO, "font-size": bfont, "font-weight": 700, fill: K.bounty, stroke: "#FFE8E0", "stroke-width": 2.5 }, bg);
   } else if (o.sticker !== false) {
     const pk = o.peel || 0;
     const g2 = E("g", { transform: `translate(${sx - 46 * pk} ${sy - pk * 46 + 66 * pk}) rotate(${pk * 34}) scale(${s * 1.0})`, opacity: pk > 0.92 ? 0 : 1 }, parent);
-    E("rect", { x: -52, y: -38, width: 104, height: 76, rx: 10, fill: "#262C4A", stroke: "#9AA4C2", "stroke-width": 5 }, g2);
+    E("rect", { x: -62, y: -48, width: 124, height: 96, rx: 14, fill: "#05060F", opacity: 0.32 }, g2);
+    E("rect", { x: -52, y: -38, width: 104, height: 76, rx: 10, fill: "#262C4A", stroke: "#CBD6F2", "stroke-width": 6 }, g2);
     E("path", { d: "M -40 8 C -20 22 6 20 38 4", stroke: "#3A4272", "stroke-width": 5, fill: "none", opacity: 0.7 }, g2);
-    V2.txt(0, 8, "$0", { "text-anchor": "middle", "font-family": MONO, "font-size": 56, "font-weight": 700, fill: P.cream }, g2);
+    V2.txt(0, 8, "$0", { "text-anchor": "middle", "font-family": MONO, "font-size": 56, "font-weight": 700, fill: P.cream, stroke: P.ink, "stroke-width": 3, "paint-order": "stroke" }, g2);
   }
 }
 
@@ -253,14 +292,15 @@ function door(parent, x, y, w, h, k, o) {
   if (k > 0.02) { /* open wedge: warm interior (mansions are lit inside — silhouettes the steppers) */
     const ig = E("linearGradient", { id: V2.uid("kd"), x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
     [["0%", "#FFD9A0"], ["70%", "#C98A4A"], ["100%", "#7A4A22"]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, ig));
-    E("path", { d: `M ${-w / 2} 0 L ${-w / 2 - k * 60} ${-h * (1 - k * 0.16)} L ${w / 2 - k * 30} ${-h * (1 - k * 0.2)} L ${w / 2} 0 Z`, fill: `url(#${ig.id})`, opacity: 0.92 }, g);
+    E("path", { d: `M ${-w / 2} 0 L ${-w / 2 - k * 60} ${-h * (1 - k * 0.16)} L ${w / 2 - k * 30} ${-h * (1 - k * 0.2)} L ${w / 2} 0 Z`, fill: `url(#${ig.id})`, opacity: 0.82 }, g);
     /* light spill on the street */
     E("path", { d: `M ${-w / 2} 0 L ${w / 2} 0 L ${w / 2 + 90 * k} 120 L ${-w / 2 - 120 * k} 120 Z`, fill: "#FFD9A0", opacity: 0.14 * k, style: "mix-blend-mode:screen" }, g);
   }
   const sk = o.slam ? Math.sin(o.slam * Math.PI) : 0;
-  const dg = E("g", { transform: `rotate(${k * -46 + sk * 4} ${w / 2} 0)` }, g);
-  E("rect", { x: -w / 2, y: -h, width: w, height: h, rx: 6, fill: K.steel, stroke: P.ink, "stroke-width": 7 }, dg);
+  const dg = E("g", { transform: `rotate(${k * -(o.openA || 46) + sk * 4} ${w / 2} 0)` }, g);
+  E("rect", { x: -w / 2, y: -h, width: w, height: h, rx: 6, fill: o.leaf || K.steel, stroke: P.ink, "stroke-width": 7 }, dg);
   E("rect", { x: -w / 2 + 10, y: -h + 10, width: w - 20, height: h - 20, rx: 4, fill: "none", stroke: K.steelShade, "stroke-width": 5 }, dg);
+  E("rect", { x: -w / 2 + 10, y: -h * 0.5, width: w - 20, height: h * 0.5 - 10, rx: 4, fill: "#000", opacity: 0.14 }, dg);
   for (let i = 0; i < 5; i++) { E("circle", { cx: -w / 2 + 18, cy: -h + 26 + i * (h - 52) / 4, r: 5, fill: K.steelHi }, dg); E("circle", { cx: w / 2 - 18, cy: -h + 26 + i * (h - 52) / 4, r: 5, fill: K.steelHi }, dg); }
   E("rect", { x: w / 2 - 34, y: -h * 0.56, width: 22, height: 60, rx: 8, fill: K.steelShade, stroke: P.ink, "stroke-width": 4 }, dg);
   if (o.bolt > 0) { /* bolt bar sliding */
@@ -275,7 +315,7 @@ function title(lines, y, size, kf) {
     const k = kf(i); if (k <= 0.001) return;
     const pop = V2.backOut(cl(k));
     V2.txt(540, y + i * size * 1.06 + (1 - pop) * 50, ln, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
-      "font-size": size, fill: P.cream, stroke: P.ink, "stroke-width": 16, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
+      "font-size": size, fill: "#FFF6EA", stroke: P.ink, "stroke-width": 10, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
   });
 }
 function stamp(k, y, text, col, size) {
@@ -290,32 +330,32 @@ function stamp(k, y, text, col, size) {
 }
 const ring = (x, y, k, col) => { if (k > 0 && k < 1) E("ellipse", { cx: x, cy: y, rx: 16 + k * 110, ry: 6 + k * 36, fill: "none", stroke: col || "#FFF6EA", "stroke-width": 9 * (1 - k), opacity: 1 - k }); };
 
-const TITLE = ["IN THIS TOWN,", "EVERYONE HAS A PRICE"];
+const TITLE = ["IN THIS TOWN,"]; /* one text system on the hook (r3: title vs tags compete); the voice + $0/$50,000 tags state the rule */
 const SC = {};
 
 /* hook: dusk square, tags over everyone, hero's gray $0 */
 SC.hook = { cam: [[540, 900, 1.0], [540, 940, 1.12]],
   world(lt, u, t) {
     return { phase: 0, over: () => {
-      hero2(V2.root, 540, 1450, 1.55, { t });
-      npc(V2.root, 200, 1470, 1.0, { t });
-      npc(V2.root, 850, 1460, 1.05, { t, price: "$50,000", facing: -1, point: 1 });
-      npc(V2.root, 90, 1380, 0.78, { t, expr: "happy", armR: { a: 60, b: -70 } });
-      npc(V2.root, 990, 1390, 0.8, { t, facing: -1, expr: "happy", armL: { a: -60, b: 70 } });
-      npc(V2.root, 360, 1330, 0.62, { t });
-      npc(V2.root, 730, 1320, 0.6, { t, facing: -1, point: 1 });
+      hero2(V2.root, 540, 1600, 1.55, { t });
+      npc(V2.root, 200, 1590, 1.0, { t });
+      npc(V2.root, 905, 1585, 0.92, { t, price: "$50,000", facing: -1, point: 1 });
+      npc(V2.root, 90, 1535, 0.78, { t, expr: "happy", armR: { a: 60, b: -70 } });
+      npc(V2.root, 990, 1540, 0.8, { t, facing: -1, expr: "happy", armL: { a: -60, b: 70 } });
+      npc(V2.root, 360, 1555, 0.62, { t });
+      npc(V2.root, 730, 1550, 0.6, { t, facing: -1, point: 1 });
     } };
   },
-  over(lt, u) { title(TITLE, 200, 96, (i) => seg(u, 0.02 + i * 0.07, 0.16 + i * 0.07)); } };
+  over(lt, u) { title(TITLE, 220, 132, (i) => seg(u, 0.02 + i * 0.07, 0.16 + i * 0.07)); } };
 
 /* s0: mocked — everyone laughs, the $0 pulses */
 SC.s0 = { cam: [[540, 1120, 1.15], [540, 1160, 1.35]],
   world(lt, u, t) {
     return { phase: 0, over: () => {
-      hero2(V2.root, 460, 1490, 1.7, { t });
-      npc(V2.root, 830, 1500, 1.25, { t, price: "$50,000", laugh: 1, facing: -1 });
-      npc(V2.root, 975, 1420, 1.0, { t, price: "$12,000", laugh: 1, facing: -1 });
-      npc(V2.root, 230, 1430, 1.05, { t, price: "$2,500", point: 1 });
+      hero2(V2.root, 460, 1620, 1.7, { t });
+      npc(V2.root, 800, 1640, 1.25, { t, price: "$50,000", laugh: 1, facing: -1 });
+      npc(V2.root, 985, 1540, 1.0, { t, laugh: 1, facing: -1 });
+      npc(V2.root, 285, 1560, 1.05, { t, price: "$2,500", point: 1 });
     } };
   },
   over(lt, u) {} };
@@ -325,9 +365,9 @@ SC.s1 = { cam: [[540, 960, 1.05], [540, 980, 1.2]],
   world(lt, u, t) {
     const flip = V2.easeInOut(seg(u, 0.05, 0.42));
     return { phase: flip > 0.4 ? 1 : 0, sweepU: seg(u, 0.1, 0.7), over: () => {
-      hero2(V2.root, 540, 1480, 1.4, { t, tilt: 3 });
-      npc(V2.root, 250, 1470, 1.0, { t, price: "$2,500", expr: "shock", priceRed: flip > 0.4 });
-      npc(V2.root, 820, 1465, 1.0, { t, price: "$50,000", facing: -1, expr: "shock", priceRed: flip > 0.4 });
+      hero2(V2.root, 540, 1590, 1.4, { t, tilt: 3 });
+      npc(V2.root, 250, 1570, 1.0, { t, price: "$2,500", expr: "shock", priceRed: flip > 0.4 });
+      npc(V2.root, 820, 1575, 1.0, { t, price: "$50,000", facing: -1, expr: "shock", priceRed: flip > 0.4 });
     } };
   },
   over(lt, u) { stamp(seg(u, 0.4, 0.55) * (1 - seg(u, 0.86, 0.97)), 290, "RED PURGE", K.red, 84); } };
@@ -391,14 +431,14 @@ SC.s5 = { cam: [[540, 1050, 1.05], [540, 1100, 1.2]],
     return { phase: 1, over: () => {
       const xs = [140, 410, 680, 950];
       xs.forEach((x, i) => {
-        const k = seg(u, 0.08 + i * 0.14, 0.26 + i * 0.14);
-        door(V2.root, x, 1520, 190, 400, V2.backOut(cl(k)), { bolt: 1 - cl(k) });
+        const k = seg(u, 0.08 + i * 0.19, 0.26 + i * 0.19);
+        door(V2.root, x, 1520, 190, 400, V2.backOut(cl(k)), { bolt: 1 - cl(k), openA: 24, leaf: "#6E7C9E" });
         if (k > 0.5) {
-          const outk = cl(seg(u, 0.24 + i * 0.13, 0.44 + i * 0.13));
+          const outk = cl(seg(u, 0.24 + i * 0.18, 0.44 + i * 0.18));
           const wp = ["bat", "pipe", "fork", "bat"][i];
           npc(V2.root, x + 132, 1560 + (1 - outk) * 30, 1.18, { t, expr: "smug", facing: -0.7,
             weapon: wp, wrot: -36, wepSide: -64, wepHigh: 1, tagDX: 34,
-            price: i % 2 === 1 ? ["$50,000", "$8,000"][Math.floor(i / 2)] : undefined,
+            price: i === 1 ? "$50,000" : undefined,
             armL: { a: 38, b: -14 }, armR: { a: 64, b: -46 } });
         }
       });
@@ -411,7 +451,7 @@ SC.s6 = { cam: [[540, 1100, 1.2], [540, 1150, 1.4]],
   world(lt, u, t) {
     return { phase: 1, over: () => {
       door(V2.root, 950, 1520, 190, 400, V2.backOut(cl(seg(u, 0.0, 0.3))), { bolt: 0 });
-      npc(V2.root, 960, 1560, 1.0, { t, expr: "smug", facing: -0.8, weapon: "fork", price: "$8,000" });
+      npc(V2.root, 960, 1560, 1.0, { t, expr: "smug", facing: -0.8, weapon: "fork", price: "$8,000", tagDX: -170 });
       const skid = seg(u, 0.1, 0.34);
       hero2(V2.root, 480 + skid * 40, 1560, 1.75, { t, tilt: -10 + skid * 8, cape: 0.7,
         headTilt: lerp(0, -14, seg(u, 0.3, 0.62)), look: 0.7,
@@ -444,7 +484,7 @@ SC.s8 = { cam: [[540, 950, 1.1], [540, 990, 1.25]],
   world(lt, u, t) {
     return { phase: 2, over: () => {
       const shake = Math.sin(lt * 58) * 7 * (u < 0.3 ? 1 : 0);
-      hero2(V2.root, 540, 1500, 1.5, { t, bounty: true, bountyS: 1.0 + seg(u, 0.04, 0.3) * 0.18,
+      hero2(V2.root, 540, 1580, 1.5, { t, bounty: true, bountyS: 1.0 + seg(u, 0.04, 0.3) * 0.18,
         tilt: shake * 0.4, armL: { a: 8, b: -6 }, armR: { a: -8, b: 6 } });
       for (let i = 0; i < 5; i++) { const rk = (t * 1.4 + i / 5) % 1;
         E("ellipse", { cx: 540, cy: 760, rx: 60 + rk * 700, ry: 30 + rk * 300, fill: "none", stroke: K.bounty, "stroke-width": 12 * (1 - rk), opacity: 0.5 * (1 - rk) }, V2.root); }
@@ -456,7 +496,11 @@ SC.s8 = { cam: [[540, 950, 1.1], [540, 990, 1.25]],
 SC.s9 = { cam: [[540, 1000, 1.0], [540, 1040, 1.15]],
   world(lt, u, t) {
     return { phase: 2, over: () => {
-      hero2(V2.root, 380, 1500, 1.35, { t, bounty: true, bountyS: 0.9, facing: 1 });
+      /* r4: red back-glow behind the monster cluster — silhouettes must pop off the bg */
+      const bgg = E("radialGradient", { id: "kMBG", cx: 0.5, cy: 0.5 }, V2.defsHold);
+      [["0%", "#FF4A30", 0.34], ["55%", "#B2180C", 0.16], ["100%", "#B2180C", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, bgg));
+      E("ellipse", { cx: 560, cy: 1240, rx: 640, ry: 520, fill: "url(#kMBG)" }, V2.root);
+      hero2(V2.root, 380, 1560, 1.35, { t, bounty: true, bountyS: 0.78, facing: 1 });
       const drops = [[210, 0.05, 1.05], [760, 0.18, 1.25], [980, 0.3, 0.9], [590, 0.44, 1.1]];
       drops.forEach(([x, at, s], i) => {
         const dk = cl(seg(u, at, at + 0.3));
@@ -468,8 +512,15 @@ SC.s9 = { cam: [[540, 1000, 1.0], [540, 1040, 1.15]],
         if (dk >= 1) { ring(x, land + 8, (u - at) * 1.6 % 1 || seg(u, at + 0.28, at + 0.55), K.ember); }
       });
       /* the armed neighbors freeze mid-smirk */
-      npc(V2.root, 140, 1560, 1.0, { t, expr: "shock", weapon: "bat", wrot: 30, price: "$12,000", priceRed: true, facing: 0.8 });
-      npc(V2.root, 900, 1560, 1.0, { t, expr: "shock", facing: -0.4, price: "$8,000", priceRed: true, armL: { a: 130, b: -60 } });
+      npc(V2.root, 140, 1560, 1.0, { t, expr: "shock", weapon: "bat", wrot: 30, price: "$12,000", priceRed: true, facing: 0.8, tagDX: 120 });
+      npc(V2.root, 900, 1560, 1.0, { t, expr: "shock", facing: -0.4, price: "$8,000", priceRed: true, armL: { a: 130, b: -60 }, tagDX: -140 });
+      /* rooftop menace fills the top band (r4) */
+      for (let i = 0; i < 3; i++) {
+        const mx = 150 + i * 380 + V2.rnd(240, i) * 60, my = 1210 + V2.rnd(241, i) * 26;
+        E("path", { d: `M ${mx - 70} ${my} q 70 ${-96 - V2.rnd(242, i) * 30} 140 0 Z`, fill: K.ink2, opacity: 0.92 }, V2.root);
+        E("ellipse", { cx: mx - 22, cy: my - 42, rx: 6, ry: 4, fill: K.ember }, V2.root);
+        E("ellipse", { cx: mx + 22, cy: my - 42, rx: 6, ry: 4, fill: K.ember }, V2.root);
+      }
     } };
   },
   over(lt, u) {} };
@@ -486,17 +537,25 @@ SC.s10 = { cam: [[540, 1080, 1.15], [540, 1120, 1.3]],
       const shut = V2.backOut(cl(seg(u, 0.42, 0.6)));
       door(V2.root, 960, 1560, 230, 460, 1 - shut, { bolt: seg(u, 0.62, 0.74) });
       if (shut >= 1) ring(960, 1180, seg(u, 0.6, 0.78), K.redGlow);
-      /* through the window: shadows swarm the street */
+      /* through the window: warm interior + shadows swarming the street (r4: identifiable, lit) */
       const wg = E("g", {}, V2.root);
-      E("rect", { x: 90, y: 1120, width: 360, height: 300, rx: 10, fill: "#05060F", stroke: K.steelShade, "stroke-width": 8 }, wg);
+      const wgr = E("linearGradient", { id: "kWin", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", "#FFD9A0"], ["60%", "#D89A58"], ["100%", "#8A5426"]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, wgr));
+      E("rect", { x: 90, y: 1120, width: 360, height: 300, rx: 10, fill: "url(#kWin)", stroke: K.steelShade, "stroke-width": 10 }, wg);
       for (let i = 0; i < 7; i++) {
         const mk = cl(seg(u, 0.3, 0.95) * 2 - V2.rnd(220, i) * 0.9);
         if (mk <= 0) continue;
         E("path", { d: `M ${120 + V2.rnd(221, i) * 300} ${1400 + V2.rnd(222, i) * 40} l ${Math.sin(t * 2 + i) * 8} ${-140 - V2.rnd(223, i) * 90}`,
           stroke: K.ink2, "stroke-width": 26 + V2.rnd(224, i) * 18, "stroke-linecap": "round", opacity: 0.9 }, wg);
-        E("circle", { cx: 0, cy: 0, r: 0 }, wg);
-        E("ellipse", { cx: 120 + V2.rnd(221, i) * 300 + Math.sin(t * 2 + i) * 8, cy: 1268 - V2.rnd(223, i) * 90, rx: 7, ry: 4.5, fill: K.ember, opacity: 0.9 }, wg);
+        E("ellipse", { cx: 120 + V2.rnd(221, i) * 300 + Math.sin(t * 2 + i) * 8, cy: 1268 - V2.rnd(223, i) * 90, rx: 7, ry: 4.5, fill: K.bounty, opacity: 0.95 }, wg);
       }
+      /* floor light pool closes the bottom third (r4) */
+      const fpg = E("linearGradient", { id: "kPool", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", "#FF6A3A", 0], ["100%", "#FF6A3A", 0.22]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, fpg));
+      E("rect", { x: -40, y: 1660, width: 1160, height: 300, fill: "url(#kPool)", style: "mix-blend-mode:screen" }, V2.root);
+      /* mullions + lit frame edge: the panel must read as a WINDOW, not a monitor (r2 f6) */
+      E("path", { d: "M 270 1126 L 270 1414 M 96 1270 L 444 1270", stroke: K.steelShade, "stroke-width": 9 }, wg);
+      E("rect", { x: 90, y: 1120, width: 360, height: 300, rx: 10, fill: "none", stroke: "#8A96B8", "stroke-width": 4, opacity: 0.7 }, wg);
     } };
   },
   over(lt, u) {

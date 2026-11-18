@@ -1,0 +1,245 @@
+{
+ "round": 4,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.67,
+ "frame_grand_mean": 7.67,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.17,
+  "frame:visual_hierarchy": 7.5,
+  "frame:contrast_legibility": 7.58,
+  "frame:production_polish": 7.33
+ },
+ "frame_means": {
+  "hook_u50": 7.4,
+  "s0_u50": 7.5,
+  "s10_u50": 7.8,
+  "s1_u50": 7.75,
+  "s2_u50": 7.75,
+  "s3_u50": 7.75,
+  "s4_u50": 8.3,
+  "s5_u50": 6.25,
+  "s6_u50": 8.0,
+  "s7_u50": 8.3,
+  "s8_u50": 8.0,
+  "s9_u50": 7.3
+ },
+ "floor_breaches": [
+  "hook_u50",
+  "s5_u50"
+ ],
+ "video_directives": [],
+ "video_pass_source": "none",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 5,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.4,
+   "words_visible": 8,
+   "top3_directives": [
+    "Kill the top header or the price tags \u2014 running a full-width title AND two diegetic price labels splits attention; if the header stays, animate the tags in later so the opening frame carries one text system",
+    "The giant moon occupies a large upper-right dead zone doing no narrative work \u2014 shrink it or add a subtle silhouette/texture so the top third isn't empty above the skyline",
+    "Give the $0 tag stronger separation from the dark building behind it (brighter fill or drop shadow) \u2014 it currently reads slightly mushier than the $50,000 tag, which should be the weaker element, not the stronger one"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "Raise the two side price tags to match the brightness/stroke weight of the central $0 badge so all three labels read at equal hierarchy",
+    "Add subtle rim-light or scale separation to the right-edge cropped figure so it reads as background, not a cut-off mistake",
+    "Flesh out the mid-frame dead zone (empty street between center figure and right pair) with a light pool or prop to tighten the eye path"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Foreground props (window frame left, door right) crop awkwardly at edges and partially occlude the character's arm \u2014 recompose or align them as intentional framing",
+    "Dark navy streets/sky elements near the bottom third read as a large dead zone with faint texture \u2014 add a subtle ground glow or vignette focus",
+    "Red portal ellipses up top compete with the character's warm glow for focal priority \u2014 dim them slightly or tighten palette to two accent hues"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill or compress the large empty band between the RED PURGE header and the figures (the ellipse zone reads as a dead zone on a 6-inch phone)",
+    "Increase separation of the two price tags from the background buildings \u2014 the $2,500 tag's red-on-red glow edge gets mushy against the dark brick",
+    "Give the center $0 character a subtle rim-light or scale bump so it out-competes the price tags as the unmistakable focal point"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the bottom ~15% dead zone (empty street pavement) with subtle ground texture, reflections, or shadow detail to tighten the vertical composition",
+    "Increase the $0 badge's pop \u2014 add a soft glow or slight scale-up so the narrative-critical number reads instantly on a 6-inch daylight screen",
+    "Reduce the mid-right clutter where the tilted metal panels and tan shape overlap ambiguously \u2014 clarify silhouette separation with edge shading or depth-of-field dimming"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 1,
+   "top3_directives": [
+    "Boost the $0 sign's brightness/scale \u2014 it's the narrative hook but reads dimmer than the character glow; give it a subtle outer glow or rim light to lock the eye path",
+    "Middle-ground buildings merge into mushy low-contrast shapes; add a 5-8% brightness step or rim separation on door edges so foreground doors read cleanly on small screens",
+    "Dead zone in the bottom third (empty floor); ground the composition with a longer character shadow or faint floor reflection of the character glow"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.3,
+   "words_visible": 1,
+   "top3_directives": [
+    "The bottom-left fridge/door is an unresolved dead zone with muddy blue-grey values \u2014 darken it or crop it out so the eye path stays on character and the $0 sign",
+    "The small mark on the character's cheek reads as a rendering artifact at 6-inch size \u2014 remove or clarify it",
+    "The red orbital ring passes behind the character's head awkwardly and clips through the $0 sign's shadow zone \u2014 reroute or lower its opacity to clean up the top third"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.25,
+   "words_visible": 1,
+   "top3_directives": [
+    "Kill or drastically dim the giant red ellipse rings in the sky \u2014 they read as a competing focal element and fill a huge dead zone with meaningless geometry",
+    "Raise the action: characters occupy only the bottom third; the upper 45% of the frame is empty dark sky with one faint moon \u2014 crop up or add lit environment detail to close the dead zone",
+    "Character faces are occluded by the doors they carry, muddying the focal subject \u2014 tilt doors or raise heads so expression/emotion anchors the eye path from the $50,000 tag down to the figures"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "The right-side second character ($8,000 figure) is clipped at the frame edge with an awkward tilted card \u2014 either fully compose him or push him further into background haze to avoid competing with the focal figure",
+    "The two red elliptical orbit rings read as ambiguous decoration crossing the money label \u2014 resolve their purpose or reduce opacity so they frame rather than cut through text",
+    "Lower third of the ground plane is a large near-black dead zone \u2014 add subtle wet-street reflection of the glowing figure or vignette to earn that space"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.3,
+   "words_visible": 2,
+   "top3_directives": [
+    "Brighten the '$0' card or add a subtle glow/outline so it pops as hard as the character does \u2014 it currently reads slightly dimmer than the focal figure",
+    "Boost separation of the mid-ground buildings from the dark sky (they nearly merge in the lower third, creating a soft dead zone around the legs)",
+    "Resolve the awkward right-arm pose \u2014 the cropped elbow-to-edge gesture reads as a layout accident rather than an intentional composition choice"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Refine the character's warm glow rim \u2014 it's patchy on the body's right edge and terminates abruptly at the coat hem; unify the rim-light thickness",
+    "The streetlamp cone glows on both sides are slightly clipped by the building seams \u2014 feather their edges so they read as one coherent light pass",
+    "Push a subtle shadow or radial vignette behind the counter band so the red-bordered strip separates cleanly from the red rings colliding behind it"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 3,
+   "top3_directives": [
+    "Separate the dark shadow figures from the money-tag characters \u2014 currently the $12,000 and $8,000 characters visually merge with the background monsters, muddying who owns each price tag",
+    "Give the big $999,999,999 plate a subtle drop shadow or stronger glow so it fully owns the focal point over the busy mid-frame character cluster",
+    "Fill or crop the top third \u2014 the moon and rings leave a large low-interest dead zone; push the header plate up slightly or enlarge the character row"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['They'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Monsters', 'They'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}
