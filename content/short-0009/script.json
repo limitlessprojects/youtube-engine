@@ -1,0 +1,347 @@
+{
+ "title": "The largest animal that ever existed is alive right now",
+ "format": "short",
+ "origin": "Superlative-formula #2, from the topic bench (research/video-notes/topic-0006-stitches.md, score lane 'largest animal that ever existed'). Day-021 queue directive: option (b) — the next short goes for a bolder-composition world; one dominant object (the whale spans the frame in every scene). Script, drawings and audio are original.",
+ "hook": {
+  "timestamp_start": 0.0,
+  "narration": "The largest animal ever recorded is no dinosaur. It's alive right now.",
+  "visual": {
+   "v1": "Whale silhouette, huge, crosses the whole frame left-to-right under the title; the tail breaks the surface at the end."
+  },
+  "fact_sources": [
+   "wwf"
+  ],
+  "audio_dur_s": 3.936
+ },
+ "scenes": [
+  {
+   "timestamp_start": 4.186,
+   "narration": "The blue whale tops two hundred tonnes — thirty-three elephants in one body.",
+   "visual": {
+    "v1": "Whale mid-frame; six elephants stand on its back as a stamp counts 33."
+   },
+   "fact_sources": [
+    "wwf"
+   ],
+   "audio_dur_s": 3.864
+  },
+  {
+   "timestamp_start": 8.3,
+   "narration": "It grows as long as three school buses.",
+   "visual": {
+    "v1": "Three yellow buses nose-to-tail along the whale's flank, dimension line."
+   },
+   "fact_sources": [
+    "wwf"
+   ],
+   "audio_dur_s": 2.112
+  },
+  {
+   "timestamp_start": 10.662,
+   "narration": "Its tongue alone weighs as much as an elephant.",
+   "visual": {
+    "v1": "Zoom: mouth slightly open, tongue out flat, one elephant standing on it."
+   },
+   "fact_sources": [
+    "tongue"
+   ],
+   "audio_dur_s": 2.136
+  },
+  {
+   "timestamp_start": 13.048,
+   "narration": "Its heart weighs four hundred pounds — three grown men.",
+   "visual": {
+    "v1": "Chest goes x-ray; four-chambered heart + aorta arch; three stickmen for scale."
+   },
+   "fact_sources": [
+    "heart2015"
+   ],
+   "audio_dur_s": 2.784
+  },
+  {
+   "timestamp_start": 16.082,
+   "narration": "The artery leaving it is wide enough for a newborn to crawl through.",
+   "visual": {
+    "v1": "Aorta ring close-up; a crawling newborn figure inches through it."
+   },
+   "fact_sources": [
+    "aorta2015"
+   ],
+   "audio_dur_s": 2.952
+  },
+  {
+   "timestamp_start": 19.284,
+   "narration": "A calf is born weighing two and a half tonnes.",
+   "visual": {
+    "v1": "Calf glides beside the mother's flank; size plates tick on."
+   },
+   "fact_sources": [
+    "aad"
+   ],
+   "audio_dur_s": 2.496
+  },
+  {
+   "timestamp_start": 22.03,
+   "narration": "Then it gains ninety kilograms a day, on milk alone.",
+   "visual": {
+    "v1": "Calf silhouette inflates on a counter; milk stream lines from the mother."
+   },
+   "fact_sources": [
+    "adfg"
+   ],
+   "audio_dur_s": 2.808
+  },
+  {
+   "timestamp_start": 25.088,
+   "narration": "But the biggest animal on Earth eats one of the smallest.",
+   "visual": {
+    "v1": "Wide shot: the whale dwarfed by a drifting krill cloud the size of a city block."
+   },
+   "fact_sources": [
+    "wwf"
+   ],
+   "audio_dur_s": 2.592
+  },
+  {
+   "timestamp_start": 27.93,
+   "narration": "Four tonnes of krill a day — each one smaller than your thumb.",
+   "visual": {
+    "v1": "Krill close-up: one krill vs a thumb outline; counter ticks to 4 T."
+   },
+   "fact_sources": [
+    "noaa4t"
+   ],
+   "audio_dur_s": 2.784
+  },
+  {
+   "timestamp_start": 30.964,
+   "narration": "No teeth — it lunges, and strains the swarm through baleen.",
+   "visual": {
+    "v1": "The lunge: mouth yawns open, krill+water in, baleen comb strains, water jets out."
+   },
+   "fact_sources": [
+    "wwf"
+   ],
+   "audio_dur_s": 3.48
+  },
+  {
+   "timestamp_start": 34.694,
+   "narration": "The dinosaurs never held the record. The champion is out there right now.",
+   "visual": {
+    "v1": "Whale silhouette crosses back under the title; loop target = frame 0."
+   },
+   "fact_sources": [
+    "wwf"
+   ],
+   "audio_dur_s": 3.336
+  }
+ ],
+ "timeline": {
+  "fps": 30,
+  "total_s": 38.03,
+  "gap_s": 0.25,
+  "voice": "edge-tts en-US-AndrewNeural rate +25%",
+  "words": 121,
+  "wpm_measured": 205.8
+ },
+ "sources": {
+  "wwf": "WWF blue whale facts (worldwildlife.org/resources/facts/whats-the-biggest-animal-that-has-ever-lived-and-other-blue-whale-facts): biggest animal ever incl. dinosaurs; up to 100 ft = three school buses; up to 200 tons = as heavy as about 33 elephants; nearly 8,000 lb of krill a day",
+  "heart2015": "National Geographic Education blog, 2015-08-31 (blog.education.nationalgeographic.org/2015/08/31/how-big-is-a-blue-whales-heart): first preserved blue whale heart (2015 ROM dissection) ~400 lb, 5 ft x 4 ft x 5 ft; the researcher's golf-cart quote noted as NOT really true (heart smaller than folklore) — we use the measured 400 lb, rendered as three 60-kg men",
+  "aorta2015": "Korea Times 2015-09-14 report on the same 2015 Royal Ontario Museum dissection: the aorta is large enough for a human baby/child to crawl through",
+  "aad": "Australian Antarctic Division (antarctica.gov.au/about-antarctica/animals/whales/blue-whale, updated 2024-12): newborn calf ~2.5 t, can put on ~100 kg/day late in suckling",
+  "adfg": "Alaska Department of Fish & Game, baleen whale birth & care: nursing blue whale calves gain ~90 kg (200 lb) per day",
+  "tongue": "Monterey Bay Aquarium + BBC Discover Wildlife (2025): a blue whale's tongue weighs over 3 t — about as much as an elephant",
+  "noaa4t": "NOAA/NPS blue whale pages: feeding-season intake up to ~4 tonnes of krill per day (WWF: nearly 8,000 lb)"
+ },
+ "bed_peak": 0.05,
+ "sfx": [
+  {
+   "kind": "whoosh",
+   "at": 0.1,
+   "gain": 0.4,
+   "f_lo": 300,
+   "f_hi": 1500
+  },
+  {
+   "kind": "thump",
+   "at": 3.55,
+   "gain": 0.55,
+   "seed": 9
+  },
+  {
+   "kind": "thump",
+   "at": 5.05,
+   "gain": 0.5,
+   "seed": 3
+  },
+  {
+   "kind": "blip",
+   "at": 6.2,
+   "gain": 0.28
+  },
+  {
+   "kind": "blip",
+   "at": 6.5,
+   "gain": 0.28
+  },
+  {
+   "kind": "blip",
+   "at": 6.8,
+   "gain": 0.28
+  },
+  {
+   "kind": "thump",
+   "at": 7.55,
+   "gain": 0.5,
+   "seed": 5
+  },
+  {
+   "kind": "whoosh",
+   "at": 8.6,
+   "gain": 0.4,
+   "seed": 4,
+   "f_lo": 600,
+   "f_hi": 3600
+  },
+  {
+   "kind": "thump",
+   "at": 9.5,
+   "gain": 0.4,
+   "seed": 6
+  },
+  {
+   "kind": "thump",
+   "at": 11.5,
+   "gain": 0.55,
+   "seed": 7
+  },
+  {
+   "kind": "riser",
+   "at": 13.15,
+   "gain": 0.4
+  },
+  {
+   "kind": "thump",
+   "at": 14.3,
+   "gain": 0.6,
+   "seed": 11
+  },
+  {
+   "kind": "blip",
+   "at": 16.9,
+   "gain": 0.25
+  },
+  {
+   "kind": "blip",
+   "at": 17.2,
+   "gain": 0.25
+  },
+  {
+   "kind": "blip",
+   "at": 17.5,
+   "gain": 0.25
+  },
+  {
+   "kind": "whoosh",
+   "at": 19.5,
+   "gain": 0.4,
+   "seed": 8,
+   "f_lo": 900,
+   "f_hi": 4200
+  },
+  {
+   "kind": "thump",
+   "at": 20.6,
+   "gain": 0.45,
+   "seed": 12
+  },
+  {
+   "kind": "blip",
+   "at": 22.6,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 22.9,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 23.2,
+   "gain": 0.3
+  },
+  {
+   "kind": "thump",
+   "at": 24.1,
+   "gain": 0.5,
+   "seed": 13
+  },
+  {
+   "kind": "riser",
+   "at": 25.2,
+   "gain": 0.45
+  },
+  {
+   "kind": "whoosh",
+   "at": 26.4,
+   "gain": 0.4,
+   "seed": 6,
+   "f_lo": 300,
+   "f_hi": 2600
+  },
+  {
+   "kind": "blip",
+   "at": 28.7,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 29.0,
+   "gain": 0.3
+  },
+  {
+   "kind": "blip",
+   "at": 29.3,
+   "gain": 0.3
+  },
+  {
+   "kind": "thump",
+   "at": 29.9,
+   "gain": 0.5,
+   "seed": 15
+  },
+  {
+   "kind": "whoosh",
+   "at": 31.2,
+   "gain": 0.55,
+   "seed": 8,
+   "f_lo": 500,
+   "f_hi": 2400
+  },
+  {
+   "kind": "riser",
+   "at": 32.7,
+   "gain": 0.45
+  },
+  {
+   "kind": "thump",
+   "at": 33.7,
+   "gain": 0.5,
+   "seed": 16
+  },
+  {
+   "kind": "thump",
+   "at": 35.5,
+   "gain": 0.55,
+   "seed": 17
+  },
+  {
+   "kind": "whoosh",
+   "at": 36.7,
+   "gain": 0.4,
+   "seed": 8,
+   "f_lo": 400,
+   "f_hi": 2000
+  }
+ ]
+}

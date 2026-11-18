@@ -1,0 +1,152 @@
+{
+ "short": "short-0009",
+ "verified_at": "2026-11-18T07:10:44.839769+00:00",
+ "voice": "edge-tts en-US-AndrewNeural rate +25%",
+ "gap_s": 0.25,
+ "total_vo_s": 35.28,
+ "timeline_end_s": 38.03,
+ "n_fail": 1,
+ "thresholds": {
+  "pass_wer": 0.15,
+  "warn_wer": 0.3
+ },
+ "lines": [
+  {
+   "line": "00",
+   "role": "narration",
+   "expected": "The largest animal ever recorded is no dinosaur. It's alive right now.",
+   "heard": "",
+   "wer": 1.0,
+   "accuracy": 0.0,
+   "verdict": "FAIL",
+   "audio_dur_s": 3.936,
+   "synced_start_s": 0.0,
+   "verify_source": "unverified: ASR throttle on both post-resynth attempts (L-111); off-peak --verify-only is a pre-publish liability (L-091)"
+  },
+  {
+   "line": "01",
+   "role": "narration",
+   "expected": "The blue whale tops two hundred tonnes — thirty-three elephants in one body.",
+   "heard": "The blue whale tops two hundred tons, thirty three elephants in one body.",
+   "wer": 0.25,
+   "accuracy": 0.0,
+   "verdict": "WARN",
+   "audio_dur_s": 3.864,
+   "synced_start_s": 4.186,
+   "verify_source": "run1 (union L-091)"
+  },
+  {
+   "line": "02",
+   "role": "narration",
+   "expected": "It grows as long as three school buses.",
+   "heard": "It grows as long as three school buses.",
+   "wer": 0.0,
+   "accuracy": 0.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.112,
+   "synced_start_s": 8.3,
+   "verify_source": "run1 (union L-091)"
+  },
+  {
+   "line": "03",
+   "role": "narration",
+   "expected": "Its tongue alone weighs as much as an elephant.",
+   "heard": "Its tongue alone weighs as much as an elephant.",
+   "wer": 0.0,
+   "accuracy": 0.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.136,
+   "synced_start_s": 10.662,
+   "verify_source": "run1 (union L-091)"
+  },
+  {
+   "line": "04",
+   "role": "narration",
+   "expected": "Its heart weighs four hundred pounds — three grown men.",
+   "heard": "It's heart weighs four hundred pounds, three grown men.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.784,
+   "synced_start_s": 13.048
+  },
+  {
+   "line": "05",
+   "role": "narration",
+   "expected": "The artery leaving it is wide enough for a newborn to crawl through.",
+   "heard": "The artery leaving it is wide enough for a newborn to crawl through.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.952,
+   "synced_start_s": 16.082
+  },
+  {
+   "line": "06",
+   "role": "narration",
+   "expected": "A calf is born weighing two and a half tonnes.",
+   "heard": "A calf is born weighing two and a half tons.",
+   "wer": 0.1,
+   "accuracy": 0.9,
+   "verdict": "PASS",
+   "audio_dur_s": 2.496,
+   "synced_start_s": 19.284
+  },
+  {
+   "line": "07",
+   "role": "narration",
+   "expected": "Then it gains ninety kilograms a day, on milk alone.",
+   "heard": "Then it gains ninety kilograms a day on milk alone.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.808,
+   "synced_start_s": 22.03
+  },
+  {
+   "line": "08",
+   "role": "narration",
+   "expected": "But the biggest animal on Earth eats one of the smallest.",
+   "heard": "But the biggest animal on Earth eats one of the smallest.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 2.592,
+   "synced_start_s": 25.088
+  },
+  {
+   "line": "09",
+   "role": "narration",
+   "expected": "Four tonnes of krill a day — each one smaller than your thumb.",
+   "heard": "For tons of krill a day, each one's smaller than your thumb.",
+   "wer": 0.25,
+   "accuracy": 0.75,
+   "verdict": "WARN",
+   "audio_dur_s": 2.784,
+   "synced_start_s": 27.93
+  },
+  {
+   "line": "10",
+   "role": "narration",
+   "expected": "No teeth — it lunges, and strains the swarm through baleen.",
+   "heard": "No teeth, it lunges and strains the swarm through bile.",
+   "wer": 0.1,
+   "accuracy": 0.9,
+   "verdict": "PASS",
+   "audio_dur_s": 3.48,
+   "synced_start_s": 30.964
+  },
+  {
+   "line": "11",
+   "role": "narration",
+   "expected": "The dinosaurs never held the record. The champion is out there right now.",
+   "heard": "The dinosaurs never held the record. The champion is out there right now.",
+   "wer": 0.0,
+   "accuracy": 1.0,
+   "verdict": "PASS",
+   "audio_dur_s": 3.336,
+   "synced_start_s": 34.694
+  }
+ ],
+ "union_note": "union across 5 runs per L-091; line 00 pending off-peak re-verify"
+}

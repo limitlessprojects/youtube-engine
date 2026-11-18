@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#070A18;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0009 — "The largest animal that ever existed is alive right now"
+   Superlative formula #2 (topic bench lane); day-021 directive (b):
+   bolder-composition world — ONE dominant object, the whale spans the
+   frame in every scene. C14 layered body (mottled skin, pleats, fins),
+   C15 parallax + idle breathing + tail sway, C18 all events timed on u.
+   Deterministic: pure function of t (C6). Loop: last frame = frame 0.
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+const TITLE_FONT = "'Bricolage Grotesque', sans-serif";
+const MONO = "'Fragment Mono', monospace";
+const E = V2.el, cl = V2.clamp01, lerp = V2.lerp;
+const _ctx = document.createElement("canvas").getContext("2d");
+const meas = (s, font) => { _ctx.font = font; return _ctx.measureText(s).width; };
+const sstep = (a, b, v) => { const x = cl((v - a) / (b - a)); return x * x * (3 - 2 * x); };
+const seg = (u, a, b) => cl((u - a) / (b - a));
+const pathOf = (a, close) => "M " + a.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L ") + (close ? " Z" : "");
+
+/* world tokens — derived from the bible hues (cool water scene, amber = the ONE warm accent: krill/buses) */
+const K = {
+  whaleTop: "#6FA3D4", whaleLow: "#3E76AC", whaleMid: "#5C93C4",
+  mottle: "#D8EAF8", belly: "#EDF4FA", pleat: "#2A5478",
+  fin: "#3E6E9E", baleen: "#F6EFE3", baleenS: "#D2C4AD",
+  krill: "#FFA95C", krillHi: "#FFD7A0",
+  bus: "#FFB054", busWin: "#F6EFE3",
+  el: "#B9C7D8", elS: "#93A6BC",
+  heart: "#E06B60", heartHi: "#F5A69C", vein: "#4AA8FF", arte: "#F6EFE3",
+  steel: "#DDE7F6",
+};
+
+/* ---------- water (screen space, parallax) — shared ocean backdrop ---------- */
+function water(t, cam, day) {
+  const bs = 1 + (cam[2] - 1) * 0.25;
+  const g = E("g", { transform: `translate(540 960) scale(${bs}) translate(${-540 - (cam[0] - 540) * 0.25} ${-960 - (cam[1] - 940) * 0.25})` });
+  const lg = E("linearGradient", { id: "kSea", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#2E7FB4"], ["30%", P.earthSea2], ["70%", "#173A66"], ["100%", "#0B1C38"]].forEach(([o, c]) => E("stop", { offset: o, c }, lg));
+  E("rect", { x: -500, y: -500, width: 2080, height: 2920, fill: "url(#kSea)" }, g);
+  const sg = E("linearGradient", { id: "kShaft", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", "#CFF3FF", 0.42], ["100%", "#CFF3FF", 0]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, sg));
+  for (let i = 0; i < 5; i++) {
+    const x = 120 + i * 220 + Math.sin(t * 0.5 + i * 1.7) * 40, w = 90 + (i % 2) * 60, lean = -160 + Math.sin(t * 0.4 + i) * 30;
+    E("path", { d: `M ${x} -200 L ${x + w} -200 L ${x + w * 2.2 + lean} 1500 L ${x - w + lean} 1500 Z`, fill: "url(#kShaft)", opacity: (0.5 + 0.2 * Math.sin(t * 0.9 + i * 2)) * (day === undefined ? 1 : day), style: "mix-blend-mode:screen" }, g);
+  }
+  for (let i = 0; i < 46; i++) {
+    const sp = 0.4 + V2.rnd(3, i), x = ((V2.rnd(1, i) * 1400 - 160 + Math.sin(t * 0.7 * sp + i) * 26 - t * 14 * sp) % 1400 + 1400) % 1400 - 160;
+    const y = ((V2.rnd(2, i) * 2100 - t * 46 * sp) % 2100 + 2100) % 2100 - 90, r = 2 + V2.rnd(4, i) * 5;
+    if (i % 5 === 0) E("circle", { cx: x, cy: y, r: r + 5, fill: "none", stroke: "#CFF3FF", "stroke-width": 2.5, opacity: 0.45 }, g);
+    else E("circle", { cx: x, cy: y, r, fill: i % 3 ? "#9FD8F0" : "#7DF0E4", opacity: 0.2 + V2.rnd(5, i) * 0.3 }, g);
+  }
+}
+
+function halo(x, y, r, o) {
+  if (!document.getElementById("kHalo")) {
+    const hg = E("radialGradient", { id: "kHalo" }, V2.defsHold);
+    [["0%", "#9FC0FF", 0.30], ["60%", "#9FC0FF", 0.10], ["100%", "#9FC0FF", 0]].forEach(([off, c, a]) => E("stop", { offset: off, "stop-color": c, "stop-opacity": a }, hg));
+  }
+  E("ellipse", { cx: x, cy: y, rx: r * 1.15, ry: r, fill: "url(#kHalo)", opacity: o === undefined ? 0.8 : o });
+}
+/* ---------- krill: comma-shaped swimmers (the ONE warm accent) ---------- */
+function krill(parent, x, y, s, o) {
+  o = o || {};
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${o.rot === undefined ? -20 : o.rot}) scale(${s})`, opacity: o.alpha === undefined ? 1 : o.alpha }, parent);
+  E("path", { d: "M 0 0 C -30 -22 -46 -8 -58 -30 C -46 -34 -36 -26 -30 -34 C -20 -26 -8 -10 0 0", fill: K.krill, stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, g);
+  E("path", { d: "M -22 -20 C -28 -12 -34 -12 -40 -22", stroke: P.ink, "stroke-width": 3.5, fill: "none", "stroke-linecap": "round" }, g);
+  E("path", { d: "M -46 -24 L -56 -40 M -50 -18 L -62 -30 M -52 -10 L -66 -20", stroke: K.krillHi, "stroke-width": 3, "stroke-linecap": "round" }, g);
+  E("circle", { cx: -6, cy: -9, r: 3.2, fill: P.ink }, g);
+}
+
+/* ---------- elephant: African silhouette (mass reference) ---------- */
+function elephant(parent, x, y, s, o) {
+  o = o || {};
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${o.rot || 0}) scale(${s})`, opacity: o.alpha === undefined ? 1 : o.alpha }, parent);
+  const bd = pathOf([[0, -78], [66, -92], [104, -60], [112, -8], [96, 0], [-88, 0], [-104, -26], [-92, -70], [-52, -90]], true);
+  E("path", { d: bd, fill: o.flat ? K.elS : K.el, stroke: P.ink, "stroke-width": 7, "stroke-linejoin": "round" }, g);
+  E("path", { d: "M -60 -74 C -96 -86 -108 -52 -84 -34 C -70 -28 -58 -40 -60 -74", fill: K.elS, stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, g);
+  E("path", { d: `M -104 -34 C ${-128 + (o.sw || 0)} -28 ${-132 + (o.sw || 0) * 1.6} -4 ${-118 + (o.sw || 0) * 2} 14`, stroke: P.ink, "stroke-width": 11, fill: "none", "stroke-linecap": "round" }, g);
+  E("path", { d: `M -118 ${-4 + (o.sw || 0) * 2} q -18 10 -4 26`, stroke: K.steel, "stroke-width": 6, fill: "none", "stroke-linecap": "round" }, g);
+  [[-76, 0], [-40, 0], [58, 0], [88, 0]].forEach(([lx, ly], i) => E("path", { d: `M ${lx} ${ly - 8} L ${lx} ${ly + 30 + Math.sin((o.t || 0) * 3 + i) * 2}`, stroke: P.ink, "stroke-width": 13, "stroke-linecap": "round" }, g));
+  E("path", { d: "M 64 -92 C 96 -110 118 -84 104 -58", fill: K.elS, stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, g);
+  E("circle", { cx: -66, cy: -58, r: 5.5, fill: P.ink }, g);
+}
+
+/* ---------- school bus (US yellow, window band, wheels) ---------- */
+function bus(parent, x, y, s, o) {
+  o = o || {};
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${o.rot || 0}) scale(${o.flip ? [-s, s] : s})`, opacity: o.alpha === undefined ? 1 : o.alpha }, parent);
+  E("path", { d: pathOf([[-150, 46], [-150, -34], [-128, -34], [-118, -56], [96, -56], [146, -18], [150, 0], [150, 46]], true), fill: K.bus, stroke: P.ink, "stroke-width": 7, "stroke-linejoin": "round" }, g);
+  E("rect", { x: -138, y: -40, width: 274, height: 26, rx: 5, fill: K.busWin, stroke: P.ink, "stroke-width": 4 }, g);
+  for (let i = 0; i < 6; i++) E("path", { d: `M ${-112 + i * 45} -40 L ${-112 + i * 45} -14`, stroke: P.ink, "stroke-width": 4 }, g);
+  E("rect", { x: 116, y: -44, width: 26, height: 22, rx: 4, fill: K.busWin, stroke: P.ink, "stroke-width": 4 }, g);
+  E("rect", { x: -150, y: 8, width: 300, height: 9, rx: 4, fill: P.ink, opacity: 0.75 }, g);
+  E("circle", { cx: -92, cy: 52, r: 24, fill: "#1A2540", stroke: P.ink, "stroke-width": 6 }, g);
+  E("circle", { cx: -92, cy: 52, r: 9, fill: K.steel }, g);
+  E("circle", { cx: 92, cy: 52, r: 24, fill: "#1A2540", stroke: P.ink, "stroke-width": 6 }, g);
+  E("circle", { cx: 92, cy: 52, r: 9, fill: K.steel }, g);
+  E("circle", { cx: 146, cy: -12, r: 7, fill: K.busWin, stroke: P.ink, "stroke-width": 4 }, g);
+}
+
+/* ---------- the whale (origin = body centre, faces right) ---------- */
+/* whale geometry — origin = body centre; nose +330, flukes -396 (blue whale profile:
+   rounded rostrum, flat back, tail stock, broad two-lobe flukes, long jaw line) */
+function whaleBodyPath() {
+  return "M 330 -8 C 296 -36 232 -54 140 -60 C 30 -66 -80 -58 -170 -40 C -225 -28 -252 -16 -272 -4 L -272 8 C -240 26 -180 44 -100 56 C 40 70 180 62 260 40 C 300 30 326 12 330 -8 Z";
+}
+const FLUKES = "M -268 -4 C -330 -52 -372 -66 -396 -60 C -366 -26 -354 -4 -358 4 C -362 16 -372 40 -394 66 C -368 64 -326 48 -268 16 Z";
+const PEC = "M 120 40 C 90 70 40 92 0 96 C 30 72 50 56 70 38 Z";
+const MOUTH_LINE = "M 326 18 C 260 36 180 44 110 44";
+function whale(parent, x, y, s, o) {
+  o = o || {};
+  const br = 1 + 0.012 * Math.sin((o.t || 0) * 1.9);           /* idle breathing */
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${o.rot || 0}) scale(${s * br} ${s * (2 - br)})`, opacity: o.alpha === undefined ? 1 : o.alpha }, parent);
+  const id = V2.uid("wb"), cp = E("clipPath", { id }, V2.defsHold); E("path", { d: whaleBodyPath() }, cp);
+  const bg = E("linearGradient", { id: V2.uid("wg"), x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", K.whaleTop], ["55%", K.whaleMid], ["100%", K.whaleLow]].forEach(([off, c]) => E("stop", { offset: off, "stop-color": c }, bg));
+  /* flukes + tail stock (secondary motion: sway) */
+  const sway = (o.sway === undefined ? 1 : o.sway) * Math.sin((o.t || 0) * 1.3) * 14;
+  E("path", { d: FLUKES, fill: K.fin, stroke: P.ink, "stroke-width": 7, "stroke-linejoin": "round", transform: `rotate(${sway} -272 2)` }, g);
+  E("path", { d: "M -272 -4 L -238 -18 L -238 14 Z", fill: K.fin, stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round", transform: `rotate(${sway * 0.5} -250 0)` }, g);
+  /* body fill */
+  E("path", { d: whaleBodyPath(), fill: `url(#${bg.id})`, stroke: P.ink, "stroke-width": 8, "stroke-linejoin": "round", opacity: o.xray ? 1 - 0.82 * o.xray : 1 }, g);
+  const inn = E("g", { "clip-path": `url(#${id})` }, g);
+  /* mottled skin (real blue whale pattern) */
+  for (let i = 0; i < 26; i++) {
+    const mx = -220 + V2.rnd(11, i) * 500, my = -48 + V2.rnd(12, i) * 88;
+    E("ellipse", { cx: mx, cy: my, rx: 14 + V2.rnd(13, i) * 26, ry: 6 + V2.rnd(14, i) * 9, fill: K.mottle, opacity: (0.2 + V2.rnd(15, i) * 0.22) * (o.xray ? 1 - 0.8 * o.xray : 1), transform: `rotate(${V2.rnd(16, i) * 40 - 20} ${mx} ${my})` }, inn);
+  }
+  /* ventral pleats along the jaw-belly zone */
+  for (let i = 0; i < 11; i++) {
+    const yy = 24 + i * 3.4;
+    E("path", { d: `M 310 ${yy - 4} C 210 ${yy + 10} 60 ${yy + 18} -70 ${yy + 16}`, stroke: K.pleat, "stroke-width": 3.4, fill: "none", opacity: 0.5 * (o.xray ? 1 - 0.8 * o.xray : 1) }, inn);
+  }
+  /* pale ventral wash under the mouth line */
+  E("ellipse", { cx: 70, cy: 44, rx: 250, ry: 24, fill: K.belly, opacity: (o.xray ? 1 - 0.88 * o.xray : 0.5) }, inn);
+  if (o.inside) o.inside(inn);
+  /* fins */
+  E("path", { d: PEC, fill: K.fin, stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round", transform: `rotate(${Math.sin((o.t || 0) * 1.3) * 6} 120 40)` }, g);
+  E("path", { d: "M -150 -44 L -122 -24 L -178 -28 Z", fill: K.fin, stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, g);
+  /* mouth line */
+  E("path", { d: MOUTH_LINE, stroke: P.ink, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, g);
+  /* lunge: mouth interior wedge + baleen comb (no rotation — alpha + grow) */
+  const jaw = o.jaw || 0;
+  if (jaw > 0.02) {
+    const wg = E("g", { opacity: cl(jaw * 1.6) }, g);
+    const drop = 18 + jaw * 46;
+    E("path", { d: `M 326 18 L 318 ${drop + 12} C 250 ${drop + 30} 170 ${drop + 34} 108 ${drop + 26} L 110 44 C 180 44 260 36 326 18 Z`, fill: "#0A1626", stroke: P.ink, "stroke-width": 5, "stroke-linejoin": "round" }, wg);
+    for (let i = 0; i < 16; i++) {
+      const bx = 118 + i * 13.5, top = lerp(44, 18, (bx - 110) / 216), h = (drop + 14 - top) * 0.85;
+      E("path", { d: `M ${bx} ${top} L ${bx - 3} ${top + h}`, stroke: K.baleen, "stroke-width": 5.5, "stroke-linecap": "round", opacity: 0.95 }, wg);
+    }
+    if (o.krillIn) o.krillIn(wg);
+  }
+  /* eye + blowhole (blink: lid sweeps down on a slow cycle) */
+  const bl = (o.t || 0) % 2.7 < 0.16 ? cl(1 - Math.abs(((o.t || 0) % 2.7) - 0.08) / 0.08) : 0;
+  E("circle", { cx: 210, cy: 4, r: 7.5, fill: P.ink }, g);
+  if (bl > 0) E("path", { d: `M 200 ${4 - 7.5 * bl} L 220 ${4 - 7.5 * bl}`, stroke: K.whaleMid, "stroke-width": 16 * bl, "stroke-linecap": "round" }, g);
+  if (bl < 0.5) E("circle", { cx: 212, cy: 2, r: 2.6, fill: K.steel, opacity: 1 - bl * 2 }, g);
+  E("ellipse", { cx: 140, cy: -60, rx: 13, ry: 6, fill: P.ink, transform: `rotate(-14 140 -60)` }, g);
+  /* teal rim light on the back */
+  E("path", { d: "M 140 -60 C 30 -66 -80 -58 -170 -40", stroke: "#7DF0E4", "stroke-width": 5, fill: "none", "stroke-linecap": "round", opacity: 0.75 }, g);
+  return g;
+}
+/* krill stream flowing into the mouth wedge (whale-local coords) */
+function krillStream(parent, k, t) {
+  for (let i = 0; i < 9; i++) {
+    const at = 0.05 + i * 0.085, kk = cl((k - at) / 0.22);
+    if (kk <= 0 || kk >= 1) continue;
+    const px = lerp(400, 150, kk) + V2.rnd(61, i) * 30, py = lerp(6, 34 + V2.rnd(62, i) * 14, kk);
+    krill(parent, px, py, 0.5 + V2.rnd(63, i) * 0.3, { rot: lerp(-6, -34, kk), alpha: 1 - kk * 0.4 });
+  }
+}
+
+/* ---------- stick hero (scale refs) — rig from #0008, navy shadow ---------- */
+const POSES = {
+  point:   { tilt: -5, headTilt: -8, look: -0.6, expr: "happy", armL: { a: 74, b: -14 }, armR: { a: -8, b: -6 } },
+  amazed:  { tilt: 0, headTilt: -12, look: -0.5, expr: "shock", armL: { a: 44, b: -44 }, armR: { a: 132, b: -92 } },
+  happy:   { tilt: -3, headTilt: 6, look: -0.3, expr: "happy", armL: { a: 150, b: -24 }, armR: { a: 150, b: -24 } },
+  inspect: { tilt: -16, headTilt: -16, look: -0.8, expr: "neutral", armL: { a: 52, b: 6 }, armR: { a: -24, b: -18 }, legL: { a: 10, b: 0 }, legR: { a: -14, b: 10 } },
+};
+function hero(t, name, x, z, sc, extra) {
+  const base = POSES[name] || {}, sw = Math.sin(t * 2.2) * 5;
+  const p = Object.assign({}, V2.basePose, base, { x, y: z - 140 * sc - 6 * sc + Math.sin(t * 2.6) * 3 * sc, scale: sc, blink: 0,
+    tilt: (base.tilt || 0) + Math.sin(t * 1.7) * 2, squash: 0.012 * Math.sin(t * 2.6), sway: Math.sin(t * 2.2) * 6 }, extra || {});
+  p.armL = Object.assign({}, p.armL, { a: p.armL.a + sw });
+  p.armR = Object.assign({}, p.armR, { a: p.armR.a - sw * 0.7 });
+  V2.Hero(p, null, "vRimL", 0);
+  return p;
+}
+/* crawling newborn (s4) */
+function crawler(parent, x, y, s, ph) {
+  const g = E("g", { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+  E("path", { d: "M -34 6 Q 0 -26 36 4", stroke: P.ink, "stroke-width": 12, fill: "none", "stroke-linecap": "round" }, g);
+  E("path", { d: "M -34 6 Q 0 -22 36 4", stroke: "#F3B7A8", "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, g);
+  E("circle", { cx: 44, cy: -8, r: 17, fill: "#F3B7A8", stroke: P.ink, "stroke-width": 6 }, g);
+  [[-26, 1, 1], [-6, -1, -1], [22, 1, 1], [36, -1, -1]].forEach(([lx, dir, k], i) => {
+    const a = Math.sin(ph * Math.PI * 2 + i * 1.57) * 10 * k;
+    E("path", { d: `M ${lx} 2 L ${lx + a * dir} 22`, stroke: P.ink, "stroke-width": 9, "stroke-linecap": "round" }, g);
+  });
+}
+
+/* ---------- text systems (C1: one per scene, ≤5 words) ---------- */
+function title(lines, y, size, kf) {
+  lines.forEach((ln, i) => {
+    const k = kf(i); if (k <= 0.001) return;
+    const pop = V2.backOut(cl(k));
+    V2.txt(540, y + i * size * 1.06 + (1 - pop) * 50, ln, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+      "font-size": size, fill: P.cream, stroke: P.ink, "stroke-width": 16, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
+  });
+}
+function chip(k, x, y, text, accent, size, strike) {
+  if (k <= 0.001) return;
+  size = size || 44;
+  const pop = V2.backOutBig(cl(k)), w = text.length * size * 0.6 + 86, h = size * 1.75;
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(${x} ${y}) scale(${0.7 + 0.3 * pop})` });
+  E("rect", { x: -w / 2, y: -h / 2 + 7, width: w, height: h, rx: h * 0.28, fill: "#000", opacity: 0.35 }, g);
+  E("rect", { x: -w / 2, y: -h / 2, width: w, height: h, rx: h * 0.28, fill: P.ink, stroke: P.cream, "stroke-width": 4 }, g);
+  E("rect", { x: -w / 2 + 18, y: -h * 0.25, width: 10, height: h * 0.5, rx: 5, fill: accent || P.teal }, g);
+  V2.txt(14, size * 0.34, text, { "text-anchor": "middle", "font-family": MONO, "font-size": size, fill: P.cream, "letter-spacing": 1 }, g);
+  if (strike > 0) E("path", { d: `M ${-w / 2 + 34} 0 L ${-w / 2 + 34 + (w - 56) * cl(strike)} -6`, stroke: "#FF5A4A", "stroke-width": 9, "stroke-linecap": "round" }, g);
+}
+function plate(k, y, big, sub, col, bump) {
+  if (k <= 0.001) return;
+  const pop = V2.backOutBig(cl(k)), font = `800 112px ${TITLE_FONT}`, w = Math.max(meas(big, font), sub.length * 28) + 110;
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(540 ${y}) scale(${(0.7 + 0.3 * pop) * (1 + 0.14 * Math.sin(cl(bump || 0) * Math.PI))})` });
+  E("rect", { x: -w / 2, y: -98 + 10, width: w, height: 252, rx: 30, fill: "#000", opacity: 0.4 }, g);
+  E("rect", { x: -w / 2, y: -98, width: w, height: 252, rx: 30, fill: P.ink, stroke: col, "stroke-width": 6 }, g);
+  V2.txt(0, 36, big, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 112, fill: col }, g);
+  V2.txt(0, 116, sub, { "text-anchor": "middle", "font-family": MONO, "font-size": 44, fill: P.cream, "letter-spacing": 2 }, g);
+}
+const ring = (x, y, k, col) => { if (k > 0 && k < 1) E("ellipse", { cx: x, cy: y, rx: 16 + k * 90, ry: 6 + k * 30, fill: "none", stroke: col || "#FFF6EA", "stroke-width": 8 * (1 - k), opacity: 1 - k }); };
+
+const TITLE = ["THE LARGEST ANIMAL", "EVER RECORDED"];
+const WH = { x: 540, y: 1130, s: 1.9 };       /* frame-0 whale pose (loop target) */
+
+const SC = {};
+
+/* hook: whale silhouette crosses the whole frame under the title */
+SC.hook = { cam: [[540, 960, 1.0], [540, 980, 1.08]],
+  world(lt, u, t) {
+    return { over: () => {
+      const k = V2.easeInOut(u);
+      const wx = lerp(-1500, 600, k), wy = 1560 + Math.sin(u * Math.PI) * -40;
+      halo(300, 1360, 760, 0.6);
+      whale(V2.root, wx, wy, 4.2, { t, sway: 1 });
+      const dg = E("g", { transform: `translate(1120 700) scale(1.4)`, opacity: 0.34 + 0.08 * Math.sin(t * 1.2) }, V2.root);
+      E("path", { d: "M -180 60 C -120 -10 -30 -30 60 -18 C 130 -10 190 20 230 60", stroke: "#0A1626", "stroke-width": 22, fill: "none", "stroke-linecap": "round" }, dg);
+      for (let i = 0; i < 6; i++) { const rx = -140 + i * 62, rh = 44 - Math.abs(i - 2.5) * 9; E("path", { d: `M ${rx} -14 C ${rx - 6} ${-14 - rh} ${rx + 30} ${-14 - rh} ${rx + 26} -12`, stroke: "#0A1626", "stroke-width": 9, fill: "none" }, dg); }
+      E("path", { d: "M -180 60 L -230 96 M 230 60 L 274 92", stroke: "#0A1626", "stroke-width": 14, "stroke-linecap": "round" }, dg);
+    } };
+  },
+  over(lt, u) { title(TITLE, 215, 92, (i) => seg(u, 0.05 + i * 0.08, 0.2 + i * 0.08)); } };
+
+/* s0: 200 tonnes — elephants on the back, counter to 33 */
+SC.s0 = { cam: [[540, 1020, 1.12], [540, 1060, 1.2]],
+  world(lt, u, t) {
+    return { over: () => {
+      halo(540, 1420, 800);
+      whale(V2.root, 540, 1420, 3.4, { t, sway: 0.6 });
+      const n = Math.min(6, Math.floor(seg(u, 0.18, 0.8) * 7));
+      for (let i = 0; i < n; i++) {
+        const ek = V2.backOut(cl(seg(u, 0.18 + i * 0.1, 0.3 + i * 0.1)));
+        const ex = [350, 520, 690, 435, 605, 775][i], ey = 1200 - [0, -10, -22, -8, -20, -32][i];
+        elephant(V2.root, ex, ey - (1 - ek) * 60, 0.92, { t, sw: Math.sin(t * 2 + i) * 3, alpha: ek });
+      }
+    } };
+  },
+  over(lt, u) { plate(seg(u, 0.4, 0.52), 250, "33 ELEPHANTS", "ONE BODY", P.amber, seg(u, 0.86, 0.98)); } };
+
+/* s1: three school buses nose-to-tail along the flank */
+SC.s1 = { cam: [[540, 1120, 1.15], [540, 1140, 1.22]],
+  world(lt, u, t) {
+    return { over: () => {
+      halo(540, 1380, 800);
+      whale(V2.root, 540, 1380, 3.2, { t, sway: 0.5 });
+      for (let i = 0; i < 3; i++) {
+        const bk = V2.backOut(seg(u, 0.12 + i * 0.16, 0.26 + i * 0.16));
+        if (bk <= 0) continue;
+        bus(V2.root, lerp(-360, 10 + i * 380, bk), 1188, 0.85, { alpha: 1 });
+        ring(10 + i * 380, 1260, seg(u, 0.3 + i * 0.16, 0.4 + i * 0.16), "#FFF6EA");
+      }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.68, 0.8), 540, 240, "3 SCHOOL BUSES", P.amber, 50); } };
+
+/* s2: the tongue — zoom to the head, elephant steps on */
+SC.s2 = { cam: [[700, 1050, 1.5], [640, 1120, 1.9]],
+  world(lt, u, t) {
+    const jaw = V2.easeInOut(seg(u, 0.08, 0.34)) * 0.75;
+    return { over: () => {
+      halo(560, 1400, 780);
+      whale(V2.root, 400, 1400, 2.8, { t, jaw, sway: 0.35 });
+      const ek = V2.backOut(seg(u, 0.3, 0.62));
+      if (ek > 0) {
+        const ex = lerp(1220, 1010, ek), ey = lerp(620, 1465, ek) - Math.sin(cl(ek * 3) * Math.PI) * 70;
+        elephant(V2.root, ex, ey, 0.9, { t, sw: Math.sin(t * 4) * 4, rot: Math.sin(cl(ek * 3) * Math.PI) * -6 });
+        if (ek >= 1) ring(1010, 1540, seg(u, 0.8, 0.92), "#FFF6EA");
+      }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.66, 0.78), 400, 300, "ONE TONGUE", P.amber, 48); } };
+
+/* s3: x-ray chest — heart + three men */
+      halo(540, 1260, 640);
+SC.s3 = { cam: [[560, 1120, 1.35], [600, 1160, 1.6]],
+  world(lt, u, t) {
+    const xr = sstep(0.05, 0.3, u), beat = 1 + 0.07 * Math.sin(t * 6.2);
+    return { over: () => {
+      halo(540, 1420, 800);
+      whale(V2.root, 540, 1420, 2.8, { t, xray: xr, sway: 0.3, inside: (g) => {
+        const hk = V2.backOut(seg(u, 0.3, 0.5));
+        if (hk <= 0) return;
+        const hg = E("g", { transform: `translate(100 4) scale(${0.5 * hk * beat})` }, g);
+        V2.glow(0, 0, 240, "Warm", 0.5, hg);
+        E("path", { d: "M -30 -96 C -110 -130 -150 -60 -108 -6 C -80 30 20 44 76 6 C 112 -20 96 -96 40 -108 C 28 -112 -8 -112 -30 -96", fill: K.heart, stroke: P.ink, "stroke-width": 8, "stroke-linejoin": "round" }, hg);
+        E("path", { d: "M 0 -108 C 4 -168 60 -190 108 -178", stroke: K.arte, "stroke-width": 26, fill: "none", "stroke-linecap": "round" }, hg);
+        E("path", { d: "M 0 -108 C 4 -168 60 -190 108 -178", stroke: P.ink, "stroke-width": 31, fill: "none", "stroke-linecap": "round", opacity: 0.0, transform: "translate(0 0)" }, hg);
+        E("circle", { cx: 108, cy: -178, r: 15, fill: K.arte, stroke: P.ink, "stroke-width": 6 }, hg);
+        E("path", { d: "M -40 -104 C -70 -150 -110 -160 -136 -152", stroke: K.vein, "stroke-width": 14, fill: "none", "stroke-linecap": "round", opacity: 0.85 }, hg);
+        E("path", { d: "M -20 -20 C -60 20 -40 60 0 66", stroke: K.heartHi, "stroke-width": 9, fill: "none", "stroke-linecap": "round", opacity: 0.7 }, hg);
+        E("path", { d: "M 36 -84 C 60 -60 58 -24 34 -4", stroke: K.heartHi, "stroke-width": 9, fill: "none", "stroke-linecap": "round", opacity: 0.55 }, hg);
+      } });
+      if (xr > 0.6) {
+        const mk = seg(u, 0.34, 0.5);
+        if (mk > 0) {
+          ["point", "amazed", "happy"].forEach((nm, i) => {
+            const m = V2.backOut(cl(mk * 3 - i));
+            if (m > 0) hero(t, nm, 260 + i * 170, 1690 + (1 - m) * 60, 0.9 * m, { alpha: m });
+          });
+        }
+      }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.56, 0.68), 460, 300, "400 POUNDS", P.amber, 52); } };
+
+/* s4: the aorta — a newborn crawls through */
+SC.s4 = { cam: [[640, 1250, 1.8], [660, 1290, 2.0]],
+  world(lt, u, t) {
+    return { over: () => {
+      const k = V2.easeInOut(seg(u, 0.06, 0.4));
+      const ringX = 660, ringY = 1250, rr = 150;
+      /* vessel walls: two thick curved bands across the frame */
+      E("path", { d: `M -100 ${ringY - rr - 60} C 300 ${ringY - rr - 20} 800 ${ringY - rr - 30} 1200 ${ringY - rr - 10}`, stroke: K.whaleTop, "stroke-width": 72, fill: "none", opacity: 0.85, "stroke-linecap": "round" });
+      E("path", { d: `M -100 ${ringY + rr + 60} C 300 ${ringY + rr + 20} 800 ${ringY + rr + 30} 1200 ${ringY + rr + 10}`, stroke: K.whaleTop, "stroke-width": 72, fill: "none", opacity: 0.85, "stroke-linecap": "round" });
+      E("rect", { x: -40, y: ringY - rr - 24, width: 1160, height: 2 * rr + 48, fill: "#16335C", opacity: 0.55 });
+      for (let i = 0; i < 9; i++) { const bp = ((u * 0.7 + V2.rnd(65, i)) % 1); E("circle", { cx: lerp(-60, 1300, bp), cy: ringY + (V2.rnd(66, i) - 0.5) * 190, r: 16 + V2.rnd(67, i) * 9, fill: K.heart, opacity: 0.75 * (1 - bp * 0.3) }); }
+      E("ellipse", { cx: ringX, cy: ringY, rx: rr, ry: rr * 0.92, fill: "#0A1626", stroke: P.ink, "stroke-width": 9, opacity: 0.4 + 0.6 * k });
+      E("ellipse", { cx: ringX, cy: ringY, rx: rr + 14, ry: rr * 0.92 + 14, fill: "none", stroke: K.arte, "stroke-width": 10, opacity: 0.9 * k });
+      const crawl = seg(u, 0.3, 0.92);
+      if (crawl > 0) {
+        const cx = lerp(ringX - rr - 160, ringX + rr + 60, V2.easeInOut(crawl));
+        crawler(V2.root, cx, ringY + 10 - Math.sin(crawl * Math.PI) * 14, 0.9, crawl * 3);
+        if (crawl > 0.9) ring(ringX, ringY, seg(u, 0.93, 1.0), "#FFF6EA");
+      }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.5, 0.62), 540, 280, "A NEWBORN FITS", P.teal, 50); } };
+      halo(540, 1250, 620);
+
+/* s5: calf beside the mother */
+SC.s5 = { cam: [[540, 1080, 1.05], [540, 1100, 1.1]],
+  world(lt, u, t) {
+    return { over: () => {
+      halo(480, 1420, 800);
+      whale(V2.root, 420, 1420, 3.0, { t, sway: 0.4 });
+      const ck = V2.backOut(seg(u, 0.14, 0.44));
+      if (ck > 0) {
+        whale(V2.root, lerp(1340, 1000, ck), lerp(1720, 1580, ck) + Math.sin(t * 2.4) * 8, 1.05, { t, sway: 1.4, alpha: ck });
+        ring(1000, 1630, seg(u, 0.5, 0.62), "#FFF6EA");
+      }
+    } };
+  },
+  over(lt, u) { plate(seg(u, 0.6, 0.72), 240, "2.5 TONNES", "AT BIRTH", P.amber, seg(u, 0.88, 0.98)); } };
+      halo(620, 1270, 600);
+
+/* s6: +90 kg a day — the calf inflates on a counter */
+SC.s6 = { cam: [[560, 1140, 1.12], [560, 1160, 1.2]],
+  world(lt, u, t) {
+    const grow = V2.easeInOut(seg(u, 0.1, 0.85));
+    return { over: () => {
+      halo(500, 1440, 800);
+      whale(V2.root, 420, 1440, 2.9, { t, sway: 0.4 });
+      /* milk stream lines */
+      const mk = seg(u, 0.06, 0.2);
+      for (let i = 0; i < 5; i++) if (mk > 0) E("path", { d: `M ${880 - i * 14} 1500 q 44 54 ${84 - i * 12} 120`, stroke: "#F6EFE3", "stroke-width": 9, fill: "none", "stroke-linecap": "round", opacity: 0.6 * mk * (1 - 0.4 * Math.sin(t * 6 + i)) });
+      whale(V2.root, 1010 + grow * -30, 1620 + grow * -50, lerp(1.0, 1.35, grow), { t, sway: 1.2 });
+    } };
+      halo(400, 1160, 700);
+  },
+  over(lt, u) { const n = Math.round(90 * V2.easeInOut(seg(u, 0.12, 0.86))); plate(seg(u, 0.14, 0.26), 240, "+" + n + " KG", "EVERY DAY", P.amber, seg(u, 0.88, 0.98)); } };
+
+/* s7: the twist — krill cloud dwarfs nothing: whale vs swarm */
+SC.s7 = { cam: [[540, 1060, 0.92], [540, 1080, 0.98]],
+  world(lt, u, t) {
+    return { over: () => {
+      halo(360, 1420, 800);
+      whale(V2.root, 300 + Math.sin(u * Math.PI) * 30, 1420, 2.6, { t, sway: 0.7 });
+      const ck = V2.easeInOut(seg(u, 0.1, 0.7));
+      for (let i = 0; i < 54; i++) {
+        const a = V2.rnd(71, i) * Math.PI * 2, rr2 = V2.rnd(72, i) * 1;
+        const bx = 760 + Math.cos(a) * 420 * (0.35 + rr2 * 0.65), by = 780 + Math.sin(a) * 560 * (0.35 + rr2 * 0.65);
+        const k2 = cl((ck - V2.rnd(73, i) * 0.4) / 0.6);
+        if (k2 <= 0) continue;
+        krill(V2.root, bx + Math.sin(t * 1.1 + i) * 22, by + Math.cos(t * 0.9 + i * 2) * 18, (0.36 + V2.rnd(74, i) * 0.44) * k2, { rot: V2.rnd(75, i) * 60 - 30, alpha: 0.7 + k2 * 0.3 });
+      }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.62, 0.74), 780, 300, "ONE OF THE SMALLEST", P.amber, 44); } };
+
+/* s8: krill close-up vs thumb; 4 t counter */
+SC.s8 = { cam: [[700, 1100, 1.5], [660, 1120, 1.7]],
+  world(lt, u, t) {
+    return { over: () => {
+      const kk = V2.backOut(seg(u, 0.1, 0.32));
+      if (kk > 0) krill(V2.root, 800, 1220, 8.6 * kk, { t: 0, rot: -12 + Math.sin(t * 2.4) * 6 });
+      /* thumb-up fist for scale */
+      const tk = seg(u, 0.36, 0.52);
+      if (tk > 0) {
+        const hg = E("g", { transform: `translate(930 1420) rotate(-8) scale(${1.6 * tk})`, opacity: cl(tk * 2) });
+        E("path", { d: "M -78 96 L -78 -10 C -78 -46 -50 -64 -18 -62 C 22 -60 44 -38 46 -4 L 46 96 Z", fill: K.steel, stroke: P.ink, "stroke-width": 9, "stroke-linejoin": "round" }, hg);
+        E("path", { d: "M -30 -60 C -34 -110 -24 -150 -4 -154 C 14 -156 24 -140 22 -112 C 20 -90 16 -72 14 -60", fill: K.steel, stroke: P.ink, "stroke-width": 9, "stroke-linejoin": "round" }, hg);
+        for (let i = 0; i < 3; i++) E("path", { d: `M -58 ${20 + i * 26} L 40 ${20 + i * 26}`, stroke: P.ink, "stroke-width": 5, opacity: 0.55 }, hg);
+      }
+      for (let i = 0; i < 10; i++) { const p = (u * 0.5 + V2.rnd(81, i)) % 1; krill(V2.root, 140 + V2.rnd(82, i) * 820, 1560 + p * 220, 0.5 + V2.rnd(83, i) * 0.4, { rot: -14, alpha: 0.8 }); }
+    } };
+  },
+  over(lt, u) { const n = Math.round(4 * V2.easeInOut(seg(u, 0.14, 0.6))); plate(seg(u, 0.16, 0.28), 260, n + " TONNES", "OF KRILL / DAY", P.amber, seg(u, 0.88, 0.98)); } };
+
+/* s9: the lunge — mouth yawns, krill in, water jets */
+SC.s9 = { cam: [[580, 1160, 1.28], [620, 1200, 1.45]],
+  world(lt, u, t) {
+    const jaw = V2.easeInOut(seg(u, 0.08, 0.42));
+    const shake = Math.sin(lt * 60) * 8 * (jaw > 0.3 && jaw < 0.7 ? 1 : 0);
+    return { shake, over: () => {
+      halo(440, 1480, 800);
+      whale(V2.root, 330, 1480, 3.0, { t, jaw, sway: 0.3, krillIn: (jg) => krillStream(jg, seg(u, 0.42, 0.95), t) });
+      /* water jets escaping the baleen */
+      const jk = seg(u, 0.5, 0.95);
+      for (let i = 0; i < 6; i++) {
+        const k2 = cl(jk * 1.4 - i * 0.09);
+        if (k2 <= 0 || k2 >= 1) continue;
+        const jx = 300 + i * 55, jy = 1090 - i * 26;
+        E("path", { d: `M ${jx} ${jy} q -70 -30 -130 -8`, stroke: "#CFF3FF", "stroke-width": 8, fill: "none", "stroke-linecap": "round", opacity: 0.7 * (1 - k2), transform: `translate(${(1 - k2) * 60} ${(1 - k2) * 30})` });
+      }
+      /* incoming krill cloud from the right */
+      for (let i = 0; i < 10; i++) {
+        const at = 0.1 + i * 0.05, k3 = cl((u - at) / 0.3);
+        if (k3 <= 0 || k3 >= 1) continue;
+        krill(V2.root, lerp(1340, 1120, k3), 1160 + V2.rnd(91, i) * 360 - k3 * 80, 0.95, { rot: 200, alpha: 0.9 });
+      }
+    } };
+  },
+  over(lt, u) { chip(seg(u, 0.6, 0.72), 400, 280, "NO TEETH — BALEEN", P.teal, 46); } };
+
+/* s10: closer — whale crosses back, loop to frame 0 */
+SC.s10 = { cam: [[540, 980, 1.08], [540, 960, 1.0]],
+  world(lt, u, t) {
+    return { over: () => {
+      const k = V2.easeInOut(seg(u, 0.0, 0.95));
+      const x = lerp(600, -1500, k);
+      const wy = 1550 + Math.sin(cl(k) * Math.PI) * -40;
+      halo(300, 1360, 760, 0.6);
+      whale(V2.root, x, wy, 4.0, { t, sway: 1 });
+    } };
+  },
+  over(lt, u) {
+    title(TITLE, 215, 92, () => 1);
+    const k = 1 - seg(u, 0.0, 0.3);
+    if (k > 0) V2.txt(540, 480, "IS ALIVE RIGHT NOW", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 76, fill: P.amber, stroke: P.ink, "stroke-width": 14, "stroke-linejoin": "round", "paint-order": "stroke", opacity: k });
+    const ul = V2.easeInOut(seg(u, 0.76, 0.98));
+    if (ul > 0) E("path", { d: `M ${540 - 380} 520 L ${540 - 380 + 760 * ul} 520`, stroke: P.amber, "stroke-width": 12, "stroke-linecap": "round" });
+  } };
+
+function withCam(cam, fn) {
+  const hold = V2.root;
+  V2.root = E("g", { transform: V2.cam(cam[0], cam[1], cam[2]) }, hold);
+  fn();
+  V2.root = hold;
+}
+function camOf(idx, lt, dur) {
+  const sc = SC[TL[idx].id], a = sc.cam[0], b = sc.cam[1], u = V2.easeInOut(cl(lt / dur) * 0.85 + 0.075);
+  let c = [lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u)];
+  if (idx > 0 && lt < 0.36) {
+    const pv = SC[TL[idx - 1].id].cam[1], k = V2.easeOutQuint(lt / 0.36);
+    c = [lerp(pv[0], c[0], k), lerp(pv[1], c[1], k), lerp(pv[2], c[2], k)];
+  }
+  return c;
+}
+
+function fgLayer(t, cam) {
+  const g = E("g", { transform: `translate(540 960) scale(${1 + (cam[2] - 1) * 0.55}) translate(${-540 - (cam[0] - 540) * 1.15} ${-960 - (cam[1] - 940) * 1.15})` });
+  for (let i = 0; i < 5; i++) {
+    const sp = 0.7 + V2.rnd(95, i), x = ((V2.rnd(96, i) * 1500 - 200 + Math.sin(t * 0.6 * sp + i) * 30 - t * 26 * sp) % 1500 + 1500) % 1500 - 200;
+    const y = 1290 + V2.rnd(97, i) * 700 + Math.sin(t * 0.9 + i * 2) * 24, sc = 1.5 + V2.rnd(98, i) * 1.6;
+    const g2 = E("g", { transform: `translate(${x} ${y}) rotate(${20 + V2.rnd(99, i) * 30}) scale(${sc})`, opacity: 0.55 }, g);
+    E("path", { d: "M 0 0 C -30 -22 -46 -8 -58 -30 C -46 -34 -36 -26 -30 -34 C -20 -26 -8 -10 0 0", fill: "#0A1626", stroke: "#050D1A", "stroke-width": 5 }, g2);
+    E("path", { d: "M -46 -24 L -56 -40 M -50 -18 L -62 -30", stroke: "#050D1A", "stroke-width": 3 }, g2);
+  }
+}
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  V2.defsHold = E("defs", {}, V2.root);
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++) if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx], def = SC[sc.id] || SC.hook;
+  const lt = Math.max(0, t - sc.start), dur = sc.end - sc.start, u = cl(lt / dur);
+  const cam = camOf(idx, lt, dur);
+  const S = def.world(lt, u, t, dur);
+  if (S.shake) cam[1] += S.shake;
+  water(t, cam, S.day);
+  withCam(cam, () => { if (S.over) S.over(); });
+  def.over(lt, u, t, dur, cam);
+  fgLayer(t, cam);
+  const vg = E("radialGradient", { id: "kVig" }, V2.defsHold);
+  [["62%", "#05050A", 0], ["100%", "#05050A", 0.5]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, vg));
+  E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#kVig)" });
+  E("rect", { x: 0, y: 0, width: 1080, height: 1920, filter: "url(#vGrain)", opacity: 0.5, transform: `translate(${(Math.floor(t * 15) % 2) * 3} ${Math.floor(t * 15) % 3})` });
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>

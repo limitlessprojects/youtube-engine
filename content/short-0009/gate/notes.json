@@ -1,0 +1,24 @@
+{
+  "short": "short-0009",
+  "world": "ONE lit object: an adult blue whale whose body spans the frame in the deep-ocean gradient, light shafts from the surface. Scale comparisons (elephants, buses, heart, artery, calf) orbit the same whale so the world never breaks.",
+  "intent": {
+    "xray": "s3/s4 render the chest translucent so the heart + artery read inside the body",
+    "text": "one text system per scene (chips, one stamp, counter plates); title on hook and closer only",
+    "timing": "rule C18: every event is timed on u (fraction of the line); nothing holds on idle motion",
+    "loop": "last frame equals frame 0 (whale silhouette crossing the frame under the title)"
+  },
+  "accuracy_C17": [
+    "blue whale: elongated body, broad flat rostrum, small dorsal fin set ~3/4 back, 11-12 ventral pleats, mottled blue-gray skin (pale splotches), small pectoral fin, wide flukes",
+    "elephants: African silhouette (trunk, dome head, tusks) for the 33-elephant mass comparison",
+    "school bus: US yellow bus, black windows band, wheels; ~12 m vs whale ~30 m",
+    "heart: four chambers + aorta arch, 400 lb (2015 ROM dissection), not a folkloric VW Beetle",
+    "aorta: wide ring, newborn crawls through (2015 dissection quote)",
+    "krill: comma-shaped swimmers, 4-6 cm, swarming cloud; baleen = comb plates",
+    "calf: 2.5 t at birth (AAD), gains ~90 kg/day (ADF&G)"
+  ],
+  "simplifications": [
+    "33 elephants shown as 6 on-deck + counter stamp",
+    "baleen shown as ~30 comb plates (real: 270-400 per side)",
+    "heart drawn 4-chambered schematic with aorta arch"
+  ]
+}
