@@ -1,0 +1,17 @@
+{
+    "video_id": "2p68-3OWtXI",
+    "url": "https://youtu.be/2p68-3OWtXI",
+    "title": "What if you were the last doctor on Earth?",
+    "channel": "Jack Blessed",
+    "handle": "@JackBlessed-u5x",
+    "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
+    "published_at": "2026-11-18T19:52:00Z",
+    "privacy": "public",
+    "category": "27 (Education)",
+    "tags": "what if,last doctor,medicine,apocalypse,survival,story,stickman,shorts",
+    "synthetic_disclosure": "set via API (containsSyntheticMedia=true)",
+    "thumbnail": "content/short-0007/render/hook_v1.png (set via API)",
+    "source": "content/short-0007",
+    "note": "published LOCALLY (CI runner queue stuck 1h+, run 44378639011 cancelled; boss day-022 autonomy grant: 'publish #7, if we lose it it's gone forever'). Gate: r11 grand 7.56, vh 6.85, one dim<7 (the parked call). 11 rounds, studio judge. Master: download/short-0007-last-doctor-master.mp4",
+    "monitoring": "48h/7d rows via Actions Views Row + API; feeds the Nov 21 fork"
+}
