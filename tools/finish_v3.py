@@ -265,17 +265,44 @@ def main() -> int:
     out = short / f"{slug}.mp4"
     # L-072 (made permanent day-010): the image2 demuxer got this sandbox
     # OOM-killed on 1000+ frames; pipe the PNGs through stdin instead.
+    # L-129 (day-022 night): (a) x264 -preset medium at 1080x1920 OOM-flakes on
+    # 2 cores (silently truncated/corrupt moov-less output — the tool used to
+    # IGNORE ffmpeg's exit code); (b) the in-process -movflags +faststart
+    # relocation pass corrupts output under the same pressure. Fix: plain
+    # encode at preset fast + rc-lookahead=12, CHECK the exit code, verify a
+    # full decode, THEN a separate -c copy faststart pass with its own check.
     import glob as _glob
     frames = sorted(_glob.glob(str(short / "render" / "frames" / "f*.png")))
     cat = subprocess.Popen(["cat", *frames], stdout=subprocess.PIPE)
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "image2pipe", "-framerate", str(FPS),
+    mux = subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "image2pipe",
+                    "-framerate", str(FPS),
                     "-i", "-", "-i", str(master),
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "18",
-                    "-pix_fmt", "yuv420p", "-c:a", "copy", "-movflags", "+faststart",
+                    "-c:v", "libx264", "-preset", "fast",
+                    "-x264opts", "rc-lookahead=12:threads=2", "-crf", "18",
+                    "-pix_fmt", "yuv420p", "-c:a", "copy",
                     "-shortest", str(out)],
                    stdin=cat.stdout, capture_output=True, timeout=1800)
     cat.stdout.close()
     cat.wait()
+    if mux.returncode != 0:
+        raise SystemExit(f"finish_v3: mux FAILED rc={mux.returncode}: {mux.stderr[-400:]!r}")
+    chk = subprocess.run(["ffmpeg", "-v", "error", "-i", str(out), "-f", "null", "-"],
+                         capture_output=True, timeout=900)
+    if chk.returncode != 0 or chk.stderr.count(b"error") > 4:
+        raise SystemExit(f"finish_v3: encode decode-check FAILED: {chk.stderr[-300:]!r}")
+    fs = subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(out), "-c", "copy",
+                         "-movflags", "+faststart", str(out) + ".fs.mp4"],
+                        capture_output=True, timeout=600)
+    if fs.returncode == 0:
+        v = subprocess.run(["ffmpeg", "-v", "error", "-i", str(out) + ".fs.mp4", "-f", "null", "-"],
+                           capture_output=True, timeout=900)
+        if v.returncode == 0 and not v.stderr:
+            out.unlink(missing_ok=True)
+            (Path(str(out) + ".fs.mp4")).rename(out)
+        else:
+            (Path(str(out) + ".fs.mp4")).unlink(missing_ok=True)  # ship moov-at-end (upload-safe)
+    else:
+        (Path(str(out) + ".fs.mp4")).unlink(missing_ok=True)
 
     dur = run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                "-of", "csv=p=0", str(out)]).stdout.strip()

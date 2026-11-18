@@ -204,7 +204,7 @@ function hero2(parent, x, y, s, o) {
     handL: o.handL || "open", handR: o.handR || "open",
   });
   /* grounding + separation: contact shadow, then a soft streetlight pool behind the figure (L-127) */
-  if (!o.noShadow) E("ellipse", { cx: x + 8, cy: y + 6, rx: 62 * s, ry: 15 * s, fill: "#04040A", opacity: 0.5 }, parent);
+  if (!o.noShadow) E("ellipse", { cx: x + 8, cy: y + 6, rx: 68 * s, ry: 17 * s, fill: "#03030A", opacity: 0.58 }, parent);
   if (!o.noPool) V2.glow(x + (o.poolDX || 0), y - 180 * s, 230 * s, "Warm", o.poolOp || 0.13, parent);
   /* long coat: back cape (behind rig) + front panel (over torso, under arms) */
   const capeK = o.cape || 0;

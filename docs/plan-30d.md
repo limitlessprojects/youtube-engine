@@ -89,6 +89,9 @@
 - **Day-019 pair:** #0008 (topic-pull, C18 pacing) published 55 min after #0006 (boss-topic, pre-C18 v3) — the cleanest same-engine comparison yet; 24 h / 48 h checkpoints = the 11-17 and 11-18 early sessions.
 - **Pre-decided fork (Nov 21):** best Short quality <8/10 OR median 24h views <1K → **pivot WITHIN YouTube** (new format/topic family per outlier formulas), not away from video. Executes at the Nov 21 session; no renegotiation.
 
+- **Day-022 double-publish under the boss autonomy grant:** #0007 "What if you were the last doctor on Earth?" (2p68-3OWtXI) and #0009 "The largest animal that ever existed is alive right now" (3QnKzDKuZdc) went live 2026-11-18 ~22:50 EAT — #0009 at gate 6.76-6.96 (<7.5 bar) published explicitly on the grant ("don't wait on me... if we lose it it's gone forever"); CI publish leg was queue-stuck so both went out via the local API path. 24h checkpoints: 11-19 morning row.
+- **Fiction lane opened (#0010):** first Larptuber "in this town" narrative test (boss brief "The Zero-Dollar Bait"), built on the larpniverse sweep's measured specs (35-55s, 229-285 WPM deadpan, no CTA, Entertainment lane). Gate r1 6.2 / r2 6.0 → world-patch round (L-127 look-object fix + L-128 window-monopoly + street-life/grounding/tag-discipline) → r3 in flight. This is the Phase C "scale what works" experiment running INSIDE Phase B's tail; its 24h/48h rows join the Nov 21 fork data.
+
 ## Phase C — Scale what works (Day 022–030, Nov 22–Dec 1)
 
 - Double the best formula-hook combo (2 Shorts/day OK if the gate stays green; never lower the bar to ship more).
