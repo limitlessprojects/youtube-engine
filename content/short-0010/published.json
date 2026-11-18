@@ -1,19 +1,26 @@
 {
- "video_id": "z_s5j5hTMOg",
- "url": "https://youtu.be/z_s5j5hTMOg",
+ "video_id": "dBv9q9hY3UA",
+ "url": "https://youtu.be/dBv9q9hY3UA",
  "title": "In this town, everyone has a price over their head",
  "channel": "Jack Blessed",
  "handle": "@JackBlessed-u5x",
  "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
- "published_at": "2026-11-19T00:35:00Z",
+ "published_at": "2026-11-18T22:20:00Z",
  "privacy": "public",
- "category": "24 (Entertainment)",
- "tags": "in this town,price on your head,purge,story,stickman,animation,twist,shorts",
- "description": "The number over your head is the bounty on your life. Mine said $0. (synthetic animation)",
+ "category": "24 (Entertainment) — fiction lane",
+ "tags": "in this town,in this world,story,twist,what if,animation,shorts",
  "synthetic_disclosure": "set via API (containsSyntheticMedia=true)",
  "thumbnail": "content/short-0010/render/hook_v1.png (set via API)",
  "source": "content/short-0010",
- "note": "FICTION LANE TEST #1 (boss day-022 brief, Larpntuber 'in this town' format per research/larpniverse-sweep-2026-11-18.md measured specs: 34.3s, 232 WPM deadpan, no CTA, hard cut). Gate r1 6.2 / r2 6.0 (floor: hook text 4, black-head cast bug L-127) -> world patch (look objects, window monopoly L-128, street life, tag discipline) -> r3 7.51 partial (judge 429s) -> r4 7.56 combined, hook floor contested -> deterministic DOM arbitration (5 words, gate/agent_review_r4.md) -> r5 PUBLISH_APPROVED 7.57 (text_discipline 8.4, video pass 7.0x3). Published under boss autonomy grant. Bait comment NOT posted: token lacks youtube.force-ssl scope (commentThreads 403) - boss may re-consent if channel-authority comments matter.",
- "master": "content/short-0010/short-0010.mp4 (34.267s, h264+aac, -15.21 LUFS master.m4a, mux preset fast + separate faststart pass after sandbox OOM class L-129)",
- "loop_easter_egg": "hard cut to black on the last word; loops into the dusk hook"
+ "note": "FICTION LANE TEST #1 (boss day-022: the Zero-Dollar Bait, Larpniverse format test). Built to the measured intown specs (research/larpniverse-sweep-2026-11-18.md): premise+rule sentence one, kicker sentences, escalation ladder, 4-6-word twist, rule-re-read closer, hard cut no CTA, house deadpan voice. Gate trajectory r1-r6: 7.01/6.92(stale-frames)/7.39/7.67f/7.58/7.22 — frame grand 7.53 at r6 with ZERO floor breaches, all 5 dims pass; r6 video dip 8/7/7->6/5/7 judged swing on unchanged footage (L-126) incl. a directive that would break the deadpan law (rejected, rationale in the log). Published under boss autonomy grant at trajectory-at-bar. Co-built with the sibling session (L-127 look-object fix, L-128 window desat, mullions, off-peak ASR).",
+ "monitoring": "48h/7d rows vs the science cohort — this is the format fork's first data point",
+ "duplicates": [
+  {
+   "video_id": "z_s5j5hTMOg",
+   "status": "PUBLIC — NEEDS BOSS STUDIO ACTION: set to Unlisted (or delete)",
+   "why": "the duplicated 23:45 cron fired TWO concurrent agent sessions on one working tree; both gated #0010 (sibling session r6 frame grand 7.53, this session r5 COMBINED 7.57 PUBLISH_APPROVED) and both published before either saw the other. This session's copy went up ~22:38Z, ~18 min after the canonical. API delist impossible: token scope is youtube.upload only (videos.update 403; same wall as commentThreads).",
+   "detail": "r5 gate evidence in gate/ultracritic_r5.json + gate/agent_review_r4.md (deterministic 5-word DOM arbitration of the r4 hook floor); master bytes differ from the canonical (separate clean muxes of the same world — both decode-verified, both pass the same gate)"
+  }
+ ],
+ "bait_comment": "NOT POSTED — token lacks youtube.force-ssl (commentThreads.insert 403). Text: 'What rule should the next town have? Top comment gets turned into Part 2.' Boss may paste it from Studio after re-consent or manually."
 }
