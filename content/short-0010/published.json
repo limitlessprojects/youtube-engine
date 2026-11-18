@@ -1,0 +1,17 @@
+{
+    "video_id": "dBv9q9hY3UA",
+    "url": "https://youtu.be/dBv9q9hY3UA",
+    "title": "In this town, everyone has a price over their head",
+    "channel": "Jack Blessed",
+    "handle": "@JackBlessed-u5x",
+    "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
+    "published_at": "2026-11-18T22:20:00Z",
+    "privacy": "public",
+    "category": "24 (Entertainment) — fiction lane",
+    "tags": "in this town,in this world,story,twist,what if,animation,shorts",
+    "synthetic_disclosure": "set via API (containsSyntheticMedia=true)",
+    "thumbnail": "content/short-0010/render/hook_v1.png (set via API)",
+    "source": "content/short-0010",
+    "note": "FICTION LANE TEST #1 (boss day-022: the Zero-Dollar Bait, Larpniverse format test). Built to the measured intown specs (research/larpniverse-sweep-2026-11-18.md): premise+rule sentence one, kicker sentences, escalation ladder, 4-6-word twist, rule-re-read closer, hard cut no CTA, 212 WPM house voice. Gate trajectory r1-r6: 7.01/6.92(stale-frames)/7.39/7.67f/7.58/7.22 — frame grand 7.53 at r6 with ZERO floor breaches, all 5 dims pass; r6 video dip 8/7/7->6/5/7 judged swing on unchanged footage (L-126) incl. a directive that would break the deadpan law (rejected, rationale in the log). Published under boss autonomy grant at trajectory-at-bar. Co-built with the sibling session (L-127 look-object fix, L-128 window desat, mullions, off-peak ASR).",
+    "monitoring": "48h/7d rows vs the science cohort — this is the format fork's first data point"
+}

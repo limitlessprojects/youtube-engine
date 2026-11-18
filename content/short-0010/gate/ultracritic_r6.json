@@ -1,0 +1,249 @@
+{
+ "round": 6,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.22,
+ "frame_grand_mean": 7.53,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 8.42,
+  "frame:visual_hierarchy": 7.25,
+  "frame:contrast_legibility": 7.33,
+  "frame:production_polish": 7.17,
+  "video:pacing_rhythm": 6,
+  "video:character_life": 5,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 7.4,
+  "s0_u50": 7.3,
+  "s10_u50": 7.3,
+  "s1_u50": 7.75,
+  "s2_u50": 7.3,
+  "s3_u50": 7.75,
+  "s4_u50": 8.0,
+  "s5_u50": 7.0,
+  "s6_u50": 7.8,
+  "s7_u50": 8.0,
+  "s8_u50": 8,
+  "s9_u50": 6.75
+ },
+ "floor_breaches": [],
+ "video_directives": [
+  "The hero's face is frozen in the same smile for all 34 seconds \u2014 add blinks, brow shifts, or reactive expressions at the RED PURGE reveal and the $999,999,999 jump or he reads as a slid cutout",
+  "The 9\u201316s stretch dwells too long on one composition with a slow pan and almost no motion; tighten to ~4s or add micro-action (door rattle, dust, crowd peek) to keep tempo",
+  "Scene-to-scene flow is decent (push-ins, wipe reveals), but the crowd-to-hero cut at 6\u20137s snaps without a transition beat \u2014 add a 2-frame whip or sound-slam ease to motivate the Red Purge flip"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 7,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.4,
+   "words_visible": 5,
+   "top3_directives": [
+    "Strengthen the focal glow/rim light on the central $0 character so it reads instantly on a 6-inch daylight screen",
+    "The header 'IN THIS TOWN,' sits in muted gray-brown on dark purple \u2014 boost contrast or add subtle outline/glow",
+    "Kill the large dead zone in the upper-middle band between header text and skyline; add atmosphere (haze, gradient accent, or slight moon glow spread) to tighten composition"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 3,
+   "top3_directives": [
+    "Upper ~35% of frame is a dead zone \u2014 push the character group up and crop the empty purple sky, or add a subtle skyline/gradient interest behind the $0 tag",
+    "Give the $0 badge more prominence (scale up ~20% or add a soft pulse glow) so the $0 vs $50,000 contrast reads instantly as the story",
+    "Left label '$2,500' arrow slightly clips the small character's head \u2014 nudge it up/left for clean separation"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 0,
+   "top3_directives": [
+    "The top third (moon + red rings) and bottom fifth of floor are near-dead zones \u2014 raise the character scale or add mid-ground interest to compress vertical dead space",
+    "The cropped window panel (left) and tilted door (right) read as awkward floating cutouts rather than intentional framing \u2014 either anchor them fully in-scene or push them behind the character layer with shadow overlap",
+    "Character glow is the only warm highlight; darken the left window's orange panel or rim-light the character so the focal separation survives bright-sunlight phone viewing"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill the large dead zone between the RED PURGE banner and the middle character (empty buildings/circle area) with a subtle light beam or fog gradient to connect title to subject",
+    "Give the central $0 tag a warmer/high-contrast treatment than the red side tags so the eye reads value progression left-to-right instantly",
+    "Unify glow colors \u2014 orange rim light on characters vs red banner vs red spotlight column pulls palette three ways; pick two accent hues max"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 2,
+   "top3_directives": [
+    "Raise ambient scene brightness slightly or add a subtle vignette spotlight so the dark city background doesn't read as murk on a daylight phone screen",
+    "Give the $0 badge stronger separation (outline/glow or darker chip fill) so it never blends into the purple skyline behind it",
+    "Compose the fallen-door cluster to point toward the character \u2014 right now it spills off-frame and creates a competing low-left mass"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 1,
+   "top3_directives": [
+    "Activate the top third: the large dead zone above the red orbit ring needs a subtle light shaft, stars, or title accent \u2014 currently it's empty real estate on a 9:16 frame",
+    "Tighten the bottom third: the faint floor ticks and tiny orange dot below the character's shadow are near-invisible noise; either strengthen the ground reflection or crop the stage up",
+    "Boost the '$0' badge contrast \u2014 the cream icon on the dark chip reads well, but at daylight brightness on a 6-inch screen the dark navy chip blends into the dark purple backdrop; add a soft rim glow or lighter chip fill"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the bottom-left dead zone (empty purple floor between door and character) with subtle foreground detail \u2014 a shadow streak, curb, or floor texture \u2014 to tighten the composition",
+    "Brighten the '$0' badge face or add a stronger inner glow; the dark-on-dark numeral edges are the weakest legibility point in daylight",
+    "The red orbital ring lines cutting across the midground read as stray scribbles \u2014 either commit to a full orbit shape or reduce their opacity so they stop competing with the character's glow"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "Upper ~40% of frame is a dead zone (empty sky + floating red ellipse); raise composition or crop scene so the subject occupies more vertical real estate",
+    "Background cityscape and floor detail are nearly value-identical to the background \u2014 lift ambient rim light or add subtle gradient separation so silhouettes don't melt into the purple",
+    "The $50,000 callout is small and low in frame; scale it up ~40% and move it to the upper third to create a deliberate eye path from hook to subject"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.8,
+   "words_visible": 2,
+   "top3_directives": [
+    "Boost contrast on the $8,000 speech bubble and secondary character \u2014 they sit in the murky right-mid zone and their orange tag barely separates from the dim background on a small daylight screen",
+    "The cropped\u6b21\u8981 character at the right edge reads as a framing accident \u2014 either push him fully off-frame or pull him in with clearer separation so the two-figure comparison reads intentionally",
+    "Fill the dead lower third (empty street with one tiny manhole) with subtle foreground depth \u2014 a curb line, steam, or ground shadow texture \u2014 to complete the eye path from $0 down and back"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Anchor the tilted '$0' card more clearly to the character's hand/head so the tilt reads as intentional, not a crop artifact",
+    "Remove or integrate the stray thin line and dash marks floating near the head \u2014 they read as unexplained debris",
+    "The bottom third of the frame is near-empty dark coat/ground; either crop tighter or add subtle rim/ground glow to kill the dead zone"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 9,
+    "production_polish": 8
+   },
+   "mean": 8,
+   "words_visible": 1,
+   "top3_directives": [
+    "Top quarter (dark sky + moon) is a dead zone \u2014 extend the red ring/glow motif higher or crop composition to tighten vertical rhythm",
+    "The banner's glowing red border bleeds into the ceiling ring behind it \u2014 add a subtle dark drop shadow behind the banner bar for cleaner separation",
+    "Character glow is warm orange while banner/ambient glow is red \u2014 unify the rim-light color temperature for tighter palette control"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.75,
+   "words_visible": 3,
+   "top3_directives": [
+    "Dark antagonist figures blend into the dark buildings behind them \u2014 add rim lighting or a subtle ground shadow/spotlight to separate silhouettes from the background",
+    "The left character cluster overlaps awkwardly (price tag of the hidden figure collides with the smiling character's head) \u2014 space or offset the group for cleaner read",
+    "Large empty dead zone in the mid-frame between the two groups (dark alley gap) \u2014 tighten composition or add mid-ground detail/depth haze to bridge it"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['They'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Monsters', 'They'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}
