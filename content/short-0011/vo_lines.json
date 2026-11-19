@@ -1,0 +1,20 @@
+{
+    "short": "short-0011",
+    "voice": "edge-tts en-US-AndrewNeural rate +25%",
+    "note": "The Value System (boss day-022 brief #2, refined day-023 morning) to the measured intown specs: premise+exact rule in sentence one, kicker sentences, escalation ladder, two fake twists + real twist in the final 5s, rule re-read closer, hard cut to black, no CTA, 0 exclamation marks. Digits written as words (L-090); all $ values live on STAMPS only. Never resolve tension early (boss trap list).",
+    "lines": [
+        {"key": "hook", "role": "narration", "narration": "In this town, everyone wears a price tag. Whoever pays it, owns you."},
+        {"key": "s0", "role": "narration", "narration": "The Mayor cost nine million. The sheriff, four. I cost one dollar."},
+        {"key": "s1", "role": "narration", "narration": "People used me as a tip jar."},
+        {"key": "s2", "role": "narration", "narration": "Then a gray-coat stranger arrived, and started buying everyone."},
+        {"key": "s3", "role": "narration", "narration": "The butcher. The sheriff. The choir. Sold. Sold. Sold."},
+        {"key": "s4", "role": "narration", "narration": "He skipped me. 'Not you. You're not for sale, you're the deposit.'"},
+        {"key": "s5", "role": "narration", "narration": "By midnight, the whole town marched behind him, gray-eyed."},
+        {"key": "s6", "role": "narration", "narration": "At dawn, he handed me one dollar. Exact change."},
+        {"key": "s7", "role": "narration", "narration": "I held it. The empty town held its breath."},
+        {"key": "s8", "role": "narration", "narration": "'Full refund,' he said. 'The buyer backed out.'"},
+        {"key": "s9", "role": "narration", "narration": "Then every tag in town flipped to the same number. One dollar."},
+        {"key": "s10", "role": "narration", "narration": "The tags were never prices. They were installments."},
+        {"key": "s11", "role": "narration", "narration": "Everyone in this town has a price. I'm the price. Tonight, I was finally paid off."}
+    ]
+}

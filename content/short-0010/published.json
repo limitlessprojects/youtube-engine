@@ -17,7 +17,7 @@
  "duplicates": [
   {
    "video_id": "z_s5j5hTMOg",
-   "status": "PUBLIC — NEEDS BOSS STUDIO ACTION: set to Unlisted (or delete)",
+   "status": "STILL PUBLIC (day-023 morning re-check 2026-11-19 06:45Z: privacyStatus=public, viewCount=0 — zero traffic split so far, but BOSS STUDIO ACTION still open: Content -> z_s5j5hTMOg -> Visibility -> Unlisted. Token scope re-verified youtube.readonly+youtube.upload only — videos.update and commentThreads remain 403; no re-consent happened as of this check)",
    "why": "the duplicated 23:45 cron fired TWO concurrent agent sessions on one working tree; both gated #0010 (sibling session r6 frame grand 7.53, this session r5 COMBINED 7.57 PUBLISH_APPROVED) and both published before either saw the other. This session's copy went up ~22:38Z, ~18 min after the canonical. API delist impossible: token scope is youtube.upload only (videos.update 403; same wall as commentThreads).",
    "detail": "r5 gate evidence in gate/ultracritic_r5.json + gate/agent_review_r4.md (deterministic 5-word DOM arbitration of the r4 hook floor); master bytes differ from the canonical (separate clean muxes of the same world — both decode-verified, both pass the same gate)"
   }

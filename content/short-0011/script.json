@@ -1,0 +1,260 @@
+{
+    "title": "In this town, you can buy anyone",
+    "format": "narrative what-if (Larptuber 'In this town' one-rule world; fiction lane test #2)",
+    "staged": {
+        "by": "day-023 morning session (2026-11-19)",
+        "status": "SCRIPT STAGED — VO/scenes/render/gate/publish owned by the day-023 EVENING session",
+        "timestamp_note": "all timestamp_start/audio_dur_s below are ESTIMATES at 210 WPM + 0.25s gaps for lint pre-clear; the VO stage overwrites them with measured values (playbook: never estimate, L-003)",
+        "lint_preclear": "PASS at --duration-s 42.0 (see script.md)"
+    },
+    "hook": {
+        "timestamp_start": 0.0,
+        "narration": "In this town, everyone wears a price tag. Whoever pays it, owns you.",
+        "visual": {
+            "v1": "dusk town square wide (reuse #0010 night-town world DNA); every NPC carries a floating amber price tag (MAYOR $9,000,000 / SHERIFF $4,000 / folk $500-$2,000); hero dead-center, warm-lit, tag $1 gray; frame-0 title 'IN THIS TOWN,' / 'YOU CAN BUY ANYONE'; warm windows, long shadows; single-title hook law (L-128: title stamps own the frame at t=0, no other text competes)"
+        },
+        "fact_sources": [
+            "narrative"
+        ],
+        "audio_dur_s": 3.7
+    },
+    "scenes": [
+        {
+            "timestamp_start": 3.95,
+            "narration": "The Mayor cost nine million. The sheriff, four. I cost one dollar.",
+            "visual": {
+                "v1": "rapid triptych: mayor's mansion w/ glowing $9,000,000 tag -> sheriff w/ $4,000 -> hero alone, tiny $1; stamp '$1' (big gray)"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 3.4
+        },
+        {
+            "timestamp_start": 7.6,
+            "narration": "People used me as a tip jar.",
+            "visual": {
+                "v1": "two NPCs flick coins at the hero; one coin BOUNCES off the $1 tag (ping); NPCs smirk; hero face 100% neutral (deadpan law)"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.0
+        },
+        {
+            "timestamp_start": 9.85,
+            "narration": "Then a gray-coat stranger arrived, and started buying everyone.",
+            "visual": {
+                "v1": "the stranger enters frame-left: long gray coat, gray hat, ledger book; the ONLY fully desaturated object in town (color monopoly — the walking absence of value); first tag flips SOLD behind him"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.9
+        },
+        {
+            "timestamp_start": 13.0,
+            "narration": "The butcher. The sheriff. The choir. Sold. Sold. Sold.",
+            "visual": {
+                "v1": "three rapid shots: butcher tag, sheriff tag, choir row — SOLD stamp SLAMS on each (shake frames, dust puffs); gray-eyed townsfolk start lining up"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.6
+        },
+        {
+            "timestamp_start": 15.85,
+            "narration": "He skipped me. 'Not you. You're not for sale, you're the deposit.'",
+            "visual": {
+                "v1": "FAKE TWIST 1: stranger leans to hero eye level, ledger closed; quote stamp 'YOU'RE THE DEPOSIT'; hero's $1 tag pulses once; no answer given (tension deepens, never resolves)"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 3.7
+        },
+        {
+            "timestamp_start": 19.8,
+            "narration": "By midnight, the whole town marched behind him, gray-eyed.",
+            "visual": {
+                "v1": "wide night shot: gray procession down the main street, rows of SOLD tags bobbing; hero the only warm-lit figure, standing still; sky deepens"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.9
+        },
+        {
+            "timestamp_start": 22.95,
+            "narration": "At dawn, he handed me one dollar. Exact change.",
+            "visual": {
+                "v1": "THE TURN: pale-blue dawn palette (distinct from #0010 red-purge night); the stranger holds out a single bill between two fingers; stamp '$1 — EXACT CHANGE'"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.6
+        },
+        {
+            "timestamp_start": 25.8,
+            "narration": "I held it. The empty town held its breath.",
+            "visual": {
+                "v1": "HOLD (tension peak, zero resolution): extreme close on the bill in the hero's hand; around them the square is EMPTY, every window dark; 1.5s of near-silence (bed ducks)"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.6
+        },
+        {
+            "timestamp_start": 28.65,
+            "narration": "'Full refund,' he said. 'The buyer backed out.'",
+            "visual": {
+                "v1": "FAKE TWIST 2: stranger tips his hat; quote stamp 'THE BUYER BACKED OUT'; behind him the gray townsfolk stand perfectly still, watching"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.6
+        },
+        {
+            "timestamp_start": 31.5,
+            "narration": "Then every tag in town flipped to the same number. One dollar.",
+            "visual": {
+                "v1": "THE MASS FLIP (money shot): a wave crosses the square back-to-front, every SOLD tag flipping to $1 in sequence (rapid tick cascade, 12-15 flips visible); hero watches, lit by the flip-wave"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 3.4
+        },
+        {
+            "timestamp_start": 35.15,
+            "narration": "The tags were never prices. They were installments.",
+            "visual": {
+                "v1": "REAL TWIST: hero looks UP at his own tag; it flips $1 -> 'PAID IN FULL' with a red-seal stamp slam (red reserved for THIS moment only — color monopoly); glass-shatter flash"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.3
+        },
+        {
+            "timestamp_start": 37.7,
+            "narration": "Everyone in this town has a price. I'm the price.",
+            "visual": {
+                "v1": "RULE RE-READ: hero walks alone through the parted gray crowd toward the town hall door (now his); quote stamp 'I'M THE PRICE'"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 2.4
+        },
+        {
+            "timestamp_start": 40.35,
+            "narration": "Tonight, I was finally paid off.",
+            "visual": {
+                "v1": "LOOP: tags dim out one row at a time behind him as he reaches the door; hard cut to BLACK on the last word — loop-to-black, no CTA, no end card"
+            },
+            "fact_sources": [
+                "narrative"
+            ],
+            "audio_dur_s": 1.9
+        }
+    ],
+    "timeline": {
+        "fps": 30,
+        "total_s": 42.25,
+        "gap_s": 0.25,
+        "voice": "edge-tts en-US-AndrewNeural rate +25% (target 205-215 WPM measured; #0010 shipped 212.3)",
+        "words": 137,
+        "wpm_measured": null
+    },
+    "sources": {
+        "premise": "Boss day-022 brief #2 'The Value System' (48-52s draft, marked 'close but needs refinement'). Boss verbatim draft lost in the day-022 session compression — beats re-authored from the preserved spec summary: one-rule value world, never resolve tension early, two fake twists + real twist in the last 5 seconds, loop-to-black, pinned-comment theorizing bait. Hook/twist wording is new; the boss's premise (a town where people can be bought; hero costs $1) and trap list are preserved verbatim in intent.",
+        "format_research": "research/larpniverse-sweep-2026-11-18.md measured intown specs: premise+exact rule sentence one; ~15% kicker sentences; escalation ladder; twist 4-6 words; rule re-read closer; hard cut no CTA (ENDING_RULE v2); 229-285 WPM reference band (house linter band 185-215 wins, #0010 precedent 212.3); mute test: rule reads sound-off in 2s via frame-0 title + $9,000,000/$1 stamps.",
+        "deviations": "House canvas-vector world (not Roblox/Blender); house voice Andrew +25% deadpan; ~42s est vs boss draft 48-52s (house 35-55s breakout band wins; #0010 precedent 33.8s). Red reserved for the PAID-IN-FULL seal only (L-128 color monopoly); stranger = full desaturation as the anti-value signature device."
+    },
+    "bed_peak": 0.06,
+    "origin": "Fiction lane test #2 — commissioned day-022 (two-script brief), staged day-023 morning. Purpose: give the Nov 21 Phase C fork a second fiction data point (n=1 is not a lane verdict; #0010 paces 150 v/h vs science cohort ~114 v/h — if #0011 confirms, the fork has a lane to scale; if it flops, #0010 was noise). Category Entertainment (24). Bait comment: 'Every tag flipped to $1 at the end. What do you think was actually being paid for? Best theory gets pinned.' (commentThreads still scope-blocked — text parked here for boss paste).",
+    "sfx": [
+        {
+            "kind": "thump",
+            "at": 0.4,
+            "gain": 0.3,
+            "seed": 41,
+            "note": "est — re-time after VO"
+        },
+        {
+            "kind": "blip",
+            "at": 8.3,
+            "gain": 0.35,
+            "seed": 42,
+            "note": "coin ping off $1 tag"
+        },
+        {
+            "kind": "riser",
+            "at": 10.0,
+            "gain": 0.4,
+            "seed": 43,
+            "note": "stranger arrival"
+        },
+        {
+            "kind": "thump",
+            "at": 13.4,
+            "gain": 0.45,
+            "seed": 44,
+            "note": "SOLD slam 1"
+        },
+        {
+            "kind": "thump",
+            "at": 14.0,
+            "gain": 0.45,
+            "seed": 45,
+            "note": "SOLD slam 2"
+        },
+        {
+            "kind": "thump",
+            "at": 14.6,
+            "gain": 0.5,
+            "seed": 46,
+            "note": "SOLD slam 3"
+        },
+        {
+            "kind": "riser",
+            "at": 20.0,
+            "gain": 0.35,
+            "seed": 47,
+            "note": "procession night"
+        },
+        {
+            "kind": "blip",
+            "at": 23.4,
+            "gain": 0.3,
+            "seed": 48,
+            "note": "bill held out"
+        },
+        {
+            "kind": "riser",
+            "at": 31.6,
+            "gain": 0.5,
+            "seed": 49,
+            "note": "mass flip wave (bed_peak)"
+        },
+        {
+            "kind": "thump",
+            "at": 36.0,
+            "gain": 0.55,
+            "seed": 50,
+            "note": "PAID IN FULL seal — deepest hit of the cut"
+        },
+        {
+            "kind": "whoosh",
+            "at": 41.2,
+            "gain": 0.4,
+            "seed": 51,
+            "note": "cut to black"
+        }
+    ]
+}
