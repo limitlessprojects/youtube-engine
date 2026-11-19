@@ -15,6 +15,7 @@
         {"key": "s8", "role": "narration", "narration": "'Full refund,' he said. 'The buyer backed out.'"},
         {"key": "s9", "role": "narration", "narration": "Then every tag in town flipped to the same number. One dollar."},
         {"key": "s10", "role": "narration", "narration": "The tags were never prices. They were installments."},
-        {"key": "s11", "role": "narration", "narration": "Everyone in this town has a price. I'm the price. Tonight, I was finally paid off."}
+        {"key": "s11", "role": "narration", "narration": "Everyone in this town has a price. I'm the price."},
+        {"key": "s12", "role": "narration", "narration": "Tonight, I was finally paid off."}
     ]
 }

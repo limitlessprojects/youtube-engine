@@ -1,0 +1,169 @@
+{
+  "short": "short-0011",
+  "verified_at": "2026-11-19T07:05:06.803043+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +45%",
+  "gap_s": 0.45,
+  "total_vo_s": 36.6,
+  "timeline_end_s": 42.45,
+  "n_fail": 7,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "narration",
+      "expected": "In this town, everyone wears a price tag. Whoever pays it, owns you.",
+      "heard": "In this town, everyone wears a price tag. Whoever pays it owns you.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.264,
+      "synced_start_s": 0.0
+    },
+    {
+      "line": "01",
+      "role": "narration",
+      "expected": "The Mayor cost nine million. The sheriff, four. I cost one dollar.",
+      "heard": "The mayor cost nine million, the sheriff four. I cost one dollar.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.264,
+      "synced_start_s": 3.714
+    },
+    {
+      "line": "02",
+      "role": "narration",
+      "expected": "People used me as a tip jar.",
+      "heard": "People use me as a tip jar.",
+      "wer": 0.143,
+      "accuracy": 0.857,
+      "verdict": "PASS",
+      "audio_dur_s": 1.872,
+      "synced_start_s": 7.428
+    },
+    {
+      "line": "03",
+      "role": "narration",
+      "expected": "Then a gray-coat stranger arrived, and started buying everyone.",
+      "heard": "Then a gray coat stranger arrived and started buying everyone.",
+      "wer": 0.222,
+      "accuracy": 0.778,
+      "verdict": "WARN",
+      "audio_dur_s": 2.952,
+      "synced_start_s": 9.75
+    },
+    {
+      "line": "04",
+      "role": "narration",
+      "expected": "The butcher. The sheriff. The choir. Sold. Sold. Sold.",
+      "heard": "The butcher, the sheriff, the choir sold, sold, sold.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.624,
+      "synced_start_s": 13.152
+    },
+    {
+      "line": "05",
+      "role": "narration",
+      "expected": "He skipped me. 'Not you. You're not for sale, you're the deposit.'",
+      "heard": "He skipped me, not you. You're not for sale. You're the deposit.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.952,
+      "synced_start_s": 17.226
+    },
+    {
+      "line": "06",
+      "role": "narration",
+      "expected": "By midnight, the whole town marched behind him, gray-eyed.",
+      "heard": "By midnight, the whole town marched behind him gray eyed.",
+      "wer": 0.222,
+      "accuracy": 0.778,
+      "verdict": "WARN",
+      "audio_dur_s": 2.52,
+      "synced_start_s": 20.628
+    },
+    {
+      "line": "07",
+      "role": "narration",
+      "expected": "At dawn, he handed me one dollar. Exact change.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.592,
+      "synced_start_s": 23.598
+    },
+    {
+      "line": "08",
+      "role": "narration",
+      "expected": "I held it. The empty town held its breath.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.04,
+      "synced_start_s": 26.64
+    },
+    {
+      "line": "09",
+      "role": "narration",
+      "expected": "'Full refund,' he said. 'The buyer backed out.'",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.328,
+      "synced_start_s": 29.13
+    },
+    {
+      "line": "10",
+      "role": "narration",
+      "expected": "Then every tag in town flipped to the same number. One dollar.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.808,
+      "synced_start_s": 31.908
+    },
+    {
+      "line": "11",
+      "role": "narration",
+      "expected": "The tags were never prices. They were installments.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.328,
+      "synced_start_s": 35.166
+    },
+    {
+      "line": "12",
+      "role": "narration",
+      "expected": "Everyone in this town has a price. I'm the price.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 2.184,
+      "synced_start_s": 37.944
+    },
+    {
+      "line": "13",
+      "role": "narration",
+      "expected": "Tonight, I was finally paid off.",
+      "heard": "",
+      "wer": 1.0,
+      "accuracy": 0.0,
+      "verdict": "FAIL",
+      "audio_dur_s": 1.872,
+      "synced_start_s": 40.578
+    }
+  ]
+}

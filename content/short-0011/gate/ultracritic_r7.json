@@ -1,0 +1,12 @@
+{
+ "round": 7,
+ "mechanical_fails": [
+  "A5 bed too loud: 9.3 dB under VO (mud)"
+ ],
+ "warns": [
+  "A4 new entity ['Everyone'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Tonight'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ],
+ "verdict": "MECHANICAL_FAIL"
+}

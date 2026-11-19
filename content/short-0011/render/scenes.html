@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#070A18;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0011 — "In this town, you can buy anyone"
+   FICTION LANE test #2 (Larptuber one-rule world, boss day-022
+   brief #2 "The Value System", refined day-023). Same town DNA
+   as #0010 (night-town canvas world) — lane visual identity.
+   Traps honored: two fake twists, real twist in the last 5s,
+   tension never resolved early, loop-to-black, no CTA.
+   Deadpan law: the hero's face NEVER moves.
+   Color law (L-128): amber = value/tags; gray = SOLD/the
+   stranger/the bought; pale blue = dawn; the ONE red = the
+   PAID IN FULL seal (s10) and nothing else.
+   Deterministic: pure function of t (C6).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+const TITLE_FONT = "'Bricolage Grotesque', sans-serif";
+const MONO = "'Fragment Mono', monospace";
+const E = V2.el, cl = V2.clamp01, lerp = V2.lerp;
+const _ctx = document.createElement("canvas").getContext("2d");
+const meas = (s, font) => { _ctx.font = font; return _ctx.measureText(s).width; };
+const seg = (u, a, b) => cl((u - a) / (b - a));
+const pathOf = (a, close) => "M " + a.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L ") + (close ? " Z" : "");
+/* r5: keep an object inside the FRAME in SCREEN space — V2.cam maps
+   world->screen at full zoom, so world-space clamps leak (the r4 $50,000 clip).
+   V2.CAM_NOW is set by renderFrame before any scene draw. */
+V2.keepInFrame = (x, halfWorldW) => {
+  const cn = V2.CAM_NOW || [540, 960, 1];
+  const hw = halfWorldW * cn[2];
+  const sx = Math.max(28 + hw, Math.min((x - cn[0]) * cn[2] + 540, 1052 - hw));
+  return cn[0] + (sx - 540) / cn[2];
+};
+
+/* the hero: same vigil look as #0010 (same town, same kid) */
+V2.LOOKS.vigil = {
+  skin: "#F6EFE3", skinShade: "#E2D3BE", hand: "#F6EFE3",
+  jacket: "#181B30", jacketShade: "#10121F", accent: "#FFB054",
+  limb: "#EFE2CC", line: "#121019", shoe: "#181B30",
+  face: "#1D2033", hair: "#1D2033", extra: "hood",
+};
+/* bought townsfolk: the life drained out (desaturated swap) */
+V2.LOOKS.grayed = {
+  skin: "#C9CBD4", skinShade: "#ACAFBC", hand: "#C9CBD4",
+  jacket: "#3E4456", jacketShade: "#2C3040", accent: "#5A6076",
+  limb: "#B4B7C4", line: "#171A26", shoe: "#3E4456",
+  face: "#23262F", hair: "#2E3140", extra: "hood",
+};
+/* the stranger: the walking absence of value — nothing warm on him */
+V2.LOOKS.strange = {
+  skin: "#DCDDE2", skinShade: "#BCBEC9", hand: "#DCDDE2",
+  jacket: "#565B6E", jacketShade: "#3E4456", accent: "#8A8FA3",
+  limb: "#C9CBD4", line: "#1A1C26", shoe: "#2C2F3C",
+  face: "#23262F", hair: "#2E3140",
+};
+
+/* world tokens — value-system town */
+const K = {
+  duskTop: "#2A1E4A", duskLow: "#63304E", nightTop: "#0A0E24", nightLow: "#1A1440",
+  dawnTop: "#24345C", dawnLow: "#7E9CC4", dawnHi: "#A8BDD4", paidTop: "#2E3A64", paidLow: "#8FA0C0",
+  bldg: "#1B2142", bldgShade: "#141833", bldgFar: "#232A52",
+  win: "#FFC878", winDim: "#8A6B4A", winOff: "#242A4A",
+  street: "#262E52", streetFar: "#12162E",
+  money: P.amber, moneyHi: "#FFD7A0",
+  sold: "#9AA0B4", soldDeep: "#3E4456",
+  seal: "#E8281C", sealDeep: "#3A0505",
+  ink2: "#0A0A18", ember: "#FF6A2A",
+  ash: "#3A4268", dawnDust: "#A8BDD4",
+  grayEyes: "#8A8FA3",
+};
+
+/* ---------- price tag: the lane's signature device ----------
+   flip = 0..1: first half squashes the FROM text to zero-width,
+   second half grows the TO text back (coin-flip illusion). */
+function tag(parent, x, y, text, col, s, bob, flip) {
+  s = s || 1;
+  const w = Math.max(76, text.length * 30 + 44), h = 62;
+  /* L-127/#0010 rule: no clipped money — clamp in SCREEN space (cam-aware) */
+  const halfW = (w * s) / 2;
+  x = V2.keepInFrame(x, halfW);
+  const g = E("g", { transform: `translate(${x} ${y + Math.sin(bob || 0) * 5}) scale(${s})` }, parent);
+  E("path", { d: `M ${-w / 2 - 12} ${-h / 2} L ${-w / 2 + 10} ${-h} L ${-w / 2 + 10} ${h / 2} Z`, fill: col, opacity: 0.9 }, g);
+  E("rect", { x: -w / 2, y: -h / 2, width: w, height: h, rx: 12, fill: col, stroke: P.ink, "stroke-width": 5 }, g);
+  if (flip !== undefined && flip > 0 && flip < 1) {
+    const kx = flip < 0.5 ? 1 - flip * 2 : (flip - 0.5) * 2;
+    E("rect", { x: -w * kx / 2, y: -h / 2, width: w * kx, height: h, rx: 12, fill: "#0A0D1E", opacity: 0.85 }, g);
+  } else {
+    V2.txt(0, 9, text, { "text-anchor": "middle", "font-family": MONO, "font-size": 40, "font-weight": 700, fill: P.ink }, g);
+  }
+  return g;
+}
+/* SOLD plate: gray slab slams over a tag (scale pop + rotate) */
+function soldPlate(parent, x, y, k, s) {
+  if (k <= 0.001) return;
+  s = (s || 1);
+  x = V2.keepInFrame(x, 89 * s);
+  const pop = V2.backOutBig(cl(k));
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${-7 * pop}) scale(${s * (0.62 + 0.38 * pop)})`, opacity: cl(k * 3) }, parent);
+  const w = 178, h = 64;
+  E("rect", { x: -w / 2 - 6, y: -h / 2 + 6, width: w, height: h, rx: 10, fill: "#000", opacity: 0.4 }, g);
+  E("rect", { x: -w / 2, y: -h / 2, width: w, height: h, rx: 10, fill: K.soldDeep, stroke: "#C8CDDC", "stroke-width": 6 }, g);
+  V2.txt(0, 10, "SOLD", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 40, fill: "#E4E8F2", stroke: P.ink, "stroke-width": 3, "paint-order": "stroke" }, g);
+}
+
+/* ---------- town backdrop: sky + 2 building bands + street ----------
+   phase: 0 dusk · 1 sold-night · 2 dawn · 3 paid-dawn (amber restored) */
+function townscape(t, phase, cam) {
+  const g = E("g", { transform: `translate(540 960) scale(${1 + (cam[2] - 1) * 0.22}) translate(${-540 - (cam[0] - 540) * 0.22} ${-960 - (cam[1] - 940) * 0.22})` });
+  const tops = [K.duskTop, K.nightTop, K.dawnTop, K.paidTop];
+  const lows = [K.duskLow, K.nightLow, K.dawnLow, K.paidLow];
+  const lg = E("linearGradient", { id: "kSky", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", tops[phase]], ["62%", lows[phase]], ["100%", phase === 0 ? "#3A2450" : phase === 1 ? "#0C0A22" : K.dawnHi]].forEach(([o, c]) => E("stop", { offset: o, "stop-color": c }, lg));
+  E("rect", { x: -300, y: -500, width: 1680, height: 2400, fill: "url(#kSky)" }, g);
+  /* dusk sun / night moon / rising dawn sun */
+  if (phase === 0) {
+    E("circle", { cx: 820, cy: 560, r: 120, fill: "#FFB054", opacity: 0.85 }, g);
+    E("circle", { cx: 820, cy: 560, r: 170, fill: "#FFB054", opacity: 0.18 }, g);
+  } else if (phase === 1) {
+    E("circle", { cx: 260, cy: 420, r: 84, fill: "#D8E0F4", opacity: 0.5 }, g);
+    E("circle", { cx: 296, cy: 404, r: 84, fill: tops[1], opacity: 0.9 }, g);
+  } else {
+    const dy = lerp(1250, 690, phase === 2 ? 0.55 : 0.9);
+    E("circle", { cx: 540, cy: dy, r: 105, fill: "#FFE9C8", opacity: 0.92 }, g);
+    E("circle", { cx: 540, cy: dy, r: 160, fill: "#FFE9C8", opacity: 0.16 }, g);
+  }
+  /* far band (behind) */
+  for (let i = 0; i < 9; i++) {
+    const bx = -260 + i * 200 + V2.rnd(201, i) * 60, bw = 130 + V2.rnd(202, i) * 90, bh = 320 + V2.rnd(203, i) * 260;
+    E("rect", { x: bx, y: 1480 - bh, width: bw, height: bh + 420, fill: K.bldgFar, opacity: phase >= 2 ? 0.7 : 0.55 }, g);
+    for (let w = 0; w < 4; w++) if (V2.rnd(204, i * 7 + w) > 0.55)
+      E("rect", { x: bx + 18 + w * 26, y: 1480 - bh + 40 + V2.rnd(205, i + w) * 120, width: 14, height: 20, fill: phase >= 2 ? K.winDim : K.winOff }, g);
+  }
+  /* near band: facades with warm windows (L-128: windows never own amber) */
+  for (let i = 0; i < 7; i++) {
+    const bx = -220 + i * 230 + V2.rnd(206, i) * 50, bw = 165 + V2.rnd(207, i) * 80, bh = 420 + V2.rnd(208, i) * 330;
+    E("rect", { x: bx, y: 1500 - bh, width: bw, height: bh + 460, fill: K.bldg, stroke: P.ink, "stroke-width": 4 }, g);
+    E("rect", { x: bx, y: 1500 - bh, width: 18, height: bh + 460, fill: K.bldgShade }, g);
+    for (let wy = 0; wy < Math.floor(bh / 150); wy++) for (let wx = 0; wx < 3; wx++) {
+      const lit = phase === 0 ? V2.rnd(209, i * 11 + wy * 3 + wx) > 0.8 : phase === 1 ? V2.rnd(209, i * 11 + wy * 3 + wx) > 0.9 : V2.rnd(209, i * 11 + wy * 3 + wx) > 0.72;
+      E("rect", { x: bx + 30 + wx * (bw - 55) / 2.4, y: 1500 - bh + 46 + wy * 150, width: 34, height: 52, rx: 4,
+        fill: lit ? (phase === 1 ? K.winDim : phase === 0 ? "#C08A50" : "#D89A58") : K.winOff, opacity: lit ? 0.72 : 1 }, g);
+    }
+    E("rect", { x: bx + bw * 0.3, y: 1500, width: bw * 0.4, height: 26, fill: K.bldgShade, opacity: 0.7 }, g);
+  }
+  /* street */
+  E("rect", { x: -300, y: 1500, width: 1680, height: 620, fill: phase === 1 ? "#2C3560" : K.street }, g);
+  E("rect", { x: -300, y: 1500, width: 1680, height: 16, fill: K.streetFar }, g);
+  for (let i = 0; i < 7; i++) E("rect", { x: -240 + i * 260, y: 1560 + V2.rnd(210, i) * 300, width: 120, height: 10, fill: "#3A4272", opacity: 0.5 }, g);
+  /* L-127 street life: far-side lampposts, reflections, curb, crosswalk, manhole */
+  const refC = phase === 0 ? "#C08A50" : phase === 1 ? "#5A6488" : "#D8C8A0";
+  for (let i = 0; i < 9; i++) {
+    const sx2 = -180 + i * 160 + V2.rnd(240, i) * 50;
+    E("rect", { x: sx2, y: 1512 + V2.rnd(241, i) * 130, width: 16, height: 50 + V2.rnd(242, i) * 90, rx: 8,
+      fill: refC, opacity: 0.09, style: "mix-blend-mode:screen" }, g);
+  }
+  E("rect", { x: -300, y: 1500, width: 1680, height: 12, fill: "#3A4272", opacity: 0.8 }, g);
+  for (let i = 0; i < 4; i++) E("rect", { x: 140 + i * 190, y: 1800, width: 96, height: 13, rx: 3, fill: "#3A4272", opacity: 0.55 }, g);
+  for (let i = 0; i < 3; i++) E("rect", { x: 240 + i * 260, y: 1856, width: 120, height: 15, rx: 3, fill: "#333B66", opacity: 0.45 }, g);
+  [[150, 1], [935, -1]].forEach(([lx, sd]) => {
+    E("rect", { x: lx - 6, y: 1082, width: 12, height: 424, fill: "#0C0F22", stroke: P.ink, "stroke-width": 3 }, g);
+    E("path", { d: `M ${lx} 1092 L ${lx} 1064 L ${lx + sd * 34} 1072`, stroke: "#0C0F22", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }, g);
+    E("circle", { cx: lx + sd * 38, cy: 1078, r: 13, fill: "#FFD9A0", opacity: 0.95 }, g);
+    E("circle", { cx: lx + sd * 38, cy: 1078, r: 26, fill: "#FFD9A0", opacity: 0.25 }, g);
+    E("path", { d: `M ${lx + sd * 20} 1082 L ${lx + sd * 92} 1500 L ${lx - sd * 30} 1500 Z`, fill: "#FFD9A0", opacity: 0.07, style: "mix-blend-mode:screen" }, g);
+    E("ellipse", { cx: lx + sd * 30, cy: 1516, rx: 130, ry: 24, fill: "#FFD9A0", opacity: 0.12, style: "mix-blend-mode:screen" }, g);
+  });
+  E("ellipse", { cx: 560, cy: 1688, rx: 44, ry: 13, fill: "#101426", stroke: "#3A4272", "stroke-width": 4 }, g);
+  /* the dawn mist band (phases 2-3): soft low fog so the palette shift reads */
+  if (phase >= 2) {
+    const mg = E("linearGradient", { id: "kMist", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+    [["0%", K.dawnHi, 0], ["100%", K.dawnHi, 0.28]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, mg));
+    E("rect", { x: -300, y: 1280, width: 1680, height: 260, fill: "url(#kMist)" }, g);
+  }
+  E("rect", { x: -300, y: 1908, width: 1680, height: 212, fill: "#141833" }, g);
+  E("rect", { x: -300, y: 1908, width: 1680, height: 8, fill: "#232A52", opacity: 0.8 }, g);
+  return g;
+}
+
+/* ---------- NPC: mini stick figure (smirk / flick / freeze / march) ---------- */
+function npc(parent, x, y, s, o) {
+  o = o || {};
+  const t = o.t || 0;
+  const bought = o.bought || 0;
+  const p = Object.assign({}, V2.basePose, {
+    x, y: y - 140 * s, scale: s, expr: o.expr || (bought ? "tired" : "happy"), facing: o.facing || 1,
+    tilt: (o.tilt || 0) + (o.march ? Math.sin(t * 6 + x) * 4 : Math.sin(t * 1.4 + x) * 1.5),
+    sway: o.march ? Math.sin(t * 6 + x) * 5 : Math.sin(t * 1.2 + x) * 4,
+    blink: 0, glasses: 0,
+    armL: o.armL || (o.march ? { a: 40 + Math.sin(t * 6 + x) * 24, b: -22 } : { a: 20, b: -10 }),
+    armR: o.armR || (o.march ? { a: 40 - Math.sin(t * 6 + x) * 24, b: -22 } : { a: 20, b: -10 }),
+    legL: o.march ? { a: 26 + Math.sin(t * 6 + x) * 22, b: -14 } : (o.legL || { a: 4, b: 0 }),
+    legR: o.march ? { a: -26 + Math.sin(t * 6 + x) * 22, b: 14 } : (o.legR || { a: -4, b: 0 }),
+    look: o.look || 0, headTilt: o.headTilt || 0,
+  });
+  if (o.flick) { p.armR = { a: 96 + Math.sin(t * 8 + x) * 8, b: -48 }; p.expr = "smug"; }
+  if (o.frozen) { p.armL = { a: 20, b: -10 }; p.armR = { a: 20, b: -10 }; p.sway = 0; }
+  if (!o.noShadow) E("ellipse", { cx: x + 5, cy: y + 4, rx: 46 * s, ry: 12 * s, fill: "#04040A", opacity: 0.48 }, parent);
+  /* L-127: look OBJECT (strings made look values undefined once) */
+  V2.Hero(p, o.look2 || (bought ? V2.LOOKS.grayed : V2.LOOKS.kip), "vRimR", bought ? 0.35 : 0.6, parent);
+  if (o.price !== undefined) {
+    tag(parent, x + (o.tagDX || 0), y - 440 * s, o.flip > 0 ? "$1" : o.price,
+      o.flip > 0 ? K.money : K.money, 0.8 * s, t * 2 + x,
+      o.flip !== undefined && o.flip > 0 && o.flip < 1 ? o.flip : undefined);
+    if (o.sold > 0) soldPlate(parent, x + (o.tagDX || 0), y - 440 * s, o.sold, 0.82 * s);
+  }
+}
+
+/* ---------- the hero: deadpan law + long coat + the $1 tag ---------- */
+function hero2(parent, x, y, s, o) {
+  o = o || {};
+  const t = o.t || 0;
+  const bc = (t * 0.85) % 3.2;
+  const bl = o.blinkOff ? 0 : (bc < 0.13 ? cl(1 - Math.abs(bc - 0.065) / 0.065) : 0);
+  const p = Object.assign({}, V2.basePose, {
+    x, y: y - 140 * s, scale: s, expr: "neutral", facing: o.facing || 1,
+    tilt: o.tilt || 0, headTilt: o.headTilt || 0, look: o.look || 0, blink: bl,
+    sway: o.sway === undefined ? Math.sin(t * 1.5) * 3 : o.sway, squash: o.squash || 0,
+    armL: o.armL || { a: 12, b: -8 }, armR: o.armR || { a: 12, b: -8 },
+    legL: o.legL || { a: 4, b: 0 }, legR: o.legR || { a: -4, b: 0 },
+    handL: o.handL || "open", handR: o.handR || "open",
+  });
+  if (o.walk) {
+    const cyc = (o.walkCyc || t * 5.4);
+    p.legL = { a: 22 + Math.sin(cyc) * 20, b: -12 }; p.legR = { a: -22 + Math.cos(cyc) * 20, b: 10 };
+    p.armL = { a: 30 + Math.sin(cyc) * 16, b: -14 }; p.armR = { a: 30 - Math.sin(cyc) * 16, b: -14 };
+  }
+  /* grounding + separation: contact shadow, soft pool behind the figure (L-127) */
+  if (!o.noShadow) E("ellipse", { cx: x + 8, cy: y + 6, rx: 68 * s, ry: 17 * s, fill: "#03030A", opacity: 0.58 }, parent);
+  if (!o.noPool) V2.glow(x + (o.poolDX || 0), y - 180 * s, 230 * s, "Warm", o.poolOp || 0.13, parent);
+  /* long coat: back cape + front panel (identical vigil coat) */
+  const capeK = o.cape || 0;
+  if (capeK > 0.01) {
+    const cg = E("g", { transform: `translate(${x} ${y - 150 * s}) rotate(${p.tilt} 0 -40) scale(${s})` }, parent);
+    const flare = 26 + capeK * 66;
+    E("path", { d: `M -34 -96 C -44 -20 ${-flare - 18} 70 ${-flare} 150 L ${flare * 0.7} 148 C ${flare * 0.55} 60 ${flare * 0.4} -20 30 -96 Z`,
+      fill: "#10121F", stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round", opacity: 0.97 }, cg);
+  }
+  V2.Hero(p, V2.LOOKS.vigil, "vRimL", 0.65, parent);
+  if (!o.noCoat) {
+    const fg = E("g", { transform: `translate(${x} ${y - 150 * s}) rotate(${p.tilt} 0 -40) scale(${s})` }, parent);
+    E("path", { d: "M -40 -100 C -48 -30 -40 40 -30 108 L 30 108 C 42 40 48 -30 40 -100 C 14 -110 -14 -110 -40 -100 Z",
+      fill: "#181B30", stroke: P.ink, "stroke-width": 5, "stroke-linejoin": "round" }, fg);
+    E("path", { d: "M 0 -104 L 4 104", stroke: P.ink, "stroke-width": 3, opacity: 0.5 }, fg);
+    E("path", { d: "M -34 -92 L -26 96", stroke: "#2A2F52", "stroke-width": 5, opacity: 0.8 }, fg);
+    E("path", { d: "M 34 -92 L 26 96", stroke: "#10121F", "stroke-width": 5, opacity: 0.8 }, fg);
+    E("path", { d: "M 40 -100 C 48 -30 42 40 30 108", stroke: "#FFB054", "stroke-width": 6, opacity: 0.5, fill: "none", "stroke-linecap": "round" }, fg);
+    E("path", { d: "M -40 -100 C -14 -114 16 -114 40 -100", stroke: "#FFD7A0", "stroke-width": 7, opacity: 0.55, fill: "none", "stroke-linecap": "round" }, fg);
+  }
+  /* the $1 tag: pulses on demand (o.pulse 0..1), flips to PAID IN FULL (o.paid 0..1) */
+  const sx = x + (o.stickerDX || 0), sy = y - 440 * s + Math.sin(t * 2) * 6;
+  if (o.paid !== undefined && o.paid > 0) {
+    const pk = V2.backOutBig(cl(o.paid));
+    const sf = 44, tw = meas("PAID IN FULL", `800 ${sf}px ${TITLE_FONT}`) + 84;
+    const g2 = E("g", { transform: `translate(${sx} ${sy}) rotate(${-6 * pk}) scale(${Math.min(s, 1.3) * (0.7 + 0.3 * pk)})`, opacity: cl(o.paid * 3) }, parent);
+    V2.glow(0, 0, tw * 0.7, "Warm", 0.8, g2);
+    E("rect", { x: -tw / 2, y: -52, width: tw, height: 104, rx: 16, fill: K.sealDeep, stroke: K.seal, "stroke-width": 8 }, g2);
+    E("rect", { x: -tw / 2 + 14, y: -40, width: tw - 28, height: 80, rx: 10, fill: "none", stroke: K.seal, "stroke-width": 3, opacity: 0.6 }, g2);
+    V2.txt(0, 14, "PAID IN FULL", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": sf, fill: K.seal, stroke: "#FFE8E0", "stroke-width": 2 }, g2);
+  } else if (o.sticker !== false) {
+    const pulse = o.pulse ? 1 + Math.sin(o.pulse * Math.PI) * 0.16 : 1;
+    const g2 = E("g", { transform: `translate(${sx} ${sy}) scale(${s * (o.stickerS || 1) * pulse})` }, parent);
+    if (o.stickerGlow) V2.glow(0, 0, 190, "Warm", 0.5, g2);
+    E("rect", { x: -62, y: -48, width: 124, height: 96, rx: 14, fill: "#05060F", opacity: 0.32 }, g2);
+    E("rect", { x: -52, y: -38, width: 104, height: 76, rx: 10, fill: "#262C4A", stroke: "#CBD6F2", "stroke-width": 6 }, g2);
+    V2.txt(0, 8, "$1", { "text-anchor": "middle", "font-family": MONO, "font-size": 56, "font-weight": 700, fill: P.cream, stroke: P.ink, "stroke-width": 3, "paint-order": "stroke" }, g2);
+  }
+}
+
+/* ---------- the stranger: gray coat, gray hat, ledger ---------- */
+function stranger(parent, x, y, s, o) {
+  o = o || {};
+  const t = o.t || 0;
+  const p = Object.assign({}, V2.basePose, {
+    x, y: y - 150 * s, scale: s, expr: "neutral", facing: o.facing === undefined ? 1 : o.facing,
+    tilt: o.tilt || 0, headTilt: o.headTilt || 0, look: o.look || 0, blink: 0,
+    sway: o.walk ? Math.sin(t * 5) * 6 : 0,
+    armL: o.armL || { a: 14, b: -8 }, armR: o.armR || { a: 14, b: -8 },
+    legL: { a: o.walk ? 22 + Math.sin(t * 5) * 20 : 4, b: o.walk ? -12 : 0 },
+    legR: { a: o.walk ? -22 + Math.sin(t * 5) * 20 : -4, b: o.walk ? 10 : 0 },
+    handR: o.handR || "open",
+  });
+  if (!o.noShadow) E("ellipse", { cx: x + 6, cy: y + 6, rx: 72 * s, ry: 18 * s, fill: "#04040A", opacity: 0.55 }, parent);
+  /* desaturated pool ONLY — no warm glow on the man who buys people */
+  V2.glow(x, y - 190 * s, 220 * s, "Cool", 0.1, parent);
+  V2.Hero(p, V2.LOOKS.strange, "vRimR", 0.4, parent);
+  /* long gray coat */
+  const fg = E("g", { transform: `translate(${x} ${y - 160 * s}) rotate(${p.tilt} 0 -40) scale(${s})` }, parent);
+  E("path", { d: "M -44 -108 C -54 -34 -46 44 -34 118 L 34 118 C 46 44 54 -34 44 -108 C 16 -118 -16 -118 -44 -108 Z",
+    fill: "#3E4456", stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, fg);
+  E("path", { d: "M 0 -112 L 3 116", stroke: P.ink, "stroke-width": 3.5, opacity: 0.6 }, fg);
+  E("path", { d: "M -38 -100 L -30 106", stroke: "#2C3040", "stroke-width": 5, opacity: 0.9 }, fg);
+  E("path", { d: "M 38 -100 L 30 106", stroke: "#2C3040", "stroke-width": 5, opacity: 0.9 }, fg);
+  /* gray hat: brim + flat crown (drawn over the head zone) */
+  const hg = E("g", { transform: `translate(${x} ${y - 150 * s}) rotate(${p.tilt + (o.hatTip || 0)} 0 ${0}) scale(${s})` }, parent);
+  E("ellipse", { cx: 0, cy: -238, rx: 74, ry: 16, fill: "#2C2F3C", stroke: P.ink, "stroke-width": 4 }, hg);
+  E("path", { d: `M -46 -242 L -40 -300 L 40 -300 L 46 -242 Z`, fill: "#3E4456", stroke: P.ink, "stroke-width": 4 }, hg);
+  E("rect", { x: -46, y: -254, width: 92, height: 14, rx: 6, fill: "#1F222C" }, hg);
+  /* ledger book under the arm (closes on demand: o.ledger 0..1 tilt) */
+  if (o.ledger !== false) {
+    const lg = E("g", { transform: `translate(${x + 58 * s * (o.facing === undefined ? 1 : o.facing)} ${y - 160 * s}) rotate(${o.ledger || 0}) scale(${s})` }, parent);
+    E("rect", { x: -34, y: -52, width: 68, height: 104, rx: 6, fill: "#8A6B4A", stroke: P.ink, "stroke-width": 5 }, lg);
+    E("line", { x1: 0, y1: -52, x2: 0, y2: 52, stroke: P.ink, "stroke-width": 4 }, lg);
+    for (let i = 0; i < 4; i++) E("line", { x1: -24, y1: -34 + i * 20, x2: -4, y2: -34 + i * 20, stroke: "#5E4A32", "stroke-width": 3 }, lg);
+  }
+  /* the bill held between two fingers (o.bill 0..1: extend) */
+  if (o.bill > 0) {
+    const bk = V2.easeInOut(cl(o.bill));
+    const bg = E("g", { transform: `translate(${x + 66 * s + bk * 26} ${y - 170 * s}) rotate(${-8}) scale(${s})` }, parent);
+    E("rect", { x: -56, y: -30, width: 112, height: 60, rx: 6, fill: "#B9C9A2", stroke: P.ink, "stroke-width": 5 }, bg);
+    E("rect", { x: -44, y: -20, width: 88, height: 40, rx: 4, fill: "none", stroke: "#7E9468", "stroke-width": 3 }, bg);
+    V2.txt(0, 12, "$1", { "text-anchor": "middle", "font-family": MONO, "font-size": 34, "font-weight": 700, fill: "#3E4A32" }, bg);
+  }
+}
+/* ---------- steel door (town hall entrance, s11/s12) ---------- */
+function door(parent, x, y, w, h, k, o) {
+  o = o || {};
+  const g = E("g", { transform: `translate(${x} ${y})` }, parent);
+  E("rect", { x: -w / 2 - 16, y: -h - 14, width: w + 32, height: h + 18, fill: K.bldgShade, stroke: P.ink, "stroke-width": 6 }, g);
+  if (k > 0.02) {
+    const ig = E("linearGradient", { id: V2.uid("kd"), x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+    [["0%", "#FFE9C8"], ["70%", "#D8A868"], ["100%", "#8A5E30"]].forEach(([o2, c]) => E("stop", { offset: o2, "stop-color": c }, ig));
+    E("path", { d: `M ${-w / 2} 0 L ${-w / 2 - k * 60} ${-h * (1 - k * 0.16)} L ${w / 2 - k * 30} ${-h * (1 - k * 0.2)} L ${w / 2} 0 Z`, fill: `url(#${ig.id})`, opacity: 0.85 }, g);
+    E("path", { d: `M ${-w / 2} 0 L ${w / 2} 0 L ${w / 2 + 90 * k} 120 L ${-w / 2 - 120 * k} 120 Z`, fill: "#FFE9C8", opacity: 0.15 * k, style: "mix-blend-mode:screen" }, g);
+  }
+  const sk = o.slam ? Math.sin(o.slam * Math.PI) : 0;
+  const dg = E("g", { transform: `rotate(${k * -(o.openA || 46) + sk * 4} ${w / 2} 0)` }, g);
+  E("rect", { x: -w / 2, y: -h, width: w, height: h, rx: 6, fill: o.leaf || K.steel || "#93A1C0", stroke: P.ink, "stroke-width": 7 }, dg);
+  E("rect", { x: -w / 2 + 10, y: -h + 10, width: w - 20, height: h - 20, rx: 4, fill: "none", stroke: "#525E80", "stroke-width": 5 }, dg);
+  E("rect", { x: -w / 2 + 10, y: -h * 0.5, width: w - 20, height: h * 0.5 - 10, rx: 4, fill: "#000", opacity: 0.14 }, dg);
+  for (let i = 0; i < 5; i++) { E("circle", { cx: -w / 2 + 18, cy: -h + 26 + i * (h - 52) / 4, r: 5, fill: "#D5DEF0" }, dg); E("circle", { cx: w / 2 - 18, cy: -h + 26 + i * (h - 52) / 4, r: 5, fill: "#D5DEF0" }, dg); }
+  return g;
+}
+
+/* ---------- text systems (C1: one per scene, <=5 words) ---------- */
+function title(lines, y, size, kf) {
+  lines.forEach((ln, i) => {
+    const k = kf(i); if (k <= 0.001) return;
+    const pop = V2.backOut(cl(k));
+    V2.txt(540, y + i * size * 1.06 + (1 - pop) * 50, ln, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+      "font-size": size, fill: "#FFFDF6", stroke: P.ink, "stroke-width": 13, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
+  });
+}
+function stamp(k, y, text, col, size) {
+  if (k <= 0.001) return;
+  size = size || 64;
+  const pop = V2.backOutBig(cl(k)), font = `800 ${size}px ${TITLE_FONT}`;
+  const w = meas(text, font) + 96, h = size * 1.9;
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(540 ${y}) scale(${0.7 + 0.3 * pop})` });
+  E("rect", { x: -w / 2, y: -h / 2 + 8, width: w, height: h, rx: h * 0.26, fill: "#000", opacity: 0.4 }, g);
+  E("rect", { x: -w / 2, y: -h / 2, width: w, height: h, rx: h * 0.26, fill: P.ink, stroke: col, "stroke-width": 6 }, g);
+  const tcol = (col === K.sold || col === "#CBD6F2") ? "#E9EDF6" : col;
+  V2.txt(0, size * 0.34, text, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": size, fill: tcol, stroke: P.ink, "stroke-width": 3, "paint-order": "stroke" }, g);
+}
+const ring = (x, y, k, col) => { if (k > 0 && k < 1) E("ellipse", { cx: x, cy: y, rx: 16 + k * 110, ry: 6 + k * 36, fill: "none", stroke: col || "#FFF6EA", "stroke-width": 9 * (1 - k), opacity: 1 - k }); };
+
+/* crowd helper: standing folk at depth with tags (flip/sold states) */
+function crowd(parent, t, rows, o) {
+  o = o || {};
+  rows.forEach((r, i) => {
+    const [x, y, s, price] = r;
+    const flip = o.flip && o.flip(x, y);
+    const sold = o.sold && o.sold(x, y);
+    npc(parent, x, y, s, { t, price, flip, sold, bought: o.bought === undefined ? (sold !== undefined && sold >= 1) : o.bought(x, y), frozen: o.frozen, march: o.march, expr: o.expr });
+  });
+}
+
+const TITLE = ["YOU CAN BUY ANYONE"]; /* r3: <=6-word header; the lane marker lives in VO sentence one */
+const SC = {};
+
+/* hook: dusk square — tags over everyone, the hero's gray $1 */
+/* r2 hook redesign: ONE dominant element — the hero + the $1 tag.
+   The crowd is silhouette texture (no tags, dark), exactly ONE contrast
+   tag in frame ($50,000) so the mute-test math reads: $50,000 vs $1.
+   11 text objects -> 5. */
+SC.hook = { cam: [[540, 880, 1.0], [540, 950, 1.18]],
+  world(lt, u, t) {
+    return { phase: 0, over: () => {
+      /* silhouette crowd: dark, tag-less, half-lit */
+      npc(V2.root, 150, 1560, 1.05, { t, expr: "happy", armR: { a: 60, b: -70 } });
+      npc(V2.root, 295, 1585, 0.92, { t });
+      npc(V2.root, 790, 1590, 0.95, { t, facing: -1 });
+      npc(V2.root, 940, 1560, 1.02, { t, facing: -1, expr: "happy", armL: { a: -60, b: 70 } });
+      /* the one speaking tag: $50,000 pointing at the hero */
+      npc(V2.root, 895, 1560, 0.88, { t, price: "$50,000", facing: -1, point: 1, tagDX: -120 });
+      /* the hero, LARGE, warm-pooled — the frame's center of gravity */
+      hero2(V2.root, 520, 1610, 1.78, { t, poolOp: 0.22, stickerS: 1.32, stickerGlow: 1 });
+    } };
+  },
+  over(lt, u) {
+    /* r3: luminous header — warm under-glow + heavier keyline so it survives daylight phones */
+    const k0 = seg(u, 0.02, 0.17);
+    if (k0 > 0.001) V2.glow(540, 215, 620, "Warm", 0.5 * cl(k0 * 2), V2.root);
+    title(TITLE, 210, 104, (i) => seg(u, 0.02 + i * 0.09, 0.17 + i * 0.09));
+  } };
+
+/* s0: the triptych — nine million, four thousand, one dollar */
+SC.s0 = { cam: [[540, 1060, 1.06], [540, 1120, 1.26]],
+  world(lt, u, t) {
+    return { phase: 0, over: () => {
+      /* the mayor's mansion, left-bg: the $9M lives on the BUILDING */
+      E("rect", { x: 40, y: 1010, width: 360, height: 500, fill: K.bldg, stroke: P.ink, "stroke-width": 5 }, V2.root);
+      E("path", { d: "M 30 1010 L 220 880 L 410 1010 Z", fill: K.bldgShade, stroke: P.ink, "stroke-width": 5 }, V2.root);
+      for (let i = 0; i < 3; i++) E("rect", { x: 90 + i * 100, y: 1080, width: 52, height: 66, rx: 6, fill: "#C08A50", opacity: 0.8 }, V2.root);
+      tag(V2.root, 220, 960, "$9,000,000", K.moneyHi, 1.0, t * 2);
+      npc(V2.root, 810, 1560, 1.1, { t, price: "$4,000", expr: "smug", facing: -0.6 });
+      npc(V2.root, 950, 1545, 0.85, { t, price: "$12,000", facing: -1 });
+      hero2(V2.root, 480, 1630, 1.62, { t, look: -0.3 });
+    } };
+  },
+  over(lt, u) { stamp(seg(u, 0.62, 0.78), 300, "$1", "#CBD6F2", 96); } };
+
+/* s1: used as a tip jar — coins flick, one pings off the $1 tag */
+SC.s1 = { cam: [[540, 1160, 1.3], [540, 1180, 1.42]],
+  world(lt, u, t) {
+    return { phase: 0, over: () => {
+      hero2(V2.root, 540, 1640, 1.66, { t });
+      npc(V2.root, 220, 1620, 1.15, { t, flick: 1, price: "$2,000", facing: 1 });
+      npc(V2.root, 880, 1610, 1.05, { t, flick: 1, price: "$50,000", facing: -1 });
+      npc(V2.root, 120, 1540, 0.8, { t, expr: "smug" });
+      /* two coin arcs: flick hand -> bounce off the tag */
+      const c1 = seg(u, 0.08, 0.55);
+      if (c1 > 0 && c1 < 1) {
+        const cx1 = lerp(300, 520, c1), cy1 = 1430 - Math.sin(c1 * Math.PI) * 180 + c1 * 190;
+        E("circle", { cx: cx1, cy: cy1, r: 13, fill: "#D8B45A", stroke: P.ink, "stroke-width": 4 }, V2.root);
+      }
+      if (c1 >= 0.55 && c1 < 0.62) ring(540, 1245, (c1 - 0.55) * 8, "#FFD7A0");
+      const c2 = seg(u, 0.3, 0.78);
+      if (c2 > 0 && c2 < 1) {
+        const cx2 = lerp(770, 560, c2), cy2 = 1440 - Math.sin(c2 * Math.PI) * 170 + c2 * 200;
+        E("circle", { cx: cx2, cy: cy2, r: 12, fill: "#D8B45A", stroke: P.ink, "stroke-width": 4 }, V2.root);
+      }
+      if (c2 >= 0.78) E("circle", { cx: 560, cy: 1652, r: 12, fill: "#D8B45A", stroke: P.ink, "stroke-width": 4 }, V2.root);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s2: the stranger arrives — first tag flips SOLD */
+SC.s2 = { cam: [[420, 1120, 1.1], [620, 1150, 1.24]],
+  world(lt, u, t) {
+    const sx = lerp(60, 360, V2.easeInOut(seg(u, 0.05, 0.72)));
+    return { phase: seg(u, 0.0, 0.2) > 0.5 ? 1 : 0, over: () => {
+      crowd(V2.root, t, [[180, 1580, 1.0, "$2,000"], [860, 1575, 1.0, "$12,000"], [985, 1538, 0.78, "$8,000"], [350, 1550, 0.62, "$500"]],
+        { sold: (x, y) => (y > 1560 ? seg(u, 0.66, 0.82) : 0) });
+      stranger(V2.root, sx, 1600, 1.42, { t, walk: seg(u, 0.05, 0.72) > 0 && seg(u, 0.05, 0.72) < 0.98 });
+      hero2(V2.root, 700, 1630, 1.5, { t, noPool: 1, poolDX: -40 });
+    } };
+  },
+  over(lt, u) {} };
+
+/* s3: the ladder — butcher, sheriff, choir. Sold. Sold. Sold. */
+SC.s3 = { cam: [[540, 1060, 1.16], [540, 1140, 1.32]],
+  world(lt, u, t) {
+    return { phase: 1, over: () => {
+      const soldK = [seg(u, 0.1, 0.26), seg(u, 0.38, 0.54), seg(u, 0.64, 0.8)];
+      /* butcher */
+      npc(V2.root, 180, 1600, 1.16, { t, price: "$6,000", sold: soldK[0], bought: soldK[0] >= 1, frozen: soldK[0] >= 1, tagDX: 40 });
+      /* sheriff */
+      npc(V2.root, 520, 1580, 1.1, { t, price: "$4,000", sold: soldK[1], bought: soldK[1] >= 1, frozen: soldK[1] >= 1 });
+      /* the choir: three minis in a row */
+      [[745, 1562, 0.7], [838, 1550, 0.66], [925, 1540, 0.62]].forEach(([cx2, cy2, cs], i) => {
+        npc(V2.root, cx2, cy2, cs, { t, price: "$1,000", sold: soldK[2], bought: soldK[2] >= 1, frozen: soldK[2] >= 1, tagDX: -26 });
+      });
+      hero2(V2.root, 400, 1640, 1.28, { t, noPool: 1, look: 0.6 });
+      if (soldK[0] >= 1) ring(180, 1160, seg(u, 0.26, 0.44), K.sold);
+      if (soldK[1] >= 1) ring(520, 1140, seg(u, 0.54, 0.72), K.sold);
+      if (soldK[2] >= 1) ring(860, 1108, seg(u, 0.8, 0.98), K.sold);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s4: FAKE TWIST 1 — "you're the deposit" (tension deepens) */
+SC.s4 = { cam: [[560, 1100, 1.42], [580, 1120, 1.6]],
+  world(lt, u, t) {
+    return { phase: 1, over: () => {
+      npc(V2.root, 130, 1580, 1.0, { t, price: "$2,000", sold: 1, bought: 1, frozen: 1 });
+      npc(V2.root, 980, 1560, 0.9, { t, price: "$12,000", sold: 1, bought: 1, frozen: 1 });
+      stranger(V2.root, 760, 1620, 1.5, { t, facing: -1, ledger: seg(u, 0.0, 0.2) * 24,
+        tilt: -3, headTilt: 6, look: -0.4 });
+      hero2(V2.root, 430, 1640, 1.52, { t, pulse: seg(u, 0.44, 0.78), look: 0.5 });
+    } };
+  },
+  over(lt, u) { stamp(seg(u, 0.42, 0.58), 268, "YOU'RE THE DEPOSIT", K.sold, 62); } };
+
+/* s5: midnight — the town marches, the hero stands alone */
+SC.s5 = { cam: [[500, 1000, 1.0], [620, 1040, 1.14]],
+  world(lt, u, t) {
+    return { phase: 1, over: () => {
+      /* the procession: gray-eyed rows marching right */
+      for (let i = 0; i < 7; i++) {
+        const px = ((i * 210 + (t * 85) % 210) % 1500) - 250;
+        const py = 1520 + (i % 3) * 34, ps = 0.72 + (i % 3) * 0.17;
+        npc(V2.root, px, py, ps, { t, march: 1, price: "$1,000", sold: 1, bought: 1, tagDX: 30 });
+      }
+      stranger(V2.root, 560, 1560, 1.2, { t, walk: 1, hatTip: 0 });
+      hero2(V2.root, 880, 1620, 1.4, { t, look: -0.7, poolOp: 0.17 });
+    } };
+  },
+  over(lt, u) {} };
+
+/* s6: THE TURN — dawn; the bill held out */
+SC.s6 = { cam: [[600, 1120, 1.3], [580, 1140, 1.44]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      stranger(V2.root, 760, 1630, 1.56, { t, facing: -1, bill: seg(u, 0.18, 0.44), ledger: false, tilt: -2, headTilt: 4 });
+      hero2(V2.root, 420, 1640, 1.5, { t, look: 0.7 });
+      if (seg(u, 0.18, 0.44) >= 0.5) ring(700, 1470, seg(u, 0.44, 0.62), "#FFE9C8");
+    } };
+  },
+  over(lt, u) { stamp(seg(u, 0.5, 0.66), 262, "$1 — EXACT CHANGE", K.moneyHi, 60); } };
+
+/* s7: THE HOLD — the bill, the empty square, near-silence */
+SC.s7 = { cam: [[540, 1160, 1.55], [540, 1180, 1.68]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      /* extreme close: the hero's hand around the bill */
+      const sh = Math.sin(lt * 9) * 2.2;
+      const bg = E("g", { transform: `translate(540 ${1210 + sh * 0.4}) rotate(${-4 + Math.sin(lt * 3) * 1.2}) scale(1.9)` }, V2.root);
+      E("rect", { x: -100, y: -54, width: 200, height: 108, rx: 8, fill: "#B9C9A2", stroke: P.ink, "stroke-width": 6 }, bg);
+      E("rect", { x: -80, y: -36, width: 160, height: 72, rx: 5, fill: "none", stroke: "#7E9468", "stroke-width": 4 }, bg);
+      V2.txt(0, 22, "$1", { "text-anchor": "middle", "font-family": MONO, "font-size": 62, "font-weight": 700, fill: "#3E4A32" }, bg);
+      /* the hand: simplified pinch over the bill edge */
+      const hg = E("g", { transform: `translate(${452 + sh * 0.8} 1330) rotate(${Math.sin(lt * 3) * 1.5})` }, V2.root);
+      E("path", { d: "M -34 60 C -40 20 -34 -14 -8 -34 L 26 -52 C 40 -58 52 -44 40 -34 L 8 -8 C 30 -6 44 4 40 22 C 36 44 20 56 -4 62 Z",
+        fill: "#F6EFE3", stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, hg);
+      /* empty square behind: no NPCs, dark windows only (the held breath) */
+    } };
+  },
+  over(lt, u) {} };
+
+/* s8: FAKE TWIST 2 — "the buyer backed out" (re-opens, doesn't close) */
+SC.s8 = { cam: [[580, 1110, 1.34], [560, 1130, 1.46]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      stranger(V2.root, 750, 1620, 1.5, { t, facing: -1, hatTip: V2.easeInOut(seg(u, 0.12, 0.4)) * -14, ledger: false,
+        armR: { a: 150 + (seg(u, 0.12, 0.4)) * 10, b: -60 } });
+      /* the still gray crowd behind him (two, tags spread — no plate stacking) */
+      [[905, 1585, 1.0], [1000, 1548, 0.85]].forEach(([cx2, cy2, cs], i) => {
+        npc(V2.root, cx2, cy2, cs, { t, price: "$1,000", sold: 1, bought: 1, frozen: 1, tagDX: i === 0 ? -34 : 26 });
+      });
+      hero2(V2.root, 400, 1640, 1.42, { t, look: 0.7 });
+    } };
+  },
+  over(lt, u) { stamp(seg(u, 0.34, 0.5), 262, "THE BUYER BACKED OUT", K.sold, 58); } };
+
+/* s9: THE MASS FLIP — every tag flips to $1, a wave back-to-front */
+SC.s9 = { cam: [[540, 1060, 1.08], [540, 1100, 1.24]],
+  world(lt, u, t) {
+    const rows = [[180, 1560, 1.0, "$2,000"], [340, 1620, 1.12, "$6,000"], [520, 1575, 0.95, "$4,000"],
+      [700, 1625, 1.1, "$12,000"], [880, 1570, 1.0, "$50,000"], [1010, 1535, 0.8, "$8,000"]];
+    const flipOf = (x, y) => seg(u, 0.06 + (y - 1500) / 140 * 0.1 + x / 1080 * 0.28, 0.36 + (y - 1500) / 140 * 0.1 + x / 1080 * 0.28);
+    return { phase: 2, over: () => {
+      /* amber sweep light tracking the wave */
+      const wx = lerp(180, 1080, seg(u, 0.06, 0.7));
+      V2.glow(wx, 1400, 420, "Warm", seg(u, 0.06, 0.3) * (1 - seg(u, 0.7, 0.95)) * 0.32, V2.root);
+      rows.forEach(([x, y, s, price]) => {
+        npc(V2.root, x, y, s, { t, price, flip: flipOf(x, y), bought: false });
+        if (flipOf(x, y) >= 1 && flipOf(x, y) < 1.03) ring(x, y - 440 * s, 0.3, K.moneyHi);
+      });
+      hero2(V2.root, 540, 1660, 1.3, { t, look: 0, poolOp: 0.2 });
+    } };
+  },
+  over(lt, u) {} };
+
+/* s10: REAL TWIST — PAID IN FULL (the one red of the whole cut) */
+SC.s10 = { cam: [[540, 1080, 1.5], [540, 1100, 1.64]],
+  world(lt, u, t) {
+    const paid = seg(u, 0.3, 0.55);
+    return { phase: 2, over: () => {
+      hero2(V2.root, 540, 1600, 2.05, { t, paid, tilt: paid > 0 ? -2 : 0, look: 0,
+        armL: { a: 16, b: -10 }, armR: { a: -10, b: -10 } });
+      /* glass-shatter flash on the seal slam */
+      const fl = seg(u, 0.3, 0.42);
+      if (fl > 0 && fl < 1) {
+        E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "#FFE8E0", opacity: 0.32 * (1 - fl) }, V2.root);
+        for (let i = 0; i < 6; i++) {
+          const a = (i / 6) * Math.PI * 2 + 0.4, r1 = 120 + fl * 260, r2 = 190 + fl * 340;
+          E("path", { d: `M 540 900 L ${540 + Math.cos(a) * r1} ${900 + Math.sin(a) * r1 * 0.7} L ${540 + Math.cos(a + 0.22) * r2} ${900 + Math.sin(a + 0.22) * r2 * 0.7} Z`,
+            fill: "#FFF6EA", opacity: 0.5 * (1 - fl) }, V2.root);
+        }
+      }
+      if (paid >= 1) ring(540, 900, seg(u, 0.55, 0.8), K.seal);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s11: RULE RE-READ — the walk, the parted crowd, the hall door */
+SC.s11 = { cam: [[500, 1120, 1.2], [640, 1150, 1.34]],
+  world(lt, u, t) {
+    return { phase: 3, over: () => {
+      /* the parted crowd: exactly TWO $1 tags flank the walk (r6: word budget) */
+      npc(V2.root, 130, 1595, 1.0, { t, price: "$1", flip: 1, tilt: -7, facing: -1, expr: "tired" });
+      npc(V2.root, 1005, 1585, 1.0, { t, price: "$1", flip: 1, tilt: 7, facing: 1, expr: "tired", tagDX: 30 });
+      /* two silhouette bystanders (no tags) */
+      npc(V2.root, 255, 1618, 0.9, { t, tilt: -4, facing: -1, expr: "tired", look2: V2.LOOKS.grayed });
+      npc(V2.root, 855, 1620, 0.85, { t, tilt: 5, facing: 1, expr: "tired", look2: V2.LOOKS.grayed });
+      /* the town hall door, opening for its new owner (tight wedge — no muddy mid-right) */
+      door(V2.root, 790, 1560, 210, 430, V2.backOut(cl(seg(u, 0.1, 0.42))) * 0.62, { openA: 18 });
+      hero2(V2.root, lerp(360, 620, V2.easeInOut(seg(u, 0.04, 0.85))), 1640, 1.5, { t, walk: 1 });
+    } };
+  },
+  over(lt, u) { stamp(seg(u, 0.3, 0.46), 330, "I'M THE PRICE", "#FFF6EA", 64); } };
+
+/* s12: LOOP — the town pays its last light out, cut to black */
+SC.s12 = { cam: [[640, 1140, 1.3], [700, 1160, 1.4]],
+  world(lt, u, t) {
+    return { phase: 3, over: () => {
+      /* the town hall door closes gently: the town is his */
+      door(V2.root, 760, 1560, 210, 430, 0.35 * (1 - V2.easeInOut(seg(u, 0.3, 0.75))), { openA: 34 });
+      /* hero enters LAST so the leaf never covers him */
+      hero2(V2.root, 700, 1640, 1.52, { t, walk: seg(u, 0.0, 0.6), cape: 0.3, facing: 1 });
+      /* tags dim out one row at a time behind him (the debt is settled) */
+      [[80, 1590, 1.0], [180, 1620, 0.9], [300, 1575, 0.8], [950, 1590, 1.0], [1030, 1555, 0.8]].forEach(([cx2, cy2, cs], i) => {
+        const dim = 1 - cl(seg(u, 0.08 + i * 0.09, 0.26 + i * 0.09));
+        if (dim > 0.02) {
+          const gg = E("g", { opacity: dim }, V2.root);
+          npc(gg, cx2, cy2, cs, { t, price: "$1", flip: 1, expr: "tired" });
+        }
+      });
+    } };
+  },
+  over(lt, u) {
+    const blk = seg(u, 0.94, 0.985);
+    if (blk > 0) E("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: "#020204", opacity: cl(blk * 1.4) });
+  } };
+
+function withCam(cam, fn) {
+  const hold = V2.root;
+  V2.root = E("g", { transform: V2.cam(cam[0], cam[1], cam[2]) }, hold);
+  fn();
+  V2.root = hold;
+}
+function camOf(idx, lt, dur) {
+  const sc = SC[TL[idx].id], a = sc.cam[0], b = sc.cam[1], u = V2.easeInOut(cl(lt / dur) * 0.85 + 0.075);
+  let c = [lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u)];
+  if (idx > 0 && lt < 0.36) {
+    const pv = SC[TL[idx - 1].id].cam[1], k = V2.easeOutQuint(lt / 0.36);
+    c = [lerp(pv[0], c[0], k), lerp(pv[1], c[1], k), lerp(pv[2], c[2], k)];
+  }
+  return c;
+}
+
+/* foreground: ash at night, dust motes at dawn */
+function fgLayer(t, phase) {
+  const g = E("g", { opacity: phase === 1 ? 1 : 0.5 });
+  const col = phase >= 2 ? K.dawnDust : K.ash;
+  for (let i = 0; i < 14; i++) {
+    const sp = 0.5 + V2.rnd(230, i);
+    const x = ((V2.rnd(231, i) * 1200 - t * 30 * sp) % 1200 + 1200) % 1200 - 60;
+    const y = ((V2.rnd(232, i) * 2100 + t * 90 * sp) % 2100 + 2100) % 2100 - 90;
+    E("path", { d: `M ${x} ${y} l 10 22`, stroke: col, "stroke-width": 4.5 + V2.rnd(233, i) * 4.5, "stroke-linecap": "round", opacity: 0.42 + V2.rnd(234, i) * 0.3 }, g);
+  }
+  return g;
+}
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  V2.defsHold = E("defs", {}, V2.root);
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++) if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx], def = SC[sc.id] || SC.hook;
+  const lt = Math.max(0, t - sc.start), dur = sc.end - sc.start, u = cl(lt / dur);
+  const cam = camOf(idx, lt, dur);
+  V2.CAM_NOW = cam;
+  const S = def.world(lt, u, t, dur);
+  townscape(t, S.phase === undefined ? 0 : S.phase, cam);
+  withCam(cam, () => { if (S.over) S.over(); });
+  def.over(lt, u, t, dur, cam);
+  V2.root.appendChild(fgLayer(t, S.phase === undefined ? 0 : S.phase));
+  const vg = E("radialGradient", { id: "kVig" }, V2.defsHold);
+  [["62%", "#05050A", 0], ["100%", "#05050A", 0.5]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, vg));
+  E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#kVig)" });
+  E("rect", { x: 0, y: 0, width: 1080, height: 1920, filter: "url(#vGrain)", opacity: 0.5, transform: `translate(${(Math.floor(t * 15) % 2) * 3} ${Math.floor(t * 15) % 3})` });
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>

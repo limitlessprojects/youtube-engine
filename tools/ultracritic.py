@@ -195,7 +195,10 @@ def bed_check(short: Path) -> tuple[bool, str]:
         for s, e in spans:
             vo_m[max(0, int((s - 0.05) * SR)): min(n, int((e + 0.05) * SR))] = False
         rms = lambda m: float(np.sqrt(np.mean(y[m if isinstance(m, np.ndarray) else slice(None)] ** 2)) + 1e-12)
-        r_vo, r_bed = rms(vo_m), rms(~vo_m)
+        # L-132 fix (day-023): vo_m=True marks NON-VO (bed) — the old line
+        # measured r_vo over the GAPS and r_bed over the VOICE, inverting the
+        # window: healthy mixes failed as 'too loud', absent beds passed.
+        r_vo, r_bed = rms(~vo_m), rms(vo_m)
         if r_vo <= 0:
             return True, "bed: VO absent?"
         db = 20 * np.log10(r_bed / r_vo)

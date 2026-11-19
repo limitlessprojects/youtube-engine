@@ -17,9 +17,10 @@
  "duplicates": [
   {
    "video_id": "z_s5j5hTMOg",
-   "status": "STILL PUBLIC (day-023 morning re-check 2026-11-19 06:45Z: privacyStatus=public, viewCount=0 — zero traffic split so far, but BOSS STUDIO ACTION still open: Content -> z_s5j5hTMOg -> Visibility -> Unlisted. Token scope re-verified youtube.readonly+youtube.upload only — videos.update and commentThreads remain 403; no re-consent happened as of this check)",
+   "status": "DELISTED (CONFIRMED day-023 14:55Z: privacyStatus=unlisted — boss executed the Studio action after the morning flag; viewCount=0 throughout, no traffic split ever accrued; L-130 incident fully closed)",
    "why": "the duplicated 23:45 cron fired TWO concurrent agent sessions on one working tree; both gated #0010 (sibling session r6 frame grand 7.53, this session r5 COMBINED 7.57 PUBLISH_APPROVED) and both published before either saw the other. This session's copy went up ~22:38Z, ~18 min after the canonical. API delist impossible: token scope is youtube.upload only (videos.update 403; same wall as commentThreads).",
-   "detail": "r5 gate evidence in gate/ultracritic_r5.json + gate/agent_review_r4.md (deterministic 5-word DOM arbitration of the r4 hook floor); master bytes differ from the canonical (separate clean muxes of the same world — both decode-verified, both pass the same gate)"
+   "detail": "r5 gate evidence in gate/ultracritic_r5.json + gate/agent_review_r4.md (deterministic 5-word DOM arbitration of the r4 hook floor); master bytes differ from the canonical (separate clean muxes of the same world — both decode-verified, both pass the same gate)",
+   "delisted_at": "2026-11-19 (between 06:45Z morning probe [public] and 14:55Z evening probe [unlisted])"
   }
  ],
  "bait_comment": "NOT POSTED — token lacks youtube.force-ssl (commentThreads.insert 403). Text: 'What rule should the next town have? Top comment gets turned into Part 2.' Boss may paste it from Studio after re-consent or manually."
