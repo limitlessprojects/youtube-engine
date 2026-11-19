@@ -1,0 +1,22 @@
+{
+ "id": "c5G_25dhoeU",
+ "duration_s": 41.4,
+ "words": 116,
+ "wpm": 168.1,
+ "hook_15s_words": 45,
+ "opener_sentence_words": 118,
+ "sentences": 1,
+ "avg_sentence_words": 118,
+ "short_sentence_ratio": 0.0,
+ "cue_word_density_per_min": 4.3,
+ "connector_starts": 0,
+ "estimated_cuts_per_min_proxy": 1.4,
+ "open_loop_markers": [],
+ "top_bigrams": [
+  {
+   "pair": "blood vessels",
+   "n": 2
+  }
+ ],
+ "language_note": "ci-tv"
+}

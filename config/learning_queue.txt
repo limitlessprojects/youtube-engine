@@ -6,7 +6,6 @@
 
 # Seeded 2026-11-14 (session A) from the video wishlist (boss-approved wishlist) — downloaded
 # and analyzed locally this day; see research/attribution log + video-notes/. One ID per line.
-https://www.youtube.com/watch?v=c5G_25dhoeU   # VL-04 Blood Vessels (ZackD)
 https://www.youtube.com/watch?v=ciIAcD4eXsI   # VL-05 Ancient Armor (ZackD)
 https://www.youtube.com/watch?v=h6fcK_fRYaI   # VL-06 The Egg (Kurzgesagt, 36M)
 https://www.youtube.com/watch?v=MQW3VefRozc   # VL-07 What if Germany Won WWI? (AltHistoryHub, 7.9M)
