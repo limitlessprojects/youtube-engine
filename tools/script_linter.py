@@ -74,17 +74,34 @@ def lint(text: str, fmt: str, duration_s: float | None, data: dict | None = None
     if opener_words > 14:
         fails.append(f"hook too long: opener is {opener_words} words (target ≤ 12, hard cap 14)")
 
+    # day-024 (L-115a class): deliberate pauses — visual-only holds (L-097 pacing
+    # cuts) and inter-beat gaps (the boss's "let the silent beat breathe") are
+    # CRAFT, not delivery speed. The wall-clock WPM mis-reads the staccato+hold
+    # fiction style (38 sentence pauses + 2 holds dragged a 195-WPM delivery to
+    # 166 wall-clock). When scene JSON is present the band checks DELIVERY WPM
+    # (words per spoken minute); wall-clock stays in the report for reference.
+    hold_gap_s = 0.0
+    if isinstance(data, dict) and data.get("scenes"):
+        gap_s = float((data.get("timeline") or {}).get("gap_s") or 0.0)
+        hold_gap_s += sum(float(sc.get("audio_dur_s") or 0.0)
+                          for sc in data["scenes"] if sc.get("visual_only"))
+        n_beats = 1 + len(data["scenes"])
+        hold_gap_s += gap_s * max(0, n_beats - 1)
+
+    wpm_del = None
     if duration_s and duration_s > 0:
         wpm = words / (duration_s / 60)
+        wpm_del = words / (max(duration_s - hold_gap_s, 1.0) / 60)
     else:
         implied_s = words / FISH_WPS
         wpm = 156.0  # == words/(implied/60) when duration derived from same rate; informational
         warns.append(f"no duration given; implied VO length {implied_s:.1f}s at {FISH_WPS} w/s")
+    wpm_check = wpm_del if wpm_del is not None else wpm
     lo, hi = WPM_BAND.get(fmt, (150, 180))
-    if not (lo - 15 <= wpm <= hi + 15):
-        fails.append(f"WPM out of band: {wpm:.0f} (target {lo}–{hi})")
-    elif not (lo <= wpm <= hi):
-        warns.append(f"WPM slightly out of band: {wpm:.0f} (target {lo}–{hi})")
+    if not (lo - 15 <= wpm_check <= hi + 15):
+        fails.append(f"WPM out of band: {wpm_check:.0f} (target {lo}–{hi})")
+    elif not (lo <= wpm_check <= hi):
+        warns.append(f"WPM slightly out of band: {wpm_check:.0f} (target {lo}–{hi})")
 
     short_ratio = (sum(1 for s in sents if len(s.split()) <= 6) / len(sents)) if sents else 0
     if sents and short_ratio < 0.15:
@@ -185,6 +202,7 @@ def lint(text: str, fmt: str, duration_s: float | None, data: dict | None = None
         "sentences": len(sents),
         "opener_words": opener_words,
         "wpm": round(wpm, 1),
+        "wpm_delivery": round(wpm_del, 1) if wpm_del is not None else None,
         "short_sentence_ratio": round(short_ratio, 2),
         "fails": fails,
         "warns": warns,

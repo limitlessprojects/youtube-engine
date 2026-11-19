@@ -1,0 +1,50 @@
+{
+ "palette": [
+  {
+   "hex": "#2E3560",
+   "use": "dusk-to-night sky (all exterior shots)"
+  },
+  {
+   "hex": "#1A1F35",
+   "use": "road/asphalt, deep shadow areas"
+  },
+  {
+   "hex": "#C23B8E",
+   "use": "ice-cream truck body, interior walls, candy pillars"
+  },
+  {
+   "hex": "#FF9AD5",
+   "use": "interior glow, pink light wash, candy lamp shades"
+  },
+  {
+   "hex": "#FFE84D",
+   "use": "caption text, window lights, streetlamps, neon clock"
+  },
+  {
+   "hex": "#4E7BD0",
+   "use": "main character denim jacket"
+  },
+  {
+   "hex": "#7ED957",
+   "use": "trees, lawn grass"
+  },
+  {
+   "hex": "#FFF1D6",
+   "use": "picket fence, character skin, truck door burst of light"
+  }
+ ],
+ "color_arc": "Starts cool blue-dusk exteriors (frames 1-5, muted navy/gray street) \u2192 explodes into saturated hot-pink/magenta interior (frames 6-9, 10) \u2192 snaps back to cold blue night exterior for 'vanished' \u2192 ends in alarming deep-red/black neon clock frame ('exactly'). Emotional arc: calm \u2192 seductive/pink \u2192 ominous red.",
+ "caption_style": "Rounded bold sans (Comic-Sans-adjacent/rounded display like Baloo or Fredoka), warm yellow #FFE84D with thin dark brown/black outline (~2-3px) and slight soft drop shadow; caption height \u2248 5-7% of frame height; positioned bottom-center or center-bottom third, NEVER at very edge; ONE word per frame (occasionally two: 'ice-cream' style compound), reading as a word-per-shot chant across the sheet; implied animation = word pops in with the cut, possibly tiny scale-up bounce.",
+ "character_staging": "Mix of scales: 1-2 wide establishing shots (truck on road, interior POV), several medium shots (character walking by fence), and 1 tight close-up (face fills ~60% of frame height, frame 3). Characters are blocky/simple = strong silhouettes: blue-jacket protagonist reads instantly. Facing: truck head-on then rear; protagonist faces camera in close-up, 3/4 back walking away in 'vanished'; interior crowd faces away/toward glow. Never more than 2-3 characters per frame; interior crowds are glowing featureless silhouettes.",
+ "camera": "Frames 1-2 imply a slow push-in on the parked truck (closer each cut); frame 3 hard cut to close-up (crash-in); frames 6-9 alternate POV shots implying forward dolly through interior; frame 10 slight low-angle push toward protagonist; frame 12 static or slow push on the clock. Overall: cut-driven push-in rhythm, no pans or handheld.",
+ "lighting": "Night scene lit by discrete glowing sources: warm streetlamps, truck's own pink-white interior glow (bloom/halo blowout on door frame 6), candy lamps casting pink wash. Contrast is high: dark navy surroundings vs hot pink/white light pools. Interior frames are nearly blown-out pink with soft bloom everywhere; final frame is a red neon glow on dark. No daylight, no ambient soft light.",
+ "huss_treatment": "No explicit 'HUSS' caption appears; closest analog is the one-word chant captions ('music', 'broke', 'driving', 'the', 'door', 'children', 'bite', 'again', 'vanished', 'exactly') \u2014 single word, uniform yellow-outlined style, same position every frame, 1 word = 1 cut, acting as rhythm. If adding a chant word: same yellow, same size, no distortion, no repetition within a frame.",
+ "empty_vs_dense": "Exterior frames ~60-70% empty (flat navy sky and dark road dominate; 3-4 props only). Interior frames ~80% dense-but-soft: pink glow fills space, repeated candy-pillar/lamp motifs, but detail is low-frequency (big shapes, not clutter). Rule: outside = empty and moody, inside = flooded with one color.",
+ "the_5_things": [
+  "1. One-word yellow rounded caption with dark outline, same position every shot \u2014 the entire narration is carried by word-per-cut rhythm.",
+  "2. Color-arc storytelling: muted navy night \u2192 overwhelming saturated pink interior \u2192 cold blue \u2192 red alarm frame; let one hue own each sequence.",
+  "3. A single glowing 'magical object' (the pink truck/door) that blows out with bloom and lights everything around it \u2014 the light source IS the story.",
+  "4. Simple high-silhouette character in one recognizable costume (blue jacket) reused across all shots for instant readability.",
+  "5. Empty-frame discipline: exteriors keep 60%+ flat sky/road so the glowing subject pops; only 3-4 props per exterior."
+ ]
+}

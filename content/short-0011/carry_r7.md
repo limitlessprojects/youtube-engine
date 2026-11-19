@@ -55,3 +55,31 @@ lane to scale; a flop = #0010 was noise and science keeps the channel.
 | disclosure | containsSyntheticMedia=true |
 | voice | edge-tts en-US-AndrewNeural +45%, 193.6 WPM measured |
 | bait comment (blocked, for boss paste) | Every tag flipped to $1 at the end. What do you think was actually being paid for? Best theory gets pinned. |
+
+## r8 note — sibling-session coordination (2026-11-19 21:12 UTC, L-130)
+
+Two 23:45-cron instances converged on this carry (both read "23:45 session owns
+r7" and claimed it). Region stand-down applied: THIS note-writer is NOT touching
+short-0011 render/gate/master any further — the sibling session that is actively
+rendering owns the r8 loop end-to-end. State at handoff:
+
+- scenes.html now carries BOTH fix sets, all uncommitted: (a) r7 frame top3 —
+  title() hard offset shadow (contrast fix) + hook $50,000 tagOp 0.82 / tagCol
+  #D9A96B / tagS 0.7 de-emphasis (rendered + probe-verified at t=1.95, probes
+  probe_1_95.png); (b) r7 video-pass idle-life fixes (npc/hero2 arm sway, head
+  tilt, breathing squash) by the sibling — GLOBAL helpers, affect every scene.
+- Frame set is MIXED-AUTHORITY right now: 0-429 re-rendered with idle-life at
+  21:02-21:10; 430-1286 are pre-idle-life pixels. A full re-render of 430-1286
+  is REQUIRED before any remux — the idle-life deltas (arm ±2.5deg, head ±1.5deg,
+  squash 0.008) stop dead at f0430 otherwise, and video-pass character_life will
+  read the freeze.
+- /tmp/mux0011 chunk encodes (chunk0/1/2, video, withaudio, final) were DELETED
+  by this session — they encoded pre-idle-life pixels; any concat reusing them
+  bakes a stale world. Chunks must re-encode from fresh frames (C6 pure
+  functions make that safe; chunk0 spans exactly 0-429).
+- Encodes in this sandbox die at tool-call boundaries (detached nohup/setsid do
+  NOT survive between calls) — run each mux chunk inside ONE tool call with a
+  600s timeout, or sub-chunk. /tmp chunk0 attempts died twice this way.
+- Verdict tree unchanged (carry above): r8 fresh+video pass -> publish >=7.5 /
+  two-round 7.3-7.49 / L-125 directive fixes below. Publish lock rule L-130(b)
+  applies — take content/.publish.lock BEFORE youtube_upload.py.

@@ -1,7 +1,7 @@
 {
  "short": "short-0012",
  "voice": "edge-tts en-US-AndrewNeural rate +25%",
- "note": "The Last Guest (fiction lane test #3, the huss-huss chant test; boss day-023 20:00 EAT directive) to the measured canon specs: premise in sentence one, kicker density ~15-20%, escalation ladder, one false reversal, 4-6 word twist in the final 5s, credit-line-inversion closer, hard cut to black, no CTA, 0 exclamation marks. Numbers as spoken words (L-090). The chant is CROWD BED SFX only \u2014 the narrator NEVER chants (larpniverse canon law, dissection section 4). Digits/stamps live on screen.",
+ "note": "The Last Guest (fiction lane test #3, the huss-huss chant test; boss day-023 20:00 EAT directive + day-024 option-3 craft notes) to the measured canon specs: premise in sentence one, kicker density ~15-20%, escalation ladder, one false reversal, 4-6 word twist in the final 5s, hard cut to black, no CTA, 0 exclamation marks. Numbers as spoken words (L-090). The chant is CROWD BED SFX only — the narrator never chants ALOUD (s4 practice = silent mouthing alone in their room; the crowd bed carries every chant). Digits/stamps live on screen. Per-line pacing (boss: 'fast for the montage, slow for the horror'): s1/s4 +32%, s5/s5b +30%, s6/s7 +18%, twist s11/s12/s12b +12%, rest +25% — vo_pipeline.py applies the per-line rate field (day-024). the closer is the boss's line split for the L-075 scene bar: s12 'They didn't forget me for nine years.' + s12b 'They were making sure I'd say yes.' (the canon credit-line inversion is retired; the word 'rehearsals' stays in s11; s5b is the boss's 2-second returned-guest clue shot; s4 split into montage (s4) + metronome gag (s4b) — TTS inter-sentence pauses made the staccato line breach the L-075 4.2s scene bar)).",
  "lines": [
   {
    "key": "hook",
@@ -16,6 +16,7 @@
   {
    "key": "s1",
    "role": "narration",
+   "rate": "+32%",
    "narration": "They threw one for a stop sign. The town fountain got two."
   },
   {
@@ -31,21 +32,37 @@
   {
    "key": "s4",
    "role": "narration",
-   "narration": "I practice anyway. Wave. Bow. Smile. Four seconds. Too slow. Two."
+   "rate": "+32%",
+   "narration": "I practice the chant anyway. Wave. Bow. Smile."
+  },
+  {
+   "key": "s4b",
+   "role": "narration",
+   "rate": "+32%",
+   "narration": "Four seconds. Too slow. Two."
   },
   {
    "key": "s5",
    "role": "narration",
+   "rate": "+30%",
    "narration": "The paperboy got his at nine. The chant made the streetlights pulse."
+  },
+  {
+   "key": "s5b",
+   "role": "narration",
+   "rate": "+30%",
+   "narration": "He came back quiet, after."
   },
   {
    "key": "s6",
    "role": "narration",
+   "rate": "+18%",
    "narration": "Then, one night. No music. No lights. Nothing."
   },
   {
    "key": "s7",
    "role": "narration",
+   "rate": "+18%",
    "narration": "Every window dark. An envelope on every doorstep. Unopened."
   },
   {
@@ -66,12 +83,20 @@
   {
    "key": "s11",
    "role": "narration",
+   "rate": "+12%",
    "narration": "They were never parties. They were rehearsals."
   },
   {
    "key": "s12",
    "role": "narration",
-   "narration": "While they were out partying, by the way, the town practiced. For me."
+   "rate": "+12%",
+   "narration": "They didn't forget me for nine years."
+  },
+  {
+   "key": "s12b",
+   "role": "narration",
+   "rate": "+12%",
+   "narration": "They were making sure I'd say yes."
   }
  ]
 }

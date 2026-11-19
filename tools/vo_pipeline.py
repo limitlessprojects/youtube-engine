@@ -72,11 +72,14 @@ def wer(ref: str, hyp: str) -> float:
     return prev[-1] / len(r)
 
 
-def synth_line(text: str, out: Path) -> None:
+def synth_line(text: str, out: Path, rate: str | None = None) -> None:
     import edge_tts
 
     async def run() -> None:
-        await edge_tts.Communicate(text, VOICE, rate=RATE).save(str(out))
+        # day-024: per-line rate override (vo_lines.json "rate" field) — the boss
+        # craft note "fast for the montage, slow for the horror" needs line-level
+        # pacing; default stays the global VO_RATE so old tables build byte-identical.
+        await edge_tts.Communicate(text, VOICE, rate=rate or RATE).save(str(out))
 
     asyncio.run(run())
 
@@ -168,7 +171,7 @@ def main() -> int:
             ok = False
             for attempt in range(4):
                 try:
-                    synth_line(tts_text(ln["narration"]), mp3)
+                    synth_line(tts_text(ln["narration"]), mp3, ln.get("rate"))
                     ok = True
                     break
                 except Exception as e:
@@ -189,7 +192,8 @@ def main() -> int:
             verdict = "PASS (asr-plural-bias)"
         rows.append({"line": key, "role": ln["role"], "expected": ln["narration"],
                      "heard": heard, "wer": round(w, 3), "accuracy": round(1 - w, 3),
-                     "verdict": verdict, "audio_dur_s": d, "synced_start_s": round(t, 3)})
+                     "verdict": verdict, "audio_dur_s": d, "synced_start_s": round(t, 3),
+                     "rate": ln.get("rate") or RATE})
         print(f"[{key}] {verdict} wer={w:.2f} dur={d}s start={t:.2f}  «{heard[:60]}»")
         t = round(t + d + GAP_S, 3)
         # ASR service flakes when hammered (day-008; L-111: the 2 s default

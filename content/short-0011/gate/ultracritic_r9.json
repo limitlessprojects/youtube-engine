@@ -1,0 +1,278 @@
+{
+ "round": 9,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.34,
+ "frame_grand_mean": 7.34,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 7.79,
+  "frame:visual_hierarchy": 6.93,
+  "frame:contrast_legibility": 7.36,
+  "frame:production_polish": 7.29
+ },
+ "frame_means": {
+  "hook_u50": 6.8,
+  "s0_u50": 6.5,
+  "s10_u50": 7.75,
+  "s11_u50": 8.0,
+  "s12_u50": 7.8,
+  "s1_u50": 8.0,
+  "s2_u50": 6.75,
+  "s3_u50": 7.75,
+  "s4_u50": 7.0,
+  "s5_u50": 7.2,
+  "s6_u50": 7.0,
+  "s7_u50": 8.0,
+  "s8_u50": 7.0,
+  "s9_u50": 7.25
+ },
+ "floor_breaches": [],
+ "video_directives": [],
+ "video_pass_source": "none",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 6,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 7,
+   "top3_directives": [
+    "Fill the large dead zone between the header and the skyline \u2014 the middle third of the frame is empty; push the hero group and price tag up or extend buildings/skyglow into that gap",
+    "Resolve the competing price-tag system: the tiny '$50,000' tag on the right is illegible at phone size and reads as noise \u2014 either enlarge it to match '$1' or delete it so '$1' owns the message",
+    "Tighten the '$1' badge so it doesn't overlap the buildings' hard rectangular edge \u2014 the badge's rounded card fights the flat dark skyline behind it; add a subtle rim glow or isolate it against sky"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fix the colliding money tags on the right \u2014 the $12,000 label overlaps the $4,000 label; stagger them vertically with clear pointer arrows so each tag reads as belonging to one character",
+    "The $9,000,000 tag is cropped by the $1 badge and clipped at frame edge \u2014 give it its own clear space and full visibility",
+    "Fill or rebalance the empty purple sky occupying the top ~35% of frame \u2014 raise the skyline, add a subtle gradient/atmosphere element, or push the whole scene up to eliminate the dead zone"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 3,
+   "top3_directives": [
+    "The tilted red sign floats with no visual attachment \u2014 anchor it (string, post, or character grip) to integrate it into the scene",
+    "The character's arm outline shows a visible seam/line break at the shoulder-robe junction; clean up the stroke continuity",
+    "Bottom third of the frame (wet street) is near-empty texture \u2014 either add a subtle reflection of the glowing character or crop framing tighter to reduce the dead zone"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 6,
+   "top3_directives": [
+    "Central character's $1 badge slightly clips into the moon/midground building \u2014 add 5-8% breathing room above the character",
+    "Background $1 street signs read smaller than the main price tag; unify stroke weight so they scan as one system at 6-inch distance",
+    "Lower third (below the dark sidewalk) is a near-empty dead zone ~20% of frame \u2014 extend ground texture or ambient props to close it"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.8,
+   "words_visible": 3,
+   "top3_directives": [
+    "The two background '$1' tags read as duplicate clutter and one is clipped by the building \u2014 differentiate their values ($5/$10) or push them further into fog",
+    "The glass pane overlapping the main character's right side creates an ambiguous silhouette \u2014 add a rim light or separation shadow so the pane reads as a distinct layer",
+    "Foreground street shadow (oval under the head area) floats unanchored \u2014 align the character's contact shadow directly under the feet for grounded weight"
+   ],
+   "frame": "s12_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Add a subtle rim-light separation behind the central figure's dark body against the dark buildings \u2014 the torso silhouette slightly merges with the background navy",
+    "Align the $2,000 and $50,000 callout bubbles to identical vertical height for cleaner symmetry",
+    "Resolve the dead zone at the bottom third \u2014 either lift the characters slightly or add a faint street-reflection glow under the central figure"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 6.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "Reposition the $2,000 and $12,000 tags fully inside frame \u2014 they are clipped at the left and right edges and read as cropped UI",
+    "Fill or compress the top ~35% dead sky zone: the empty gradient above the moon wastes prime real estate in a 9:16 Short",
+    "Strengthen the focal path: the $1 character is the hero but side characters with bright price tags compete at equal glow weight \u2014 dim side figures or add a subtle spotlight/vignette on the $1 subject"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "Brighten or add outline to the gray SOLD signs \u2014 they sit close to the dark building tones and risk mushing out on a 6-inch screen in daylight",
+    "The $1,000 price tag overlaps a building edge awkwardly on the right; give it a consistent anchor point (above the trio like the SOLD signs) for system consistency",
+    "Large empty upper-third (moon + sky) is acceptable for mood but could carry subtle rain streaks or gradient warmth to avoid feeling like a dead zone in a Short's vertical scroll"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 6,
+   "top3_directives": [
+    "Fill the dead zone between the header and the $1 badge (upper 40% is empty sky) \u2014 raise characters or lower the header to tighten composition",
+    "Resolve the competing focal points: two characters of equal size split attention \u2014 differentiate with scale, lighting, or framing so eye path reads left\u2192right deliberately",
+    "The cropped 'SOL'/'LD' street signs read as broken text \u2014 either complete the words or remove them; partial words at frame edges look like errors"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 6,
+    "production_polish": 8
+   },
+   "mean": 7.2,
+   "words_visible": 6,
+   "top3_directives": [
+    "Focal '$1' character is pushed to the right edge and partially cropped \u2014 recenter or pull left so the hero figure and price tag read as one unmistakable focal point",
+    "Upper ~40% of frame is a near-black dead zone with only a dim moon \u2014 add subtle building silhouettes, fog gradient, or let the title/lower third occupy the top to recover the dead space",
+    "Background 'SOLD' tags and gray hoodie faces sit at near-zero contrast against the dark backdrop \u2014 lift background layer luminance ~15% or add rim separation so mid-ground reads on a daylight phone"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the dead upper 40% of frame (empty sky) with a title card, atmospheric light beam payoff, or push the characters higher in composition",
+    "The two identical 'face' characters split focal attention \u2014 differentiate the key subject with scale, lighting intensity, or a spotlight pool on only one",
+    "Darken the mid-tone background buildings further so the character outlines and $1 sign gain more foreground/background separation for daylight phone viewing"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill the large empty sky/upper third dead zone with a subtle element (moon glow, rain streaks) to balance the vertical composition",
+    "Give the hand+bill group a soft drop shadow or rim light so it separates more cleanly from the buildings behind",
+    "Slightly enlarge '$1' within the bill so it reads instantly at 6-inch phone distance; currently safe margin shrinks it"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 7,
+   "top3_directives": [
+    "Clean up the SOLD badges: they collide with the top-hat character's head and each other \u2014 reposition to the right figure's side with consistent offset and shadow",
+    "The dark blob near bottom-center reads as an undefined manhole/puddle \u2014 either define it or remove it; it's a dead-zone artifact",
+    "The left character's golden rim glow is the focal device but the right character also glows \u2014 dim the supporting characters' glows so the eye path lands on the $1 figure first"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill the top ~40% empty sky zone with a bold payoff headline or dimmed atmospheric layer \u2014 currently a large dead zone above the skyline",
+    "Differentiate the hero's '$1' sign from the peripheral '$1'/orange icons \u2014 enlarge, add glow or slight zoom so the eye locks on the protagonist's price first",
+    "Push background characters and buildings back with reduced opacity/haze to strengthen depth separation from the glowing center figure"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Everyone'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A4 new entity ['Tonight'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}

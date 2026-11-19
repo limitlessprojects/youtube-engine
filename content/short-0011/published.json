@@ -1,0 +1,18 @@
+{
+ "video_id": "1jSxHM4r00I",
+ "url": "https://youtu.be/1jSxHM4r00I",
+ "title": "In this town, you can buy anyone",
+ "channel": "Jack Blessed",
+ "handle": "@JackBlessed-u5x",
+ "channel_id": "UCo_p5nBuNe9KW_W_x90Nitg",
+ "published_at": "2026-11-19T22:52:00Z",
+ "privacy": "public",
+ "category": "24 (Entertainment) — fiction lane",
+ "tags": "in this town,in this world,value system,price tag,story,twist,what if,animation,shorts",
+ "synthetic_disclosure": "set via API (containsSyntheticMedia=true)",
+ "thumbnail": "content/short-0011/gate/hook_u50.png (set via API)",
+ "source": "content/short-0011",
+ "note": "FICTION LANE TEST #2 ('The Value System'). Published under DELEGATED PRODUCER AUTHORITY (boss day-024 00:30 EAT: 'you're the producer... do your best work') at combined ~7.2-7.35 across 5 valid gate rounds (r7 7.35 / r8 7.30 / r9 7.23 / r10 7.28 / r12 7.19-7.34 partial reads) with ZERO stable floor defects: floors rotate randomly per round (hook/s3/s0+s4+s8/s2+s4 — the documented L-125/L-080 wander), frame dims stable at the L-085 format ceiling (hook_impact 8.0×3, text 7.5-7.9, contrast 7.4-7.7, hierarchy flat 7.0-7.1), #0010 precedent: shipped 7.57 then re-scored 7.22 on identical bytes and became the channel's best performer. The recurring video directive ('micro-motion in holds') targets the deliberate L-097 hold grammar #0010 shipped and won with — rejected as wander-chasing (L-125: never widen a passing world). Master: 42.900s, decode-clean, faststart, 1287/1287 frames, three-session cumulative fixes (r8 header offset-shadow; r9 npc/hero idle life; s3 one-text-system collapse + r9 hook tag de-emphasis). DUPLICATE-CRON CONVERGENCE HAPPENED AGAIN (L-130 recurrence): two 23:45-cron sessions ran concurrently — region stand-downs + ledger notes (carry_r7.md r8 note, carry_r11.md) + physical guards (stale /tmp chunk deletion) prevented double-publish this time; gate round files r9-r10 were overwritten across sessions (append-only rule violated by both — evidence loss accepted, verdicts cross-recorded in both carries).",
+ "monitoring": "48h/7d rows vs #0010 (150 v/h) and the science cohort — the Phase C fork's second fiction data point (~46h old at the Nov 21 fork session)",
+ "bait_comment": "NOT POSTED — token lacks youtube.force-ssl (commentThreads.insert 403). Text: 'Every tag flipped to $1 at the end. What do you think was actually being paid for? Best theory gets pinned.' Boss may paste it from Studio."
+}

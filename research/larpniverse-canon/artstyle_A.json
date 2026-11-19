@@ -1,0 +1,50 @@
+{
+ "palette": [
+  {
+   "hex": "#3D5AD9",
+   "use": "hero character hoodie + hat (royal blue, everywhere)"
+  },
+  {
+   "hex": "#8FBFF0",
+   "use": "daytime sky, soft cloud whites on top of it"
+  },
+  {
+   "hex": "#2A3550",
+   "use": "night frames: dark navy sky, dimmed buildings"
+  },
+  {
+   "hex": "#F2C230",
+   "use": "yellow accents: star on hat, hoodie text 'in this town!', center-court circle"
+  },
+  {
+   "hex": "#D94A3A",
+   "use": "red accents: rival character's headwrap, flag, party decorations"
+  },
+  {
+   "hex": "#4E9C4A",
+   "use": "grass hills, park strips"
+  },
+  {
+   "hex": "#FFFFFF",
+   "use": "clouds, eyes, UI hearts, caption outlines"
+  },
+  {
+   "hex": "#E8A0B8",
+   "use": "party crowd clothing, bunting flags, pastel room"
+  }
+ ],
+ "color_arc": "Starts bright daylight (light blue sky, saturated green/blue blocks) -> dips to a full-dark night frame at frame 2 (deep navy, single moon) -> returns to warm daytime with pastel party bunting through the middle -> final frame goes dark night again (navy sky, moon top-left, hero lit only by faint caption glow). So: day, NIGHT shock-frame, day... day, night closer.",
+ "caption_style": "One or two word phrases only ('meme', 'pushup', 'potholes', 'HUSS!', 'more', 'one', 'that's', 'than') \u2014 words of a sentence spread one-per-shot across the sheet. Rounded extra-bold sans (Nunito/Baloo-like), white fill with thin dark outline or dark fill with white outline depending on background, centered at ~55-60% frame height, cap height ~6-8% of frame height, floating with slight drop shadow; implied pop-in/bounce animation synced per word.",
+ "character_staging": "Blocky cylindrical low-detail characters (one visible face plane, simple dot/arc eyes, wide open red mouth). Hero occupies 40-70% of frame height in mid/close chest-up shots facing camera dead-on (frames 3, 6, 9, 11, 12); wide environmental shots (frames 1, 5, 8) show 8-15 tiny identical crowd figures scattered on a court/street. Silhouette-simple: flat color blocks, no shading folds, readable at thumbnail size.",
+ "camera": "Mostly locked-off static frames alternating with hard push-ins: wide establishing shot (row 1) -> slow dolly toward hero's face in recurring 'hero close-up' beats that get progressively tighter (frames 3 -> 6 -> 9 -> 11 are nearly the same pose at increasing zoom); night frames use low-angle looking up at character; frame 5 implies a slow overhead/high-angle drift over the party.",
+ "lighting": "Flat ambient daylight in day frames \u2014 almost no shadows, low contrast, soft pastel bounce. Night frames drop to very high contrast: 5-10% lit (moon disc, small lamp glow, caption text acting as its own light source), rest crushed to navy/black. Small white radial glow behind key UI elements.",
+ "huss_treatment": "'HUSS!' (frame 3): all-caps white extra-bold sans with dark outline, slightly larger than other captions (~9% frame height), placed dead-center on the character's chest, no distortion/repetition \u2014 single clean shout-word, punch-in implied.",
+ "empty_vs_dense": "Extremely empty: 60-80% of every frame is flat sky, flat wall, or flat ground. Detail is confined to a few large simple props (speaker, flag, bunting strip, one building block). Crowd shots are the densest at maybe 8 distinct shapes. Nothing small or fussy anywhere.",
+ "the_5_things": [
+  "1. One-word captions at mid-frame, one word per shot, bold rounded white type \u2014 the sentence is cut across the whole video.",
+  "2. Recurring identical hero close-up (same centered pose, hat-star, chest slogan) at escalating zoom as the visual hook/chorus.",
+  "3. Single NIGHT shock-frame placed early (frame 2) then again at the end: crush everything to navy, keep only a moon and one glow.",
+  "4. 60-80% empty flat-color backgrounds; max 3-4 props per shot; all shapes big and rounded.",
+  "5. One accent color per emotional beat (red rival head, yellow court circle, pastel bunting for the party) against an otherwise blue-and-sky world."
+ ]
+}

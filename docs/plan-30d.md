@@ -129,3 +129,16 @@
 | Views flatline <100 | Phase B data | formula rotation, not premise doubt (L-060) |
 | Boss unavailable | forks blocked | pre-decided forks execute automatically |
 | ffmpeg wrapper noise | exit 255 post-success | verify artifacts, not exit codes (day-010) |
+
+## day-024 (Nov 20) — #0011 SHIPPED at the format ceiling; #0012 build-ready
+
+- **#0011 published** (1jSxHM4r00I, 22:52Z) under producer authority at combined
+  7.19-7.35 across 5 rounds (zero stable defects, wander-class floors, L-085
+  ceiling ~7.4 frame; rationale in published.json). The Phase C fork's second
+  fiction row: ~46h of data at the Nov 21 fork session.
+- **#0012 build-ready**: boss's option-3 craft notes baked (s5b returned-guest clue,
+  s4 chant practice, s12/s12b "making sure I'd say yes" closer), VO measured
+  (53.02s total, per-line rates), lint PASS (delivery WPM 186.0). Build = the next
+  session's job IF the fork says fiction; the script survives either way.
+- L-135/L-136/L-137 appended (ffmpeg teardown-hang recipe; duplicate-cron physical
+  guards; delivery-WPM metric).

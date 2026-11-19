@@ -1,0 +1,26 @@
+{
+ "palette": [
+  "#1a2340 deep navy \u2014 night sky, dark streets, shadows",
+  "#3b5fd9 royal blue \u2014 hero character hoodie, house siding, court",
+  "#4a8f3c grass green \u2014 lawns, rolling hills",
+  "#d9d9d9 warm gray \u2014 roads, sidewalks, building walls",
+  "#e8b83a golden yellow \u2014 streetlight glow, court circle, banner, scoreboard numbers",
+  "#e8734a coral/orange \u2014 character shirt, orange court mat, car accents",
+  "#f2ead9 cream \u2014 lit windows, character skin, daylight sky",
+  "#f5f0f0 white \u2014 captions, moon, sun-lamp orb"
+ ],
+ "color_arc": "Starts deep night (navy sky, moon, tiny warm window lights) \u2192 brightens to full cheerful daytime pastel (cream sky, saturated court, yellow banner) mid-sheet \u2192 sinks back into night by the last frames, ending on a purple-lavender interior lit by a bubble. Narrative rhythm: night \u2192 day \u2192 night, cool bookending a warm core.",
+ "caption_style": "Bold rounded sans-serif (Nunito/Baloo-like), white fill with soft dark drop shadow, lowercase single words ('a', 'they', 'dancing', 'party', 'up', 'walked', 'goes', 'only') or short shouts ('HUSS!'), sized ~5\u20137% of frame height, placed low-center or center-bottom, one word per frame \u2014 implies a word-per-beat karaoke rhythm, popping in sync with narration.",
+ "character_staging": "Mix of scale: extreme close-up on hero (frame 3, head/shoulders fills frame), medium hero shots (frames 4, 7, 8), and wide establishing shots with 3\u20138 tiny characters as color-dot partygoers (frames 1, 2, 6, 11). Characters are chunky silhouette-first shapes \u2014 cylinder limbs, blocky torsos, dot eyes, cone party hats in green/yellow/red \u2014 readable at any size. Facing: mostly toward or away from camera walking into the scene; hero faces camera in close-ups.",
+ "camera": "Static wide establishing shots alternating with slow push-ins toward the hero; subtle high-angle-to-low-angle descend on the town pan (frames 1\u21922 feel like a drone tilt-down); courtroom scenes hold still; final frames drift laterally past houses (dolly-by). No whip pans \u2014 everything slow and floaty.",
+ "lighting": "Night scenes: small warm point sources \u2014 glowing spherical streetlamps, golden window rectangles, one big white moon \u2014 high local contrast, deep navy ambient. Day scenes: flat soft ambient, almost shadowless, pastel brightness. Emissive objects (sun orb lamp frame 4, bubble frame 12) get soft radial glow bloom.",
+ "huss_treatment": "'HUSS!' appears 3 times, identical treatment each time: same bold white rounded font with dark drop shadow as all captions, same ~5\u20136% frame height, low-center placement \u2014 deliberately NOT enlarged or distorted; the repetition (frames 5, 7, 10) in flat identical styling is the joke, a deadpan chant against escalating scene changes.",
+ "empty_vs_dense": "Very empty: 60\u201380% of every frame is flat sky, road, lawn, or court color. Detail is clustered in one focal zone per frame (a house, a scoreboard, a banner) with generous negative space \u2014 toy-town minimalism, never cluttered.",
+ "the_5_things": [
+  "1. Word-per-frame karaoke captions: one lowercase white bold rounded word per shot, low-center, constant size \u2014 never styled up, even for chant beats like HUSS!.",
+  "2. Day/night sandwich: open dark-blue night, punch to saturated pastel day for the party middle, return to night for the quiet ending \u2014 color carries the story arc.",
+  "3. Toy-scale staging alternation: wide drone shots where characters are tiny color dots, cut to a single hero filling the frame \u2014 maximum scale contrast, one focal subject per frame.",
+  "4. Punctum lighting: small glowing orbs and warm window rectangles floating in large flat navy negative space; light sources are simple geometric shapes with soft bloom.",
+  "5. Recurring landmark grammar: same basketball court, yellow banner, and party-hat crew reappear from new angles so the town feels continuous \u2014 reuse 2\u20133 set pieces, re-stage them."
+ ]
+}
