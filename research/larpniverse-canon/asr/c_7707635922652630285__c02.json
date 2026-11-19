@@ -1,0 +1,14 @@
+{
+  "created": 1795109322,
+  "id": "20261120012840818e47121f4b4617",
+  "request_id": "20261120012840818e47121f4b4617",
+  "text": "I walked through town and something was wrong. No music, no party lights, nothing. Then I heard it from every single window: \"Hush hush hush!\" Kevin was practicing the guitar. Linda was practicing karate. My grandma was doing push-ups. Nobody goes to parties anymore. The whole town is grinding, which is great except now I am the only one who's free on a Friday night. So I threw a party. The only guest was the mayor's goldfish. He's actually a pretty good dancer. Hush hush hush!",
+  "usage": {
+    "completion_tokens": 122,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 496
+  }
+}

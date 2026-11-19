@@ -1,0 +1,14 @@
+{
+  "created": 1795108049,
+  "id": "20261120010729d1c845f598d14165",
+  "request_id": "20261120010729d1c845f598d14165",
+  "text": "Tell me so I say, tell me so I say.",
+  "usage": {
+    "completion_tokens": 14,
+    "prompt_tokens": 247,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 261
+  }
+}

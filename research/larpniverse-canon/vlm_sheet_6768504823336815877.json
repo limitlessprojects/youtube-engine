@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**1) Visual medium:** Real footage (live-action video, filmed outdoors on a sunny day). No game engine, no HUD/UI overlays, no captions or title cards visible in any frame.\n\n**2) On-screen text:** None readable in any of the 12 frames — no captions, signs with legible text, clocks, or titles. (There's a small white sign on a brown wall in frame 1, but the text is too small/blurry to read.)\n\n**3) Visual arc:** A young man in a Harry Potter–style graduation/wizard robe (black with maroon shoulders), white shirt, and red-and-white striped tie appears to be \"flying on a magic broomstick\" across an industrial/office-park parking lot. \n- Frames 1–3: blurry distant shots of him airborne, mid-\"flight,\" past a wall, utility box, and parked truck.\n- Frames 4–6: clearer side views of him gliding/levitating past warehouses, palm trees, and parked cars, holding a broom between his legs.\n- Frames 7–9: camera angle reveals the trick — a large flat gray panel (mirror/board) hangs below him, and in frames 8–9 a skateboard with red wheels becomes visible underneath the panel.\n- Frames 10–12: the illusion fully breaks; he's plainly standing/riding a longboard skateboard on the asphalt, the mirror panel at his side, then losing balance/turning away in motion-blurred final frames. Location stays the same; bright daylight throughout, palette of gray asphalt, white/brown industrial buildings, green grass/trees, blue sky.\n\n**4) Username/watermark:** None visible.\n\n**5) Story guess:** A creator in a Hogwarts robe uses a hidden mirror panel and a skateboard to fake a \"broomstick flight\" illusion, and the contact sheet captures the moment the camera reveals how the trick works before he rides off/loses balance.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108208,
+  "id": "2026112001095908754826e9c34780",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "2026112001095908754826e9c34780",
+  "usage": {
+    "completion_tokens": 406,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2565
+  }
+}

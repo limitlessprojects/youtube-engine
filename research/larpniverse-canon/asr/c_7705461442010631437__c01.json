@@ -1,0 +1,14 @@
+{
+  "created": 1795110000,
+  "id": "20261120014000505aa986b0a141bf",
+  "request_id": "20261120014000505aa986b0a141bf",
+  "text": "Can you hold me down for one night like I got three strikes? I need you to free me, it's a prison inside my mind. Break me, chase me, pull me up like the Northern Lights. Can you hold me down for one night like I got three strikes? Hold me, hang on me.",
+  "usage": {
+    "completion_tokens": 67,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 441
+  }
+}

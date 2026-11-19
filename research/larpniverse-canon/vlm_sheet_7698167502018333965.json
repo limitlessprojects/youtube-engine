@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "# Contact Sheet Report\n\n## 1) Visual Medium\nReal footage — live-action first-person POV video (phone camera, indoor room). No game engine. No game HUD/UI; only a white TikTok-style caption overlay at the top of every frame.\n\n## 2) On-Screen Text (frame by frame)\nEvery frame (1–12) shows the same caption at the top, verbatim:\n- **Frame 1:** \"While they are out partying btw\"\n- **Frame 2:** \"While they are out partying btw\"\n- **Frame 3:** \"While they are out partying btw\"\n- **Frame 4:** \"While they are out partying btw\"\n- **Frame 5:** \"While they are out partying btw\"\n- **Frame 6:** \"While they are out partying btw\"\n- **Frame 7:** \"While they are out partying btw\"\n- **Frame 8:** \"While they are out partying btw\"\n- **Frame 9:** \"While they are out partying btw\"\n- **Frame 10:** \"While they are out partying btw\"\n- **Frame 11:** \"While they are out partying btw\"\n- **Frame 12:** \"While they are out partying btw\"\n\nNo other legible text (no clock, signs, or readable watermark).\n\n## 3) Visual Arc\n- **Frames 1–3:** POV looking down at a dark wooden table; two McDonald's burgers on yellow wrapping paper, two plastic water bottles behind them; two pairs of hands hover over the burgers (two people reaching).\n- **Frames 4–7:** The burgers get grabbed away one by one; hands clutching wrapped burgers; motion blur as one is snatched. Yellow paper wrappers remain.\n- **Frame 8–9:** Camera tilts up revealing a person wearing a dark navy t-shirt with a yellow **McDonald's \"M\" logo** on the chest, gesturing with both hands (burgers now gone, wrappers on table).\n- **Frames 10–11:** Person in the McDonald's shirt handles/tosses a wrapped burger; motion blur; camera moves to a different, lighter part of the room with clutter and what looks like a fish tank in the background.\n- **Frame 12:** A single unwrapped cheeseburger sits alone on yellow wrapper on the table — the last one left.\n- **Palette:** Warm wood browns/yellow wrappers throughout; brighter white-wall setting in later frames. Same daytime indoor lighting; time of day unchanged.\n\n## 4) TikTok Username/Watermark\nNone visible — no username, watermark, or logo legible in any frame (caption text present but unattributed).\n\n## 5) One-Line Story Guess\nRoommates/employees left behind grab all the McDonald's burgers while everyone else is out partying — leaving just one burger at the end.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108307,
+  "id": "20261120011134139eb2fcf2084bbd",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "20261120011134139eb2fcf2084bbd",
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 599
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2759
+  }
+}

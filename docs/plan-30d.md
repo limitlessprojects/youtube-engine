@@ -93,6 +93,17 @@
 - **Fiction lane opened (#0010):** first Larptuber "in this town" narrative test (boss brief "The Zero-Dollar Bait"), built on the larpniverse sweep's measured specs (35-55s, 229-285 WPM deadpan, no CTA, Entertainment lane). Gate r1 6.2 / r2 6.0 → world-patch round (L-127 look-object fix + L-128 window-monopoly + street-life/grounding/tag-discipline) → r3 in flight. This is the Phase C "scale what works" experiment running INSIDE Phase B's tail; its 24h/48h rows join the Nov 21 fork data.
 - **Day-023 morning (fork data):** #0010 canonical 812 @ T+5.4h (~150 v/h — pacing +32% over #0009, +83% over #0007); #0007 636 / #0009 1,071 @ T+7.8h; duplicate z_s5j5hTMOg still PUBLIC (0 views, delist = open boss Studio action; scope re-verified upload-only, no re-consent → bait comments still 403). **#0011 staged = fiction test #2, "The Value System"** (boss day-022 brief #2, refined to intown specs, lint pre-clear PASS; evening session owns the build+publish so the Nov 21 fork gets a second fiction row). Median 24h ≈ 1.1-1.15K — above the fork's 1K trip line but thin; #0011's row decides.
 
+- **Day-023 20:00 (boss directive, additive to the evening session):** larpniverse
+  canon dissection landed (research/larpniverse-canon-dissection-2026-11-19.md — 12
+  boss-supplied videos decoded; **huss-huss = the town chant**, spoken "hush hush
+  hush" / captioned HUSS!, trend peaking on TikTok, YT-native lane empty; canon WPM
+  187-213 re-validates the house band). **#0012 STAGED = fiction test #3, the
+  huss-huss test: "In this town, everybody parties except me" (The Last Guest)** —
+  canon skeleton + our dark twist, 139w/16 beats, lint PASS. Build = post-fork
+  session's call (Nov 21 fork decides lane; #0011's row is its input). Cast law:
+  ours (neighbor/paperboy), never theirs. L-133/L-134 lessons banked.
+
+
 ## Phase C — Scale what works (Day 022–030, Nov 22–Dec 1)
 
 - Double the best formula-hook combo (2 Shorts/day OK if the gate stays green; never lower the bar to ship more).

@@ -1,0 +1,14 @@
+{
+  "created": 1795109384,
+  "id": "20261120012943217fa6c3e65c43ec",
+  "request_id": "20261120012943217fa6c3e65c43ec",
+  "text": "Hush, hush, hush! Hush, hush, hush! I wrapped the burger. I wrapped the plate. I wrapped my neighbor's cat. The cat is fine. The cat is warm. My neighbor has a party every single night. Come out, he says. You only live once. Exactly one life, one interview. Fold, fold, tuck, roll. Two seconds. One second. I stopped being able to see my own hands. Then came the interview. The manager put one burger on the counter. Whenever you are ready, he said, it was already wrapped. So was his clipboard. So was his tie.",
+  "usage": {
+    "completion_tokens": 142,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 516
+  }
+}

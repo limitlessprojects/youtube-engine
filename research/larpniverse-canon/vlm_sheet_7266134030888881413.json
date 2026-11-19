@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**1) Visual medium:** Real animation clips — these are actual Disney/Pixar/DreamWorks movie stills (not Minecraft/Roblox/GTA/AI art). No gameplay HUD. All frames appear rotated 90° sideways (portrait video, landscape source), and the whole sheet is mirrored/upside-down in places.\n\n**2) On-screen text (frame by frame, as readable — much is mirrored/rotated):**\n- Frame 1 (SpongeBob-style underwater scene, Krusty Krab sign upside-down): \"ADITONYA\" watermark, left edge.\n- Frame 2 (SpongeBob underwater, pineapple house): \"ADITONYA\" watermark; small text near SpongeBob's door mirrored, unreadable.\n- Frame 3 (Wreck-It Ralph-like / cave characters): no readable text.\n- Frame 4 (Up house floating with balloons): no readable text.\n- Frame 5 (Lightning McQueen, mirrored): \"Rust-eze\" on the hood (mirrored), \"95\" on the side, \"Piston Cup\"-style sticker; \"ADITONYA\" watermark.\n- Frame 6 (Baymax-style white figure in city): \"ADITONYA\" watermark.\n- Frame 7 (dark cloaked figure on purple beach): \"ADITONYA\" watermark.\n- Frame 8 (Merida, Brave): no readable text.\n- Frame 9 (Po, Kung Fu Panda, in glowing gold): \"ADITONYA\" watermark.\n- Frame 10 (Shrek's outhouse/sign in swamp): \"ADITONYA\" watermark; outhouse sign text mirrored, unreadable.\n- Frame 11 (Shrek in swamp): \"ADITONYA\" watermark.\n- Frame 12 (Ratatouille rats in kitchen): \"ADITONYA\" watermark.\n\n**3) Visual arc:** No single continuous scene — it's a rapid montage hitting one famous animated movie/franchise per frame: SpongeBob → Wreck-It Ralph-style → Up → Cars → Big-Hero-6-style → fantasy magic scene → Brave → Kung Fu Panda → Shrek (two frames) → Ratatouille. Color palette shifts wildly frame to frame: deep blue underwater → warm orange/brown → grey sky → red/orange → bright cyan city → purple/magenta → blue sky → glowing gold/orange → dark green swamp → warm kitchen. Characters and locations change entirely each frame.\n\n**4) Watermark:** \"ADITONYA\" appears vertically along the edge of nearly every frame — that's the TikTok username.\n\n**5) Story guess:** A fan-edit montage slideshow of iconic animated-movie characters/scenes set to music, posted by the creator \"ADITONYA\" — likely a \"guess the movie\" or nostalgia/POV edit with no single narrative.",
+        "reasoning_content": "Frames are rotated 90°. Read left-to-right, top-to-bottom: frames appear rotated sideways. Watermark \"ADITONYA\" repeated.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108226,
+  "id": "2026112001101685257b76bdd04e87",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "2026112001101685257b76bdd04e87",
+  "usage": {
+    "completion_tokens": 625,
+    "completion_tokens_details": {
+      "reasoning_tokens": 31
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2784
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "created": 1795109738,
+  "id": "20261120013538467486107c804d4d",
+  "request_id": "20261120013538467486107c804d4d",
+  "text": "I don't think you wanna give me a reason. Christmas Eve, your mother insists. Don't want to fight, but your mother insists. So I love you, so I love you.",
+  "usage": {
+    "completion_tokens": 44,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 418
+  }
+}

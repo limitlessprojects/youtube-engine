@@ -1,0 +1,14 @@
+{
+  "created": 1795109534,
+  "id": "20261120013213546bedf466784c9d",
+  "request_id": "20261120013213546bedf466784c9d",
+  "text": "Three, it started at exactly midnight. I heard a creepy ice cream melody outside. I peeked through my curtains. A bright pink ice cream truck was parked across the street, but there was nobody driving. Suddenly, my phone rang. It was my best friend Oliver Mason. My little brother followed the truck. He's gone. Then the call cut off. I grabbed my flashlight and ran outside. The truck was waiting.",
+  "usage": {
+    "completion_tokens": 100,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 474
+  }
+}

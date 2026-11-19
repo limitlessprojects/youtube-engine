@@ -1,0 +1,14 @@
+{
+  "created": 1795108046,
+  "id": "20261120010725a6f3cfd6e4914482",
+  "request_id": "20261120010725a6f3cfd6e4914482",
+  "text": "Like my costume? Yo, that's so cool! How are you doing that? Got a Nimbus two thousand Oh I see Wait is that my longboard Longboardium Lavi Osa Zap My longboard Come on man get back here Do not go",
+  "usage": {
+    "completion_tokens": 55,
+    "prompt_tokens": 290,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 345
+  }
+}

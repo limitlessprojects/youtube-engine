@@ -1,0 +1,14 @@
+{
+  "created": 1795109597,
+  "id": "20261120013316eebe69aef6054d19",
+  "request_id": "20261120013316eebe69aef6054d19",
+  "text": "I spotted an old music box behind the counter. I grabbed a metal chair and smashed it. The music stopped, every glass wall shattered. The children started moving again. Everyone run! We raced toward the exit as the entire shop collapsed around us. The ice cream man screamed, \"You can't escape!\" But we jumped outside just in time. The truck vanished into thin air. Oliver hugged.",
+  "usage": {
+    "completion_tokens": 92,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 466
+  }
+}

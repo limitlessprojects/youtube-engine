@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "# Contact Sheet Analysis\n\n## 1) VISUAL MEDIUM\n**Roblox-style 3D animation** (blocky characters, but not actual Roblox gameplay — likely a stylized animated short, possibly from TikTok animators using Roblox-like avatars or \"Roblox story\" animation). No game HUD/UI; only subtitle captions and in-scene signage.\n\n## 2) ON-SCREEN TEXT (frame by frame)\n1. \"In\"\n2. \"because\"\n3. \"wrapping\" (also a storefront sign reading \"FUN TOWN\" with a burger logo, and a red-and-white sign: \"NOW HIRING / BURGER WRAPPERS\" — partially readable as \"NOW HIRING / BURGER / WRAPPE...\")\n4. \"Fold\"\n5. \"The\"\n6. \"HUSS!\"\n7. \"on\"\n8. \"you\"\n9. \"Thank you for wrapping my tie.\" (on a white card/sign with burger logo; the word \"tie\" is underlined)\n10. \"am\"\n11. \"Saturday\"\n12. \"HUSS!\"\n\n## 3) VISUAL ARC\n- **Frames 1–2:** Night-time town square with string lights, lanterns, and a crowd of blocky characters; center on a man in an orange jacket/captain hat.\n- **Frame 3:** Daytime outside a burger restaurant (\"Fun Town\" diner) — a character in a white shirt and red cap stands outside; \"NOW HIRING: Burger Wrappers\" sign.\n- **Frames 4–6:** Interior close-ups at a food counter — hands folding a burger into a wrapper, a grumpy orange cat, and arms slamming down; fireworks visible outside at night in frame 5.\n- **Frames 7–8:** A burger on a counter, then a mustached manager in a maroon suit/gold tie looking displeased.\n- **Frame 9:** Close-up of the punchline card: \"Thank you for wrapping my tie.\"\n- **Frame 10:** Same red-capped character at a desk at night with a teal alarm clock, angry expression.\n- **Frame 11:** Back to the night-time street festival with a top-hatted, sash-wearing character (possibly the mayor) and crowd.\n- **Frame 12:** Close-up of the red-capped worker slamming \"HUSS!\" at the burger counter, angry.\n\n**Palette shift:** Night scenes (purple/blue with festival lights) alternate with warm interior restaurant scenes (wood browns, reds, golds) and one daytime exterior (frame 3).\n\n## 4) TIKTOK USERNAME/WATERMARK\nNone visible in any frame.\n\n## 5) STORY GUESS\nA comedic Roblox-style skit: a guy takes a \"Burger Wrapper\" job, but because he \"wrapped\" everything (like a gift), he hilariously wraps the manager's tie instead of the burger — \"Thank you for wrapping my tie\" — prompting his angry \"HUSS!\" meltdown.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108382,
+  "id": "20261120011247e6d45c347b2b4dc1",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "20261120011247e6d45c347b2b4dc1",
+  "usage": {
+    "completion_tokens": 633,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2792
+  }
+}

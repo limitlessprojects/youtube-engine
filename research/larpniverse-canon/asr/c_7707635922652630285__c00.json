@@ -1,0 +1,14 @@
+{
+  "created": 1795109279,
+  "id": "2026112001275861af6dca6355493b",
+  "request_id": "2026112001275861af6dca6355493b",
+  "text": "In this town, everybody goes out partying except me. You see, every single night there's a party somewhere: pool parties, pizza parties, even a birthday party for the mayor's goldfish. Nobody here practices anything. Why would they? There is always another party going on. My best friend Kevin goes to every party. My neighbor Linda goes to every party. Even my grandma goes dancing on Tuesdays, but not me. Day by day.",
+  "usage": {
+    "completion_tokens": 97,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 471
+  }
+}

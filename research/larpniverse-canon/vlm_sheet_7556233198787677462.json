@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**1) Visual medium:** Painted/digital 2D animation (fan-edit style, anime-inspired AI/painted art), not game footage. No HUD or game UI. Looks like Attack on Titan–themed edit.\n\n**2) On-screen text:** No readable text in any frame except:\n- Roman numerals on the clock face (frame 3): **XII, I, II, III, IV, V, VI, IX, X** (partially visible around the dial).\n- A small watermark, bottom-left corner of every frame, reading approximately **\"IrjBily\"** (stylized signature, hard to read exactly).\n\n**3) Visual arc:**\n- **F1:** Dark silhouette of a figure (red cloak) overlooking a glowing nighttime city.\n- **F2:** Silhouetted figure standing in bright teal/white light with a billowing cape.\n- **F3:** Close-up of an ornate golden clock with chains.\n- **F4–F5:** Deep red interiors — gothic arches, then a solid blurry red wall/door.\n- **F6:** Young man's face lit teal against red, distressed.\n- **F7:** Extreme close-up of an eye with red flame-like makeup above it.\n- **F8:** Dark-haired bearded man (Eren-like) looking down somberly, hand raised.\n- **F9:** Huge teal eye close-up.\n- **F10:** Blonde-haired figure seen from behind against fiery orange light.\n- **F11:** Blonde figure crouching before bright red-lit windows.\n- **F12:** Small figure in green cloak surrounded by flames.\n\nPalette shifts: teal/white → gold → saturated red → warm fire orange. Mood darkens into fiery climax.\n\n**4) Watermark:** Same small signature (\"IrjBily\"-like) bottom-left in all 12 frames; no TikTok logo/username bar visible.\n\n**5) Story guess:** An Attack on Titan anime edit tracing Eren's dark transformation — time ticking toward a red-hued path of destruction ending in fire.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108245,
+  "id": "20261120011034d105ce1dd79540e6",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "20261120011034d105ce1dd79540e6",
+  "usage": {
+    "completion_tokens": 435,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2594
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**1) VISUAL MEDIUM:** Real footage throughout — a compilation/countdown video made of real TikTok clips (people, animals, food, piano). No game engine content, no HUD; each frame has a consistent red title banner and white caption text overlaid by the compiler.\n\n**2) ON-SCREEN TEXT (frame by frame):**\n- F1: \"Top 15 Most Liked TikToks\" / \"15th mngnzls: 46.3M ❤️\"\n- F2: \"Top 15 Most Liked TikToks\" / \"14th zheyyad.mallih: 46.7M ❤️\"\n- F3: \"Top 15 Most Liked TikToks\" / \"13th sergey8896: 49.7M ❤️\"\n- F4: \"Top 15 Most Liked TikToks\" / \"11th lamine.yamal: 51.3M ❤️\"\n- F5: \"Top 15 Most Liked TikToks\" / \"10th franekbielak_art: 52.1M ❤️\"\n- F6: \"Top 15 Most Liked TikToks\" / \"9th colbyirv: 52.4M ❤️\"\n- F7: \"Top 15 Most Liked TikToks\" / \"8th pr4yforgabs: 52.7M ❤️\"\n- F8: \"Top 15 Most Liked TikToks\" / \"7th jamie32bsh: 54.5M ❤️\"\n- F9: \"Top 15 Most Liked TikToks\" / \"5th thenickluciano: 58.1M ❤️\"\n- F10: \"Top 15 Most Liked TikToks\" / \"THIS ONE?\" (yellow text) / \"4th vantoan__: 58.4M ❤️\"\n- F11: \"Top 15 Most Liked TikToks\" / \"🥉 marialuisamoni: 62M ❤️\" (partial \"e\" of another caption top-right)\n- F12: \"Top 15 Most Liked TikToks\" / \"🥈 julencohen_piano: 62.9M ❤️\"\n\n**3) VISUAL ARC:** Each frame is a different ranked clip, going up the like-count ladder: a girl in a cat-ear headband → a blurry dark clip → a puppy in water → Lamine Yamal in a cap → extreme-close-up green lips biting a lime → rabbits on a lawn → a bowl of strawberries/chocolate → a boy taking a mirror selfie → a man in a coat outdoors → a kid at a piano in a glass-roofed hall (\"THIS ONE?\") → a corgi on a deck → three boys at a window playing piano. Location, subject, and palette change every frame; like counts climb steadily from 46.3M to 62.9M.\n\n**4) USERNAME/WATERMARK:** None visible beyond the compiled creators' handles listed in the captions (e.g., \"julencohen_piano\", \"vantoan__\"); no compiler watermark readable.\n\n**5) STORY GUESS:** A countdown compilation ranking the most-liked TikToks of all time, counting up from #15 toward #1 by likes.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108326,
+  "id": "202611200111555bbd5b701ce5454f",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "202611200111555bbd5b701ce5454f",
+  "usage": {
+    "completion_tokens": 711,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2870
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "created": 1795109363,
+  "id": "20261120012922fa72faa60bb243d2",
+  "request_id": "20261120012922fa72faa60bb243d2",
+  "text": "In this town, everybody is out partying except me. They will party for anything: a birthday, a Tuesday once because somebody found a nice rock while they are out partying. By the way, I am in here preparing for my job interview. The job is wrapping burgers at Buntown, so I train five AM wrist stretches, two hundred raps before breakfast. I do not eat breakfast; I wrap it fold, fold, tuck roll four seconds too slow.",
+  "usage": {
+    "completion_tokens": 103,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 477
+  }
+}

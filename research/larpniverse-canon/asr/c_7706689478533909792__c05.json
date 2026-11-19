@@ -1,0 +1,14 @@
+{
+  "created": 1795109618,
+  "id": "20261120013337f98793f8aa564a21",
+  "request_id": "20261120013337f98793f8aa564a21",
+  "text": "His little brother, and for the first time in years, every missing child was finally home. I thought it was over until the next night at exactly eleven fifty nine p.m., a small pink ice cream box appeared on my doorstep. Inside was a note: \"Thank you for freeing them, Mason.\" And underneath, but who's going to free me?",
+  "usage": {
+    "completion_tokens": 78,
+    "prompt_tokens": 344,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 422
+  }
+}

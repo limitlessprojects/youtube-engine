@@ -1,0 +1,14 @@
+{
+  "created": 1795109217,
+  "id": "202611200126560ac98d8f60d248fb",
+  "request_id": "202611200126560ac98d8f60d248fb",
+  "text": "But there's one problem, everybody steals my idea. Kevin made a video while they were out partying I was doing my homework. Linda made one too. While they were out partying, I was walking my dog. The mayor made one. While they were out partying, I was fixing the potholes. He has never fixed a single pothole. Even my grandma made one. While they were out partying, I was knitting a sweater. She",
+  "usage": {
+    "completion_tokens": 102,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 476
+  }
+}

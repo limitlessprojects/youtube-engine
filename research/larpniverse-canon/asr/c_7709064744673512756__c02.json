@@ -1,0 +1,14 @@
+{
+  "created": 1795109405,
+  "id": "2026112001300433709cf096db4025",
+  "request_id": "2026112001300433709cf096db4025",
+  "text": "He was impressed, I could tell. Then he asked me one question: \"Can you cook a burger?\" I have never cooked a burger. I have never even eaten one. I only wrap. I did not get the job. The letter said, \"Thank you for wrapping my tie.\" Ah, almost, almost. So tonight, while they are out partying by the way, I am back in here learning to cook five AM two hundred burgers before breakfast. You are hired,\" he said. When can you start? I had already started.",
+  "usage": {
+    "completion_tokens": 117,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 491
+  }
+}

@@ -1,0 +1,77 @@
+{
+ "short": "short-0012",
+ "voice": "edge-tts en-US-AndrewNeural rate +25%",
+ "note": "The Last Guest (fiction lane test #3, the huss-huss chant test; boss day-023 20:00 EAT directive) to the measured canon specs: premise in sentence one, kicker density ~15-20%, escalation ladder, one false reversal, 4-6 word twist in the final 5s, credit-line-inversion closer, hard cut to black, no CTA, 0 exclamation marks. Numbers as spoken words (L-090). The chant is CROWD BED SFX only \u2014 the narrator NEVER chants (larpniverse canon law, dissection section 4). Digits/stamps live on screen.",
+ "lines": [
+  {
+   "key": "hook",
+   "role": "narration",
+   "narration": "In this town, everybody parties except me."
+  },
+  {
+   "key": "s0",
+   "role": "narration",
+   "narration": "Every dusk, a gold envelope slides under one door."
+  },
+  {
+   "key": "s1",
+   "role": "narration",
+   "narration": "They threw one for a stop sign. The town fountain got two."
+  },
+  {
+   "key": "s2",
+   "role": "narration",
+   "narration": "Your envelope comes, they carry you to the square, chanting."
+  },
+  {
+   "key": "s3",
+   "role": "narration",
+   "narration": "Nine years. My slot never clicks. The neighbor checks it for me."
+  },
+  {
+   "key": "s4",
+   "role": "narration",
+   "narration": "I practice anyway. Wave. Bow. Smile. Four seconds. Too slow. Two."
+  },
+  {
+   "key": "s5",
+   "role": "narration",
+   "narration": "The paperboy got his at nine. The chant made the streetlights pulse."
+  },
+  {
+   "key": "s6",
+   "role": "narration",
+   "narration": "Then, one night. No music. No lights. Nothing."
+  },
+  {
+   "key": "s7",
+   "role": "narration",
+   "narration": "Every window dark. An envelope on every doorstep. Unopened."
+  },
+  {
+   "key": "s8",
+   "role": "narration",
+   "narration": "Nine years of nothing. Tonight they forget me. I almost smiled."
+  },
+  {
+   "key": "s9",
+   "role": "narration",
+   "narration": "Then my slot clicked. My name, in green ink."
+  },
+  {
+   "key": "s10",
+   "role": "narration",
+   "narration": "The whole town outside. Unlit lanterns. The neighbor, crying."
+  },
+  {
+   "key": "s11",
+   "role": "narration",
+   "narration": "They were never parties. They were rehearsals."
+  },
+  {
+   "key": "s12",
+   "role": "narration",
+   "narration": "While they were out partying, by the way, the town practiced. For me."
+  }
+ ]
+}

@@ -1,0 +1,353 @@
+{
+ "title": "In this town, everybody parties except me",
+ "format": "narrative what-if (Larptuber 'In this town' one-rule world; fiction lane test #3 \u2014 the huss-huss chant test)",
+ "staged": {
+  "by": "day-023 20:00 EAT boss-directive session (2026-11-19)",
+  "status": "SCRIPT STAGED \u2014 build belongs to a post-fork session (Nov 21 fork decides the lane; #0011's row is its input). VO \u2192 scenes \u2192 render \u2192 gate (>=7.5) \u2192 publish per the v3 pipeline.",
+  "timestamp_note": "all timestamp_start/audio_dur_s are ESTIMATES at 205 WPM + 0.25s gaps for lint pre-clear; the VO stage overwrites them with measured values (L-003). The ~2.6s crowd-chant slam-to-black tail is render-level, outside timeline.total_s (the #0010 loop-to-black pattern)."
+ },
+ "hook": {
+  "timestamp_start": 0.0,
+  "narration": "In this town, everybody parties except me.",
+  "visual": {
+   "v1": "night-town wide (reuse #0010 night-town world DNA); every window throws warm party light, distant square glows gold w/ confetti drift; OUR door dead-center, dark, mail slot visible; frame-0 single title stamps 'EVERYBODY PARTIES.' / 'EXCEPT ME.' (L-128: title owns frame 0); far background: a gold envelope silhouette carried on shoulders"
+  },
+  "fact_sources": [
+   "narrative"
+  ],
+  "audio_dur_s": 2.0,
+  "_key": "hook"
+ },
+ "scenes": [
+  {
+   "timestamp_start": 2.15,
+   "narration": "Every dusk, a gold envelope slides under one door.",
+   "visual": {
+    "v1": "dusk street row; slow push-in on one door's mail slot; a gold envelope slides in (paper-slide SFX); its name-field glows; that door's window lights warm instantly"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.571,
+   "_key": "s0"
+  },
+  {
+   "timestamp_start": 4.87,
+   "narration": "They threw one for a stop sign. The town fountain got two.",
+   "visual": {
+    "v1": "two deadpan vignettes: a stop sign wearing a party hat + streamers, tiny crowd dancing around it; then the town fountain with TWO party banners, confetti on the water; day-lit absurdity, zero dialogue energy"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.429,
+   "_key": "s1"
+  },
+  {
+   "timestamp_start": 8.45,
+   "narration": "Your envelope comes, they carry you to the square, chanting.",
+   "visual": {
+    "v1": "the square at night: crowd silhouettes carry a glowing guest of honor toward a lit stage; red 'HUSS!' stamps pop word-by-word over the crowd (stamp cascade = #0011 seal rig re-colored RED); the chant is CROWD BED only \u2014 the narrator never chants (canon law)"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.857,
+   "_key": "s2"
+  },
+  {
+   "timestamp_start": 11.46,
+   "narration": "Nine years. My slot never clicks. The neighbor checks it for me.",
+   "visual": {
+    "v1": "our dark door by day; mail slot close-up, dust motes, no envelope; the NEIGHBOR (hooded, kind) crouches checking our slot, then pats the door twice (OUR recurring cast plant #1)"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.429,
+   "_key": "s3"
+  },
+  {
+   "timestamp_start": 15.04,
+   "narration": "I practice anyway. Wave. Bow. Smile. Four seconds. Too slow. Two.",
+   "visual": {
+    "v1": "interior: silhouette practicing toward a mirror; small gray text stamps WAVE / BOW / SMILE pop on metronome ticks; counter stamp '4s' cut with a red TOO-SLOW slash, then '2s'; the rhythm tightens visibly"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.143,
+   "_key": "s4"
+  },
+  {
+   "timestamp_start": 18.33,
+   "narration": "The paperboy got his at nine. The chant made the streetlights pulse.",
+   "visual": {
+    "v1": "montage: the PAPERBOY's door receives its gold envelope (he salutes it \u2014 OUR recurring cast plant #2); then the square at night, party lights pulsing in rhythm with red HUSS stamps \u2014 the chant makes the streetlights breathe"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.429,
+   "_key": "s5"
+  },
+  {
+   "timestamp_start": 21.91,
+   "narration": "Then, one night. No music. No lights. Nothing.",
+   "visual": {
+    "v1": "HARD SILENCE begins (HOLD rig): the same street, all windows dark, square empty; slow empty-street dolly; no stamps, no motion energy \u2014 the canon silence beat"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.286,
+   "_key": "s6"
+  },
+  {
+   "timestamp_start": 24.34,
+   "narration": "",
+   "visual": {
+    "v1": "VISUAL-ONLY HOLD EXTENSION (~1.9s): the dolly continues down the dead street; at the hold's end the first gold envelope-row resolves out of the fog (a doorstep envelope, upright, unopened, faint glow)"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 1.6,
+   "_key": "s6b",
+   "visual_only": true,
+   "note": "L-097 legal pacing cut: held beat, narration empty on purpose (s6b = canon silence hold; s10b = formation hold before the twist)"
+  },
+  {
+   "timestamp_start": 26.09,
+   "narration": "Every window dark. An envelope on every doorstep. Unopened.",
+   "visual": {
+    "v1": "walking shot down the dead street: gold envelopes leaning upright on every doorstep, faint gold glow, rows receding into fog; no people anywhere"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.571,
+   "_key": "s7"
+  },
+  {
+   "timestamp_start": 28.81,
+   "narration": "Nine years of nothing. Tonight they forget me. I almost smiled.",
+   "visual": {
+    "v1": "interior, our mirror from s4: my face lit only by window moonlight; the almost-smile forms and dies; the empty slot visible in frame; a single breath"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.143,
+   "_key": "s8"
+  },
+  {
+   "timestamp_start": 32.11,
+   "narration": "Then my slot clicked. My name, in green ink.",
+   "visual": {
+    "v1": "THE CLICK: slot close-up; one HEAVY gold envelope slides in slowly, filling the slot (deepest thump of the video, #0011 seal-thump class); the green-ink name-field flares \u2014 a calligraphic flourish, deliberately unreadable (mystery bait)"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.571,
+   "_key": "s9"
+  },
+  {
+   "timestamp_start": 34.83,
+   "narration": "The whole town outside. Unlit lanterns. The neighbor, crying.",
+   "visual": {
+    "v1": "the door cracks open: the ENTIRE town stands in formation rows, hundreds of unlit grey lanterns; the neighbor front row, face lit gold by our envelope, crying; nobody moves"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.571,
+   "_key": "s10"
+  },
+  {
+   "timestamp_start": 37.55,
+   "narration": "",
+   "visual": {
+    "v1": "VISUAL-ONLY FORMATION HOLD (~1.3s): the crying neighbor holds; nobody in the crowd moves; the camera begins the slow pull-back that reveals the rehearsal rows \u2014 dread beat before the twist"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 1.3,
+   "_key": "s10b",
+   "visual_only": true,
+   "note": "L-097 legal pacing cut: held beat, narration empty on purpose (s6b = canon silence hold; s10b = formation hold before the twist)"
+  },
+  {
+   "timestamp_start": 39.0,
+   "narration": "They were never parties. They were rehearsals.",
+   "visual": {
+    "v1": "TWIST pull-back wide: the crowd is arranged in choir/performance formation down the square \u2014 rehearsal geometry made visible at once; silent red HUSS stamps cascade over them like sheet music"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 2.0,
+   "_key": "s11"
+  },
+  {
+   "timestamp_start": 41.15,
+   "narration": "While they were out partying, by the way, the town practiced. For me.",
+   "visual": {
+    "v1": "closer: our hand pushes the door wide; gold light floods the frame; EVERY lantern lights amber in one single frame; the crowd inhales together; SLAM to black on the loudest crowd 'Hush. Hush. Hush.' (SFX only, render-level tail ~2.6s beyond VO end); loop to hook frame"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.714,
+   "_key": "s12"
+  }
+ ],
+ "timeline": {
+  "fps": 30,
+  "total_s": 44.864,
+  "gap_s": 0.15,
+  "voice": "edge-tts en-US-AndrewNeural rate +25% (target 195-215 WPM; #0010 shipped 212.3, #0011 measured 193.6)",
+  "words": 139,
+  "wpm_estimated": 210.0,
+  "render_tail_s": 2.6,
+  "render_total_s": 47.464
+ },
+ "sources": {
+  "premise": "Boss directive day-023 20:00 EAT: 'can we do one on huss huss and see where it goes... look at the video transcript you'll get what I mean.' Decoded via the canon dissection (research/larpniverse-canon-dissection-2026-11-19.md): huss-huss = the town chant (spoken 'hush hush hush', captioned HUSS!, @larpniverse's original sound, trend peaking now, YouTube-native lane empty). Concept = canon fusion: opener/taxonomy/chant/silence-beat/credit-line inversion from the larpniverse canon + our dark mechanical re-read DNA (#0010 price tags, #0011 value tags).",
+  "format_research": "research/larpniverse-canon-dissection-2026-11-19.md (measured at source: canon 187-213 WPM wholesome lane; kicker density 15-20%; twist 4-6 words; silence beat before every turn; chant = crowd sound never narrator; hard cut no CTA) + research/larpniverse-sweep-2026-11-18.md (day-022 external sweep: INTOWN_FORMAT / ENDING_RULE v2 / VOICE_SPEC).",
+  "cast_note": "Recurring cast is OURS, not theirs (dissection verdict: copying Kevin/Linda/grandma verbatim makes us the Kevin of video A). Our plants: THE NEIGHBOR (checks our slot, cries at our door), THE PAPERBOY (got his at nine), plus #0011's Mayor continuity available for future episodes. Serial-universe flywheel per canon section 4.3.",
+  "reddit_import": "Boss pointer verified: r/nosleep one-rule-town evergreen ('no women in this town', '3 centuries our town has' \u2014 direct cousin: a town-wide ritual that is FOR one person). No specific news case needed for this concept."
+ },
+ "bed_peak": 0.045,
+ "origin": "Fiction lane test #3 \u2014 the huss-huss test, commissioned day-023 20:00 EAT. Category Entertainment (24). Bait comment (commentThreads still scope-blocked, parked for boss paste): 'Nine years of parties and nobody remembers a single morning after. What do you think happens to the guest of honor? Best theory gets pinned.' Build order note: the Nov 21 fork decides IF this builds next (fiction-lane scale) or parks (science lane keeps the channel).",
+ "sfx": [
+  {
+   "kind": "paper_slide",
+   "at": 3.55,
+   "gain": 0.16,
+   "seed": 51,
+   "note": "envelope under the door, soft"
+  },
+  {
+   "kind": "party_murmur",
+   "at": 5.07,
+   "gain": 0.12,
+   "seed": 52,
+   "note": "stop-sign party, distant band-passed"
+  },
+  {
+   "kind": "party_murmur",
+   "at": 6.67,
+   "gain": 0.14,
+   "seed": 53,
+   "note": "fountain party #2, slightly nearer"
+  },
+  {
+   "kind": "chant_bed",
+   "at": 8.85,
+   "gain": 0.18,
+   "seed": 54,
+   "note": "low crowd 'hush' texture under the carry"
+  },
+  {
+   "kind": "stamp_thump",
+   "at": 9.25,
+   "gain": 0.2,
+   "seed": 55,
+   "note": "HUSS! stamp 1 (cascade of 3, red)"
+  },
+  {
+   "kind": "stamp_thump",
+   "at": 9.95,
+   "gain": 0.2,
+   "seed": 56,
+   "note": "HUSS! stamp 2"
+  },
+  {
+   "kind": "stamp_thump",
+   "at": 10.65,
+   "gain": 0.21,
+   "seed": 57,
+   "note": "HUSS! stamp 3"
+  },
+  {
+   "kind": "room_tone",
+   "at": 11.46,
+   "gain": 0.06,
+   "seed": 58,
+   "note": "dust-tick quiet, the empty slot"
+  },
+  {
+   "kind": "metronome",
+   "at": 15.64,
+   "gain": 0.1,
+   "seed": 59,
+   "note": "practice ticks x4, soft"
+  },
+  {
+   "kind": "chant_swell",
+   "at": 19.93,
+   "gain": 0.22,
+   "seed": 60,
+   "note": "streetlights pulsing with the chant"
+  },
+  {
+   "kind": "hard_mute",
+   "at": 23.11,
+   "gain": 0.0,
+   "seed": 61,
+   "note": "SILENCE BEAT \u2014 HOLD rig, near-mute through s6+s6b (#0011 s7 rig reuse)"
+  },
+  {
+   "kind": "footsteps",
+   "at": 26.29,
+   "gain": 0.13,
+   "seed": 62,
+   "note": "empty street walk, paper rows rustle low"
+  },
+  {
+   "kind": "breath",
+   "at": 31.41,
+   "gain": 0.09,
+   "seed": 63,
+   "note": "the almost-smile, single breath"
+  },
+  {
+   "kind": "seal_thump",
+   "at": 32.41,
+   "gain": 0.26,
+   "seed": 64,
+   "note": "THE CLICK \u2014 deepest thump of the video (#0011 seal class); heavy slow paper slide under it"
+  },
+  {
+   "kind": "crowd_shuffle",
+   "at": 35.33,
+   "gain": 0.12,
+   "seed": 65,
+   "note": "the formation stands, one muffled sob"
+  },
+  {
+   "kind": "crowd_inhale",
+   "at": 40.4,
+   "gain": 0.15,
+   "seed": 66,
+   "note": "silent stamp cascade + one shared inhale"
+  },
+  {
+   "kind": "chant_full",
+   "at": 44.45,
+   "gain": 0.28,
+   "seed": 67,
+   "note": "the ONE full-volume crowd 'Hush. Hush. Hush.' \u2014 narrator never chants (canon law)"
+  },
+  {
+   "kind": "lantern_flash",
+   "at": 45.55,
+   "gain": 0.2,
+   "seed": 68,
+   "note": "every lantern lights in one frame; crack + slam-to-black thump; loop to hook"
+  }
+ ]
+}

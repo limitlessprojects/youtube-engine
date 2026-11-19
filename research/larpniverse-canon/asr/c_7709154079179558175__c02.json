@@ -1,0 +1,14 @@
+{
+  "created": 1795109238,
+  "id": "202611200127175ee42bd8adf9488f",
+  "request_id": "202611200127175ee42bd8adf9488f",
+  "text": "Got more views than me, every single video ends the same way. Now nobody even remembers who started it. So I made one more video. I stood on the basketball court, looked into the camera and said, \"While you were all copying my video, I was making a new one.\" Then I dropped my brand new sound. Fifty million views in one day, and the next morning Kevin copied that one too. That's okay. While they're out copying, I'm already making the next one.",
+  "usage": {
+    "completion_tokens": 106,
+    "prompt_tokens": 374,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 480
+  }
+}

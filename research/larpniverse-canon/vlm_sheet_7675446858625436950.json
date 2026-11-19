@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "# Contact Sheet Analysis\n\n**1) Visual Medium:** Hand-drawn digital animation (2D artist's animation frames / animatic style). Not Minecraft, Roblox, GTA, or real footage. No game HUD or UI elements — it's a stylized anime/illustration aesthetic with painterly strokes.\n\n**2) On-screen text (frame by frame):**\n- Frame 1: (blank/black)\n- Frame 2: no readable text\n- Frame 3: \"AipaDi0\" (watermark, lower right)\n- Frame 4: \"AipaDi0\" (watermark, lower left)\n- Frame 5: \"AipaDi0\" (watermark, bottom center)\n- Frame 6: no readable text\n- Frame 7: no readable text\n- Frame 8: no readable text\n- Frame 9: no readable text\n- Frame 10: no readable text\n- Frame 11: no readable text\n- Frame 12: \"AipaDi0\" (watermark, bottom center)\n\nNo captions, titles, clocks, or signs appear — only the repeated watermark.\n\n**3) Visual Arc:**\n- Frames 1–2 (top row): abstract/blurry warm-toned establishing shots; then two pale figures flanking a brilliant vertical light, dark blue outer glow.\n- Frames 4–5 (second row): a long white-haired character shown from behind/closeup, then fully revealed frontally — a serene angelic figure with a glowing yellow halo, holding a chain with a circular pendant (pocket-watch-like), standing in a bright golden cathedral-like corridor with repeating pillars.\n- Frames 6–7: sudden shift to chaos — the same white-haired figure engulfed in black ink-like corruption and violent yellow lightning/gold energy against black backgrounds.\n- Frames 8–10 (third row): the figure with massive feathered wings, now behind a glowing golden ring/halo sigil on black; close-up of a horned/earred face, eyes closed, bathed in amber-gold.\n- Frames 11–12 (bottom row): the winged sigil figure again; then a radiant golden eye/core streaked with white; ends with the white-haired character small against black, marked with gold, halo above.\n\n**Palette arc:** white/blue → blazing gold/yellow → black-and-gold corruption → luminous gold on black. Time-of-day is stylized (heavenly light vs. void darkness) rather than literal.\n\n**4) TikTok username/watermark:** \"AipaDi0\" (appears in frames 3, 4, 5, and 12).\n\n**5) Story guess:** An artist's animated short of an angelic white-haired being who descends in holy light, becomes corrupted or falls (black/energy chaos), and is reborn/transfigured as a golden winged divine entity.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108271,
+  "id": "20261120011058e2b056e4f89746ec",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "20261120011058e2b056e4f89746ec",
+  "usage": {
+    "completion_tokens": 603,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2762
+  }
+}

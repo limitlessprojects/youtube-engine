@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "# Contact Sheet Analysis\n\n## 1) Visual Medium\n**Roblox** animation/game footage (blocky avatars, Roblox-style faces and environments). UI elements visible: TikTok like/comment/share icons, heart, comment bubble, arrow, view counts.\n\n## 2) On-Screen Text (frame by frame)\n1. *(no readable text)* — group of avatars on street\n2. \"1K views\" (top); \"meme\" (caption); \"@larpniverse\" (username); \"while they were out partying... #huss\" (caption); \"1.1K\" (share count)\n3. \"HUSS!\" ; hoodie text: \"in this town! beyond the rules\"\n4. \"pushup\" (caption)\n5. *(faint watermark only)* — town square dance scene\n6. \"in this town!\" / \"beyond the rules\" (hoodie text)\n7. \"@kevin_huss\"; \"while they were out partying... #huss\"; \"1.2M\" likes; \"8K\" comments; \"40K\" shares\n8. \"potholes\" (caption); \"@mayor_official\"; \"while they were out partying, I was fixing the potholes\"; \"2.1M\" likes; \"19K\" comments; \"80K\" shares\n9. \"than\" (caption); hoodie: \"in this town! beyond the rules\"\n10. \"more\" (caption)\n11. \"one\" (caption); hoodie: \"in this town! beyond the rules\"; \"@larpniverse\"; \"I was making a new one\"\n12. \"that's\" (caption); \"1K\" (share count)\n\n## 3) Visual Arc\n- **Frames 1–2:** daytime street group scene → dark night scene with an avatar playing basketball.\n- **Frames 3, 6, 9, 11–12:** repeated close-ups of the blue star-capped avatar (\"HUSS\") in blue hoodie — happy in day frames, crying/tearful in frame 9, dark night in frame 12.\n- **Frames 4–5:** interiors/activities — avatar doing a \"pushup\" on a mat, then a daytime dance party in a town square with bunting flags and speakers.\n- **Frames 7–8:** competing characters — a red-hatted avatar (@kevin_huss) and a top-hatted mayor avatar (@mayor_official) at podiums with huge like counts.\n- **Frame 10:** avatar next to a speaker in the party square.\n- Palette shifts from bright day (blues, greens, colorful bunting) to dark night bookends.\n\n## 4) Usernames/Watermarks\n- **@larpniverse** (recurring, incl. faint watermark)\n- **@kevin_huss**\n- **@mayor_official**\n\n## 5) Story Guess\nA Roblox town meme trend: while everyone was out partying, the diligent character \"Huss\" (or the mayor) stayed behind doing pushups and fixing potholes — and that's one more \"in this town!\" tribute to them.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1795108403,
+  "id": "20261120011310a5853ad495434c54",
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "request_id": "20261120011310a5853ad495434c54",
+  "usage": {
+    "completion_tokens": 671,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2830
+  }
+}

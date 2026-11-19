@@ -1,0 +1,14 @@
+{
+  "created": 1795109779,
+  "id": "20261120013619736fb272528e43bc",
+  "request_id": "20261120013619736fb272528e43bc",
+  "text": "The fire, ah.",
+  "usage": {
+    "completion_tokens": 6,
+    "prompt_tokens": 182,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 188
+  }
+}

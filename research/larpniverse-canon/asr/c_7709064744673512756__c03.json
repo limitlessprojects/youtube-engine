@@ -1,0 +1,14 @@
+{
+  "created": 1795109426,
+  "id": "202611200130259af5497c74c04534",
+  "request_id": "202611200130259af5497c74c04534",
+  "text": "My first shift was Saturday night, the biggest party of the year. At midnight, the whole town walked in hungry. Four hundred people, one of me. Hush hush hush hush hush hush. Four hundred burgers, one minute. The mayor stared at me. How did you do that? While you were out partying, I said by the way. Hush hush hush hush hush hush.",
+  "usage": {
+    "completion_tokens": 95,
+    "prompt_tokens": 263,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 358
+  }
+}
