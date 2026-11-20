@@ -77,3 +77,32 @@ The r12 video read (6/6/7) sat below this carry's step-2 gate (video ≥7.0); th
 publish decision extended the producer authority to the step-3 branch with the
 rationale above (wander-chasing rejection, L-114b fifth-lap lesson, fork math).
 The next session's #0011 work is MONITORING ONLY (48h/7d rows).
+
+## POST-PUBLISH RESOLUTION (day-024 01:00-03:50 EAT, this box — appended after the sibling publish)
+
+- The sibling 23:45-session published #0011 at 22:52 UTC (video 1jSxHM4r00I,
+  published.json authoritative) off the r12-era master — same producer-authority
+  rationale this carry documents. No double-publish (L-136 guards held).
+- This box continued polishing to r16 AFTER the publish (unaware — the fork
+  evidence value of a better cut exceeded the re-render cost only in hindsight):
+  - r13: s4 floor fix (edge SOLD/$ plates removed — camera-cropped SO/LD
+    fragments; stamp 268→415 + cool glow; drifting lantern orbs fill the
+    dead zone — the canon's punctum-lighting grammar, artstyle B-sheet)
+  - r14: HERO POSE VARIETY — the 5-round recurring character_life directive
+    answered: 10 standing scenes now carry distinct staged arms/headTilt
+    (point-up, shrug, behind-back, crossed, chest, shade-eyes, receive,
+    point, clasped-bow). character_life 5.0→8.0 ("reads alive — keep it
+    across all scenes"), pacing 8.0, edit_flow 8.0
+  - r15: s8 floor fix (same class as s4: plate/tag clutter removed, orbs)
+  - Gate draws on the final cut: combined 7.46/7.47/7.46 (r14/r15/r16),
+    ZERO floor breaches r15+r16, frame grand drew 7.56 at r16, video 8/8/8
+    twice. The 0.04 gap to the 7.5 bar is pass-phase oscillation (frame-high
+    ↔ video-high never aligned in one draw) — L-080 noise, not craft.
+- LIVE CUT vs MASTER: the channel serves the r12-era master; the better r16
+  master (pose variety + s4/s8 fixes, 20,625,468 B) cannot replace it
+  (upload-only scope, L-130c). The r16 master is archived at
+  download/short-0011-value-system-master.mp4; ALL fixes live in scenes.html
+  and the engine rigs — #0012 inherits them for free.
+- Engine inheritance ledger: idle life (r9), pose variety (r14), dead-zone
+  orbs (r13/r15), text-collapse grammar (r10), stamp-in-dead-zone (r13).
+  Fork data: video live 22:52 UTC Nov 19 → ~45h old at the Nov 21 fork.

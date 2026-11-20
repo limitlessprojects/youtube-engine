@@ -419,7 +419,7 @@ SC.hook = { cam: [[540, 880, 1.0], [540, 950, 1.18]],
          so the eye locks $1 first (r7 directive #3); mute-test still reads both */
       npc(V2.root, 895, 1560, 0.88, { t, price: "$50,000", facing: -1, point: 1, tagDX: -120, tagOp: 0.82, tagCol: "#D9A96B", tagS: 0.7 });
       /* the hero, LARGE, warm-pooled — the frame's center of gravity */
-      hero2(V2.root, 520, 1610, 1.78, { t, poolOp: 0.22, stickerS: 1.32, stickerGlow: 1 });
+      hero2(V2.root, 520, 1610, 1.78, { t, poolOp: 0.22, stickerS: 1.32, stickerGlow: 1, armR: { a: 22, b: -55 } });
     } };
   },
   over(lt, u) {
@@ -440,7 +440,7 @@ SC.s0 = { cam: [[540, 1060, 1.06], [540, 1120, 1.26]],
       tag(V2.root, 220, 960, "$9,000,000", K.moneyHi, 1.0, t * 2);
       npc(V2.root, 810, 1560, 1.1, { t, price: "$4,000", expr: "smug", facing: -0.6 });
       npc(V2.root, 950, 1545, 0.85, { t, price: "$12,000", facing: -1 });
-      hero2(V2.root, 480, 1630, 1.62, { t, look: -0.3 });
+      hero2(V2.root, 480, 1630, 1.62, { t, look: -0.3, armL: { a: 75, b: -20 }, headTilt: -3 });
     } };
   },
   over(lt, u) { stamp(seg(u, 0.62, 0.78), 300, "$1", "#CBD6F2", 96); } };
@@ -449,7 +449,7 @@ SC.s0 = { cam: [[540, 1060, 1.06], [540, 1120, 1.26]],
 SC.s1 = { cam: [[540, 1160, 1.3], [540, 1180, 1.42]],
   world(lt, u, t) {
     return { phase: 0, over: () => {
-      hero2(V2.root, 540, 1640, 1.66, { t });
+      hero2(V2.root, 540, 1640, 1.66, { t, armL: { a: 38, b: -30 }, armR: { a: 38, b: -30 }, headTilt: 3 });
       npc(V2.root, 220, 1620, 1.15, { t, flick: 1, price: "$2,000", facing: 1 });
       npc(V2.root, 880, 1610, 1.05, { t, flick: 1, price: "$50,000", facing: -1 });
       npc(V2.root, 120, 1540, 0.8, { t, expr: "smug" });
@@ -478,7 +478,7 @@ SC.s2 = { cam: [[420, 1120, 1.1], [620, 1150, 1.24]],
       crowd(V2.root, t, [[180, 1580, 1.0, "$2,000"], [860, 1575, 1.0, "$12,000"], [985, 1538, 0.78, "$8,000"], [350, 1550, 0.62, "$500"]],
         { sold: (x, y) => (y > 1560 ? seg(u, 0.66, 0.82) : 0) });
       stranger(V2.root, sx, 1600, 1.42, { t, walk: seg(u, 0.05, 0.72) > 0 && seg(u, 0.05, 0.72) < 0.98 });
-      hero2(V2.root, 700, 1630, 1.5, { t, noPool: 1, poolDX: -40 });
+      hero2(V2.root, 700, 1630, 1.5, { t, noPool: 1, poolDX: -40, armL: { a: -6, b: 14 }, armR: { a: -6, b: 14 }, headTilt: -4 });
     } };
   },
   over(lt, u) {} };
@@ -502,7 +502,7 @@ SC.s3 = { cam: [[540, 1060, 1.16], [540, 1140, 1.32]],
       npc(V2.root, 700, 1562, 0.7, { t, frozen: soldK[2] >= 1, bought: soldK[2] >= 1 });
       npc(V2.root, 778, 1550, 0.66, { t, price: "$1,000", sold: soldK[2], bought: soldK[2] >= 1, frozen: soldK[2] >= 1, tagOp: 1 - soldK[2] });
       npc(V2.root, 852, 1540, 0.62, { t, frozen: soldK[2] >= 1, bought: soldK[2] >= 1 });
-      hero2(V2.root, 400, 1640, 1.28, { t, noPool: 1, look: 0.6 });
+      hero2(V2.root, 400, 1640, 1.28, { t, noPool: 1, look: 0.6, armL: { a: 46, b: -78 }, armR: { a: 46, b: -78 } });
       if (soldK[0] >= 1) ring(180, 1160, seg(u, 0.26, 0.44), K.sold);
       if (soldK[1] >= 1) ring(520, 1140, seg(u, 0.54, 0.72), K.sold);
       if (soldK[2] >= 1) ring(777, 1108, seg(u, 0.8, 0.98), K.sold);
@@ -522,7 +522,15 @@ SC.s4 = { cam: [[560, 1100, 1.42], [580, 1120, 1.6]],
       npc(V2.root, 980, 1560, 0.9, { t, bought: 1, frozen: 1 });
       stranger(V2.root, 760, 1620, 1.5, { t, facing: -1, ledger: seg(u, 0.0, 0.2) * 24,
         tilt: -3, headTilt: 6, look: -0.4 });
-      hero2(V2.root, 430, 1640, 1.52, { t, pulse: seg(u, 0.44, 0.78), look: 0.5 });
+      hero2(V2.root, 430, 1640, 1.52, { t, pulse: seg(u, 0.44, 0.78), look: 0.5, armR: { a: 18, b: -88 } });
+      /* r12 dead-zone fill (judge directive #2, iteration 2): drifting
+         lantern orbs in the sky band — the canon's punctum-lighting grammar
+         (small warm glows floating in flat navy negative space, B-sheet) */
+      [[215, 640, 0.9], [855, 545, 0.75], [600, 760, 0.6], [415, 545, 0.5]].forEach(([ox, oy, os], i) => {
+        const dr = Math.sin(t * 0.5 + i * 1.7) * 18;
+        V2.glow(ox + dr, oy + Math.sin(t * 0.4 + i) * 10, 58 * os, "Warm", 0.34, V2.root);
+        E("circle", { cx: ox + dr, cy: oy + Math.sin(t * 0.4 + i) * 10, r: 6.5 * os, fill: "#FFD9A0", opacity: 0.85 }, V2.root);
+      });
     } };
   },
   over(lt, u) {
@@ -545,7 +553,7 @@ SC.s5 = { cam: [[500, 1000, 1.0], [620, 1040, 1.14]],
         npc(V2.root, px, py, ps, { t, march: 1, price: "$1,000", sold: 1, bought: 1, tagDX: 30 });
       }
       stranger(V2.root, 560, 1560, 1.2, { t, walk: 1, hatTip: 0 });
-      hero2(V2.root, 880, 1620, 1.4, { t, look: -0.7, poolOp: 0.17 });
+      hero2(V2.root, 880, 1620, 1.4, { t, look: -0.7, poolOp: 0.17, armR: { a: 98, b: -12 } });
     } };
   },
   over(lt, u) {} };
@@ -555,7 +563,7 @@ SC.s6 = { cam: [[600, 1120, 1.3], [580, 1140, 1.44]],
   world(lt, u, t) {
     return { phase: 2, over: () => {
       stranger(V2.root, 760, 1630, 1.56, { t, facing: -1, bill: seg(u, 0.18, 0.44), ledger: false, tilt: -2, headTilt: 4 });
-      hero2(V2.root, 420, 1640, 1.5, { t, look: 0.7 });
+      hero2(V2.root, 420, 1640, 1.5, { t, look: 0.7, armL: { a: 52, b: -40 }, armR: { a: 52, b: -40 } });
       if (seg(u, 0.18, 0.44) >= 0.5) ring(700, 1470, seg(u, 0.44, 0.62), "#FFE9C8");
     } };
   },
@@ -586,11 +594,21 @@ SC.s8 = { cam: [[580, 1110, 1.34], [560, 1130, 1.46]],
     return { phase: 2, over: () => {
       stranger(V2.root, 750, 1620, 1.5, { t, facing: -1, hatTip: V2.easeInOut(seg(u, 0.12, 0.4)) * -14, ledger: false,
         armR: { a: 150 + (seg(u, 0.12, 0.4)) * 10, b: -60 } });
-      /* the still gray crowd behind him (two, tags spread — no plate stacking) */
+      /* the still gray crowd behind him — r14 s8 floor fix (2 rounds stable):
+         plates+tags overlapped each other AND the tophat's face; the pair is
+         atmosphere now (bought+greyed+frozen, no text) — one text story left
+         (banner + the hero's $1, the hook's proven two-system config) */
       [[905, 1585, 1.0], [1000, 1548, 0.85]].forEach(([cx2, cy2, cs], i) => {
-        npc(V2.root, cx2, cy2, cs, { t, price: "$1,000", sold: 1, bought: 1, frozen: 1, tagDX: i === 0 ? -34 : 26 });
+        npc(V2.root, cx2, cy2, cs, { t, bought: 1, frozen: 1 });
       });
-      hero2(V2.root, 400, 1640, 1.42, { t, look: 0.7 });
+      /* r14 dead-zone fill: drifting lantern orbs below the banner (the s4
+         treatment — canon punctum lighting in the empty band) */
+      [[250, 700, 0.8], [760, 640, 0.65], [520, 820, 0.55]].forEach(([ox, oy, os], i) => {
+        const dr = Math.sin(t * 0.5 + i * 1.7) * 18;
+        V2.glow(ox + dr, oy + Math.sin(t * 0.4 + i) * 10, 58 * os, "Warm", 0.3, V2.root);
+        E("circle", { cx: ox + dr, cy: oy + Math.sin(t * 0.4 + i) * 10, r: 6.5 * os, fill: "#FFD9A0", opacity: 0.85 }, V2.root);
+      });
+      hero2(V2.root, 400, 1640, 1.42, { t, look: 0.7, armL: { a: 80, b: -26 } });
     } };
   },
   over(lt, u) { stamp(seg(u, 0.34, 0.5), 262, "THE BUYER BACKED OUT", K.sold, 58); } };
@@ -609,7 +627,7 @@ SC.s9 = { cam: [[540, 1060, 1.08], [540, 1100, 1.24]],
         npc(V2.root, x, y, s, { t, price, flip: flipOf(x, y), bought: false });
         if (flipOf(x, y) >= 1 && flipOf(x, y) < 1.03) ring(x, y - 440 * s, 0.3, K.moneyHi);
       });
-      hero2(V2.root, 540, 1660, 1.3, { t, look: 0, poolOp: 0.2 });
+      hero2(V2.root, 540, 1660, 1.3, { t, look: 0, poolOp: 0.2, armL: { a: 4, b: -24 }, armR: { a: 4, b: -24 }, headTilt: 5 });
     } };
   },
   over(lt, u) {} };
