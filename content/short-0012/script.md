@@ -9,7 +9,8 @@
 > **Status: SCRIPT RE-STAGED day-024 04:45 EAT (boss option-3 craft notes baked:
 > returned-guest clue s5b, chant practice s4/s4b, closer = "They didn't forget me
 > for nine years. They were making sure I'd say yes." split s12/s12b). VO MEASURED
-> (17 lines, per-line rates, timeline end 49.82s, total 53.02s + 2.6s chant tail);
+> (17 lines, per-line rates, timeline end 49.82s, total 53.02s + 3.1s SLOW WHISPERED
+> chant tail — day-024 02:00 session applied the boss's exact closer spec);
 > lint PASS @ 53.02: 147w, delivery WPM 186.0, 19 beats ≥ 17, 0 fails. Build
 > belongs to a post-fork session.**
 
