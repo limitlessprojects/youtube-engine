@@ -2,6 +2,17 @@
 
 ## State: MASTER READY, GATE BLOCKED BY VLM QUOTA WAVE
 
+### Probe log (day-025 09:45 EAT session — 7th recycle recovery)
+- Workstation recycled; repo restored @ 4295d07; master re-mirrored from
+  `upload/short-0012.mp4` (ffprobe 56.566667s, matches carry); 20 gate
+  keyframes re-rendered FROM THOSE BYTES — same keyframe set r1 judged.
+- Judge probes (z-ai CLI vision + scripts/probe_judge.mjs SDK createVision,
+  glm-4.6v): 429 at ~14:46 +08, ~14:50 +08, ~14:52 +08 (3 spaced attempts).
+- Diagnosis: the "1.5h wave" is now 10h+ old → daily-quota exhaustion, not a
+  transient wave. Expect recovery at the provider's quota reset; probe on
+  each session open + on any retry cron fire. Gate law unchanged: no
+  verdicts → no publish.
+
 - **BUILD COMPLETE AND VERIFIED** (all on the current HEAD commit):
   - World: `content/short-0012/render/scenes.html` (19 beats + hook; option-3
     craft notes in the visuals; r1 floor fixes baked: s8 hero anchor, s10
