@@ -161,15 +161,22 @@ def main() -> int:
 
     mix = np.zeros(N)
     vo_spans = []
+    # L-138 (day-025): vo files are numbered by vo_pipeline in NARRATION order
+    # (hook + narrated scenes, sequential), NOT by scene index. #0011 had zero
+    # visual-only beats so the two schemes coincided; #0012's three pacing
+    # beats made them diverge and a scene-index read scrambled the back half
+    # of the mix. Count NARRATED lines only — that IS the file number.
     lines = [(0.0, script["hook"]["timestamp_start"], script["hook"]["audio_dur_s"],
               short / "vo" / "00.mp3")]
-    for i, sc in enumerate(script["scenes"]):
+    n = 0
+    for sc in script["scenes"]:
         # visual-only beats (narration "") carry no VO — they are pacing cuts,
         # not lines (day-015: A2 mean-scene law needs 12 beats at 214.5 WPM)
         if not (sc.get("narration") or "").strip():
             continue
-        lines.append((i + 1, sc["timestamp_start"], sc["audio_dur_s"],
-                      short / "vo" / f"{i+1:02d}.mp3"))
+        n += 1
+        lines.append((n, sc["timestamp_start"], sc["audio_dur_s"],
+                      short / "vo" / f"{n:02d}.mp3"))
     for _, start, dur, f in lines:
         y = load_vo(f)
         a = int(start * SR)

@@ -6,13 +6,18 @@
 > hush", captioned **HUSS!**, @larpniverse's original sound; the trend is peaking on
 > TikTok right now and the YouTube-native lane is empty — first-mover open).
 > Full deconstruction: `research/larpniverse-canon-dissection-2026-11-19.md`.
-> **Status: SCRIPT RE-STAGED day-024 04:45 EAT (boss option-3 craft notes baked:
-> returned-guest clue s5b, chant practice s4/s4b, closer = "They didn't forget me
-> for nine years. They were making sure I'd say yes." split s12/s12b). VO MEASURED
-> (17 lines, per-line rates, timeline end 49.82s, total 53.02s + 3.1s SLOW WHISPERED
-> chant tail — day-024 02:00 session applied the boss's exact closer spec);
-> lint PASS @ 53.02: 147w, delivery WPM 186.0, 19 beats ≥ 17, 0 fails. Build
-> belongs to a post-fork session.**
+> **Status: BUILT day-025 (2026-11-20 ~01:00 EAT, producer authority — boss "next
+> day is here did you publish no 12" + the lane-urgency note). WORLD WRITTEN
+> (render/scenes.html, 19 beats + hook, option-3 craft notes in the visuals:
+> s5b gray/shut-mouth paperboy clue, s4 silent-mouthing mirror practice,
+> s12/s12b closer with the SLOW+WHISPERED tail chant). 3.1s tail folded in as
+> visual-only scene s13 (A2 cap 4.2s). VO measured (17 lines, WPM 186.0), SFX
+> remapped to the 4 finish_v3 kinds at measured times. MASTER BUILT: 1697/1697
+> frames, 56.567s, faststart, decode-clean, VO placement verified, bed -13.1 dB,
+> motion probe: zero dead beats. Gate r1 = 7.31 (hook 8.0, s11 8.0, s12 7.8,
+> s13 7.75, s16 7.5; s10 6.5 + s15 5.8 floor breaches FIXED structurally —
+> hero-envelope + walking subject; one-HUSS redesign). r2 BLOCKED by a 1.5h+
+> VLM 429 wave — carry_0012_gate.md owns the gate+publish.**
 
 ## Why this video (the strategic case)
 

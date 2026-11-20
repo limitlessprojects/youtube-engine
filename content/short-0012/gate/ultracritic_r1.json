@@ -1,0 +1,187 @@
+{
+ "round": 1,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.31,
+ "frame_grand_mean": 7.31,
+ "dim_means": {
+  "frame:hook_impact": 8.0,
+  "frame:text_discipline": 8.56,
+  "frame:visual_hierarchy": 6.44,
+  "frame:contrast_legibility": 7.0,
+  "frame:production_polish": 7.22
+ },
+ "frame_means": {
+  "hook_u50": 8.0,
+  "s0_u50": 7.2,
+  "s10_u50": 6.5,
+  "s11_u50": 8.0,
+  "s12_u50": 7.8,
+  "s13_u50": 7.75,
+  "s14_u50": 7.25,
+  "s15_u50": 5.75,
+  "s16_u50": 7.5
+ },
+ "floor_breaches": [
+  "s10_u50",
+  "s15_u50"
+ ],
+ "video_directives": [],
+ "video_pass_source": "none",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 8,
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Push the glow/emphasis on the central character further (stronger rim light or warmer fill) so the focal point reads instantly at thumbnail scale",
+    "The dead zone between the header text and the moon/skyline (upper third) is large \u2014 either lower the header slightly or add subtle confetti/atmosphere to bridge it",
+    "Add a subtle shadow/gradient at the bottom edge to ground the characters and stop the composition from feeling flat at the feet"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom ~30% of frame is a large dead zone \u2014 raise the ground line, add a subtle reflection of the moon/characters, or push the letter scene lower to reclaim it",
+    "The cropped character on the right edge reads as an accident at first glance \u2014 either crop more decisively (clearly partial) or pull it fully into frame",
+    "The glowing envelope focal point is small and low-contrast against the dark doorway \u2014 add a stronger glow pulse or scale it up ~20% so the eye lands there first"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the top ~40% dead zone \u2014 it's pure empty navy with three stray tick marks; raise the skyline or add a headline/hero element to occupy the upper third",
+    "Establish a single focal envelope \u2014 enlarge one to hero scale with a glow or motion emphasis; currently eight identical envelopes compete evenly and none reads as the subject",
+    "Lift overall luminance and foreground/background separation \u2014 buildings are barely visible behind the fog band; deepen background to near-black or brighten envelope edges so the red seals pop on a 6-inch daylight screen"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "The upper third and right side are near-black dead zones with barely-readable background shapes \u2014 lift ambient fill or add a subtle light pool so the environment reads on a daylight phone",
+    "Character sits slightly low-center and static; compose it along a rule-of-thirds node or add a foreground shadow layer for depth",
+    "The window/door geometry is so dim it reads as noise; either boost those silhouette values ~15% or remove them for a cleaner minimal set"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Envelope is bleeding off the right edge with the wax seal off-canvas \u2014 recenter the composition so the seal (the actual focal detail) sits at/near the vertical third",
+    "Left black bar element is ambiguous mush (dark blob in dark frame) \u2014 either clarify what it is (mail slot? slot shadow?) or remove it",
+    "Top ~40% and bottom ~30% of the frame are near-black dead zones \u2014 add subtle depth cues (vignette gradient, ambient glow from the envelope, or faint texture) to justify the space"
+   ],
+   "frame": "s12_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or compress the upper ~35% dead zone (nearly pure black) \u2014 lower the skyline or add subtle atmospheric depth so the vertical frame isn't half-empty",
+    "Slightly brighten the rim-light/glow on the central hooded figure to further separate it from the dark door background on small screens",
+    "Raise the sad observer character's saturation/contrast a touch \u2014 its muted navy blends into the crowd and dilutes the intended two-subject eye path"
+   ],
+   "frame": "s13_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the upper ~40% dead zone \u2014 empty navy sky wastes half the vertical frame; add atmosphere (moon, sign, subtle gradient, or push the scene up)",
+    "Boost crowd-background separation \u2014 the massed figures melt into the dark building silhouettes; lift background rim light or darken the sky further to make the orange glows pop",
+    "Strengthen the sad character's read \u2014 he's nearly the same value as the crowd behind him; add a spotlight pool or slight scale/foreground placement so the emotional contrast registers instantly on a 6-inch screen"
+   ],
+   "frame": "s14_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 4,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 5.75,
+   "words_visible": 12,
+   "top3_directives": [
+    "Cut the repeated 'HUSS!' badges from 6 down to 1\u20132 max \u2014 six identical floating labels reads as spam and inflates on-screen word count to 12",
+    "Fill or darken the huge empty sky zone (top ~35% of frame is dead space) \u2014 crop tighter or add subtle atmosphere/stage haze so the composition isn't bottom-heavy",
+    "The small 'HUSS!' badges would be illegible at 6-inch daylight viewing \u2014 either enlarge dramatically with stronger stroke contrast against the navy background or remove them entirely"
+   ],
+   "frame": "s15_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "The upper ~40% of the frame is near-empty dark sky \u2014 add a subtle gradient, haze, or skyline glow to kill the dead zone behind the HUSS! tags",
+    "The red HUSS! labels have low luminance against the navy sky \u2014 brighten the fill or add a warm stroke/glow so they pop on a 6-inch daylight screen",
+    "The trio of HUSS! tags float without visual origin \u2014 anchor them to speakers with small motion trails or position them tighter to the crowd for readable cause-and-effect"
+   ],
+   "frame": "s16_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

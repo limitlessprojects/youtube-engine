@@ -1,9 +1,9 @@
 {
  "title": "In this town, everybody parties except me",
- "format": "narrative what-if (Larptuber 'In this town' one-rule world; fiction lane test #3 \u2014 the huss-huss chant test)",
+ "format": "narrative what-if (Larptuber 'In this town' one-rule world; fiction lane test #3 — the huss-huss chant test)",
  "staged": {
   "by": "day-023 20:00 EAT boss-directive session (2026-11-19)",
-  "status": "SCRIPT STAGED \u2014 build belongs to a post-fork session (Nov 21 fork decides the lane; #0011's row is its input). VO \u2192 scenes \u2192 render \u2192 gate (>=7.5) \u2192 publish per the v3 pipeline. RE-STAGED day-024 04:45 EAT session: boss option-3 craft notes baked \u2014 (1) returned-guest-acting-wrong clue is now a 2s visual beat in s5 (gray/pale/mouth-shut paperboy + 'He just seemed tired, after.'), (2) s4 practice made explicitly the CHANT (silent mouthing, canon law intact), (3) s12 closer swapped to the boss's 'They didn't forget me for nine years. They were making sure I'd say yes.' (word 'rehearsals' retained in s11; the credit-line inversion retires to the canon doc).",
+  "status": "SCRIPT RE-STAGED day-024 (boss option-3 craft notes baked: s5b returned-guest clue, s4/s4b chant-practice split, s12/s12b 'making sure I would say yes' closer, SLOW+WHISPERED tail chant). DAY-025 BUILD: world written (render/scenes.html), 3.1s tail folded in as visual-only scene s13 (A2 cap), SFX table remapped to the 4 finish_v3 synth kinds at MEASURED times. VO measured, lint PASS @ 53.02 narration / 56.124 render total, delivery WPM 186.0.",
   "timestamp_note": "all timestamp_start/audio_dur_s are ESTIMATES at 205 WPM + 0.25s gaps for lint pre-clear; the VO stage overwrites them with measured values (L-003). The ~2.6s crowd-chant slam-to-black tail is render-level, outside timeline.total_s (the #0010 loop-to-black pattern)."
  },
  "hook": {
@@ -47,7 +47,7 @@
    "timestamp_start": 8.394,
    "narration": "Your envelope comes, they carry you to the square, chanting.",
    "visual": {
-    "v1": "the square at night: crowd silhouettes carry a glowing guest of honor toward a lit stage; red 'HUSS!' stamps pop word-by-word over the crowd (stamp cascade = #0011 seal rig re-colored RED); the chant is CROWD BED only \u2014 the narrator never chants (canon law)"
+    "v1": "the square at night: crowd silhouettes carry a glowing guest of honor toward a lit stage; red 'HUSS!' stamps pop word-by-word over the crowd (stamp cascade = #0011 seal rig re-colored RED); the chant is CROWD BED only — the narrator never chants (canon law)"
    },
    "fact_sources": [
     "narrative"
@@ -71,7 +71,7 @@
    "timestamp_start": 15.15,
    "narration": "I practice the chant anyway. Wave. Bow. Smile.",
    "visual": {
-    "v1": "interior: silhouette ALONE in their room practicing toward a mirror \u2014 mouthing the chant with no sound coming out (canon law: the narrator never chants ALOUD); small gray text stamps WAVE / BOW / SMILE pop on metronome ticks; faint party glow leaks through the wall behind them"
+    "v1": "interior: silhouette ALONE in their room practicing toward a mirror — mouthing the chant with no sound coming out (canon law: the narrator never chants ALOUD); small gray text stamps WAVE / BOW / SMILE pop on metronome ticks; faint party glow leaks through the wall behind them"
    },
    "fact_sources": [
     "narrative"
@@ -88,14 +88,14 @@
    "_key": "s4b",
    "narration": "Four seconds. Too slow. Two.",
    "visual": {
-    "v1": "the metronome gag: counter stamp '4s' cut with a red TOO-SLOW slash, then '2s'; the mirror practice tightens visibly \u2014 wave, bow, smile faster each rep; the rhythm locks"
+    "v1": "the metronome gag: counter stamp '4s' cut with a red TOO-SLOW slash, then '2s'; the mirror practice tightens visibly — wave, bow, smile faster each rep; the rhythm locks"
    }
   },
   {
    "timestamp_start": 20.634,
    "narration": "The paperboy got his at nine. The chant made the streetlights pulse.",
    "visual": {
-    "v1": "montage: the PAPERBOY's door receives its gold envelope (he salutes it \u2014 OUR recurring cast plant #2); then the square at night, party lights pulsing in rhythm with red HUSS stamps \u2014 the chant makes the streetlights breathe"
+    "v1": "montage: the PAPERBOY's door receives its gold envelope (he salutes it — OUR recurring cast plant #2); then the square at night, party lights pulsing in rhythm with red HUSS stamps — the chant makes the streetlights breathe"
    },
    "fact_sources": [
     "narrative"
@@ -107,7 +107,7 @@
    "timestamp_start": 23.904,
    "narration": "He came back quiet, after.",
    "visual": {
-    "v1": "THE CLUE (boss option-3 craft note, visual not spoken; ~2s shot): the paperboy back among the crowd \u2014 gray-tinted, pale, mouth SHUT while every mouth around him moves with the chant; the narrator waves at him; he doesn't wave back; nobody seems to notice; streetlights still pulsing behind"
+    "v1": "THE CLUE (boss option-3 craft note, visual not spoken; ~2s shot): the paperboy back among the crowd — gray-tinted, pale, mouth SHUT while every mouth around him moves with the chant; the narrator waves at him; he doesn't wave back; nobody seems to notice; streetlights still pulsing behind"
    },
    "fact_sources": [
     "narrative"
@@ -119,7 +119,7 @@
    "timestamp_start": 25.926,
    "narration": "Then, one night. No music. No lights. Nothing.",
    "visual": {
-    "v1": "HARD SILENCE begins (HOLD rig): the same street, all windows dark, square empty; slow empty-street dolly; no stamps, no motion energy \u2014 the canon silence beat"
+    "v1": "HARD SILENCE begins (HOLD rig): the same street, all windows dark, square empty; slow empty-street dolly; no stamps, no motion energy — the canon silence beat"
    },
    "fact_sources": [
     "narrative"
@@ -169,7 +169,7 @@
    "timestamp_start": 38.614,
    "narration": "Then my slot clicked. My name, in green ink.",
    "visual": {
-    "v1": "THE CLICK: slot close-up; one HEAVY gold envelope slides in slowly, filling the slot (deepest thump of the video, #0011 seal-thump class); the green-ink name-field flares \u2014 a calligraphic flourish, deliberately unreadable (mystery bait)"
+    "v1": "THE CLICK: slot close-up; one HEAVY gold envelope slides in slowly, filling the slot (deepest thump of the video, #0011 seal-thump class); the green-ink name-field flares — a calligraphic flourish, deliberately unreadable (mystery bait)"
    },
    "fact_sources": [
     "narrative"
@@ -193,7 +193,7 @@
    "timestamp_start": 44.986,
    "narration": "",
    "visual": {
-    "v1": "VISUAL-ONLY FORMATION HOLD (~1.3s): the crying neighbor holds; nobody in the crowd moves; the camera begins the slow pull-back that reveals the rehearsal rows \u2014 dread beat before the twist"
+    "v1": "VISUAL-ONLY FORMATION HOLD (~1.3s): the crying neighbor holds; nobody in the crowd moves; the camera begins the slow pull-back that reveals the rehearsal rows — dread beat before the twist"
    },
    "fact_sources": [
     "narrative"
@@ -207,7 +207,7 @@
    "timestamp_start": 46.436,
    "narration": "They were never parties. They were rehearsals.",
    "visual": {
-    "v1": "TWIST pull-back wide: the crowd is arranged in choir/performance formation down the square \u2014 rehearsal geometry made visible at once; silent red HUSS stamps cascade over them like sheet music"
+    "v1": "TWIST pull-back wide: the crowd is arranged in choir/performance formation down the square — rehearsal geometry made visible at once; silent red HUSS stamps cascade over them like sheet music"
    },
    "fact_sources": [
     "narrative"
@@ -219,7 +219,7 @@
    "timestamp_start": 49.034,
    "narration": "They didn't forget me for nine years.",
    "visual": {
-    "v1": "closer pt.1: the formation HOLDS; nobody pulls the narrator \u2014 the rows simply part as our door opens (the 'say yes' beginning to be visible); the neighbor's crying face turns; red HUSS stamps hang motionless in the air"
+    "v1": "closer pt.1: the formation HOLDS; nobody pulls the narrator — the rows simply part as our door opens (the 'say yes' beginning to be visible); the neighbor's crying face turns; red HUSS stamps hang motionless in the air"
    },
    "fact_sources": [
     "narrative"
@@ -231,160 +231,279 @@
    "timestamp_start": 51.152,
    "narration": "They were making sure I'd say yes.",
    "visual": {
-    "v1": "closer pt.2: the narrator steps out UNBIDDEN and walks in willingly; gold light floods the frame; EVERY lantern lights amber in one single frame; the crowd exhales \u2014 and the chant comes back SLOW and WHISPERED, half speed, every mouth barely moving (the town already has its guest; the trap closes quietly \u2014 the whisper is s4's silent mouthing answered); SLAM to black mid-whisper; no epilogue; loop to hook frame"
+    "v1": "closer pt.2: the narrator steps out UNBIDDEN and walks in willingly; gold light floods the frame; EVERY lantern lights amber in one single frame; the crowd exhales — and the chant comes back SLOW and WHISPERED, half speed, every mouth barely moving (the town already has its guest; the trap closes quietly — the whisper is s4's silent mouthing answered); SLAM to black mid-whisper; no epilogue; loop to hook frame"
    },
    "fact_sources": [
     "narrative"
    ],
    "audio_dur_s": 1.872,
    "_key": "s12b"
+  },
+  {
+   "timestamp_start": 53.024,
+   "narration": "",
+   "visual": {
+    "v1": "TAIL (visual-only, 3.1s): every lantern lights AMBER in one single frame (flash pop); gold floods the square; the crowd exhales; the chant returns SLOW and WHISPERED (~70% speed, mouths barely moving — the whisper answers s4's silent mouthing); red HUSS stamps hang at low opacity; SLAM to black mid-whisper; no epilogue; loop to hook"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "audio_dur_s": 3.1,
+   "_key": "s13",
+   "visual_only": true,
+   "note": "L-097 legal pacing cut + A2 cap: the 3.1s render tail is its own beat so no scene exceeds 4.2s (s12b stays 2.12s). Boss spec: 'then the chant, slow and whispered, and hard cut to black'."
   }
  ],
  "timeline": {
   "fps": 30,
-  "total_s": 53.024,
+  "total_s": 56.124,
   "gap_s": 0.15,
-  "voice": "edge-tts en-US-AndrewNeural rate +25% (target 195-215 WPM; #0010 shipped 212.3, #0011 measured 193.6) \u2014 per-line pacing (boss craft note 'fast for the montage, slow for the horror'): montage s1/s4 +32%, s5 +30%, horror-adjacent s6/s7 +18%, TWIST s11/s12 +8%, rest +25%; rates live in vo_lines.json (vo_pipeline per-line rate support, day-024)",
+  "voice": "edge-tts en-US-AndrewNeural rate +25% (target 195-215 WPM; #0010 shipped 212.3, #0011 measured 193.6) — per-line pacing (boss craft note 'fast for the montage, slow for the horror'): montage s1/s4 +32%, s5 +30%, horror-adjacent s6/s7 +18%, TWIST s11/s12 +8%, rest +25%; rates live in vo_lines.json (vo_pipeline per-line rate support, day-024)",
   "words": 147,
   "wpm_estimated": 166.3,
-  "render_tail_s": 3.1,
+  "render_tail_s": 0.0,
   "render_total_s": 56.124,
-  "vo_source": "measured (vo/asr_report.json)"
+  "vo_source": "measured (vo/asr_report.json); total_s folded with the 3.1s visual tail (day-025 build)"
  },
  "sources": {
   "premise": "Boss directive day-023 20:00 EAT: 'can we do one on huss huss and see where it goes... look at the video transcript you'll get what I mean.' Decoded via the canon dissection (research/larpniverse-canon-dissection-2026-11-19.md): huss-huss = the town chant (spoken 'hush hush hush', captioned HUSS!, @larpniverse's original sound, trend peaking now, YouTube-native lane empty). Concept = canon fusion: opener/taxonomy/chant/silence-beat/credit-line inversion from the larpniverse canon + our dark mechanical re-read DNA (#0010 price tags, #0011 value tags).",
   "format_research": "research/larpniverse-canon-dissection-2026-11-19.md (measured at source: canon 187-213 WPM wholesome lane; kicker density 15-20%; twist 4-6 words; silence beat before every turn; chant = crowd sound never narrator; hard cut no CTA) + research/larpniverse-sweep-2026-11-18.md (day-022 external sweep: INTOWN_FORMAT / ENDING_RULE v2 / VOICE_SPEC).",
   "cast_note": "Recurring cast is OURS, not theirs (dissection verdict: copying Kevin/Linda/grandma verbatim makes us the Kevin of video A). Our plants: THE NEIGHBOR (checks our slot, cries at our door), THE PAPERBOY (got his at nine), plus #0011's Mayor continuity available for future episodes. Serial-universe flywheel per canon section 4.3.",
-  "reddit_import": "Boss pointer verified: r/nosleep one-rule-town evergreen ('no women in this town', '3 centuries our town has' \u2014 direct cousin: a town-wide ritual that is FOR one person). No specific news case needed for this concept."
+  "reddit_import": "Boss pointer verified: r/nosleep one-rule-town evergreen ('no women in this town', '3 centuries our town has' — direct cousin: a town-wide ritual that is FOR one person). No specific news case needed for this concept."
  },
  "bed_peak": 0.045,
- "origin": "Fiction lane test #3 \u2014 the huss-huss test, commissioned day-023 20:00 EAT. Category Entertainment (24). Bait comment (commentThreads still scope-blocked, parked for boss paste): 'Nine years of parties and nobody remembers a single morning after. What do you think happens to the guest of honor? Best theory gets pinned.' Build order note: the Nov 21 fork decides IF this builds next (fiction-lane scale) or parks (science lane keeps the channel).",
+ "origin": "Fiction lane test #3 — the huss-huss test, commissioned day-023 20:00 EAT. Category Entertainment (24). Bait comment (commentThreads still scope-blocked, parked for boss paste): 'Nine years of parties and nobody remembers a single morning after. What do you think happens to the guest of honor? Best theory gets pinned.' Build order note: the Nov 21 fork decides IF this builds next (fiction-lane scale) or parks (science lane keeps the channel).",
  "sfx": [
   {
-   "kind": "paper_slide",
-   "at": 3.55,
-   "gain": 0.16,
-   "seed": 51,
-   "note": "envelope under the door, soft"
-  },
-  {
-   "kind": "party_murmur",
-   "at": 5.07,
-   "gain": 0.12,
-   "seed": 52,
-   "note": "stop-sign party, distant band-passed"
-  },
-  {
-   "kind": "party_murmur",
-   "at": 6.67,
+   "kind": "whoosh",
+   "at": 3.3,
    "gain": 0.14,
-   "seed": 53,
-   "note": "fountain party #2, slightly nearer"
+   "seed": 51,
+   "note": "s0: the gold envelope slides under the lucky door (soft paper)"
   },
   {
-   "kind": "chant_bed",
-   "at": 8.85,
+   "kind": "blip",
+   "at": 4.72,
+   "gain": 0.1,
+   "seed": 52,
+   "note": "s0: name-field glow tick; its window lights warm"
+  },
+  {
+   "kind": "whoosh",
+   "at": 5.95,
+   "gain": 0.16,
+   "seed": 53,
+   "note": "s1a: stop-sign party, distant band-passed murmur"
+  },
+  {
+   "kind": "whoosh",
+   "at": 7.45,
    "gain": 0.18,
    "seed": 54,
-   "note": "low crowd 'hush' texture under the carry"
+   "note": "s1b: fountain party #2, slightly nearer"
   },
   {
-   "kind": "stamp_thump",
-   "at": 9.25,
+   "kind": "riser",
+   "at": 8.6,
    "gain": 0.2,
    "seed": 55,
-   "note": "HUSS! stamp 1 (cascade of 3, red)"
+   "note": "s2: the carry begins — low crowd 'hush' texture swells"
   },
   {
-   "kind": "stamp_thump",
-   "at": 9.95,
-   "gain": 0.2,
-   "seed": 56,
-   "note": "HUSS! stamp 2"
-  },
-  {
-   "kind": "stamp_thump",
-   "at": 10.65,
-   "gain": 0.21,
-   "seed": 57,
-   "note": "HUSS! stamp 3"
-  },
-  {
-   "kind": "room_tone",
-   "at": 11.46,
-   "gain": 0.06,
-   "seed": 58,
-   "note": "dust-tick quiet, the empty slot"
-  },
-  {
-   "kind": "metronome",
-   "at": 15.64,
-   "gain": 0.1,
-   "seed": 59,
-   "note": "practice ticks x4, soft"
-  },
-  {
-   "kind": "chant_swell",
-   "at": 19.93,
+   "kind": "thump",
+   "at": 9.2,
    "gain": 0.22,
+   "seed": 56,
+   "note": "s2: HUSS! stamp 1 (red cascade of 3)"
+  },
+  {
+   "kind": "thump",
+   "at": 9.95,
+   "gain": 0.22,
+   "seed": 57,
+   "note": "s2: HUSS! stamp 2"
+  },
+  {
+   "kind": "thump",
+   "at": 10.7,
+   "gain": 0.23,
+   "seed": 58,
+   "note": "s2: HUSS! stamp 3"
+  },
+  {
+   "kind": "blip",
+   "at": 12.1,
+   "gain": 0.08,
+   "seed": 59,
+   "note": "s3: dust-tick quiet at the empty slot (room tone)"
+  },
+  {
+   "kind": "blip",
+   "at": 15.65,
+   "gain": 0.1,
    "seed": 60,
-   "note": "streetlights pulsing with the chant"
+   "note": "s4: metronome tick 1 (practice, soft)"
   },
   {
-   "kind": "hard_mute",
-   "at": 23.11,
-   "gain": 0.0,
+   "kind": "blip",
+   "at": 16.35,
+   "gain": 0.1,
    "seed": 61,
-   "note": "SILENCE BEAT \u2014 HOLD rig, near-mute through s6+s6b (#0011 s7 rig reuse)"
+   "note": "s4: metronome tick 2"
   },
   {
-   "kind": "footsteps",
-   "at": 26.29,
-   "gain": 0.13,
+   "kind": "blip",
+   "at": 17.05,
+   "gain": 0.1,
    "seed": 62,
-   "note": "empty street walk, paper rows rustle low"
+   "note": "s4: metronome tick 3"
   },
   {
-   "kind": "breath",
-   "at": 31.41,
-   "gain": 0.09,
-   "seed": 63,
-   "note": "the almost-smile, single breath"
-  },
-  {
-   "kind": "seal_thump",
-   "at": 32.41,
-   "gain": 0.26,
-   "seed": 64,
-   "note": "THE CLICK \u2014 deepest thump of the video (#0011 seal class); heavy slow paper slide under it"
-  },
-  {
-   "kind": "crowd_shuffle",
-   "at": 35.33,
+   "kind": "blip",
+   "at": 19.0,
    "gain": 0.12,
+   "seed": 63,
+   "note": "s4b: the 4s counter tick"
+  },
+  {
+   "kind": "thump",
+   "at": 19.9,
+   "gain": 0.16,
+   "seed": 64,
+   "note": "s4b: TOO-SLOW slash; the 2s lock lands"
+  },
+  {
+   "kind": "riser",
+   "at": 22.3,
+   "gain": 0.24,
    "seed": 65,
-   "note": "the formation stands, one muffled sob"
+   "note": "s5b: streetlights pulsing with the chant (swell)"
   },
   {
-   "kind": "crowd_inhale",
-   "at": 40.4,
-   "gain": 0.15,
+   "kind": "thump",
+   "at": 22.6,
+   "gain": 0.22,
    "seed": 66,
-   "note": "silent stamp cascade + one shared inhale"
+   "note": "s5b: HUSS! beat 1 (pulsing square)"
   },
   {
-   "kind": "chant_full",
-   "at": 53.424,
-   "gain": 0.17,
+   "kind": "thump",
+   "at": 23.3,
+   "gain": 0.22,
    "seed": 67,
-   "note": "the crowd's 'Hush. Hush. Hush.' \u2014 SLOW (~70% speed) and WHISPERED per boss craft note ('then the chant, slow and whispered, and hard cut to black'); the trap closes quietly; narrator never chants (canon law)"
+   "note": "s5b: HUSS! beat 2"
   },
   {
-   "kind": "lantern_flash",
-   "at": 54.524,
-   "gain": 0.2,
+   "kind": "whoosh",
+   "at": 25.98,
+   "gain": 0.07,
    "seed": 68,
-   "note": "every lantern lights in one frame; crack + slam-to-black thump; loop to hook"
+   "note": "s6: HARD SILENCE onset — the last texture dies to near-mute"
+  },
+  {
+   "kind": "whoosh",
+   "at": 30.4,
+   "gain": 0.1,
+   "seed": 69,
+   "note": "s6b: the first envelope resolves out of the fog"
+  },
+  {
+   "kind": "thump",
+   "at": 31.9,
+   "gain": 0.08,
+   "seed": 70,
+   "note": "s7: footsteps on the dead street 1"
+  },
+  {
+   "kind": "thump",
+   "at": 32.6,
+   "gain": 0.08,
+   "seed": 71,
+   "note": "s7: footsteps 2"
+  },
+  {
+   "kind": "thump",
+   "at": 33.3,
+   "gain": 0.08,
+   "seed": 72,
+   "note": "s7: footsteps 3"
+  },
+  {
+   "kind": "whoosh",
+   "at": 37.6,
+   "gain": 0.1,
+   "seed": 73,
+   "note": "s8: the almost-smile — a single breath"
+  },
+  {
+   "kind": "whoosh",
+   "at": 39.1,
+   "gain": 0.16,
+   "seed": 74,
+   "note": "s9: THE CLICK — heavy slow paper slide under it"
+  },
+  {
+   "kind": "thump",
+   "at": 39.55,
+   "gain": 0.33,
+   "seed": 75,
+   "note": "s9: THE CLICK — deepest thump of the video (#0011 seal class)"
+  },
+  {
+   "kind": "blip",
+   "at": 40.7,
+   "gain": 0.1,
+   "seed": 76,
+   "note": "s9: the green-ink name flare"
+  },
+  {
+   "kind": "whoosh",
+   "at": 41.65,
+   "gain": 0.12,
+   "seed": 77,
+   "note": "s10: the formation stands; one muffled sob"
+  },
+  {
+   "kind": "riser",
+   "at": 47.0,
+   "gain": 0.2,
+   "seed": 78,
+   "note": "s11: TWIST — silent stamp cascade + one shared inhale"
+  },
+  {
+   "kind": "whoosh",
+   "at": 51.55,
+   "gain": 0.1,
+   "seed": 79,
+   "note": "s12b: the door opens; the rows part"
+  },
+  {
+   "kind": "whoosh",
+   "at": 53.55,
+   "gain": 0.15,
+   "seed": 80,
+   "note": "TAIL: SLOW WHISPERED chant onset (~70% speed) — the trap closes quietly"
+  },
+  {
+   "kind": "whoosh",
+   "at": 54.15,
+   "gain": 0.11,
+   "seed": 81,
+   "note": "TAIL: whisper 'hush' 2 (barely there)"
+  },
+  {
+   "kind": "thump",
+   "at": 54.5,
+   "gain": 0.3,
+   "seed": 82,
+   "note": "TAIL: EVERY lantern lights in one frame; the crack"
+  },
+  {
+   "kind": "thump",
+   "at": 55.05,
+   "gain": 0.26,
+   "seed": 83,
+   "note": "TAIL: SLAM to black mid-whisper; loop to hook"
   }
  ]
 }

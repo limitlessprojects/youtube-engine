@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#070A18;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<div id="stage"><svg id="frame" width="1080" height="1920" viewBox="0 0 1080 1920"></svg></div>
+<script src="../../../engine/core.js"></script>
+<script src="../../../engine/space.js"></script>
+<script src="../../../engine/rig.js"></script>
+<script src="../../../engine/world.js"></script>
+<script src="../../../engine/diagram.js"></script>
+<script src="../../../engine/caption.js"></script>
+<script>
+/* ============================================================
+   Short #0012 — "In this town, everybody parties except me"
+   FICTION LANE test #3 — the huss-huss chant test (The Last
+   Guest). Boss option-3 craft notes baked: s5b returned-guest
+   clue (visual, not spoken), s4 chant practice (silent mouthing
+   — the narrator NEVER chants aloud, canon law), closer =
+   "They didn't forget me for nine years. They were making sure
+   I'd say yes." then the chant returns SLOW + WHISPERED and a
+   hard slam to black. No epilogue, no CTA, loop to hook.
+   Color law (L-128 discipline): gold = the town's warmth/value
+   (windows, envelopes, the flood); the ONE red = the HUSS chant
+   (stamps, streetlight pulse) and nothing else; grey = the
+   returned/drained; pale blue = the dead night. One hue owns
+   the twist: GOLD.
+   Cast plants (ours, not the canon's): THE NEIGHBOR (hooded,
+   kind, checks our slot, cries at our door) and THE PAPERBOY
+   (flat cap + satchel, got his at nine, came back quiet).
+   Deadpan law: the hero's face NEVER moves except the scripted
+   beats (s4 practice mouthing, s11 almost-smile).
+   Deterministic: pure function of t (C6).
+   ============================================================ */
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+V2.root = document.getElementById("frame");
+const P = V2.P;
+const TITLE_FONT = "'Bricolage Grotesque', sans-serif";
+const MONO = "'Fragment Mono', monospace";
+const E = V2.el, cl = V2.clamp01, lerp = V2.lerp;
+const _ctx = document.createElement("canvas").getContext("2d");
+const meas = (s, font) => { _ctx.font = font; return _ctx.measureText(s).width; };
+const seg = (u, a, b) => cl((u - a) / (b - a));
+const pathOf = (a, close) => "M " + a.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L ") + (close ? " Z" : "");
+V2.keepInFrame = (x, halfWorldW) => {
+  const cn = V2.CAM_NOW || [540, 960, 1];
+  const hw = halfWorldW * cn[2];
+  const sx = Math.max(28 + hw, Math.min((x - cn[0]) * cn[2] + 540, 1052 - hw));
+  return cn[0] + (sx - 540) / cn[2];
+};
+
+/* caption budget (A1): <=5 emphasis keywords per scene */
+const EMPHASIS = {
+  hook: ["PARTIES", "EXCEPT"], s0: [], s1: [], s2: ["HUSS"], s3: [],
+  s4: ["WAVE", "BOW", "SMILE"], s5: ["4s", "SLOW", "2s"], s6: ["HUSS"],
+  s7: [], s8: [], s9: [], s10: [], s11: [], s12: [], s13: [], s14: [],
+  s15: ["HUSS"], s16: [], s17: [], s18: [],
+};
+
+/* ---------- looks ---------- */
+V2.LOOKS.vigil = {
+  skin: "#F6EFE3", skinShade: "#E2D3BE", hand: "#F6EFE3",
+  jacket: "#181B30", jacketShade: "#10121F", accent: "#FFB054",
+  limb: "#EFE2CC", line: "#121019", shoe: "#181B30",
+  face: "#1D2033", hair: "#1D2033", extra: "hood",
+};
+V2.LOOKS.grayed = {
+  skin: "#C9CBD4", skinShade: "#ACAFBC", hand: "#C9CBD4",
+  jacket: "#3E4456", jacketShade: "#2C3040", accent: "#5A6076",
+  limb: "#B4B7C4", line: "#171A26", shoe: "#3E4456",
+  face: "#23262F", hair: "#2E3140", extra: "hood",
+};
+/* the neighbor: soft slate-blue coat, hood up, kind face */
+V2.LOOKS.hood = {
+  skin: "#EDE6D6", skinShade: "#D6C9B2", hand: "#EDE6D6",
+  jacket: "#46527A", jacketShade: "#333D5E", accent: "#8FA0C0",
+  limb: "#DCD5C4", line: "#171A26", shoe: "#333D5E",
+  face: "#23262F", hair: "#2E3140", extra: "hood",
+};
+/* the paperboy: teal cap + lighter coat, a kid */
+V2.LOOKS.boy = {
+  skin: "#F6EFE3", skinShade: "#E2D3BE", hand: "#F6EFE3",
+  jacket: "#2C4A66", jacketShade: "#1F3A52", accent: "#2FD4C5",
+  limb: "#EFE2CC", line: "#121019", shoe: "#1F3A52",
+  face: "#1D2033", hair: "#1D2033",
+};
+
+/* ---------- world tokens ---------- */
+const K = {
+  duskTop: "#2A1E4A", duskLow: "#63304E",
+  partyTop: "#0A0E24", partyLow: "#1A1440",
+  deadTop: "#05070F", deadLow: "#0C1224",
+  dayTop: "#7E9CC4", dayLow: "#C8BCA0",
+  bldg: "#1B2142", bldgShade: "#141833", bldgFar: "#232A52",
+  win: "#FFC878", winDim: "#8A6B4A", winOff: "#242A4A",
+  street: "#262E52", streetFar: "#12162E",
+  gold: "#F5C25B", goldHi: "#FFDFA0", goldDeep: "#8A5E30", goldPale: "#FFE9B8",
+  green: "#3FA96B", greenHi: "#8FE0B0",
+  red: "#E8281C", redDeep: "#3A0505",
+  gray: "#9AA0B4", grayDeep: "#3E4456",
+  ink2: "#0A0A18",
+  fog: "#8A96B8", lanternGrey: "#5A6076",
+  moon: "#D8E0F4",
+};
+
+/* ---------- THE GOLD ENVELOPE (the town's currency of choosing) ---------- */
+function envelope(parent, x, y, s, o) {
+  o = o || {};
+  const g = E("g", { transform: `translate(${x} ${y}) rotate(${o.rot || 0}) scale(${s})` }, parent);
+  if (o.glow !== false) V2.glow(0, 0, 150, "Warm", o.glowOp === undefined ? 0.5 : o.glowOp, g);
+  /* body */
+  E("rect", { x: -64, y: -42, width: 128, height: 84, rx: 7, fill: K.gold, stroke: P.ink, "stroke-width": 5 }, g);
+  E("rect", { x: -64, y: -42, width: 128, height: 26, rx: 7, fill: K.goldDeep, opacity: 0.28 }, g);
+  /* flap */
+  E("path", { d: "M -64 -38 L 0 6 L 64 -38 Z", fill: K.goldHi, stroke: P.ink, "stroke-width": 4, "stroke-linejoin": "round" }, g);
+  /* wax seal */
+  E("circle", { cx: 0, cy: 12, r: 13, fill: "#C0392B", stroke: P.ink, "stroke-width": 3.5 }, g);
+  E("circle", { cx: 0, cy: 12, r: 6.5, fill: "#8E2A20" }, g);
+  /* name field */
+  if (o.name) {
+    E("rect", { x: -44, y: 24, width: 88, height: 13, rx: 4, fill: K.goldPale, opacity: 0.9 }, g);
+    if (o.greenInk) {
+      /* the calligraphic flourish — deliberately unreadable (mystery bait) */
+      const k = cl(o.greenInk);
+      const gg = E("g", { opacity: k }, g);
+      E("path", { d: "M -38 31 C -28 22 -24 38 -14 29 C -6 23 -2 36 8 28 C 16 22 24 36 32 27",
+        stroke: K.green, "stroke-width": 3.4, fill: "none", "stroke-linecap": "round" }, gg);
+      if (k > 0.35) V2.glow(0, 30, 60, "Warm", 0.5 * k, gg);
+    } else if (o.nameGlow) {
+      const k = 0.35 + Math.sin((o.t || 0) * 5) * 0.18;
+      E("rect", { x: -44, y: 24, width: 88, height: 13, rx: 4, fill: K.goldPale, opacity: 0.6 + 0.3 * Math.sin((o.t || 0) * 5) }, g);
+      V2.glow(0, 30, 54, "Warm", k, g);
+    }
+  }
+  return g;
+}
+
+/* ---------- our door: the one dark house (recurring anchor) ---------- */
+function ourDoor(parent, x, y, s, o) {
+  o = o || {};
+  const g = E("g", { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+  const w = 210, h = 330;
+  /* facade slab around the door */
+  E("rect", { x: -w / 2 - 46, y: -h - 96, width: w + 92, height: h + 100, fill: "#161A38", stroke: P.ink, "stroke-width": 5 }, g);
+  /* the dark window above (ours: always unlit) */
+  E("rect", { x: -42, y: -h - 72, width: 84, height: 74, rx: 8, fill: o.winLit ? "#C08A50" : "#1A1E3C", stroke: P.ink, "stroke-width": 5 }, g);
+  if (!o.winLit) E("rect", { x: -34, y: -h - 64, width: 68, height: 58, rx: 5, fill: "#101326" }, g);
+  /* door leaf */
+  const dk = o.crack === undefined ? 0 : o.crack;
+  const leaf = E("g", { transform: `rotate(${dk * -14} ${w / 2} 0)` }, g);
+  E("rect", { x: -w / 2, y: -h, width: w, height: h, rx: 6, fill: "#10142C", stroke: P.ink, "stroke-width": 6 }, leaf);
+  E("rect", { x: -w / 2 + 12, y: -h + 12, width: w - 24, height: h - 24, rx: 4, fill: "none", stroke: "#232A52", "stroke-width": 4 }, leaf);
+  /* mail slot — brass frame, dark mouth */
+  E("rect", { x: -46, y: -h * 0.5 - 13, width: 92, height: 26, rx: 12, fill: "#8A6B4A", stroke: P.ink, "stroke-width": 4 }, leaf);
+  E("rect", { x: -38, y: -h * 0.5 - 7, width: 76, height: 14, rx: 7, fill: "#0A0A18" }, leaf);
+  /* step */
+  E("rect", { x: -w / 2 - 22, y: 0, width: w + 44, height: 18, rx: 4, fill: "#1E2444", stroke: P.ink, "stroke-width": 4 }, g);
+  return g;
+}
+
+/* ---------- standing lantern (the crowd carries these) ---------- */
+function lantern(parent, x, y, s, state, k) {
+  /* state: 0 grey unlit · 1 amber lit · 2 red pulse */
+  const g = E("g", { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+  E("line", { x1: 0, y1: 0, x2: 0, y2: -46, stroke: "#0C0F22", "stroke-width": 7 }, g);
+  const body = state === 0 ? K.lanternGrey : state === 1 ? K.gold : K.red;
+  if (state > 0) V2.glow(0, -64, 74, state === 2 ? "Red" : "Warm", state === 2 ? 0.5 + Math.sin((k || 0) * 6) * 0.22 : 0.62, g);
+  E("rect", { x: -17, y: -82, width: 34, height: 42, rx: 9, fill: body, stroke: P.ink, "stroke-width": 4 }, g);
+  E("path", { d: "M -13 -82 L 0 -94 L 13 -82 Z", fill: body, stroke: P.ink, "stroke-width": 4, "stroke-linejoin": "round" }, g);
+  E("line", { x1: -7, y1: -40, x2: 7, y2: -40, stroke: P.ink, "stroke-width": 3 }, g);
+  if (state === 1) E("rect", { x: -12, y: -77, width: 24, height: 32, rx: 6, fill: K.goldPale, opacity: 0.5 }, g);
+  return g;
+}
+
+/* ---------- the square's stage (s2 plant, s15 callback) ---------- */
+function stage(parent, t, o) {
+  o = o || {};
+  const g = E("g", {}, parent);
+  E("rect", { x: 300, y: 1266, width: 480, height: 34, rx: 6, fill: "#141833", stroke: P.ink, "stroke-width": 5 }, g);
+  E("rect", { x: 330, y: 1300, width: 420, height: 16, fill: "#10142C" }, g);
+  /* gold backdrop */
+  E("rect", { x: 356, y: 1000, width: 368, height: 270, rx: 10, fill: K.goldDeep, stroke: P.ink, "stroke-width": 5 }, g);
+  E("rect", { x: 374, y: 1018, width: 332, height: 234, rx: 8, fill: K.gold, opacity: 0.55 }, g);
+  V2.glow(540, 1120, 300, "Warm", 0.3, g);
+  /* two cone beams */
+  E("path", { d: "M 420 1010 L 340 1300 L 500 1300 Z", fill: "url(#vCone)", opacity: 0.35, style: "mix-blend-mode:screen" }, g);
+  E("path", { d: "M 660 1010 L 580 1300 L 740 1300 Z", fill: "url(#vCone)", opacity: 0.35, style: "mix-blend-mode:screen" }, g);
+  return g;
+}
+
+/* ---------- confetti drift (party air) ---------- */
+function confettiDrift(parent, t, o) {
+  o = o || {};
+  const n = o.n || 22, op = o.op === undefined ? 0.75 : o.op;
+  const cols = [K.gold, K.goldHi, "#FFF2D0", K.gold];
+  for (let i = 0; i < n; i++) {
+    const sp = 0.4 + V2.rnd(250, i) * 0.8;
+    const x = ((V2.rnd(251, i) * 1160 + Math.sin(t * 0.8 + i) * 26 - t * 16 * sp) % 1160 + 1160) % 1160 - 40;
+    const y = ((V2.rnd(252, i) * 2100 + t * 120 * sp) % 2100 + 2100) % 2100 - 90;
+    const sz = 5 + V2.rnd(253, i) * 6;
+    E("rect", { x, y, width: sz, height: sz * 0.62, rx: 1.5, fill: cols[i % 4],
+      opacity: (0.35 + V2.rnd(254, i) * 0.5) * op, transform: `rotate(${(t * 60 + i * 71) % 360} ${x} ${y})` }, parent);
+  }
+}
+
+/* ---------- NPCs (party townsfolk; chant = expr cycle, never a sound cue) ---------- */
+function npc(parent, x, y, s, o) {
+  o = o || {};
+  const t = o.t || 0;
+  /* the chant: mouths cycle happy/neutral per member phase — CROWD only */
+  let expr = o.expr;
+  if (o.chant && !o.frozen) {
+    const ph = V2.rnd(255, Math.round(x * 0.37 + y * 0.11));
+    expr = Math.sin(t * 7.4 + ph * 6.28) > 0 ? "happy" : "neutral";
+  }
+  const p = Object.assign({}, V2.basePose, {
+    x, y: y - 140 * s, scale: s, expr: expr || "happy", facing: o.facing || 1,
+    tilt: (o.tilt || 0) + (o.dance ? Math.sin(t * 5.2 + x) * 7 : Math.sin(t * 1.4 + x) * 1.5),
+    sway: o.dance ? Math.sin(t * 5.2 + x) * 8 : Math.sin(t * 1.2 + x) * 4,
+    blink: 0,
+    armL: o.armL || (o.dance ? { a: 120 + Math.sin(t * 5.2 + x) * 34, b: -60 } : { a: 20 + Math.sin(t * 0.9 + x) * 2.5, b: -10 }),
+    armR: o.armR || (o.dance ? { a: 120 - Math.sin(t * 5.2 + x) * 34, b: -60 } : { a: 20 - Math.sin(t * 0.9 + x) * 2.5, b: -10 }),
+    legL: o.dance ? { a: 16 + Math.sin(t * 5.2 + x) * 14, b: -8 } : (o.legL || { a: 4, b: 0 }),
+    legR: o.dance ? { a: -16 - Math.sin(t * 5.2 + x) * 14, b: 8 } : (o.legR || { a: -4, b: 0 }),
+    look: o.look || 0, headTilt: (o.headTilt || 0) + Math.sin(t * 0.5 + x) * 1.5,
+    squash: (o.squash || 0) + Math.sin(t * 0.9 + x * 0.7) * 0.008,
+  });
+  if (o.frozen) { p.armL = { a: 20, b: -10 }; p.armR = { a: 20, b: -10 }; p.sway = 0; }
+  if (o.lantern !== undefined) p.armR = { a: 150, b: -12 };
+  if (!o.noShadow) E("ellipse", { cx: x + 5, cy: y + 4, rx: 46 * s, ry: 12 * s, fill: "#04040A", opacity: 0.48 }, parent);
+  const look = o.look2 || (o.gray ? V2.LOOKS.grayed : V2.LOOKS.kip);
+  V2.Hero(p, look, o.gray ? "vRimL" : "vRimR", o.gray ? 0.3 : 0.6, parent);
+  if (o.lantern !== undefined) lantern(parent, x + 26 * s * (o.facing || 1), y - 320 * s, s, o.lantern, t);
+}
+
+/* ---------- the hero (narrator): deadpan law, long coat ---------- */
+function hero2(parent, x, y, s, o) {
+  o = o || {};
+  const t = o.t || 0;
+  const bc = (t * 0.85) % 3.2;
+  const bl = o.blinkOff ? 0 : (bc < 0.13 ? cl(1 - Math.abs(bc - 0.065) / 0.065) : 0);
+  const p = Object.assign({}, V2.basePose, {
+    x, y: y - 140 * s, scale: s, expr: o.expr || "neutral", facing: o.facing || 1,
+    tilt: o.tilt || 0, headTilt: (o.headTilt || 0) + Math.sin(t * 0.55) * 1.4, look: o.look || 0, blink: bl,
+    sway: o.sway === undefined ? Math.sin(t * 1.5) * 3 : o.sway,
+    squash: (o.squash || 0) + Math.sin(t * 0.9) * 0.008,
+    armL: o.armL || { a: 12 + Math.sin(t * 0.8) * 2.5, b: -8 }, armR: o.armR || { a: 12 - Math.sin(t * 0.8) * 2.5, b: -8 },
+    legL: o.legL || { a: 4, b: 0 }, legR: o.legR || { a: -4, b: 0 },
+    handL: o.handL || "open", handR: o.handR || "open",
+  });
+  if (o.walk) {
+    const cyc = (o.walkCyc || t * 5.4);
+    p.legL = { a: 22 + Math.sin(cyc) * 20, b: -12 }; p.legR = { a: -22 + Math.cos(cyc) * 20, b: 10 };
+    p.armL = { a: 30 + Math.sin(cyc) * 16, b: -14 }; p.armR = { a: 30 - Math.sin(cyc) * 16, b: -14 };
+  }
+  if (!o.noShadow) E("ellipse", { cx: x + 8, cy: y + 6, rx: 68 * s, ry: 17 * s, fill: "#03030A", opacity: 0.58 }, parent);
+  if (!o.noPool) V2.glow(x + (o.poolDX || 0), y - 180 * s, 230 * s, "Warm", o.poolOp || 0.13, parent);
+  const capeK = o.cape || 0;
+  if (capeK > 0.01) {
+    const cg = E("g", { transform: `translate(${x} ${y - 150 * s}) rotate(${p.tilt} 0 -40) scale(${s})` }, parent);
+    const flare = 26 + capeK * 66;
+    E("path", { d: `M -34 -96 C -44 -20 ${-flare - 18} 70 ${-flare} 150 L ${flare * 0.7} 148 C ${flare * 0.55} 60 ${flare * 0.4} -20 30 -96 Z`,
+      fill: "#10121F", stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round", opacity: 0.97 }, cg);
+  }
+  V2.Hero(p, o.look2 || V2.LOOKS.vigil, "vRimL", 0.65, parent);
+  if (!o.noCoat) {
+    const fg = E("g", { transform: `translate(${x} ${y - 150 * s}) rotate(${p.tilt} 0 -40) scale(${s})` }, parent);
+    E("path", { d: "M -40 -100 C -48 -30 -40 40 -30 108 L 30 108 C 42 40 48 -30 40 -100 C 14 -110 -14 -110 -40 -100 Z",
+      fill: "#181B30", stroke: P.ink, "stroke-width": 5, "stroke-linejoin": "round" }, fg);
+    E("path", { d: "M 0 -104 L 4 104", stroke: P.ink, "stroke-width": 3, opacity: 0.5 }, fg);
+    E("path", { d: "M -34 -92 L -26 96", stroke: "#2A2F52", "stroke-width": 5, opacity: 0.8 }, fg);
+    E("path", { d: "M 34 -92 L 26 96", stroke: "#10121F", "stroke-width": 5, opacity: 0.8 }, fg);
+    E("path", { d: "M 40 -100 C 48 -30 42 40 30 108", stroke: "#FFB054", "stroke-width": 6, opacity: 0.5, fill: "none", "stroke-linecap": "round" }, fg);
+    E("path", { d: "M -40 -100 C -14 -114 16 -114 40 -100", stroke: "#FFD7A0", "stroke-width": 7, opacity: 0.55, fill: "none", "stroke-linecap": "round" }, fg);
+  }
+}
+
+/* ---------- THE NEIGHBOR (plant #1: hooded, kind; crouch/pat/cry) ---------- */
+function neighbor(parent, x, y, s, o) {
+  o = o || {};
+  const t = o.t || 0;
+  const crouchK = cl(o.crouch || 0);
+  const p = Object.assign({}, V2.basePose, {
+    x, y: y - 140 * s + crouchK * 62 * s, scale: s, expr: o.cry ? "tired" : (o.expr || "tired"),
+    facing: o.facing === undefined ? 1 : o.facing,
+    tilt: (o.tilt || 0) + crouchK * 14, headTilt: (o.headTilt || 0) + crouchK * 10 + Math.sin(t * 0.6) * 1.5,
+    look: o.look || 0, blink: 0,
+    sway: Math.sin(t * 1.1 + x) * 3,
+    armL: o.armL || { a: 14, b: -8 },
+    armR: o.armR || { a: 14, b: -8 },
+    legL: { a: 4 + crouchK * 66, b: -crouchK * 44 }, legR: { a: -4 - crouchK * 66, b: crouchK * 44 },
+    squash: Math.sin(t * 0.9 + x) * 0.008 + (o.cry ? Math.sin(t * 2.2) * 0.006 : 0),
+  });
+  if (o.pat) { /* two door pats: hand to the door plane */
+    const pk = Math.max(0, Math.sin(o.pat * Math.PI * 2));
+    p.armR = { a: 58 + pk * 26, b: -20 };
+  }
+  if (o.check) p.armL = { a: 52 + Math.sin(t * 1.6) * 6, b: -34 };
+  if (!o.noShadow) E("ellipse", { cx: x + 5, cy: y + 4, rx: 50 * s, ry: 12 * s, fill: "#04040A", opacity: 0.5 }, parent);
+  V2.Hero(p, V2.LOOKS.hood, "vRimR", 0.5, parent);
+  if (o.cry) {
+    /* two tears, staggered, slow */
+    const g = E("g", {}, parent);
+    for (let i = 0; i < 2; i++) {
+      const tk = ((t * 0.55 + i * 0.5) % 1);
+      E("path", { d: `M 0 0 q 4 7 0 13 q -4 -6 0 -13 Z`, fill: "#9FC0FF", opacity: 0.85 * (1 - tk * 0.4),
+        transform: `translate(${x + (i ? 12 : -13) * s} ${y - 140 * s - 152 * s + tk * 52 * s}) scale(${s})` }, g);
+    }
+  }
+}
+
+/* ---------- THE PAPERBOY (plant #2: flat cap + satchel; salute; came back grey) ---------- */
+function paperboy(parent, x, y, s, o) {
+  o = o || {};
+  const t = o.t || 0;
+  const p = Object.assign({}, V2.basePose, {
+    x, y: y - 140 * s, scale: s, expr: o.expr || "happy", facing: o.facing || 1,
+    tilt: o.tilt || 0, headTilt: (o.headTilt || 0) + Math.sin(t * 0.6) * 1.5, look: o.look || 0, blink: 0,
+    sway: Math.sin(t * 1.3 + x) * 3.5,
+    armL: o.armL || { a: 14, b: -8 },
+    armR: o.armR || { a: 14, b: -8 },
+    legL: o.legL || { a: 4, b: 0 }, legR: o.legR || { a: -4, b: 0 },
+    squash: Math.sin(t * 0.9 + x) * 0.008,
+  });
+  if (o.salute) { p.armR = { a: 148, b: -18 }; p.headTilt += 3; p.expr = "happy"; }
+  if (o.mouthShut) p.expr = "tired"; /* the clue: mouth NEVER opens */
+  if (!o.noShadow) E("ellipse", { cx: x + 5, cy: y + 4, rx: 44 * s, ry: 11 * s, fill: "#04040A", opacity: 0.48 }, parent);
+  const look = o.gray ? V2.LOOKS.grayed : V2.LOOKS.boy;
+  V2.Hero(p, look, o.gray ? "vRimL" : "vRimR", o.gray ? 0.28 : 0.6, parent);
+  /* flat cap */
+  const cg = E("g", { transform: `translate(${x} ${y - 140 * s}) rotate(${p.tilt + p.headTilt * 0.4} 0 ${-0}) scale(${s})` }, parent);
+  E("path", { d: "M -30 -214 Q 0 -244 30 -214 L 34 -204 L -34 -204 Z", fill: o.gray ? "#3E4456" : "#1F3A52", stroke: P.ink, "stroke-width": 4, "stroke-linejoin": "round" }, cg);
+  E("path", { d: "M -34 -204 L 40 -204", stroke: o.gray ? "#3E4456" : "#1F3A52", "stroke-width": 7, "stroke-linecap": "round" }, cg);
+  E("circle", { cx: 0, cy: -240, r: 4.5, fill: o.gray ? "#5A6076" : "#2FD4C5" }, cg);
+  /* satchel */
+  const sg = E("g", { transform: `translate(${x} ${y - 140 * s}) scale(${s})` }, parent);
+  E("path", { d: "M -30 -60 L 30 -34", stroke: "#8A6B4A", "stroke-width": 7, fill: "none" }, sg);
+  E("rect", { x: 16, y: -44, width: 44, height: 34, rx: 6, fill: "#8A6B4A", stroke: P.ink, "stroke-width": 4 }, sg);
+}
+
+/* ---------- text systems (C1: one per scene, <=5 words) ---------- */
+function title(lines, y, size, kf) {
+  lines.forEach((ln, i) => {
+    const k = kf(i); if (k <= 0.001) return;
+    const pop = V2.backOut(cl(k)), yy = y + i * size * 1.06 + (1 - pop) * 50;
+    V2.txt(540 + 7, yy + 9, ln, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+      "font-size": size, fill: K.ink2, stroke: K.ink2, "stroke-width": 16, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) * 0.92 });
+    V2.txt(540, yy, ln, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800,
+      "font-size": size, fill: "#FFFDF6", stroke: P.ink, "stroke-width": 13, "stroke-linejoin": "round", "paint-order": "stroke", opacity: cl(k * 2) });
+  });
+}
+function stamp(k, y, text, col, size, x) {
+  if (k <= 0.001) return;
+  size = size || 64;
+  const pop = V2.backOutBig(cl(k)), font = `800 ${size}px ${TITLE_FONT}`;
+  const w = meas(text, font) + 96, h = size * 1.9;
+  x = V2.keepInFrame(x === undefined ? 540 : x, w / 2 + 40);
+  const g = E("g", { opacity: cl(k * 3), transform: `translate(${x} ${y}) rotate(${(1 - pop) * -5}) scale(${0.7 + 0.3 * pop})` });
+  E("rect", { x: -w / 2, y: -h / 2 + 8, width: w, height: h, rx: h * 0.26, fill: "#000", opacity: 0.4 }, g);
+  E("rect", { x: -w / 2, y: -h / 2, width: w, height: h, rx: h * 0.26, fill: P.ink, stroke: col, "stroke-width": 6 }, g);
+  const tcol = col === K.gray ? "#E9EDF6" : col;
+  V2.txt(0, size * 0.34, text, { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": size, fill: tcol, stroke: P.ink, "stroke-width": 3, "paint-order": "stroke" }, g);
+}
+const ring = (x, y, k, col) => { if (k > 0 && k < 1) E("ellipse", { cx: x, cy: y, rx: 16 + k * 110, ry: 6 + k * 36, fill: "none", stroke: col || "#FFF6EA", "stroke-width": 9 * (1 - k), opacity: 1 - k }); };
+
+/* the HUSS! cascade (red, word-by-word over the crowd) */
+function hussCascade(parent, u, ats, y0, size) {
+  ats.forEach((at, i) => {
+    const k = seg(u, at, at + 0.1);
+    if (k > 0) stamp(k, y0 + i * 128, "HUSS!", K.red, size || 58, 350 + i * 195);
+  });
+}
+
+/* ---------- town backdrop (phases: 0 party-dusk · 1 party-night · 2 dead · 3 day) ---------- */
+function townscape(t, phase, cam, o) {
+  o = o || {};
+  const g = E("g", { transform: `translate(540 960) scale(${1 + (cam[2] - 1) * 0.22}) translate(${-540 - (cam[0] - 540) * 0.22} ${-960 - (cam[1] - 940) * 0.22})` });
+  const tops = [K.duskTop, K.partyTop, K.deadTop, K.dayTop];
+  const lows = [K.duskLow, K.partyLow, K.deadLow, K.dayLow];
+  const lg = E("linearGradient", { id: "kSky", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+  [["0%", tops[phase]], ["62%", lows[phase]], ["100%", phase === 0 ? "#3A2450" : phase === 1 ? "#0C0A22" : phase === 2 ? "#080B16" : "#E2D2A8"]].forEach(([of2, c]) => E("stop", { offset: of2, "stop-color": c }, lg));
+  E("rect", { x: -300, y: -500, width: 1680, height: 2400, fill: "url(#kSky)" }, g);
+  /* celestial: dusk sun / night moon / dead: NOTHING / day pale sun */
+  if (phase === 0) {
+    E("circle", { cx: 820, cy: 560, r: 120, fill: "#FFB054", opacity: 0.85 }, g);
+    E("circle", { cx: 820, cy: 560, r: 170, fill: "#FFB054", opacity: 0.18 }, g);
+  } else if (phase === 1) {
+    E("circle", { cx: 260, cy: 420, r: 84, fill: K.moon, opacity: 0.5 }, g);
+    E("circle", { cx: 296, cy: 404, r: 84, fill: tops[1], opacity: 0.9 }, g);
+  } else if (phase === 3) {
+    E("circle", { cx: 830, cy: 470, r: 96, fill: "#FFF2D0", opacity: 0.95 }, g);
+    E("circle", { cx: 830, cy: 470, r: 150, fill: "#FFF2D0", opacity: 0.2 }, g);
+  }
+  /* far band */
+  for (let i = 0; i < 9; i++) {
+    const bx = -260 + i * 200 + V2.rnd(201, i) * 60, bw = 130 + V2.rnd(202, i) * 90, bh = 320 + V2.rnd(203, i) * 260;
+    E("rect", { x: bx, y: 1480 - bh, width: bw, height: bh + 420, fill: K.bldgFar, opacity: phase === 3 ? 0.5 : 0.55 }, g);
+    for (let w = 0; w < 4; w++) if (V2.rnd(204, i * 7 + w) > 0.55)
+      E("rect", { x: bx + 18 + w * 26, y: 1480 - bh + 40 + V2.rnd(205, i + w) * 120, width: 14, height: 20,
+        fill: phase <= 1 ? K.winDim : K.winOff, opacity: phase <= 1 ? 0.85 : 1 }, g);
+  }
+  /* near band: warm windows in 0/1, OFF in 2, dim in 3 */
+  for (let i = 0; i < 7; i++) {
+    const bx = -220 + i * 230 + V2.rnd(206, i) * 50, bw = 165 + V2.rnd(207, i) * 80, bh = 420 + V2.rnd(208, i) * 330;
+    E("rect", { x: bx, y: 1500 - bh, width: bw, height: bh + 460, fill: K.bldg, stroke: P.ink, "stroke-width": 4 }, g);
+    E("rect", { x: bx, y: 1500 - bh, width: 18, height: bh + 460, fill: K.bldgShade }, g);
+    for (let wy = 0; wy < Math.floor(bh / 150); wy++) for (let wx = 0; wx < 3; wx++) {
+      const r = V2.rnd(209, i * 11 + wy * 3 + wx);
+      const lit = phase === 0 ? r > 0.22 : phase === 1 ? r > 0.4 : false;
+      E("rect", { x: bx + 30 + wx * (bw - 55) / 2.4, y: 1500 - bh + 46 + wy * 150, width: 34, height: 52, rx: 4,
+        fill: lit ? K.win : (phase === 3 ? "#3A4272" : K.winOff), opacity: lit ? 0.85 : 1 }, g);
+    }
+    E("rect", { x: bx + bw * 0.3, y: 1500, width: bw * 0.4, height: 26, fill: K.bldgShade, opacity: 0.7 }, g);
+  }
+  /* street */
+  E("rect", { x: -300, y: 1500, width: 1680, height: 620, fill: phase === 2 ? "#141A30" : K.street }, g);
+  E("rect", { x: -300, y: 1500, width: 1680, height: 16, fill: K.streetFar }, g);
+  for (let i = 0; i < 7; i++) E("rect", { x: -240 + i * 260, y: 1560 + V2.rnd(210, i) * 300, width: 120, height: 10, fill: "#3A4272", opacity: 0.5 }, g);
+  const refC = phase === 0 ? "#C08A50" : phase === 1 ? "#5A6488" : "#2A3454";
+  for (let i = 0; i < 9; i++) {
+    const sx2 = -180 + i * 160 + V2.rnd(240, i) * 50;
+    E("rect", { x: sx2, y: 1512 + V2.rnd(241, i) * 130, width: 16, height: 50 + V2.rnd(242, i) * 90, rx: 8,
+      fill: refC, opacity: 0.09, style: "mix-blend-mode:screen" }, g);
+  }
+  E("rect", { x: -300, y: 1500, width: 1680, height: 12, fill: "#3A4272", opacity: 0.8 }, g);
+  for (let i = 0; i < 4; i++) E("rect", { x: 140 + i * 190, y: 1800, width: 96, height: 13, rx: 3, fill: "#3A4272", opacity: 0.55 }, g);
+  /* two street lamps: party=gold (or RED pulse with the chant), dead=off */
+  [[150, 1], [935, -1]].forEach(([lx, sd]) => {
+    E("rect", { x: lx - 6, y: 1082, width: 12, height: 424, fill: "#0C0F22", stroke: P.ink, "stroke-width": 3 }, g);
+    E("path", { d: `M ${lx} 1092 L ${lx} 1064 L ${lx + sd * 34} 1072`, stroke: "#0C0F22", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }, g);
+    if (phase === 2) {
+      E("circle", { cx: lx + sd * 38, cy: 1078, r: 13, fill: "#2A3454" }, g);
+    } else {
+      const pulsing = o.pulse;
+      const pr = pulsing ? 0.5 + 0.5 * Math.sin(t * 7.4) : 0;
+      const col = pulsing ? "#FF6A52" : "#FFD9A0";
+      E("circle", { cx: lx + sd * 38, cy: 1078, r: 13 + pr * 3, fill: col, opacity: 0.95 }, g);
+      E("circle", { cx: lx + sd * 38, cy: 1078, r: 26 + pr * 14, fill: col, opacity: 0.22 + pr * 0.2, style: "mix-blend-mode:screen" }, g);
+      E("path", { d: `M ${lx + sd * 20} 1082 L ${lx + sd * 92} 1500 L ${lx - sd * 30} 1500 Z`, fill: col, opacity: 0.07, style: "mix-blend-mode:screen" }, g);
+    }
+  });
+  E("ellipse", { cx: 560, cy: 1688, rx: 44, ry: 13, fill: "#101426", stroke: "#3A4272", "stroke-width": 4 }, g);
+  /* the dead-night fog band (s8-s10 rows recede into it) */
+  if (phase === 2) {
+    const mg = E("linearGradient", { id: "kFog", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+    [["0%", K.fog, 0], ["100%", K.fog, 0.3]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, mg));
+    E("rect", { x: -300, y: 1180, width: 1680, height: 380, fill: "url(#kFog)" }, g);
+  }
+  E("rect", { x: -300, y: 1908, width: 1680, height: 212, fill: "#141833" }, g);
+  E("rect", { x: -300, y: 1908, width: 1680, height: 8, fill: "#232A52", opacity: 0.8 }, g);
+  return g;
+}
+
+/* ---------- interior room (s4/s5/s11: wall + window + mirror) ---------- */
+function interiorRoom(parent, lt, u, t, o) {
+  o = o || {};
+  const g = E("g", {}, parent);
+  const wallC = o.moonlit ? "#10142A" : "#151A38";
+  /* window opening (left): the town shows through */
+  const wx = 108, wy = 300, ww = 330, wh = 380;
+  E("rect", { x: -40, y: -60, width: 1160, height: 2040, fill: wallC }, g);
+  E("rect", { x: wx, y: wy, width: ww, height: wh, fill: wallC, opacity: 0 }, g); /* keep opening */
+  /* wall panels around the window (4 rects leave the hole) */
+  E("rect", { x: -40, y: -60, width: 1160, height: wy + 60, fill: wallC }, g);
+  E("rect", { x: -40, y: wy + wh, width: 1160, height: 2040 - wy - wh, fill: wallC }, g);
+  E("rect", { x: -40, y: wy, width: wx + 40, height: wh, fill: wallC }, g);
+  E("rect", { x: wx + ww, y: wy, width: 1160 - wx - ww, height: wh, fill: wallC }, g);
+  /* floor */
+  E("rect", { x: -40, y: 1520, width: 1160, height: 440, fill: o.moonlit ? "#0C1024" : "#141A38" }, g);
+  for (let i = 0; i < 6; i++) E("line", { x1: -40 + i * 200, y1: 1520, x2: -140 + i * 230, y2: 1960, stroke: "#0A0E22", "stroke-width": 5, opacity: 0.7 }, g);
+  /* window frame + mullions */
+  E("rect", { x: wx - 12, y: wy - 12, width: ww + 24, height: wh + 24, rx: 8, fill: "none", stroke: "#0A0E22", "stroke-width": 14 }, g);
+  E("path", { d: `M ${wx + ww / 2} ${wy} L ${wx + ww / 2} ${wy + wh} M ${wx} ${wy + wh / 2} L ${wx + ww} ${wy + wh / 2}`, stroke: "#0A0E22", "stroke-width": 9 }, g);
+  /* the glow that leaks through the wall (party) or moon shaft (s11) */
+  if (!o.moonlit) {
+    const wg = E("linearGradient", { id: "kLeak", x1: 0, y1: 0, x2: 1, y2: 0 }, V2.defsHold);
+    [["0%", K.gold, 0.2], ["100%", K.gold, 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, wg));
+    E("rect", { x: wx + ww, y: wy - 40, width: 620, height: wh + 120, fill: "url(#kLeak)" }, g);
+    E("path", { d: `M ${wx + 4} ${wy + wh} L ${wx + ww - 4} ${wy + wh} L ${wx + ww + 260} 1520 L ${wx - 130} 1520 Z`, fill: K.gold, opacity: 0.07, style: "mix-blend-mode:screen" }, g);
+  } else {
+    const wg = E("linearGradient", { id: "kLeak", x1: 0, y1: 0, x2: 1, y2: 0 }, V2.defsHold);
+    [["0%", "#B8C8E8", 0.16], ["100%", "#B8C8E8", 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, wg));
+    E("rect", { x: wx + ww, y: wy - 40, width: 620, height: wh + 120, fill: "url(#kLeak)" }, g);
+    E("path", { d: `M ${wx + 4} ${wy + wh} L ${wx + ww - 4} ${wy + wh} L ${wx + ww + 240} 1520 L ${wx - 110} 1520 Z`, fill: "#B8C8E8", opacity: 0.08, style: "mix-blend-mode:screen" }, g);
+    V2.dust(t, 12, [wx, wy, ww, wh], 9, { col: "#C8D8F0", op: 0.5 }, g);
+  }
+  /* the mirror (right): frame + clipped reflection surface */
+  const mx = 640, my = 380, mw = 330, mh = 640;
+  E("rect", { x: mx - 16, y: my - 16, width: mw + 32, height: mh + 32, rx: 22, fill: "#0A0E22" }, g);
+  E("rect", { x: mx - 8, y: my - 8, width: mw + 16, height: mh + 16, rx: 16, fill: "#2A3054" }, g);
+  const cid = V2.uid("mir");
+  const cp = E("clipPath", { id: cid }, V2.defsHold);
+  E("rect", { x: mx, y: my, width: mw, height: mh, rx: 10 }, cp);
+  return { g, mx, my, mw, mh, cid, wx, wy, ww, wh };
+}
+
+/* ---------- formation rows (s13-s17: the town as choir) ---------- */
+/* rows: [{y, n, s, x0, dx, arc}] — arc bends the row center forward */
+function crowdRows(parent, t, rows, o) {
+  o = o || {};
+  rows.forEach((r, ri) => {
+    for (let i = 0; i < r.n; i++) {
+      let x = r.x0 + i * r.dx;
+      const centerOff = x - 540;
+      if (o.part) x += Math.sign(centerOff || 1) * o.part * (64 + Math.abs(centerOff) * 0.24);
+      const arcLift = r.arc ? Math.abs(centerOff) * Math.abs(centerOff) * 0.00022 * (r.arcK || 1) : 0;
+      const y = r.y + arcLift;
+      const seedx = Math.round(x * 0.31 + ri * 7);
+      const bob = o.whisper ? Math.sin(t * 0.5 + V2.rnd(256, seedx) * 6.28) * 2 : 0;
+      npc(parent, x, y + bob, r.s, {
+        t, facing: Math.sign(540 - x) || 1,
+        chant: o.chant, frozen: o.frozen || o.whisper,
+        expr: o.whisper ? (Math.sin(t * 1.3 + V2.rnd(257, seedx) * 6.28) > 0.3 ? "happy" : "neutral") : undefined,
+        lantern: o.lantern,
+        look: 0.15,
+        headTilt: o.whisper ? Math.sin(t * 0.4 + V2.rnd(258, seedx) * 6.28) * 5 : 0,
+      });
+    }
+  });
+}
+
+/* ================================================================
+   SCENES — SC ids follow render_short's INDEX mapping (hook, s0..s18)
+   script keys: s0..s5→SC.s0..s4/s5 | s4b→SC.s5 | s5→SC.s6 | s5b→SC.s7 |
+   s6→SC.s8 | s6b→SC.s9 | s7→SC.s10 | s8→SC.s11 | s9→SC.s12 | s10→SC.s13 |
+   s10b→SC.s14 | s11→SC.s15 | s12→SC.s16 | s12b→SC.s17 | TAIL→SC.s18
+   ================================================================ */
+const TITLE = ["EVERYBODY PARTIES.", "EXCEPT ME."];
+const SC = {};
+
+/* hook: the whole town glows except one door */
+SC.hook = { cam: [[540, 980, 1.0], [540, 1020, 1.14]],
+  world(lt, u, t) {
+    return { phase: 0, over: () => {
+      confettiDrift(V2.root, t, { n: 26 });
+      /* distant square: gold glow + the envelope-on-shoulders silhouette */
+      V2.glow(540, 1180, 260, "Warm", 0.34, V2.root);
+      const bob = Math.sin(t * 2.2) * 4;
+      for (let i = 0; i < 4; i++) {
+        const cx = 462 + i * 52;
+        E("path", { d: `M ${cx - 14} 1230 l 28 0 l -6 -46 l -16 0 Z`, fill: "#0A0A18" }, V2.root);
+      }
+      E("rect", { x: 452, y: 1150 + bob, width: 76, height: 50, rx: 5, fill: K.gold, stroke: P.ink, "stroke-width": 3 }, V2.root);
+      E("path", { d: `M 452 ${1152 + bob} L 490 ${1178 + bob} L 528 ${1152 + bob} Z`, fill: K.goldHi, stroke: P.ink, "stroke-width": 3 }, V2.root);
+      /* flanking partiers, warm-lit, dancing */
+      npc(V2.root, 130, 1590, 1.02, { t, dance: 1, facing: 1 });
+      npc(V2.root, 262, 1615, 0.9, { t, dance: 1, facing: -1 });
+      npc(V2.root, 872, 1600, 0.95, { t, dance: 1, facing: -1 });
+      npc(V2.root, 990, 1572, 1.0, { t, dance: 1, facing: 1 });
+      /* OUR house, center: the one dark facade */
+      ourDoor(V2.root, 540, 1560, 1.28, {});
+      /* the hero: small, unlit, at the dark door */
+      hero2(V2.root, 540, 1658, 1.06, { t, noPool: 1, armL: { a: 8, b: -6 }, armR: { a: 8, b: -6 }, headTilt: 2 });
+    } };
+  },
+  over(lt, u) {
+    const k0 = seg(u, 0.02, 0.15);
+    if (k0 > 0.001) V2.glow(540, 235, 640, "Warm", 0.4 * cl(k0 * 2), V2.root);
+    title(TITLE, 200, 96, (i) => seg(u, 0.02 + i * 0.13, 0.16 + i * 0.13));
+    /* r1 note: ground the feet — bottom soft shadow so the cast doesn't float */
+    const bg2 = E("linearGradient", { id: "kGrd", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+    [["0%", "#04040A", 0], ["100%", "#04040A", 0.55]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, bg2));
+    E("rect", { x: 0, y: 1690, width: 1080, height: 230, fill: "url(#kGrd)" }, V2.root);
+  } };
+
+/* s0: dusk — a gold envelope slides under ONE lucky door */
+SC.s0 = { cam: [[540, 1230, 1.22], [600, 1330, 1.7]],
+  world(lt, u, t) {
+    return { phase: 0, over: () => {
+      confettiDrift(V2.root, t, { n: 14, op: 0.5 });
+      /* the lucky door, right of frame */
+      const dx = 620, dy = 1500;
+      E("rect", { x: dx - 128, y: dy - 430, width: 256, height: 434, fill: K.bldg, stroke: P.ink, "stroke-width": 5 }, V2.root);
+      /* its window: lights warm the instant the envelope lands */
+      const lit = seg(u, 0.72, 0.84);
+      E("rect", { x: dx - 52, y: dy - 400, width: 104, height: 96, rx: 8, fill: lit > 0 ? "#E8A860" : K.winOff, stroke: P.ink, "stroke-width": 5 }, V2.root);
+      if (lit > 0) {
+        V2.glow(dx, dy - 350, 150 * lit, "Warm", 0.4 * lit, V2.root);
+        E("rect", { x: dx - 44, y: dy - 392, width: 88, height: 80, rx: 6, fill: K.goldPale, opacity: 0.5 * lit }, V2.root);
+      }
+      /* door leaf + low slot */
+      E("rect", { x: dx - 62, y: dy - 260, width: 124, height: 260, rx: 6, fill: "#10142C", stroke: P.ink, "stroke-width": 6 }, V2.root);
+      E("rect", { x: dx - 34, y: dy - 74, width: 68, height: 18, rx: 9, fill: "#8A6B4A", stroke: P.ink, "stroke-width": 4 }, V2.root);
+      E("rect", { x: dx - 28, y: dy - 70, width: 56, height: 10, rx: 5, fill: "#0A0A18" }, V2.root);
+      /* THE ENVELOPE: slides in through the slot (gold against the dark mouth) */
+      const ek = seg(u, 0.26, 0.62);
+      if (ek > 0 && ek < 1) {
+        const ex = lerp(dx + 120, dx - 4, V2.easeInOut(ek));
+        envelope(V2.root, ex, dy - 62, 1.14, { t, rot: -7 + ek * 5 });
+        if (ek > 0.15 && ek < 0.85) ring(dx, dy - 66, (ek - 0.15) * 0.9, K.goldHi);
+      } else if (ek >= 1) {
+        V2.glow(dx, dy - 64, 120, "Warm", 0.55 + Math.sin(t * 5) * 0.15, V2.root);
+      }
+      /* a passerby celebrates the lucky door (r1: pulled fully in-frame) */
+      npc(V2.root, 892, 1592, 0.86, { t, dance: seg(u, 0.7, 0.9), facing: -1, expr: "happy" });
+      npc(V2.root, 300, 1600, 0.92, { t, facing: 1 });
+      /* r1: reclaim the bottom band — the window's warm reflection on the street */
+      const rLit = seg(u, 0.72, 0.84);
+      if (rLit > 0) {
+        E("ellipse", { cx: dx, cy: dy + 66, rx: 190, ry: 30, fill: K.gold, opacity: 0.1 * rLit, style: "mix-blend-mode:screen" }, V2.root);
+      }
+    } };
+  },
+  over(lt, u) {
+    const k = seg(u, 0.66, 0.8);
+    if (k > 0.001) V2.glow(540, 380, 420, "Warm", 0.24 * cl(k * 2), V2.root);
+  } };
+
+/* s1: two deadpan vignettes — the stop-sign party, the double fountain party */
+SC.s1 = { cam: [[540, 1120, 1.12], [540, 1130, 1.2]],
+  world(lt, u, t) {
+    const b = u < 0.5;
+    return { phase: 3, over: () => {
+      confettiDrift(V2.root, t, { n: 16, op: 0.6 });
+      if (b) {
+        /* vignette A: a stop sign with a party hat */
+        E("rect", { x: 512, y: 1120, width: 16, height: 400, fill: "#3E4456", stroke: P.ink, "stroke-width": 4 }, V2.root);
+        const oct = "M 540 940 L 596 962 L 618 1018 L 596 1074 L 540 1096 L 484 1074 L 462 1018 L 484 962 Z";
+        E("path", { d: oct, fill: "#B03028", stroke: P.ink, "stroke-width": 6, "stroke-linejoin": "round" }, V2.root);
+        V2.txt(540, 1030, "STOP", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 58, fill: "#FFF6EA", stroke: P.ink, "stroke-width": 3, "paint-order": "stroke" }, V2.root);
+        /* the party hat on top of the sign + streamers */
+        E("path", { d: "M 540 830 L 576 942 L 504 942 Z", fill: K.gold, stroke: P.ink, "stroke-width": 5, "stroke-linejoin": "round" }, V2.root);
+        E("circle", { cx: 540, cy: 822, r: 14, fill: K.goldHi, stroke: P.ink, "stroke-width": 4 }, V2.root);
+        E("path", { d: `M 505 950 q ${Math.sin(t * 3) * 30} 60 ${-18 + Math.sin(t * 3) * 20} 110`, stroke: K.goldHi, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, V2.root);
+        E("path", { d: `M 575 950 q ${Math.sin(t * 3 + 1) * 30} 60 ${18 + Math.sin(t * 3 + 1) * 20} 110`, stroke: K.gold, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, V2.root);
+        /* tiny crowd dancing around it — deadpan energy */
+        npc(V2.root, 250, 1580, 0.94, { t, dance: 1, facing: 1 });
+        npc(V2.root, 830, 1590, 0.98, { t, dance: 1, facing: -1 });
+        npc(V2.root, 960, 1560, 0.8, { t, dance: 1, facing: -1 });
+      } else {
+        /* vignette B: the fountain got TWO banners */
+        E("rect", { x: -60, y: 1430, width: 1200, height: 90, rx: 14, fill: "#3A4272", stroke: P.ink, "stroke-width": 5 }, V2.root);
+        E("rect", { x: 360, y: 1270, width: 90, height: 180, fill: "#3A4272", stroke: P.ink, "stroke-width": 5 }, V2.root);
+        E("ellipse", { cx: 405, cy: 1436, rx: 190, ry: 46, fill: "#4A5688", stroke: P.ink, "stroke-width": 6 }, V2.root);
+        E("ellipse", { cx: 405, cy: 1396, rx: 110, ry: 30, fill: "#4A5688", stroke: P.ink, "stroke-width": 5 }, V2.root);
+        /* water + confetti ON the water */
+        E("path", { d: "M 405 1280 C 380 1330 340 1360 300 1378 M 405 1280 C 430 1330 470 1360 510 1378", stroke: "#9FC0FF", "stroke-width": 7, fill: "none", "stroke-linecap": "round", opacity: 0.8 }, V2.root);
+        for (let i = 0; i < 8; i++) E("rect", { x: 320 + V2.rnd(260, i) * 180, y: 1408 + V2.rnd(261, i) * 30, width: 9, height: 6, rx: 2, fill: i % 2 ? K.gold : K.goldHi, opacity: 0.85 }, V2.root);
+        /* TWO banners strung across, bunting style */
+        for (let bI = 0; bI < 2; bI++) {
+          const by = 1030 + bI * 96;
+          E("path", { d: `M 120 ${by} Q 540 ${by + 60} 960 ${by}`, stroke: "#0A0E22", "stroke-width": 6, fill: "none" }, V2.root);
+          for (let i = 0; i < 10; i++) {
+            const bx = lerp(150, 930, i / 9), bY = by + Math.sin(Math.PI * i / 9) * 30 + 26;
+            E("path", { d: `M ${bx - 26} ${bY} L ${bx + 26} ${bY} L ${bx} ${bY + 44} Z`, fill: i % 2 ? K.gold : "#FFF2D0", stroke: P.ink, "stroke-width": 3, "stroke-linejoin": "round" }, V2.root);
+          }
+        }
+        npc(V2.root, 200, 1570, 0.96, { t, dance: 1, facing: 1 });
+        npc(V2.root, 880, 1585, 1.0, { t, dance: 1, facing: -1 });
+      }
+    } };
+  },
+  over(lt, u) {} };
+
+/* s2: your envelope comes — the carry to the square, the chant begins */
+SC.s2 = { cam: [[540, 1060, 1.02], [540, 1000, 1.2]],
+  world(lt, u, t) {
+    const walkK = V2.easeInOut(seg(u, 0.04, 0.8));
+    return { phase: 1, pulse: seg(u, 0.15, 0.2) > 0, over: () => {
+      stage(V2.root, t);
+      /* the carried guest of honor: 4 carriers + the lifted one, gold-lit */
+      const gx = lerp(160, 460, walkK);
+      const bob = Math.sin(t * 4.6) * 7;
+      [[gx - 96, 1586, 0.86], [gx - 30, 1594, 0.9], [gx + 38, 1592, 0.88], [gx + 104, 1584, 0.84]].forEach(([cx, cy, cs], i) => {
+        npc(V2.root, cx, cy, cs, { t, walk: 1, facing: 1, chant: 1, armR: { a: 120 + Math.sin(t * 4.6 + i) * 8, b: -66 }, noShadow: true });
+      });
+      /* the platform of hands + the lifted guest */
+      E("rect", { x: gx - 108, y: 1330 + bob, width: 216, height: 18, rx: 8, fill: "#0C0F22", stroke: P.ink, "stroke-width": 4 }, V2.root);
+      npc(V2.root, gx, 1330 + bob, 0.98, { t, facing: 1, expr: "happy", noShadow: true, armL: { a: 40, b: -70 }, armR: { a: 40, b: -70 } });
+      V2.glow(gx, 1240 + bob, 190, "Warm", 0.4, V2.root);
+      /* flanking crowd silhouettes chanting (mouths cycle) */
+      for (let i = 0; i < 5; i++) {
+        npc(V2.root, 60 + i * 240 + V2.rnd(212, i) * 40, 1610 + V2.rnd(213, i) * 40, 0.72 + V2.rnd(214, i) * 0.2,
+          { t, chant: 1, dance: 1, facing: 1, noShadow: true });
+      }
+    } };
+  },
+  over(lt, u) { hussCascade(V2.root, u, [0.2, 0.4, 0.6], 320, 58); } };
+
+/* s3: nine years — our dark door by day; the neighbor checks the slot */
+SC.s3 = { cam: [[560, 1240, 1.28], [600, 1300, 1.52]],
+  world(lt, u, t) {
+    return { phase: 3, over: () => {
+      /* dust motes in the day shaft */
+      V2.dust(t, 13, [300, 900, 480, 560], 10, { col: "#E8D8B0", op: 0.5 }, V2.root);
+      ourDoor(V2.root, 600, 1560, 1.44, {});
+      /* hero stands left, watching the slot — deadpan */
+      hero2(V2.root, 302, 1660, 1.18, { t, noPool: 1, look: 0.6, armL: { a: 8, b: -6 }, armR: { a: 8, b: -6 }, headTilt: -2 });
+      /* the neighbor: crouched at the slot (checks), then two door pats */
+      const crouch = seg(u, 0.08, 0.3);
+      const pat = u > 0.62 ? Math.min(1, (u - 0.62) / 0.3) : 0;
+      neighbor(V2.root, 792, 1658, 1.22, { t, crouch, check: u < 0.6, pat: pat > 0 ? pat : 0, facing: -1, look: -0.5 });
+      /* the empty slot: a small dark emphasis */
+      if (seg(u, 0.3, 0.42) > 0) V2.glow(600, 1324, 74, "Cool", 0.12, V2.root);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s4: alone — practicing the chant in the mirror (silent mouthing) */
+SC.s4 = { cam: [[540, 1080, 1.16], [540, 1100, 1.3]],
+  world(lt, u, t) {
+    return { phase: 1, over: () => {
+      const R = interiorRoom(V2.root, lt, u, t, {});
+      /* through the window: the party keeps going without us */
+      confettiDrift(R.g, t, { n: 8, op: 0.5 });
+      V2.glow(R.wx + R.ww / 2, R.wy + R.wh / 2, 200, "Warm", 0.22, R.g);
+      /* the hero, back to us, facing the mirror (profile) */
+      hero2(V2.root, 470, 1640, 1.34, { t, noPool: 1, facing: 1, look: 0.5, armL: { a: 14, b: -8 }, armR: { a: 14, b: -8 } });
+      /* the REFLECTION in the mirror: mouthing (silent), arms rehearsing */
+      const mouth = Math.sin(t * 4.4) > -0.1;
+      const rg = E("g", { "clip-path": `url(#${R.cid})` }, R.g);
+      const waveK = seg(u, 0.14, 0.3), bowK = seg(u, 0.38, 0.54), smileK = seg(u, 0.62, 0.78);
+      hero2(rg, 805, 1560, 1.06, {
+        t, noShadow: 1, noPool: 1, facing: -1, look: -0.4,
+        expr: smileK > 0 && smileK < 1 ? "happy" : (mouth ? "happy" : "neutral"),
+        armR: waveK > 0 ? { a: 128 + Math.sin(t * 6) * 18, b: -34 } : { a: 16, b: -10 },
+        tilt: bowK > 0 && bowK < 1 ? lerp(0, 12, bowK) : 0,
+        opacity: 1,
+      });
+      /* glass sheen over the reflection */
+      E("path", { d: `M ${R.mx + 40} ${R.my + R.mh - 20} L ${R.mx + R.mw - 60} ${R.my + 30}`, stroke: "#FFF6EA", "stroke-width": 16, opacity: 0.07, "stroke-linecap": "round" }, R.g);
+    } };
+  },
+  over(lt, u) {
+    /* the three moves, one small gray stamp each, on the ticks */
+    const ks = [seg(u, 0.14, 0.24), seg(u, 0.38, 0.48), seg(u, 0.62, 0.72)];
+    const ys = [260, 260, 260];
+    ks.forEach((k, i) => { if (k > 0 && k < 1.35) stamp(cl(k), ys[i], ["WAVE", "BOW", "SMILE"][i], K.gray, 54, 350 + i * 195); });
+  } };
+
+/* s5 (s4b): the metronome gag — 4s, TOO SLOW, 2s */
+SC.s5 = { cam: [[540, 1100, 1.3], [540, 1090, 1.38]],
+  world(lt, u, t) {
+    return { phase: 1, over: () => {
+      const R = interiorRoom(V2.root, lt, u, t, {});
+      confettiDrift(R.g, t, { n: 6, op: 0.4 });
+      V2.glow(R.wx + R.ww / 2, R.wy + R.wh / 2, 200, "Warm", 0.2, R.g);
+      hero2(V2.root, 470, 1640, 1.34, { t, noPool: 1, facing: 1, look: 0.5 });
+      /* the reflection: reps get FASTER — the rhythm locks */
+      const speedUp = 1 + seg(u, 0.4, 0.7) * 1.6;
+      const mouth = Math.sin(t * 4.4 * speedUp) > -0.1;
+      const rep = (t * 1.7 * speedUp) % 3;
+      const rg = E("g", { "clip-path": `url(#${R.cid})` }, R.g);
+      hero2(rg, 805, 1560, 1.06, {
+        t, noShadow: 1, noPool: 1, facing: -1, look: -0.4,
+        expr: mouth ? "happy" : "neutral",
+        armR: rep < 1 ? { a: 128 + Math.sin(t * 9 * speedUp) * 22, b: -34 } : { a: 16, b: -10 },
+        tilt: rep >= 1 && rep < 2 ? 12 * Math.sin(Math.PI * (rep - 1)) : 0,
+      });
+      E("path", { d: `M ${R.mx + 40} ${R.my + R.mh - 20} L ${R.mx + R.mw - 60} ${R.my + 30}`, stroke: "#FFF6EA", "stroke-width": 16, opacity: 0.07, "stroke-linecap": "round" }, R.g);
+    } };
+  },
+  over(lt, u) {
+    /* the counter: 4s pops, red TOO-SLOW slash, 2s locks */
+    const k4 = seg(u, 0.1, 0.2), kS = seg(u, 0.32, 0.42), k2 = seg(u, 0.5, 0.62);
+    if (k4 > 0) stamp(cl(k4), 260, "4s", "#FFF6EA", 64, 400);
+    if (kS > 0 && kS < 1.6) {
+      const g = E("g", { opacity: cl(kS * 2) }, V2.root);
+      const w = 300;
+      E("path", { d: `M ${540 - w / 2} 240 L ${540 + w / 2} 300`, stroke: K.red, "stroke-width": 16, "stroke-linecap": "round" }, g);
+      stamp(cl(kS), 260, "TOO SLOW", K.gray, 44, 700);
+    }
+    if (k2 > 0) {
+      stamp(cl(k2), 410, "2s", K.goldHi, 64, 400);
+      const pulse = 1 + Math.sin(cl(k2) * Math.PI) * 0.1;
+      E("rect", { x: 540 - 74 * pulse, y: 410 - 44, width: 148 * pulse, height: 88, rx: 18, fill: "none", stroke: K.goldHi, "stroke-width": 5, opacity: 0.5 }, V2.root);
+    }
+  } };
+
+/* s6 (s5): montage — the paperboy's envelope; the streetlights pulse with the chant */
+SC.s6 = { cam: [[540, 1100, 1.15], [540, 1085, 1.22]],
+  world(lt, u, t) {
+    const b = u < 0.55;
+    return { phase: b ? 0 : 1, pulse: !b && u > 0.7, over: () => {
+      if (b) {
+        /* the paperboy's door receives its gold envelope (dusk) */
+        const dx = 560, dy = 1500;
+        E("rect", { x: dx - 128, y: dy - 430, width: 256, height: 434, fill: K.bldg, stroke: P.ink, "stroke-width": 5 }, V2.root);
+        E("rect", { x: dx - 52, y: dy - 400, width: 104, height: 96, rx: 8, fill: "#E8A860", stroke: P.ink, "stroke-width": 5 }, V2.root);
+        E("rect", { x: dx - 62, y: dy - 260, width: 124, height: 260, rx: 6, fill: "#10142C", stroke: P.ink, "stroke-width": 6 }, V2.root);
+        envelope(V2.root, dx, dy - 64, 1.0, { t, nameGlow: 1 });
+        /* the paperboy salutes HIS envelope */
+        paperboy(V2.root, 872, 1620, 1.3, { t, salute: 1, facing: -1 });
+      } else {
+        /* the square at night: lights pulsing IN RHYTHM with the chant */
+        stage(V2.root, t);
+        for (let i = 0; i < 6; i++) {
+          npc(V2.root, 60 + i * 190 + V2.rnd(216, i) * 36, 1600 + V2.rnd(217, i) * 50, 0.7 + V2.rnd(218, i) * 0.22,
+            { t, chant: 1, dance: 1, facing: 1, noShadow: true });
+        }
+        /* red pulse cones under the lamps, synced to the stamp beats */
+        const beat = Math.sin(t * 7.4) > 0;
+        if (beat) {
+          E("ellipse", { cx: 188, cy: 1520, rx: 200, ry: 46, fill: "#FF5A4A", opacity: 0.12, style: "mix-blend-mode:screen" }, V2.root);
+          E("ellipse", { cx: 890, cy: 1520, rx: 200, ry: 46, fill: "#FF5A4A", opacity: 0.12, style: "mix-blend-mode:screen" }, V2.root);
+        }
+      }
+    } };
+  },
+  over(lt, u) { if (u >= 0.55) hussCascade(V2.root, u, [0.66, 0.8], 330, 54); } };
+
+/* s7 (s5b): THE CLUE — he came back quiet (gray, pale, mouth SHUT) */
+SC.s7 = { cam: [[540, 1060, 1.22], [540, 1075, 1.34]],
+  world(lt, u, t) {
+    return { phase: 1, pulse: true, over: () => {
+      /* the chanting crowd — every mouth cycles, warm-lit */
+      for (let i = 0; i < 7; i++) {
+        const cx = 40 + i * 168 + V2.rnd(219, i) * 30;
+        if (i === 3) continue; /* the gap where HE stands */
+        npc(V2.root, cx, 1596 + V2.rnd(220, i) * 46, 0.82 + V2.rnd(221, i) * 0.16,
+          { t, chant: 1, dance: 1, facing: 1, noShadow: true });
+      }
+      /* THE PAPERBOY, back among them: gray, pale, mouth SHUT */
+      paperboy(V2.root, 548, 1630, 1.08, { t, gray: 1, mouthShut: 1, facing: 1, look: 0.3, headTilt: 3 });
+      /* no glow on him — a desaturated hole in the party */
+      /* the narrator waves at him; nothing comes back */
+      hero2(V2.root, 940, 1660, 1.3, { t, noPool: 1, facing: -1, look: -0.6,
+        armL: { a: 156, b: -12 + Math.sin(t * 5.2) * 10 }, headTilt: -3 });
+    } };
+  },
+  over(lt, u) {} };
+
+/* s8 (s6): HARD SILENCE — no music, no lights, nothing */
+SC.s8 = { cam: [[540, 1290, 1.12], [540, 1268, 1.3]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      /* our dark door anchors the frame; the hero stands at it, alone */
+      ourDoor(V2.root, 540, 1700, 1.3, {});
+      hero2(V2.root, 540, 1798, 1.12, { t, noPool: 1, blinkOff: 1, headTilt: 3,
+        armL: { a: 8, b: -6 }, armR: { a: 8, b: -6 } });
+      /* the empty street does the rest: dark windows, dead lamps, no motion */
+      /* ONE far dead lamp glow, faint — the town is holding its breath */
+      V2.glow(935, 1090, 90, "Cool", 0.08, V2.root);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s9 (s6b): VISUAL HOLD — the first envelope resolves out of the fog */
+SC.s9 = { cam: [[540, 1180, 1.3], [540, 1210, 1.45]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      ourDoor(V2.root, 540, 1560, 1.2, {});
+      /* the first envelope ahead, resolving out of the fog (early enough that
+         the u50 keyframe carries it — r2 lesson from the s9 near-empty read) */
+      const k = seg(u, 0.32, 0.72);
+      if (k > 0) {
+        const op = cl(k * 1.4);
+        const g = E("g", { opacity: op }, V2.root);
+        envelope(g, 540, 1512, 0.62, { t, glowOp: 0.4 * op });
+      }
+    } };
+  },
+  over(lt, u) {} };
+
+/* s10 (s7): an envelope on every doorstep, unopened, rows into the fog */
+SC.s10 = { cam: [[540, 1330, 1.3], [540, 1350, 1.44]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      /* the walking subject: the hero, small, walking INTO the corridor */
+      const wk = V2.easeInOut(seg(u, 0.1, 0.95));
+      hero2(V2.root, lerp(340, 500, wk), lerp(1810, 1720, wk), lerp(0.5, 0.62, wk),
+        { t, walk: 1, cape: 0.45, noPool: 1, blinkOff: 1 });
+      /* the corridor of doorsteps — ONE hero envelope leads (near-left, big) */
+      const rows = [
+        [300, 1650, 1.3, 1.0], [860, 1620, 1.05, 0.92],
+        [472, 1560, 0.8, 0.8], [716, 1540, 0.78, 0.78],
+        [560, 1490, 0.58, 0.62], [438, 1462, 0.5, 0.55], [664, 1456, 0.48, 0.52],
+      ];
+      rows.forEach(([x, y, s, op], i) => {
+        const hero = i === 0;
+        const g = E("g", { opacity: op }, V2.root);
+        E("rect", { x: x - 66 * s, y: y, width: 132 * s, height: 16 * s, rx: 4, fill: "#1E2444", stroke: P.ink, "stroke-width": 3 * s + 1 }, g);
+        envelope(g, x, y - 34 * s, s, { t, glowOp: hero ? 0.62 : 0.3 * op });
+        if (hero) ring(x, y - 34 * s, (t * 0.5) % 1, K.goldHi);
+      });
+      /* far dead skyline (r1: reclaim the top band) + the fog eats the street */
+      for (let i = 0; i < 8; i++) {
+        const bx = -200 + i * 210 + V2.rnd(270, i) * 60;
+        E("rect", { x: bx, y: 1292 - (240 + V2.rnd(271, i) * 200), width: 130 + V2.rnd(272, i) * 70, height: 500, fill: "#0B0F20", opacity: 0.9 }, V2.root);
+      }
+      const fg = E("linearGradient", { id: "kFog2", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", K.fog, 0.42], ["100%", K.fog, 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, fg));
+      E("rect", { x: -300, y: 1230, width: 1680, height: 340, fill: "url(#kFog2)" }, V2.root);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s11 (s8): the mirror by moonlight — the almost-smile forms and dies */
+SC.s11 = { cam: [[540, 1090, 1.24], [540, 1080, 1.34]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      const R = interiorRoom(V2.root, lt, u, t, { moonlit: 1 });
+      /* the hero at the mirror, face lit by the moon window */
+      hero2(V2.root, 470, 1640, 1.34, { t, noPool: 1, facing: 1, look: 0.5 });
+      /* the reflection: the ALMOST-SMILE — forms (u .3-.5), dies (u .55-.68) */
+      const smileK = seg(u, 0.3, 0.48) * (1 - seg(u, 0.55, 0.68));
+      const breath = Math.sin(seg(u, 0.42, 0.75) * Math.PI) * 0.012;
+      const rg = E("g", { "clip-path": `url(#${R.cid})` }, R.g);
+      hero2(rg, 805, 1560, 1.06, {
+        t, noShadow: 1, noPool: 1, facing: -1, look: -0.4,
+        expr: smileK > 0.25 ? "happy" : "neutral",
+        squash: breath,
+      });
+      E("path", { d: `M ${R.mx + 40} ${R.my + R.mh - 20} L ${R.mx + R.mw - 60} ${R.my + 30}`, stroke: "#FFF6EA", "stroke-width": 16, opacity: 0.07, "stroke-linecap": "round" }, R.g);
+      /* the empty slot, visible in frame (the door at the left edge) */
+      E("rect", { x: -20, y: 900, width: 190, height: 620, rx: 8, fill: "#0D1126", stroke: P.ink, "stroke-width": 5 }, R.g);
+      E("rect", { x: 34, y: 1216, width: 82, height: 20, rx: 10, fill: "#8A6B4A", stroke: P.ink, "stroke-width": 4 }, R.g);
+      E("rect", { x: 42, y: 1222, width: 66, height: 9, rx: 4, fill: "#0A0A18" }, R.g);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s12 (s9): THE CLICK — the heavy envelope, the green-ink name */
+SC.s12 = { cam: [[540, 1300, 1.8], [540, 1290, 1.95]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      /* extreme close: the dark door fills the frame */
+      const g = E("g", { transform: `translate(540 1310) rotate(${-0.8 + Math.sin(t * 0.7) * 0.3})` }, V2.root);
+      E("rect", { x: -620, y: -760, width: 1240, height: 1520, fill: "#0D1126" }, g);
+      for (let i = 0; i < 5; i++) E("line", { x1: -620, y1: -600 + i * 300, x2: 620, y2: -610 + i * 300, stroke: "#0A0E22", "stroke-width": 10, opacity: 0.8 }, g);
+      /* the slot, huge and dark */
+      E("rect", { x: -330, y: -60, width: 660, height: 120, rx: 58, fill: "#8A6B4A", stroke: P.ink, "stroke-width": 10 }, g);
+      E("rect", { x: -300, y: -32, width: 600, height: 64, rx: 32, fill: "#06060E" }, g);
+      /* THE ENVELOPE: slides in slowly, heavy, filling the slot */
+      const ek = V2.easeInOut(seg(u, 0.22, 0.72));
+      if (ek > 0) {
+        const ex = lerp(430, 0, ek);
+        const eg = E("g", { transform: `translate(${ex} 0) scale(2.5)` }, g);
+        V2.glow(0, 0, 150, "Warm", 0.4 + ek * 0.25, eg);
+        E("rect", { x: -64, y: -42, width: 128, height: 84, rx: 7, fill: K.gold, stroke: P.ink, "stroke-width": 5 }, eg);
+        E("rect", { x: -64, y: -42, width: 128, height: 26, rx: 7, fill: K.goldDeep, opacity: 0.3 }, eg);
+        E("path", { d: "M -64 -38 L 0 6 L 64 -38 Z", fill: K.goldHi, stroke: P.ink, "stroke-width": 4, "stroke-linejoin": "round" }, eg);
+        E("circle", { cx: 0, cy: 12, r: 13, fill: "#C0392B", stroke: P.ink, "stroke-width": 3.5 }, eg);
+        E("circle", { cx: 0, cy: 12, r: 6.5, fill: "#8E2A20" }, eg);
+        /* the green-ink name flares — a flourish, deliberately unreadable */
+        const gk = seg(u, 0.74, 0.88);
+        if (gk > 0) {
+          const gg = E("g", { opacity: cl(gk * 1.6) }, eg);
+          E("rect", { x: -44, y: 24, width: 88, height: 13, rx: 4, fill: K.goldPale, opacity: 0.95 }, gg);
+          E("path", { d: "M -38 31 C -28 22 -24 38 -14 29 C -6 23 -2 36 8 28 C 16 22 24 36 32 27",
+            stroke: K.green, "stroke-width": 3.4, fill: "none", "stroke-linecap": "round" }, gg);
+          V2.glow(0, 30, 70, "Warm", 0.6 * gk, gg);
+        }
+      }
+      /* gold floods the frame edges as it lands */
+      const fl = seg(u, 0.68, 0.9);
+      if (fl > 0) {
+        const wg = E("radialGradient", { id: "kClick", cx: 0.5, cy: 0.5 }, V2.defsHold);
+        [["0%", K.gold, 0.32 * fl], ["100%", K.gold, 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, wg));
+        E("rect", { x: -620, y: -760, width: 1240, height: 1520, fill: "url(#kClick)", style: "mix-blend-mode:screen" }, g);
+      }
+      if (seg(u, 0.22, 0.3) >= 1) ring(0, 0, seg(u, 0.3, 0.5), K.goldHi);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s13 (s10): the door cracks — the whole town outside, unlit lanterns, the neighbor crying */
+SC.s13 = { cam: [[540, 1010, 1.1], [540, 1015, 1.18]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      /* formation rows receding into the dark, grey lanterns held high */
+      crowdRows(V2.root, t, [
+        { y: 1600, n: 6, s: 0.94, x0: 90, dx: 180 },
+        { y: 1500, n: 7, s: 0.78, x0: 30, dx: 170 },
+        { y: 1420, n: 8, s: 0.64, x0: -20, dx: 160 },
+        { y: 1356, n: 9, s: 0.52, x0: -60, dx: 150 },
+      ], { frozen: 1, lantern: 0 });
+      /* OUR door, center, cracking open — gold spills out of it */
+      const crack = seg(u, 0.12, 0.4);
+      ourDoor(V2.root, 540, 1700, 1.16, { crack });
+      if (crack > 0) {
+        const wg = E("linearGradient", { id: "kSpill", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+        [["0%", K.gold, 0.5 * crack], ["100%", K.gold, 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, wg));
+        E("path", { d: `M 470 1520 L 610 1520 L ${610 + 150 * crack} 1760 L ${470 - 150 * crack} 1760 Z`, fill: "url(#kSpill)", style: "mix-blend-mode:screen" }, V2.root);
+        V2.glow(540, 1560, 220 * crack, "Warm", 0.4 * crack, V2.root);
+      }
+      /* the hero silhouette in the crack (backlit) */
+      hero2(V2.root, 540, 1726, 0.9, { t, noShadow: 1, noPool: 1, noCoat: 1, blinkOff: 1 });
+      /* THE NEIGHBOR, front row, face lit gold, crying */
+      neighbor(V2.root, 800, 1630, 1.06, { t, cry: 1, facing: -1, look: -0.5, lit: 1 });
+      V2.glow(800, 1400, 130, "Warm", 0.3, V2.root);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s14 (s10b): FORMATION HOLD — nobody moves; the pull-back begins */
+SC.s14 = { cam: [[540, 1015, 1.24], [540, 1000, 1.08]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      /* r1: reclaim the sky — dim stars + a near-black top gradient */
+      for (let i = 0; i < 7; i++) E("circle", { cx: 80 + V2.rnd(280, i) * 940, cy: 260 + V2.rnd(281, i) * 420, r: 2 + V2.rnd(282, i) * 2, fill: "#8A96B8", opacity: 0.5 }, V2.root);
+      const sg = E("linearGradient", { id: "kTopDim", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", "#03040A", 0.7], ["100%", "#03040A", 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, sg));
+      E("rect", { x: -300, y: -200, width: 1680, height: 900, fill: "url(#kTopDim)" }, V2.root);
+      crowdRows(V2.root, t, [
+        { y: 1600, n: 6, s: 0.94, x0: 90, dx: 180 },
+        { y: 1500, n: 7, s: 0.78, x0: 30, dx: 170 },
+        { y: 1420, n: 8, s: 0.64, x0: -20, dx: 160 },
+        { y: 1356, n: 9, s: 0.52, x0: -60, dx: 150 },
+        { y: 1306, n: 10, s: 0.42, x0: -100, dx: 142 },
+      ], { frozen: 1, lantern: 0 });
+      ourDoor(V2.root, 540, 1700, 1.16, { crack: 0.5 });
+      const wg = E("linearGradient", { id: "kSpill", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", K.gold, 0.25], ["100%", K.gold, 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, wg));
+      E("path", { d: `M 470 1520 L 610 1520 L 685 1760 L 395 1760 Z`, fill: "url(#kSpill)", style: "mix-blend-mode:screen" }, V2.root);
+      V2.glow(540, 1560, 130, "Warm", 0.24, V2.root);
+      hero2(V2.root, 540, 1726, 0.9, { t, noShadow: 1, noPool: 1, noCoat: 1, blinkOff: 1 });
+      /* r1: the neighbor owns the read — bigger, forward, spotlit */
+      neighbor(V2.root, 824, 1668, 1.16, { t, cry: 1, facing: -1, look: -0.5 });
+      V2.glow(824, 1430, 150, "Warm", 0.4, V2.root);
+      E("ellipse", { cx: 824, cy: 1672, rx: 120, ry: 26, fill: K.gold, opacity: 0.1, style: "mix-blend-mode:screen" }, V2.root);
+    } };
+  },
+  over(lt, u) {} };
+
+/* s15 (s11): THE TWIST — they were never parties, they were rehearsals */
+SC.s15 = { cam: [[540, 990, 1.0], [540, 960, 0.92]],
+  world(lt, u, t) {
+    return { phase: 2, over: () => {
+      stage(V2.root, t);
+      /* CHOIR FORMATION: three arcs — rehearsal geometry made visible */
+      crowdRows(V2.root, t, [
+        { y: 1596, n: 7, s: 0.9, x0: 40, dx: 168, arc: 1, arcK: 0.9 },
+        { y: 1490, n: 8, s: 0.74, x0: -10, dx: 158, arc: 1, arcK: 1.25 },
+        { y: 1402, n: 9, s: 0.6, x0: -56, dx: 150, arc: 1, arcK: 1.6 },
+        { y: 1338, n: 10, s: 0.48, x0: -100, dx: 142, arc: 1, arcK: 1.9 },
+      ], { frozen: 1, lantern: 0 });
+      /* r1: haze behind the arcs so the formation silhouette pops */
+      const hz = E("linearGradient", { id: "kHaz", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", K.fog, 0], ["100%", K.fog, 0.2]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, hz));
+      E("rect", { x: -300, y: 980, width: 1680, height: 520, fill: "url(#kHaz)" }, V2.root);
+    } };
+  },
+  over(lt, u) {
+    /* r1: the 10-stamp grid read as spam (12 words, illegible) — ONE large
+       HUSS! over the choir now: the ritual mark revealed, readable at scale */
+    const k = seg(u, 0.24, 0.36);
+    if (k > 0) {
+      const pop = V2.backOutBig(cl(k));
+      const g = E("g", { opacity: cl(k * 2.4), transform: `translate(540 430) rotate(${(1 - pop) * -4}) scale(${0.66 + 0.34 * pop})` }, V2.root);
+      V2.glow(0, 0, 260, "Red", 0.24 * cl(k), g);
+      E("rect", { x: -210, y: -78, width: 420, height: 156, rx: 34, fill: P.ink, stroke: K.red, "stroke-width": 9 }, g);
+      E("rect", { x: -192, y: -60, width: 384, height: 120, rx: 26, fill: "none", stroke: K.red, "stroke-width": 4, opacity: 0.55 }, g);
+      V2.txt(0, 26, "HUSS!", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 108, fill: K.red, stroke: P.ink, "stroke-width": 5, "paint-order": "stroke" }, g);
+    }
+  } };
+
+/* s16 (s12): "They didn't forget me" — the rows simply part */
+SC.s16 = { cam: [[540, 950, 0.86], [540, 960, 0.95]],
+  world(lt, u, t) {
+    const part = V2.easeInOut(seg(u, 0.3, 0.72));
+    return { phase: 2, over: () => {
+      crowdRows(V2.root, t, [
+        { y: 1596, n: 7, s: 0.9, x0: 40, dx: 168, arc: 1, arcK: 0.9 },
+        { y: 1490, n: 8, s: 0.74, x0: -10, dx: 158, arc: 1, arcK: 1.25 },
+        { y: 1402, n: 9, s: 0.6, x0: -56, dx: 150, arc: 1, arcK: 1.6 },
+      ], { frozen: 1, lantern: 0, part });
+      /* our door opens wider below; the aisle runs to the stage */
+      ourDoor(V2.root, 540, 1700, 1.16, { crack: 0.5 + seg(u, 0.1, 0.35) * 0.5 });
+      const wg = E("linearGradient", { id: "kSpill", x1: 0, y1: 0, x2: 0, y2: 1 }, V2.defsHold);
+      [["0%", K.gold, 0.3], ["100%", K.gold, 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, wg));
+      E("path", { d: "M 470 1520 L 610 1520 L 700 1760 L 380 1760 Z", fill: "url(#kSpill)", style: "mix-blend-mode:screen" }, V2.root);
+      hero2(V2.root, 540, 1726, 0.9, { t, noShadow: 1, noPool: 1, noCoat: 1, blinkOff: 1 });
+      /* the neighbor's crying face TURNS toward our door */
+      const turn = seg(u, 0.4, 0.62);
+      neighbor(V2.root, 800, 1630, 1.06, { t, cry: 1, facing: -1, look: lerp(-0.5, -0.9, turn), headTilt: lerp(0, -6, turn) });
+      V2.glow(800, 1400, 120, "Warm", 0.26, V2.root);
+      /* red stamps hang motionless in the air */
+      [[300, 380], [540, 330], [780, 380]].forEach(([x, y]) => {
+        const g = E("g", { opacity: 0.5 }, V2.root);
+        E("rect", { x: x - 66, y: y - 26, width: 132, height: 52, rx: 12, fill: P.ink, stroke: K.red, "stroke-width": 4 }, g);
+        V2.txt(x, y + 14, "HUSS!", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 40, fill: K.red, stroke: P.ink, "stroke-width": 2, "paint-order": "stroke" }, g);
+      });
+    } };
+  },
+  over(lt, u) {} };
+
+/* s17 (s12b): "They were making sure I'd say yes." — steps out, walks in willingly */
+SC.s17 = { cam: [[540, 980, 0.98], [540, 990, 1.12]],
+  world(lt, u, t) {
+    const part = 1;
+    const walkK = V2.easeInOut(seg(u, 0.08, 0.9));
+    const wx = lerp(540, 660, walkK);
+    return { phase: 2, over: () => {
+      stage(V2.root, t);
+      crowdRows(V2.root, t, [
+        { y: 1596, n: 7, s: 0.9, x0: 40, dx: 168, arc: 1, arcK: 0.9 },
+        { y: 1490, n: 8, s: 0.74, x0: -10, dx: 158, arc: 1, arcK: 1.25 },
+        { y: 1402, n: 9, s: 0.6, x0: -56, dx: 150, arc: 1, arcK: 1.6 },
+      ], { frozen: 1, lantern: 0, part });
+      /* the gold path: light spills down the aisle ahead of him */
+      const pg = E("linearGradient", { id: "kPath", x1: 0, y1: 1, x2: 0, y2: 0 }, V2.defsHold);
+      [["0%", K.gold, 0.34], ["100%", K.gold, 0.05]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, pg));
+      E("path", { d: "M 500 1760 L 580 1760 L 760 1240 L 640 1240 Z", fill: "url(#kPath)", style: "mix-blend-mode:screen" }, V2.root);
+      ourDoor(V2.root, 540, 1700, 1.16, { crack: 1 });
+      /* the hero walks IN — unbidden, willing */
+      hero2(V2.root, wx, lerp(1726, 1640, walkK), lerp(0.9, 1.14, walkK), { t, walk: 1, cape: 0.4, noPool: 1, blinkOff: 1 });
+      /* the neighbor watches him pass, still crying */
+      neighbor(V2.root, 810, 1630, 1.06, { t, cry: 1, facing: -1, look: -0.9, headTilt: -6 });
+      /* the crowd leans toward the aisle — anticipation (subtle tilt via headTilt) */
+    } };
+  },
+  over(lt, u) {} };
+
+/* s18 (TAIL): every lantern lights amber — the chant comes back slow and whispered — slam to black */
+SC.s18 = { cam: [[540, 990, 1.12], [540, 970, 1.06]],
+  world(lt, u, t) {
+    /* u: 0-0.14 settle · 0.14-0.4 the flood rises · 0.28 ONE-FRAME lantern flash ·
+       0.4-0.86 the slow whisper · 0.86-0.94 SLAM to black mid-whisper */
+    const flash = seg(u, 0.24, 0.3);
+    const lit = flash > 0 ? 1 : 0;
+    const wash = seg(u, 0.14, 0.4);
+    const blk = seg(u, 0.86, 0.93);
+    return { phase: 2, over: () => {
+      stage(V2.root, t);
+      crowdRows(V2.root, t, [
+        { y: 1596, n: 7, s: 0.9, x0: 40, dx: 168, arc: 1, arcK: 0.9 },
+        { y: 1490, n: 8, s: 0.74, x0: -10, dx: 158, arc: 1, arcK: 1.25 },
+        { y: 1402, n: 9, s: 0.6, x0: -56, dx: 150, arc: 1, arcK: 1.6 },
+      ], { frozen: 1, lantern: lit, whisper: u > 0.34, part: 1 });
+      /* the hero small ahead on the gold path, walking in */
+      hero2(V2.root, lerp(660, 720, seg(u, 0, 0.5)), 1600, 1.05, { t, walk: u < 0.5, cape: 0.5, noPool: 1, blinkOff: 1 });
+      neighbor(V2.root, 810, 1630, 1.06, { t, cry: u < 0.5, facing: -1, look: -0.9, headTilt: -6 });
+      /* the gold flood */
+      if (wash > 0) {
+        const wg = E("radialGradient", { id: "kFlood", cx: 0.5, cy: 0.42 }, V2.defsHold);
+        [["0%", K.gold, 0.4 * wash], ["55%", K.goldDeep, 0.2 * wash], ["100%", K.goldDeep, 0]].forEach(([of2, c, a]) => E("stop", { offset: of2, "stop-color": c, "stop-opacity": a }, wg));
+        E("rect", { x: -300, y: -200, width: 1680, height: 2320, fill: "url(#kFlood)", style: "mix-blend-mode:screen" }, V2.root);
+      }
+      /* the ONE-FRAME lantern flash pop */
+      if (flash > 0 && flash < 1) {
+        E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: K.goldPale, opacity: 0.3 * (1 - flash) }, V2.root);
+      }
+      /* the whisper: red stamps hang at low opacity, everything half-speed */
+      if (u > 0.4) {
+        [[300, 380], [540, 330], [780, 380]].forEach(([x, y]) => {
+          const g = E("g", { opacity: 0.32 }, V2.root);
+          E("rect", { x: x - 66, y: y - 26, width: 132, height: 52, rx: 12, fill: P.ink, stroke: K.red, "stroke-width": 4 }, g);
+          V2.txt(x, y + 14, "HUSS!", { "text-anchor": "middle", "font-family": TITLE_FONT, "font-weight": 800, "font-size": 40, fill: K.red, stroke: P.ink, "stroke-width": 2, "paint-order": "stroke" }, g);
+        });
+      }
+    } };
+  },
+  over(lt, u) {
+    /* SLAM to black mid-whisper — no epilogue, loop to hook */
+    const blk = seg(u, 0.86, 0.92);
+    if (blk > 0) E("rect", { x: 0, y: 0, width: 1080, height: 1920, fill: "#020204", opacity: cl(blk * 1.6) });
+  } };
+
+function withCam(cam, fn) {
+  const hold = V2.root;
+  V2.root = E("g", { transform: V2.cam(cam[0], cam[1], cam[2]) }, hold);
+  fn();
+  V2.root = hold;
+}
+function camOf(idx, lt, dur) {
+  const sc = SC[TL[idx].id], a = sc.cam[0], b = sc.cam[1], u = V2.easeInOut(cl(lt / dur) * 0.85 + 0.075);
+  let c = [lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u)];
+  if (idx > 0 && lt < 0.36) {
+    const pv = SC[TL[idx - 1].id].cam[1], k = V2.easeOutQuint(lt / 0.36);
+    c = [lerp(pv[0], c[0], k), lerp(pv[1], c[1], k), lerp(pv[2], c[2], k)];
+  }
+  return c;
+}
+
+/* foreground: gold flecks at party, pale dust on the dead street */
+function fgLayer(t, phase) {
+  const g = E("g", { opacity: phase === 2 ? 0.4 : 0.6 });
+  const col = phase === 0 || phase === 1 ? K.goldHi : K.fog;
+  const n = phase === 2 ? 8 : 14;
+  for (let i = 0; i < n; i++) {
+    const sp = 0.5 + V2.rnd(230, i);
+    const x = ((V2.rnd(231, i) * 1200 - t * 30 * sp) % 1200 + 1200) % 1200 - 60;
+    const y = ((V2.rnd(232, i) * 2100 + t * 90 * sp) % 2100 + 2100) % 2100 - 90;
+    E("path", { d: `M ${x} ${y} l 10 22`, stroke: col, "stroke-width": 4.5 + V2.rnd(233, i) * 4.5, "stroke-linecap": "round", opacity: 0.42 + V2.rnd(234, i) * 0.3 }, g);
+  }
+  return g;
+}
+
+function renderFrame(t) {
+  V2.root.innerHTML = "";
+  V2.defsHold = E("defs", {}, V2.root);
+  V2.defs(V2.root);
+  let idx = TL.length - 1;
+  for (let i = 0; i < TL.length; i++) if (t < TL[i].end - 1e-6) { idx = i; break; }
+  const sc = TL[idx], def = SC[sc.id] || SC.hook;
+  const lt = Math.max(0, t - sc.start), dur = sc.end - sc.start, u = cl(lt / dur);
+  const cam = camOf(idx, lt, dur);
+  V2.CAM_NOW = cam;
+  const S = def.world(lt, u, t, dur);
+  townscape(t, S.phase === undefined ? 0 : S.phase, cam, { pulse: S.pulse });
+  withCam(cam, () => { if (S.over) S.over(); });
+  def.over(lt, u, t, dur, cam);
+  V2.root.appendChild(fgLayer(t, S.phase === undefined ? 0 : S.phase));
+  const vg = E("radialGradient", { id: "kVig" }, V2.defsHold);
+  [["62%", "#05050A", 0], ["100%", "#05050A", 0.5]].forEach(([o, c, a]) => E("stop", { offset: o, "stop-color": c, "stop-opacity": a }, vg));
+  E("rect", { x: -20, y: -20, width: 1120, height: 1960, fill: "url(#kVig)" });
+  E("rect", { x: 0, y: 0, width: 1080, height: 1920, filter: "url(#vGrain)", opacity: 0.5, transform: `translate(${(Math.floor(t * 15) % 2) * 3} ${Math.floor(t * 15) % 3})` });
+}
+window.renderFrame = renderFrame;
+renderFrame(0);
+</script>
+</body>
+</html>
