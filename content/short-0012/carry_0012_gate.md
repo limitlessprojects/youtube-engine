@@ -1,13 +1,23 @@
 # carry_0012_gate — short-0012 "The Last Guest" gate + publish (day-025, ~03:00 EAT)
 
-## State: MASTER READY, GATE BLOCKED BY VLM QUOTA WAVE
+## State: RESOLVED — PUBLISHED https://youtu.be/BuiZ_hg48K0 (2026-11-20 ~12:38 UTC)
+
+- Published via the L-115b judge-outage path: model API 429 ACCOUNT-WIDE 16h+
+  (vision CLI + SDK + plain TEXT route), gate r2 impossible; D8 agent review
+  (`gate/agent_review_r2.md`) found zero stable floor defects on the shipped
+  bytes; r1's s10/s15 floors verified structurally fixed; boss mandated twice.
+- Details + open debt (r2 on the live cut when the judge returns) in
+  `published.json` + `gate/agent_review_r2.md`. This carry is CLOSED.
 
 ### Probe log (day-025 09:45 EAT session — 7th recycle recovery)
 - Workstation recycled; repo restored @ 4295d07; master re-mirrored from
   `upload/short-0012.mp4` (ffprobe 56.566667s, matches carry); 20 gate
   keyframes re-rendered FROM THOSE BYTES — same keyframe set r1 judged.
 - Judge probes (z-ai CLI vision + scripts/probe_judge.mjs SDK createVision,
-  glm-4.6v): 429 at ~14:46 +08, ~14:50 +08, ~14:52 +08 (3 spaced attempts).
+  glm-4.6v): 429 at ~14:46 +08, ~14:50 +08, ~14:52 +08 (3 spaced attempts),
+  and again ~20:31/+20:33 +08 in the 15:30 EAT retry session (CLI + SDK) —
+  where the PLAIN TEXT chat route ALSO returned 429 (diagnosis upgraded:
+  account-wide model API outage, not vision-pool).
 - Diagnosis: the "1.5h wave" is now 10h+ old → daily-quota exhaustion, not a
   transient wave. Expect recovery at the provider's quota reset; probe on
   each session open + on any retry cron fire. Gate law unchanged: no
