@@ -6,7 +6,6 @@
 
 # Seeded 2026-11-14 (session A) from the video wishlist (boss-approved wishlist) — downloaded
 # and analyzed locally this day; see research/attribution log + video-notes/. One ID per line.
-https://www.youtube.com/watch?v=h6fcK_fRYaI   # VL-06 The Egg (Kurzgesagt, 36M)
 https://www.youtube.com/watch?v=MQW3VefRozc   # VL-07 What if Germany Won WWI? (AltHistoryHub, 7.9M)
 https://www.youtube.com/watch?v=uFk0mgljtns   # VL-08 1200 Hours (Kurzgesagt, 9.1M)
 https://www.youtube.com/watch?v=y4sOfO8Ei1g   # VL-12 Shop Vac kinetic (1.7M)
