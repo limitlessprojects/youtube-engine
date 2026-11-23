@@ -1,0 +1,26 @@
+{
+ "id": "uFk0mgljtns",
+ "duration_s": 406.8,
+ "words": 1036,
+ "wpm": 152.8,
+ "hook_15s_words": 29,
+ "opener_sentence_words": 10,
+ "sentences": 66,
+ "avg_sentence_words": 15.7,
+ "short_sentence_ratio": 0.12,
+ "cue_word_density_per_min": 6.6,
+ "connector_starts": 11,
+ "estimated_cuts_per_min_proxy": 9.7,
+ "open_loop_markers": [
+  {
+   "t": 166.8,
+   "marker": "until"
+  },
+  {
+   "t": 258.7,
+   "marker": "until"
+  }
+ ],
+ "top_bigrams": [],
+ "language_note": "ci-proxy"
+}
