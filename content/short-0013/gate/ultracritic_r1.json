@@ -1,11 +1,417 @@
 {
  "round": 1,
- "mechanical_fails": [
-  "A2 max scene 4.55s > 4.2s (pacing)",
-  "A5 bed too loud: -1.0 dB under VO (mud)"
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 6.94,
+ "frame_grand_mean": 7.12,
+ "dim_means": {
+  "frame:hook_impact": 7.0,
+  "frame:text_discipline": 8.86,
+  "frame:visual_hierarchy": 5.95,
+  "frame:contrast_legibility": 7.1,
+  "frame:production_polish": 6.57,
+  "video:pacing_rhythm": 5,
+  "video:character_life": 6,
+  "video:edit_flow": 6
+ },
+ "frame_means": {
+  "hook_u50": 7.0,
+  "s0_u50": 6.75,
+  "s10_u50": 5.8,
+  "s11_u50": 7.3,
+  "s12_u50": 7.0,
+  "s13_u50": 7.5,
+  "s14_u50": 6.0,
+  "s15_u50": 6.0,
+  "s16_u50": 6.8,
+  "s17_u50": 7.2,
+  "s18_u50": 7.5,
+  "s19_u50": 7.2,
+  "s1_u50": 7.0,
+  "s2_u50": 7.75,
+  "s3_u50": 8.0,
+  "s4_u50": 6.8,
+  "s5_u50": 7.75,
+  "s6_u50": 7.5,
+  "s7_u50": 7.75,
+  "s8_u50": 7.75,
+  "s9_u50": 7.25
+ },
+ "floor_breaches": [
+  "s10_u50",
+  "s11_u50",
+  "s12_u50",
+  "s14_u50",
+  "s15_u50",
+  "s16_u50",
+  "s4_u50"
+ ],
+ "video_directives": [
+  "Cut the ~25s static crowd block (30s-56s) \u2014 nothing changes visually; tighten to 8-10s or add micro-motion (head bobs, lamp flicker, drifting clouds) to keep tempo alive",
+  "Vary framing more: the second half is one locked wide shot; insert close-ups on individual faces reacting to the 'morning' reveal to create visual beats",
+  "Make the daybreak transition a motivated payoff (sun cresting with a hold) rather than an abrupt color swap at 59s, and bring the opening hook composition back as a loop"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 7,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or crop the empty tan bottom third (below the box/legs) \u2014 it reads as a dead zone on a 9:16 frame",
+    "Strengthen the header's edge definition: the outlined white type gets mushy against the hazy sky; add a tighter drop shadow or darker stroke",
+    "Sharpen the focal singer \u2014 the blur applied to background buildings is bleeding slightly onto the foreground figures; keep the choir crisp with a stronger figure-ground separation"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 6
+   },
+   "mean": 6.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the bottom ~20% brown foreground zone \u2014 it's a dead area with two ambiguous rectangles; extend the crowd band or push camera in so the stage fills the lower third",
+    "Fix the dark-navy bodies blending into the dark-navy band behind the crowd \u2014 rim-light or lighten the band by 15-20% so silhouettes read on a 6-inch phone in daylight",
+    "Establish depth separation: the singing focal figure sits at the same value plane as the crowd \u2014 add a soft shadow/spotlight pool under him and slight background blur to lock the eye path top-of-sky \u2192 buildings \u2192 singer"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 5
+   },
+   "mean": 5.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Remove the black corner artifacts in the lower-left and lower-right \u2014 they read as broken crops, not vignettes",
+    "Fill or compose the bottom ~25% dead zone (empty gray floor) \u2014 either crop tighter on the figure row or add a foreground element so the frame has no large dead band",
+    "Give the figure row a focal point \u2014 differentiate one character (color/light/size) so the eye has an entry point instead of nine identical faces"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the bottom ~20% gray dead zone with a foreground element (counter, table edge, or vignette) \u2014 it reads as unfinished layout, not depth",
+    "Add a focal point: every character is identical weight and evenly spaced, so the eye has no entry point \u2014 highlight or enlarge one figure to anchor the frame",
+    "Place a short text element or visual hook in the upper sky dead zone (~30% empty) to use the full 9:16 canvas"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or purposefully use the bottom ~25% dead zone \u2014 either crop tighter on the character row or place a single graphic/text anchor in the lower third",
+    "Establish a stronger focal point: all nine characters are equally weighted and edge-cropped left/right; highlight one subject (light, scale, or color pop) to guide the eye",
+    "Add subtle atmosphere craft details \u2014 warm window lights, lamp glow falloff, or rim light on characters to build depth between the flat midground and foreground"
+   ],
+   "frame": "s12_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or activate the bottom ~25% dead zone \u2014 the empty foreground sidewalk is a large inert area; push the character row lower or add subtle ground detail/shadow anchoring",
+    "Character row is uniformly lit and evenly spaced \u2014 vary scale, head tilt, or rim-light one or two figures to create a focal subject and guided eye path instead of a flat lineup",
+    "Strengthen separation between the character band and the city backdrop \u2014 the dark mid-strip reads as a mushy gap; add a depth cue (fog gradient, glow from lamps casting onto the crowd) to unify the palette's warm orange accents"
+   ],
+   "frame": "s13_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 4,
+    "contrast_legibility": 5,
+    "production_polish": 6
+   },
+   "mean": 6.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the massive dark dead zone across the middle-lower frame \u2014 nearly 40% of the canvas carries no visual information; lower the skyline or place the subject/caption there",
+    "The bottom band is a muddy low-contrast purple wash with ambiguous dark shapes \u2014 either define the foreground interior elements with rim light/palette separation or remove them",
+    "Establish a single focal point: the evenly repeated streetlamps and string lights compete flatly with no depth layering \u2014 add atmospheric haze, one highlighted building, or a lit window to anchor the eye"
+   ],
+   "frame": "s14_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 5
+   },
+   "mean": 6.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Lower ~45% of frame is an empty dark dead zone \u2014 reframe or add a foreground subject/character so the composition occupies the full 9:16 canvas",
+    "Palette is muddy and monochromatic navy-on-navy; buildings barely separate from sky and hill \u2014 push value contrast between background/midground/foreground layers",
+    "Bottom-edge black blob shapes read as accidental mattes, not intentional framing silhouettes \u2014 either design a clean vignette or remove them"
+   ],
+   "frame": "s15_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 6.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom third is a large dead zone (empty road) \u2014 crop tighter or add a foreground element/character to anchor the frame",
+    "The crowd is a uniform horizontal band with no focal subject \u2014 spotlight one character (warmer glow, slightly forward/scaled) to create an eye path",
+    "Unexplained black blobs in the bottom corners read as artifacts \u2014 remove or integrate them into a deliberate foreground silhouette layer"
+   ],
+   "frame": "s16_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 0,
+   "top3_directives": [
+    "Establish a single focal subject \u2014 the crowd is evenly weighted edge-to-edge with no eye entry point; spotlight or enlarge one character",
+    "Fix the bottom fifth: the large empty sidewalk dead zone with cropped, orphaned heads at frame edge reads as unfinished framing",
+    "Trim the cropped characters bleeding off left/right edges or re-compose the row so the cut feels intentional (staggered depth, not flat lineup)"
+   ],
+   "frame": "s17_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the bottom third: the empty brown foreground blur is a large dead zone \u2014 add a foreground element (speaker silhouette, table, props) to anchor the lower frame",
+    "Establish a single focal point: the row of nine identical faces reads as wallpaper \u2014 highlight one character (color pop, glow, framing) to guide the eye",
+    "Recover the top black band: the dead black strip above the skyline wastes real estate \u2014 extend the sky gradient or push the moon/green dome higher"
+   ],
+   "frame": "s18_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.2,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or repurpose the dead tan zone in the bottom third (~30% of frame) with foreground interest \u2014 silhouette crowd heads, stage lights, or a vignette pushing toward the banner",
+    "Resolve the ambiguous black shapes in the lower corners \u2014 they read as rendering errors, not intentional framing; either remove or make them deliberate foreground silhouettes",
+    "Tie the cool blue-green night palette above to the warm tan floor below with a transition element (street glow reflection or shadow gradient) so the two halves don't feel like separate renders"
+   ],
+   "frame": "s19_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the large empty brown foreground dead zone (bottom ~30% of frame) \u2014 it has no subject, no depth cue, and reads as unfinished space",
+    "Remove or justify the hard black wedge shape in the bottom-left corner; it reads as an unmasked element, not a design choice",
+    "Establish one focal point \u2014 every face and building carries equal weight; add depth (dimmed background, highlighted subject) or slight framing emphasis to guide the eye"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Foreground crowd figures are cropped at both frame edges mid-body \u2014 either composite a full row or add a subtle bottom vignette so the crop reads intentional",
+    "Bottom third is a large flat dead zone (brown pavement + black blobs) \u2014 carry streetlight reflections or a sidewalk texture into it to unify the frame",
+    "Tilt-shift blur on the skyline is good depth craft, but the tallest yellow building bleeds past the top edge with an ambiguous roof \u2014 soften or reframe so the skyline silhouette reads clean"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the empty lower third \u2014 the foreground is a dead zone",
+    "Push the oversized smiling head further into the focal spot with a subtle rim light or scale boost to sharpen the eye path",
+    "Edge elements (leftmost/rightmost crowd heads) are clipped awkwardly \u2014 reframe the crowd row for cleaner edge control"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 5
+   },
+   "mean": 6.8,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fix the caption bleeding off the right edge \u2014 'NOT YE' reads as a crop error; keep the full text inside the title-safe zone with padding from frame edge.",
+    "Add a subtle rim/glow or drop shadow behind the character to separate it from the near-identical navy window/wall band behind the torso \u2014 currently the body blends into the background.",
+    "Break up the large dead navy zone across the middle-left third (empty wall) with a lamp, string-light detail, or slight vignette so the eye path isn't lost between head and ground."
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Give the trio a stronger focal anchor (eye-line direction or a slight scale/foreground push on the child) \u2014 currently the eye wanders equally across three equal-weight faces with no guided path",
+    "Fill the lower-third pavement dead zone (long cast shadows or a subtle sidewalk texture line) to keep the bottom 20% from reading as empty real estate",
+    "Tighten the mid-scene transition: the hard dark-navy band edge between buildings and figures is flat and slightly misaligned with the string-lights curve \u2014 unify with a ground/kerb line for cleaner depth separation"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Remove or justify the black angular blobs in the bottom corners \u2014 they read as rendering artifacts, not framing devices",
+    "Fill or crop the large empty tan foreground strip (~25% of frame height) that creates a dead zone below the characters",
+    "Establish a single focal character (slightly larger, lit differently, or centered) instead of nine equal-weight figures with no eye-path anchor"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 7.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or compose out the bottom ~25% empty brown foreground \u2014 it's a large dead zone with only stray black silhouette slivers",
+    "Strengthen a single focal subject (e.g., one raised-arm character or a lit stage element) so the crowd doesn't read as uniform repetition",
+    "Add subtle rim light or glow on characters against the dark band to push foreground/background separation further for daylight viewing"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the bottom ~30% dead zone: the flat mauve floor plus unexplained orange box reads as dead space on a 9:16 frame",
+    "Fix the odd black corner voids at bottom-left/bottom-right (vignette matte misaligned) \u2014 they look like rendering errors",
+    "Raise the choir/drummer cluster higher in frame and let the raised baton + glowing drumstick carry the eye path; right now the focal glow sits mid-right while the compositional center is the small singer"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.25,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom third is a large dead zone \u2014 crop or fill it (crowd reflection, foreground silhouette, or caption zone) instead of empty gradient pavement",
+    "No single focal subject \u2014 push one figure forward (scale, color pop, or lighting) to anchor the eye path",
+    "Lower third characters get clipped at frame edge awkwardly \u2014 recompose so the crowd row reads as an intentional band with breathing room"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
  ],
  "warns": [
   "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
- ],
- "verdict": "MECHANICAL_FAIL"
+ ]
 }
