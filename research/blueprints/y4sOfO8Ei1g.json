@@ -1,0 +1,30 @@
+{
+ "id": "y4sOfO8Ei1g",
+ "duration_s": 205.0,
+ "words": 340,
+ "wpm": 99.5,
+ "hook_15s_words": 26,
+ "opener_sentence_words": 8,
+ "sentences": 37,
+ "avg_sentence_words": 9.2,
+ "short_sentence_ratio": 0.38,
+ "cue_word_density_per_min": 1.5,
+ "connector_starts": 2,
+ "estimated_cuts_per_min_proxy": 10.8,
+ "open_loop_markers": [],
+ "top_bigrams": [
+  {
+   "pair": "shop back",
+   "n": 9
+  },
+  {
+   "pair": "probably won't",
+   "n": 6
+  },
+  {
+   "pair": "won't hear",
+   "n": 6
+  }
+ ],
+ "language_note": "ci-proxy"
+}
