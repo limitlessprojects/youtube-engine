@@ -142,3 +142,21 @@
   session's job IF the fork says fiction; the script survives either way.
 - L-135/L-136/L-137 appended (ffmpeg teardown-hang recipe; duplicate-cron physical
   guards; delivery-WPM metric).
+
+## day-030 (Nov 25) — 5-day gap closed; fiction fork input COMPLETE; #0013 pivots the look
+
+- **Cron outage**: agent-wake cron dead since Nov 20 20:30 (Actions lane never
+  died). 5-day views rows complete. #0012 shipped day-025 (BuiZ_hg48K0, L-115b
+  path), r2 debt paid day-030 (7.29, hook 9.0, L-144).
+- **Fork input is now complete and it says PIVOT, not quit**: fiction rows are
+  1227 / 369 / 105 (48h flatline each) — BUT the flatline correlates with our
+  DARK look (lum ~0.3) vs the 20-performing-short bible band (lum 0.43-0.54,
+  sat 0.38-0.65) and with zero dialogue friction in all three scripts.
+  #0013 = fiction lane, "in this town" grammar kept, but built on the
+  bright-3D world preset + escalation-dialogue beats per
+  research/friend-skill-cartoon-3d-short.md (world relight is step 1; camera
+  ease-out bursts step 2; word-captions + bed −8 dB step 3). If the relit
+  look's first short also flatlines, the lane dies for real and the science
+  lane (Krakatau-class, blueprint lane live in Actions) takes the slot.
+- **Disclosure policy (day-030)**: uploads default to NO synthetic flag;
+  boss Studio-checks the three live videos manually if a label shows there.
