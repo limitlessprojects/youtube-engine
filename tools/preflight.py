@@ -48,11 +48,11 @@ def check_short(slug: str, root: Path | None = None) -> tuple[list[str], list[st
             fails.append(f"P1 script.json missing top-level '{key}'")
     if fails:
         return fails, warns
-    lines = [(d["hook"].get("narration") or "", "hook")] + [
-        (s.get("narration") or "", f"s{i}") for i, s in enumerate(d["scenes"])
+    lines = [(d["hook"].get("narration") or "", d["hook"], "hook")] + [
+        (s.get("narration") or "", s, f"s{i}") for i, s in enumerate(d["scenes"])
     ]
-    for narr, sid in lines:
-        if not narr.strip():
+    for narr, s, sid in lines:
+        if not narr.strip() and not s.get("visual_only"):
             fails.append(f"P1 scene {sid}: empty narration")
     hook = d["hook"]
     for k in ("narration", "visual"):
@@ -81,9 +81,10 @@ def check_short(slug: str, root: Path | None = None) -> tuple[list[str], list[st
         try:
             v = json.loads(vl.read_text())
             n = len(v.get("lines", []))
-            want = len(d["scenes"]) + 1
+            narrated = sum(1 for s in d["scenes"] if not s.get("visual_only"))
+            want = narrated + 1
             if n != want:
-                fails.append(f"P2 vo_lines.json has {n} lines, script has {want} (hook + scenes)")
+                fails.append(f"P2 vo_lines.json has {n} lines, script has {want} (hook + narrated scenes; visual-only holds exempt)")
             if not all((l.get("narration") or "").strip() for l in v.get("lines", [])):
                 fails.append("P2 a vo_lines entry has empty narration")
             keys = [l.get("key") for l in v.get("lines", [])]
@@ -136,7 +137,7 @@ def check_short(slug: str, root: Path | None = None) -> tuple[list[str], list[st
             fails.append(f"P4 gate/notes.json unreadable: {e}")
 
     # ---- P5 banned vocabulary (S1 — same list as the linter) ----
-    flat = " ".join(n for n, _ in lines).lower()
+    flat = " ".join(n for n, _, _sid in lines).lower()
     for b in BANNED:
         if re.search(rf"\b{re.escape(b)}\b", flat):
             fails.append(f"P5 banned word/phrase in narration: '{b}' (rule S1)")
