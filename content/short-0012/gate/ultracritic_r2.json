@@ -1,0 +1,395 @@
+{
+ "round": 2,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 7.29,
+ "frame_grand_mean": 7.33,
+ "dim_means": {
+  "frame:hook_impact": 9.0,
+  "frame:text_discipline": 8.9,
+  "frame:visual_hierarchy": 6.2,
+  "frame:contrast_legibility": 7.05,
+  "frame:production_polish": 7.1,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 7,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 8.2,
+  "s0_u50": 7.5,
+  "s10_u50": 7.0,
+  "s11_u50": 7.75,
+  "s12_u50": 6.3,
+  "s13_u50": 7.5,
+  "s14_u50": 7.5,
+  "s15_u50": 7.75,
+  "s16_u50": 7.25,
+  "s17_u50": 7.0,
+  "s18_u50": 7.5,
+  "s1_u50": 7.3,
+  "s2_u50": 7.3,
+  "s3_u50": 7.0,
+  "s4_u50": 6.8,
+  "s5_u50": 6.75,
+  "s6_u50": 8.0,
+  "s7_u50": 8.0,
+  "s8_u50": 7.8,
+  "s9_u50": 6.5
+ },
+ "floor_breaches": [
+  "s10_u50",
+  "s12_u50",
+  "s14_u50",
+  "s1_u50",
+  "s9_u50"
+ ],
+ "video_directives": [
+  "Solo hero scenes (0:16-0:21, 0:26-0:30) hold too static \u2014 add micro idle motion (blink, sway, weight shift) so long cards don't freeze",
+  "Tighten the 0:31-0:35 envelope-storm beat: crowd-dissolve holds a touch long for a gag beat; trim ~0.5s for snappier rhythm",
+  "Loop lands well (crowd returns to hook framing) \u2014 push the final dolly-in slightly faster so the closing beat mirrors the opening tempo"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 9,
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.2,
+   "words_visible": 4,
+   "top3_directives": [
+    "Center character's glow reads slightly warm/yellow vs cool scene; tighten rim-light color to a single moonlit tone for cohesion",
+    "Right-side confetti particles crowd the moon disc; thin them near it so the moon stays a clean secondary anchor",
+    "Lower third has a wide empty dead zone between the ground line and frame edge \u2014 either crop tighter or add subtle floor reflection under the center figure"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the empty bottom ~25% dark pavement dead zone \u2014 add subtle reflection of characters/envelope glow or raise the horizon",
+    "Strengthen the envelope as focal point: add a soft light pool or rim glow on the doorway so the eye locks center-frame faster",
+    "Differentiate the two hooded characters slightly (pose, size, lighting) so the symmetric framing reads intentional rather than duplicated"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Top ~45% of frame is a dead zone of flat dark navy \u2014 crop composition down or raise the horizon/set so the character action occupies more of the vertical canvas",
+    "The focal character is half-occluded by the foreground envelope \u2014 offset the envelope left or scale the character up so the subject reads instantly as the focal point",
+    "Two envelope silhouettes sit at low contrast against the mid-ground band (near-invisible dark envelopes center-left) \u2014 either lift their fill to match the lit gold envelopes or remove them for consistent depth cues"
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Compose the character higher or add subtle midground detail \u2014 the top ~50% of frame is a near-empty dead zone on a 9:16 canvas",
+    "Subject sits low-left of center; shift to rule-of-thirds intersection and let the light-beam motif lead the eye down to the figure",
+    "Introduce a restrained title/caption (\u22646 words) in the upper dead zone to give the silent top half purpose without a second text system"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 5
+   },
+   "mean": 6.3,
+   "words_visible": 0,
+   "top3_directives": [
+    "Pull the envelope fully into frame or crop it deliberately with intent \u2014 the right-edge bleed plus the floating black pill bar reads as an unfinished composition, not a design choice",
+    "Fill the top ~35% and bottom ~30% dead zones: add a bold hook title above and a subtle vignette/particle depth below so the vertical canvas isn't 60% empty navy",
+    "Raise background separation \u2014 the envelope blends into the dark bg on its darker gold gradient side; add a soft rim glow or drop shadow under the seal for a crisp focal pop"
+   ],
+   "frame": "s12_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the dead upper 40% of frame \u2014 the empty navy sky above the skyline is a large dead zone; push characters/skyline higher or add subtle atmosphere (fog gradient, falling particles, moonlight) to occupy it",
+    "Strengthen the eye path to the glowing central character by dimming the smiling crowd flanks slightly \u2014 currently the left crowd's bright faces compete with the focal figure",
+    "Ground the composition: the floor plane below the characters is bare; add a soft contact shadow/reflection pool or floor marking to anchor the focal character and add depth layering"
+   ],
+   "frame": "s13_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or compress the upper ~40% dead zone \u2014 it's pure empty sky; raise skyline or crop to tighten composition",
+    "Add a subtle vignette or light pool on the central doorway character to strengthen focal separation from the mirrored sad figure",
+    "Differentiate the two foreground characters' rim-light intensity so the eye path reads doorway character \u2192 sad crowd, not a tie"
+   ],
+   "frame": "s14_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.75,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fill or bridge the dead vertical zone between the 'HUSS!' sign (~y500) and the crowd (~y750) \u2014 even subtle light shafts from the stage doorway or falling confetti would connect the composition",
+    "Give the golden stage doorway more presence \u2014 it's the narrative focal point but sits muted behind the crowd; boost its glow or scale so eye path reads sign \u2192 doorway \u2192 crowd",
+    "Add a subtle warm rim-light or drop glow on the neon sign that echoes the stage's amber palette, unifying the red and gold color systems instead of leaving them as two separate light sources"
+   ],
+   "frame": "s15_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 8
+   },
+   "mean": 7.25,
+   "words_visible": 5,
+   "top3_directives": [
+    "Fill or compress the dead zone between the HUSS! stickers and the skyline \u2014 the top 45% of frame is nearly empty; raise the crowd/door composition or add atmospheric depth (haze, falling elements) to connect the two halves.",
+    "Enlarge the HUSS! sticker trio ~30-40% and cluster them tighter toward the focal doorway so the crowd's jeers read as a directed sound path pointing at the protagonist, not floating confetti.",
+    "Strengthen the protagonist's separation: push the crowd figures' glow down a notch or add a soft rim-light pool under the door character so the eye locks onto him first before scanning the smug bystander."
+   ],
+   "frame": "s16_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or activate the top ~40% of the frame \u2014 it is a near-black dead zone; extend buildings/particles upward or push the scene up so the focal glow sits nearer vertical center",
+    "Add a subtle rim-light gradient or vignette bleed from the doorway upward so the warm/cool split doesn't terminate so abruptly mid-frame",
+    "Differentiate the central character further (slightly larger scale, stronger glow or foreground placement) \u2014 currently the crowd figures on both sides compete nearly equally with the focal subject"
+   ],
+   "frame": "s17_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 8,
+    "contrast_legibility": 6,
+    "production_polish": 8
+   },
+   "mean": 7.5,
+   "words_visible": 3,
+   "top3_directives": [
+    "The three 'HUSS!' badges are dark red on a near-black sky \u2014 brighten the fill or add a stroke/glow so they survive daylight phone viewing",
+    "The upper-middle third is a large dead zone; either enlarge the glowing billboard sign or push the crowd/character cluster higher to tighten composition",
+    "The two central characters (sad figure and dark-hooded companion) blend into each other and the background \u2014 add rim separation or a subtle dark backing shape to make the emotional focal pair read instantly"
+   ],
+   "frame": "s18_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 0,
+   "top3_directives": [
+    "Bottom ~25% of frame is a dead dark zone \u2014 raise characters/composition or add foreground texture to reclaim it",
+    "Two identical characters flank the frame at equal weight with no clear focal subject \u2014 vary size/pose/position or add a single hero element",
+    "Middle band (bunting + buildings) reads mushy at small sizes \u2014 push foreground/background value separation for phone-legibility"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 7.3,
+   "words_visible": 2,
+   "top3_directives": [
+    "Fill or remove the blank golden billboard \u2014 an empty glowing rectangle mid-frame competes with the characters and reads as unfinished",
+    "Kill the dead zone: upper-middle third (between HUSS! boxes and skyline) is empty dark navy \u2014 push characters or framing upward ~15%",
+    "Relocate or enlarge the crescent moon \u2014 it's half-occluded by the first HUSS! box and reads as an accident, not a design choice"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Add a light pool or vignette to guide the eye to one primary focal character \u2014 currently the door and two figures compete equally",
+    "Fill the large dead foreground zone (bottom third) with a subtle street detail, shadow gradient, or lowered framing to avoid the empty band",
+    "Increase background/foreground separation: the dark navy building and dark clothing figures nearly merge \u2014 lift rim light intensity or darken the backdrop 10-15%"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 6.8,
+   "words_visible": 2,
+   "top3_directives": [
+    "The WAVE and BOW pills visibly overlap/misalign at their border \u2014 separate them with a consistent gutter or make them a single segmented pill",
+    "The choice UI floats in the upper-left dead zone with no connection to the character \u2014 anchor the options near the figure or connect with a light beam/vignette cue",
+    "The middle third of the frame is empty floor and wall \u2014 add subtle depth cues (dust particles already exist; add faint furniture/door lines or push a soft spotlight cone linking text to character)"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 6,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 4,
+   "top3_directives": [
+    "Move the '4s / TOO SLOW' badges adjacent to the character (or connect with a clear pointer line) so the label and focal subject read as one unit instead of two disconnected clusters",
+    "Replace the messy hand-drawn red strike line crossing the '4s' text with a clean animated strikethrough that doesn't obscure the numeral",
+    "Lift the badge fills (lighter panel or stronger outline) \u2014 dark chips on dark walls risk mud on a 6-inch daylight screen"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 7
+   },
+   "mean": 8.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Tighten the eye path: the glowing character (right) and the sealed envelope (center) split attention \u2014 add a subtle connecting cue (character gesturing toward the mailbox) so the envelope reads as the destination",
+    "Break up the large dead zone in the lower third: the foreground street is nearly empty flat navy \u2014 add a puddle reflecting the moon or a soft vignette to ground the composition",
+    "Strengthen the envelope's glow halo slightly and dim competing window highlights near the mailbox so the warm focal point separates more cleanly from the building facade"
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 8,
+    "production_polish": 8
+   },
+   "mean": 8.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the empty upper ~35% of sky \u2014 it's a dead zone; push composition up or add subtle atmospheric depth (stars, gradient interest, foreground framing)",
+    "Give the central frowning character stronger focal dominance (slightly larger, tighter rim glow) since the flanking dancers currently compete evenly for attention",
+    "Tame the cut-off dancer at right edge \u2014 its partial body and raised arm read as a framing accident rather than intentional crop"
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.8,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the large dead zone in the upper third \u2014 the empty dark sky occupies ~35% of frame with nothing guiding the eye before the character",
+    "Push stronger rim-light glow separation on the character from the dark doorway, which currently blends into the building mass behind it",
+    "Add subtle atmospheric depth (fog gradient, foreground silhouette) to layer the flat midground buildings"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the top ~40% of frame \u2014 it is a near-black dead zone; either raise the building/door composition or add subtle atmospheric depth (fog gradient, stars, moon) to earn that space",
+    "Enlarge the envelope or add a light-beam / vignette spotlight around the door threshold so the focal subject reads instantly on a 6-inch screen in daylight",
+    "Brighten the foreground door face slightly and add a rim glow on the gold mail slot and envelope edges to improve figure-ground separation against the muddy dark-blue background"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": []
+}

@@ -89,10 +89,16 @@ def upload(file: Path, tok_access: str, meta: dict) -> str:
             timeout=120,
         )
 
-    # Altered/synthetic media disclosure (studio policy: AI voice + AI visuals
-    # => disclose YES, docs/youtube-oauth.md checklist). The API supports
-    # status.containsSyntheticMedia; if a given API version rejects the field
-    # we retry once without it and fall back to the manual Studio step.
+    # Altered/synthetic media disclosure. DEFAULT OFF since day-030 (boss
+    # instruction + YouTube policy: the label is REQUIRED only for REALISTIC
+    # synthetic media — youtube-blog 2024-03-18: "We're not requiring creators
+    # to disclose content that is clearly unrealistic, animated... or has used
+    # generative AI for production assistance"; generic neural narration and
+    # stylized 2D worlds are explicitly exempt). Pass --synthetic ONLY for a
+    # future realistic lane (photoreal scenes, recognizable-voice clones).
+    # The API supports status.containsSyntheticMedia; if a given API version
+    # rejects the field we retry once without it and fall back to the manual
+    # Studio step.
     extra = {"containsSyntheticMedia": True} if meta.get("synthetic") else {}
     init = _init(extra)
     if init.status_code == 400 and extra:
@@ -128,8 +134,9 @@ def main() -> int:
                          "verify BEFORE the publish moment, grants die silently)")
     ap.add_argument("--id-file", default="",
                     help="write the uploaded video id to this file (CI publish path)")
-    ap.add_argument("--no-synthetic", action="store_true",
-                    help="skip the altered/synthetic disclosure (default: disclose YES per studio policy)")
+    ap.add_argument("--synthetic", action="store_true",
+                    help="set the altered/synthetic disclosure (default OFF — animated/"
+                         "stylized lane is policy-exempt; only for realistic synthetic media)")
     a = ap.parse_args()
 
     file = Path(a.file) if a.file else None
@@ -177,15 +184,15 @@ def main() -> int:
         "title": a.title, "description": a.description,
         "tags": [t.strip() for t in a.tags.split(",") if t.strip()],
         "privacy": a.privacy, "categoryId": a.category, "contentType": a.content_type,
-        "synthetic": not a.no_synthetic,
+        "synthetic": a.synthetic,
     })
     if a.id_file:
         Path(a.id_file).write_text(vid + "\n", encoding="utf-8")
     print(f"[yt] UPLOADED: https://youtu.be/{vid}")
-    if not a.no_synthetic:
+    if a.synthetic:
         print("[yt] altered/synthetic disclosure: set via API (containsSyntheticMedia=true)")
     else:
-        print("[yt] NOW IN STUDIO: mark 'Altered or Synthetic Content' = YES")
+        print("[yt] disclosure: not set (stylized-animation lane — policy-exempt, day-030 policy)")
     print("[yt] NEXT: record the video id in content/<slug>/published.json + today's ledger")
     return 0
 

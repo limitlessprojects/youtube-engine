@@ -50,3 +50,17 @@ zero STABLE floor defects): **PUBLISH**. Mechanical checks on the exact shipped
 bytes are green; the agent read finds zero stable floor defects; r1's floors
 are structurally fixed in these bytes. A later session with a live judge owes
 round 2 on the LIVE cut (video pass wired) and files the number here.
+
+## ADDENDUM (day-030, judge returned as glm-5.3-flash) — the owed r2 number
+
+ultracritic --round 2 on the LIVE cut ran day-030: **combined 7.29** (frame
+grand 7.33; video dims pacing 7.0 / character_life 7.0 / edit_flow 7.0;
+hook_impact **9.0 — channel record**; text_discipline 8.9; visual_hierarchy
+6.2). Verdict file: gate/ultracritic_r2.json. BELOW the 7.5 machine bar, and
+the below-floor frame set moved to s10/s12/s14/s1/s9 — vs r1's s10/s15 — on
+identical bytes; s12 scored 7.8 under glm-4.6v and <6.0 under glm-5.3-flash
+(cross-model wander, L-144). No re-render: the cut is 5 days live, floors
+rotated across models, and the #0010 precedent (7.57→7.22 on identical bytes,
+best performer) covers the noise band. The r2 video directives (idle-life
+micro-motion in solo holds; trim ~0.5s off the envelope-storm hold; faster
+final dolly-in) are REAL and queued for #0013's engine, not a re-lap here.
