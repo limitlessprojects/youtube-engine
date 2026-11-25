@@ -12,77 +12,481 @@
   "visual": {
    "v1": "GOLDEN-hour wide: Main Street stage, baker mid-reel on the crate stage, crowd circle with hands in pockets, string lights, hill silhouette beyond rooftops; title card 'NOBODY CLAPS UNTIL MORNING.' over the sky; 4-frame white flash at the hook/s0 boundary"
   },
-  "fact_sources": ["narrative"]
+  "fact_sources": [
+   "narrative"
+  ],
+  "audio_dur_s": 2.376
  },
- "timeline": {"total_s": 61.662, "gap_s": 0.45},
+ "timeline": {
+  "total_s": 62.976,
+  "gap_s": 0.45
+ },
  "scenes": [
-  {"timestamp_start": 2.826, "narration": "One night a year, Main Street becomes a stage.", "rate": "+18%", "audio_dur_s": 2.592,
-   "visual": {"v1": "GOLDEN: camera glides along the street (ease-out 20f entry from the hook wide); the crate stage, bunting; continuous follow move"}, "fact_sources": ["narrative"], "_key": "s0"},
-  {"timestamp_start": 5.868, "narration": "And every window fills with faces.", "rate": "+18%", "audio_dur_s": 2.016,
-   "visual": {"v1": "GOLDEN: tilt up the facade — windows warm one after another with face after face; bunting sways"}, "fact_sources": ["narrative"], "_key": "s0b"},
-  {"timestamp_start": 8.334, "narration": "The baker just played the best reel of her life. Silence. She bowed anyway.", "rate": "+18%", "audio_dur_s": 4.392,
-   "visual": {"v1": "GOLDEN: the baker lowers her fiddle and bows to a silent crowd; every visible hand is pocketed; slow push-in creep on her bow; a single string-light sway"}, "fact_sources": ["narrative"], "_key": "s1"},
-  {"timestamp_start": 13.176, "narration": "'Not yet,' the mayor said, like I was the strange one.", "rate": "+20%", "audio_dur_s": 2.856,
-   "visual": {"v1": "GOLDEN: mayor close-up, one finger raised; villagers between him and the lens; slight dutch tilt; quoted-line plate 'NOT YET.'"}, "fact_sources": ["narrative"], "_key": "s2"},
-  {"timestamp_start": 16.482, "narration": "A kid clapped once, and half the street grabbed his wrists.", "rate": "+18%", "audio_dur_s": 2.976,
-   "visual": {"v1": "GOLDEN: the kid's hands mid-clap, two adults' hands clamp his wrists from both sides; freeze-tension; whip-ease into the tight framing"}, "fact_sources": ["narrative"], "_key": "s3"},
-  {"timestamp_start": 19.908, "narration": "They aren't cold people. They cheer. They whistle. They just never clap.", "rate": "+18%", "audio_dur_s": 4.104,
-   "visual": {"v1": "GOLDEN: crowd montage — open-mouth cheers, two-finger whistles, then hands clamped flat against coats; lateral camera follow; faces bright, warm-lit"}, "fact_sources": ["narrative"], "_key": "s4"},
-  {"timestamp_start": 24.462, "narration": "This year, the fiddler's last note hung in the air like it was waiting.", "rate": "+15%", "audio_dur_s": 3.264,
-   "visual": {"v1": "NIGHT falling: sky deepens behind the rooftops mid-shot (golden->night crossfade); the fiddler's last note hangs as a glowing quaver above the fiddle; streetlights blink on amber"}, "fact_sources": ["narrative"], "_key": "s5"},
-  {"timestamp_start": 28.176, "narration": "So I clapped.", "rate": "+0%", "audio_dur_s": 1.872,
-   "visual": {"v1": "NIGHT: my hands enter frame bottom and CLAP once — 4-frame white flash at contact + flip-shake kick decaying 7f; the note-shape scatters into sparks"}, "fact_sources": ["narrative"], "_key": "s5b"},
-  {"timestamp_start": 30.498, "narration": "Once. The sound came back wrong. Too loud.", "rate": "+12%", "audio_dur_s": 3.312,
-   "visual": {"v1": "NIGHT: the clap echoes — the street's windows pulse once, too bright; camera micro-shake; keyframes at u .25/.6/.9"}, "fact_sources": ["narrative"], "_key": "s6"},
-  {"timestamp_start": 34.260, "narration": "Like the street itself clapped with me.", "rate": "+8%", "audio_dur_s": 1.944,
-   "visual": {"v1": "NIGHT: the pulse travels down the whole row — every window flashes in sequence as if the street has palms"}, "fact_sources": ["narrative"], "_key": "s6b"},
-  {"timestamp_start": 36.654, "narration": "Wait. Every window on the street went dark at the same time.", "rate": "+10%", "audio_dur_s": 3.384,
-   "visual": {"v1": "NIGHT-DEEP: the wave reverses — windows snuff out front-to-back in one breath; streetlights dim to embers; the street goes flat dark"}, "fact_sources": ["narrative"], "_key": "s7"},
-  {"timestamp_start": 40.938, "narration": "", "audio_dur_s": 1.2, "visual_only": true,
-   "visual": {"v1": "VISUAL-ONLY DREAD HOLD (~1.2s): the dead dark street holds; at the hold's end, between the roof gaps, the HILL'S silhouette resolves a head-and-shoulders profile facing the town — subtle, one shape, no glow"},
-   "fact_sources": ["narrative"], "_key": "s7b", "note": "L-097 legal pacing cut: held beat, narration empty on purpose"},
-  {"timestamp_start": 42.588, "narration": "You see, the hill behind the town listens all year.", "rate": "+12%", "audio_dur_s": 2.808,
-   "visual": {"v1": "NIGHT: tilt-up ease from the street to the HILL wide — the head-and-shoulders silhouette framed clean between two roof gaps; one star directly above it"}, "fact_sources": ["narrative"], "_key": "s8"},
-  {"timestamp_start": 45.846, "narration": "Applause isn't praise here. It's payment.", "rate": "+8%", "audio_dur_s": 2.64,
-   "visual": {"v1": "NIGHT: windows relight one by one like coins dropped into a slot — a slow sequence paying up the hill's dark face; each relight ticks a coin of light onto the silhouette's shoulders"}, "fact_sources": ["narrative"], "_key": "s9"},
-  {"timestamp_start": 48.936, "narration": "They were never saving their applause for the dancers.", "rate": "+14%", "audio_dur_s": 2.424,
-   "visual": {"v1": "NIGHT: the crowd stands loaded — hands cupped, elbows cocked, the held-applause posture, all facing the hill, not the stage; push-in among their shoulders"}, "fact_sources": ["narrative"], "_key": "s10"},
-  {"timestamp_start": 51.810, "narration": "They were saving it for the hill. And now it knows my hands.", "rate": "+8%", "audio_dur_s": 3.312,
-   "visual": {"v1": "NIGHT: my hands in frame bottom — a thin gold seam glows across both palms, pulse-synced; the hill's silhouette leans one degree closer"}, "fact_sources": ["narrative"], "_key": "s10b"},
-  {"timestamp_start": 55.572, "narration": "This morning, I heard the whole town applaud the sunrise.", "rate": "+14%", "audio_dur_s": 3.12,
-   "visual": {"v1": "DAWN->DAY: the relit payoff — silhouette rows of clapping hands against a brightening sky, night-blue->peach->day-blue crossfade; the sun crests THE HILL; brightest frame of the short (lum target ~0.55)"}, "fact_sources": ["narrative"], "_key": "s11"},
-  {"timestamp_start": 59.142, "narration": "It sounded less like joy, and more like rent.", "rate": "+8%", "audio_dur_s": 2.52,
-   "visual": {"v1": "DAY: full day preset — the sun sits above the hill's shoulders, shoulders visibly RELAXED; the town applauds; a banner reads 'FIDDLE NIGHT AGAIN TONIGHT'; deadpan hold on the last word; end"}, "fact_sources": ["narrative"], "_key": "s12"}
+  {
+   "timestamp_start": 2.826,
+   "narration": "One night a year, Main Street becomes a stage.",
+   "rate": "+18%",
+   "audio_dur_s": 2.592,
+   "visual": {
+    "v1": "GOLDEN: camera glides along the street (ease-out 20f entry from the hook wide); the crate stage, bunting; continuous follow move"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s0"
+  },
+  {
+   "timestamp_start": 5.868,
+   "narration": "And every window fills with faces.",
+   "rate": "+18%",
+   "audio_dur_s": 2.016,
+   "visual": {
+    "v1": "GOLDEN: tilt up the facade — windows warm one after another with face after face; bunting sways"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s0b"
+  },
+  {
+   "timestamp_start": 8.334,
+   "narration": "The baker just played the best reel of her life. Silence. She bowed anyway.",
+   "rate": "+18%",
+   "audio_dur_s": 2.328,
+   "visual": {
+    "v1": "GOLDEN: the baker lowers her fiddle and bows to a silent crowd; every visible hand is pocketed; slow push-in creep on her bow; a single string-light sway"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s1"
+  },
+  {
+   "timestamp_start": 11.112,
+   "narration": "Silence. She bowed anyway.",
+   "rate": "+14%",
+   "audio_dur_s": 2.232,
+   "visual": {
+    "v1": "GOLDEN: the bow itself — she lowers the fiddle, bends to a silent crowd, hands stay pocketed; slow push-in creep"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s1b"
+  },
+  {
+   "timestamp_start": 13.794,
+   "narration": "'Not yet,' the mayor said, like I was the strange one.",
+   "rate": "+20%",
+   "audio_dur_s": 2.856,
+   "visual": {
+    "v1": "GOLDEN: mayor close-up, one finger raised; villagers between him and the lens; slight dutch tilt; quoted-line plate 'NOT YET.'"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s2"
+  },
+  {
+   "timestamp_start": 17.1,
+   "narration": "A kid clapped once, and half the street grabbed his wrists.",
+   "rate": "+18%",
+   "audio_dur_s": 2.976,
+   "visual": {
+    "v1": "GOLDEN: the kid's hands mid-clap, two adults' hands clamp his wrists from both sides; freeze-tension; whip-ease into the tight framing"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s3"
+  },
+  {
+   "timestamp_start": 20.526,
+   "narration": "They aren't cold people.",
+   "rate": "+14%",
+   "audio_dur_s": 1.872,
+   "visual": {
+    "v1": "GOLDEN: the crowd, warm-lit, mid-gesture — but every hand stays flat against a coat; lateral follow"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s4"
+  },
+  {
+   "timestamp_start": 22.848,
+   "narration": "They cheer. They whistle. They just never clap.",
+   "rate": "+18%",
+   "audio_dur_s": 2.928,
+   "visual": {
+    "v1": "GOLDEN: triptych — open-mouth cheers, two-finger whistles, hands clamped flat; lateral camera follow; faces bright"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s4b"
+  },
+  {
+   "timestamp_start": 26.226,
+   "narration": "This year, the fiddler's last note hung in the air like it was waiting.",
+   "rate": "+15%",
+   "audio_dur_s": 3.264,
+   "visual": {
+    "v1": "NIGHT falling: sky deepens behind the rooftops mid-shot (golden->night crossfade); the fiddler's last note hangs as a glowing quaver above the fiddle; streetlights blink on amber"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s5"
+  },
+  {
+   "timestamp_start": 29.94,
+   "narration": "So I clapped.",
+   "rate": "+0%",
+   "audio_dur_s": 1.872,
+   "visual": {
+    "v1": "NIGHT: my hands enter frame bottom and CLAP once — 4-frame white flash at contact + flip-shake kick decaying 7f; the note-shape scatters into sparks"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s5b"
+  },
+  {
+   "timestamp_start": 32.262,
+   "narration": "Once. The sound came back wrong. Too loud.",
+   "rate": "+12%",
+   "audio_dur_s": 3.312,
+   "visual": {
+    "v1": "NIGHT: the clap echoes — the street's windows pulse once, too bright; camera micro-shake; keyframes at u .25/.6/.9"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s6"
+  },
+  {
+   "timestamp_start": 36.024,
+   "narration": "Like the street itself clapped with me.",
+   "rate": "+8%",
+   "audio_dur_s": 1.944,
+   "visual": {
+    "v1": "NIGHT: the pulse travels down the whole row — every window flashes in sequence as if the street has palms"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s6b"
+  },
+  {
+   "timestamp_start": 38.418,
+   "narration": "Wait. Every window on the street went dark at the same time.",
+   "rate": "+10%",
+   "audio_dur_s": 3.384,
+   "visual": {
+    "v1": "NIGHT-DEEP: the wave reverses — windows snuff out front-to-back in one breath; streetlights dim to embers; the street goes flat dark"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s7"
+  },
+  {
+   "timestamp_start": 42.252,
+   "narration": "",
+   "audio_dur_s": 1.2,
+   "visual_only": true,
+   "visual": {
+    "v1": "VISUAL-ONLY DREAD HOLD (~1.2s): the dead dark street holds; at the hold's end, between the roof gaps, the HILL'S silhouette resolves a head-and-shoulders profile facing the town — subtle, one shape, no glow"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s7b",
+   "note": "L-097 legal pacing cut: held beat, narration empty on purpose"
+  },
+  {
+   "timestamp_start": 43.902,
+   "narration": "You see, the hill behind the town listens all year.",
+   "rate": "+12%",
+   "audio_dur_s": 2.808,
+   "visual": {
+    "v1": "NIGHT: tilt-up ease from the street to the HILL wide — the head-and-shoulders silhouette framed clean between two roof gaps; one star directly above it"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s8"
+  },
+  {
+   "timestamp_start": 47.16,
+   "narration": "Applause isn't praise here. It's payment.",
+   "rate": "+8%",
+   "audio_dur_s": 2.64,
+   "visual": {
+    "v1": "NIGHT: windows relight one by one like coins dropped into a slot — a slow sequence paying up the hill's dark face; each relight ticks a coin of light onto the silhouette's shoulders"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s9"
+  },
+  {
+   "timestamp_start": 50.25,
+   "narration": "They were never saving their applause for the dancers.",
+   "rate": "+14%",
+   "audio_dur_s": 2.424,
+   "visual": {
+    "v1": "NIGHT: the crowd stands loaded — hands cupped, elbows cocked, the held-applause posture, all facing the hill, not the stage; push-in among their shoulders"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s10"
+  },
+  {
+   "timestamp_start": 53.124,
+   "narration": "They were saving it for the hill. And now it knows my hands.",
+   "rate": "+8%",
+   "audio_dur_s": 3.312,
+   "visual": {
+    "v1": "NIGHT: my hands in frame bottom — a thin gold seam glows across both palms, pulse-synced; the hill's silhouette leans one degree closer"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s10b"
+  },
+  {
+   "timestamp_start": 56.886,
+   "narration": "This morning, I heard the whole town applaud the sunrise.",
+   "rate": "+14%",
+   "audio_dur_s": 3.12,
+   "visual": {
+    "v1": "DAWN->DAY: the relit payoff — silhouette rows of clapping hands against a brightening sky, night-blue->peach->day-blue crossfade; the sun crests THE HILL; brightest frame of the short (lum target ~0.55)"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s11"
+  },
+  {
+   "timestamp_start": 60.456,
+   "narration": "It sounded less like joy, and more like rent.",
+   "rate": "+8%",
+   "audio_dur_s": 2.52,
+   "visual": {
+    "v1": "DAY: full day preset — the sun sits above the hill's shoulders, shoulders visibly RELAXED; the town applauds; a banner reads 'FIDDLE NIGHT AGAIN TONIGHT'; deadpan hold on the last word; end"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s12"
+  }
  ],
  "sfx": [
-  {"kind":"whoosh","at":2.9,"gain":0.14,"seed":71,"note":"s0: street glide entry"},
-  {"kind":"blip","at":6.1,"gain":0.1,"seed":72,"note":"s0b: first window lights (face 1)"},
-  {"kind":"blip","at":6.9,"gain":0.1,"seed":73,"note":"s0b: second window face"},
-  {"kind":"riser","at":8.5,"gain":0.12,"seed":74,"note":"s1: the best reel ends"},
-  {"kind":"thump","at":9.3,"gain":0.18,"seed":75,"note":"s1: silence lands on the bow"},
-  {"kind":"blip","at":13.4,"gain":0.1,"seed":76,"note":"s2: NOT YET plate"},
-  {"kind":"thump","at":16.7,"gain":0.16,"seed":77,"note":"s3: wrists grabbed"},
-  {"kind":"blip","at":20.1,"gain":0.09,"seed":78,"note":"s4: cheer"},
-  {"kind":"blip","at":21.0,"gain":0.09,"seed":79,"note":"s4: whistle"},
-  {"kind":"blip","at":21.9,"gain":0.09,"seed":80,"note":"s4: hands clamp"},
-  {"kind":"whoosh","at":24.7,"gain":0.14,"seed":81,"note":"s5: dusk falls"},
-  {"kind":"riser","at":26.5,"gain":0.12,"seed":82,"note":"s5: the note hangs waiting"},
-  {"kind":"thump","at":28.9,"gain":0.22,"seed":83,"note":"s5b: THE CLAP (loudest event)"},
-  {"kind":"blip","at":28.95,"gain":0.12,"seed":84,"note":"s5b: white flash sync"},
-  {"kind":"thump","at":30.8,"gain":0.15,"seed":85,"note":"s6: echo pulse 1"},
-  {"kind":"thump","at":32.2,"gain":0.13,"seed":86,"note":"s6: echo pulse 2"},
-  {"kind":"thump","at":34.5,"gain":0.12,"seed":87,"note":"s6b: wave traveling"},
-  {"kind":"whoosh","at":37.0,"gain":0.16,"seed":88,"note":"s7: windows snuff out"},
-  {"kind":"riser","at":42.9,"gain":0.12,"seed":89,"note":"s8: hill tilt-up"},
-  {"kind":"blip","at":46.1,"gain":0.1,"seed":90,"note":"s9: coin relight 1"},
-  {"kind":"blip","at":46.8,"gain":0.1,"seed":91,"note":"s9: coin relight 2"},
-  {"kind":"blip","at":47.5,"gain":0.1,"seed":92,"note":"s9: coin relight 3"},
-  {"kind":"thump","at":49.3,"gain":0.14,"seed":93,"note":"s10: crowd loads"},
-  {"kind":"blip","at":52.1,"gain":0.1,"seed":94,"note":"s10b: seam glow"},
-  {"kind":"riser","at":55.8,"gain":0.14,"seed":95,"note":"s11: sunrise"},
-  {"kind":"blip","at":56.5,"gain":0.1,"seed":96,"note":"s11: applause swell 1"},
-  {"kind":"blip","at":57.3,"gain":0.1,"seed":97,"note":"s11: applause swell 2"},
-  {"kind":"blip","at":58.1,"gain":0.1,"seed":98,"note":"s11: applause swell 3"},
-  {"kind":"thump","at":59.5,"gain":0.18,"seed":99,"note":"s12: rent lands (deadpan)"}
+  {
+   "kind": "whoosh",
+   "at": 2.896,
+   "gain": 0.14,
+   "seed": 71,
+   "note": "street glide entry"
+  },
+  {
+   "kind": "blip",
+   "at": 6.098,
+   "gain": 0.1,
+   "seed": 72,
+   "note": "first window face"
+  },
+  {
+   "kind": "blip",
+   "at": 6.898,
+   "gain": 0.1,
+   "seed": 73,
+   "note": "second window face"
+  },
+  {
+   "kind": "riser",
+   "at": 8.504,
+   "gain": 0.12,
+   "seed": 74,
+   "note": "reel ends"
+  },
+  {
+   "kind": "thump",
+   "at": 11.662,
+   "gain": 0.18,
+   "seed": 75,
+   "note": "silence lands on the bow"
+  },
+  {
+   "kind": "blip",
+   "at": 14.014,
+   "gain": 0.1,
+   "seed": 76,
+   "note": "NOT YET plate"
+  },
+  {
+   "kind": "thump",
+   "at": 17.32,
+   "gain": 0.16,
+   "seed": 77,
+   "note": "wrists grabbed"
+  },
+  {
+   "kind": "blip",
+   "at": 23.038,
+   "gain": 0.09,
+   "seed": 78,
+   "note": "cheer"
+  },
+  {
+   "kind": "blip",
+   "at": 23.938,
+   "gain": 0.09,
+   "seed": 79,
+   "note": "whistle"
+  },
+  {
+   "kind": "blip",
+   "at": 24.838,
+   "gain": 0.09,
+   "seed": 80,
+   "note": "hands clamp"
+  },
+  {
+   "kind": "whoosh",
+   "at": 26.466,
+   "gain": 0.14,
+   "seed": 81,
+   "note": "dusk falls"
+  },
+  {
+   "kind": "riser",
+   "at": 28.266,
+   "gain": 0.12,
+   "seed": 82,
+   "note": "note hangs"
+  },
+  {
+   "kind": "thump",
+   "at": 30.65,
+   "gain": 0.22,
+   "seed": 83,
+   "note": "THE CLAP"
+  },
+  {
+   "kind": "blip",
+   "at": 30.7,
+   "gain": 0.12,
+   "seed": 84,
+   "note": "flash sync"
+  },
+  {
+   "kind": "thump",
+   "at": 32.562,
+   "gain": 0.15,
+   "seed": 85,
+   "note": "echo pulse 1"
+  },
+  {
+   "kind": "thump",
+   "at": 33.962,
+   "gain": 0.13,
+   "seed": 86,
+   "note": "echo pulse 2"
+  },
+  {
+   "kind": "thump",
+   "at": 36.264,
+   "gain": 0.12,
+   "seed": 87,
+   "note": "wave traveling"
+  },
+  {
+   "kind": "whoosh",
+   "at": 38.768,
+   "gain": 0.16,
+   "seed": 88,
+   "note": "windows snuff"
+  },
+  {
+   "kind": "riser",
+   "at": 44.212,
+   "gain": 0.12,
+   "seed": 89,
+   "note": "hill tilt-up"
+  },
+  {
+   "kind": "blip",
+   "at": 47.41,
+   "gain": 0.1,
+   "seed": 90,
+   "note": "coin relight 1"
+  },
+  {
+   "kind": "blip",
+   "at": 48.11,
+   "gain": 0.1,
+   "seed": 91,
+   "note": "coin relight 2"
+  },
+  {
+   "kind": "blip",
+   "at": 48.81,
+   "gain": 0.1,
+   "seed": 92,
+   "note": "coin relight 3"
+  },
+  {
+   "kind": "thump",
+   "at": 50.61,
+   "gain": 0.14,
+   "seed": 93,
+   "note": "crowd loads"
+  },
+  {
+   "kind": "blip",
+   "at": 53.414,
+   "gain": 0.1,
+   "seed": 94,
+   "note": "seam glow"
+  },
+  {
+   "kind": "riser",
+   "at": 57.116,
+   "gain": 0.14,
+   "seed": 95,
+   "note": "sunrise"
+  },
+  {
+   "kind": "blip",
+   "at": 57.816,
+   "gain": 0.1,
+   "seed": 96,
+   "note": "applause 1"
+  },
+  {
+   "kind": "blip",
+   "at": 58.616,
+   "gain": 0.1,
+   "seed": 97,
+   "note": "applause 2"
+  },
+  {
+   "kind": "blip",
+   "at": 59.416,
+   "gain": 0.1,
+   "seed": 98,
+   "note": "applause 3"
+  },
+  {
+   "kind": "thump",
+   "at": 60.816,
+   "gain": 0.18,
+   "seed": 99,
+   "note": "rent lands"
+  }
  ]
 }

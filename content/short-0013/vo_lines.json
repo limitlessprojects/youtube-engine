@@ -1,25 +1,127 @@
 {
  "short": "short-0013",
  "voice": "en-US-AndrewNeural",
- "note": "day-030 — 'nobody claps until morning' (the applause-rent test). Bible formula baked: hook paradox-as-fact (8w), setting, escalation with QUOTED dialogue friction (s2/s3 = the bible's mock beats), snap on its own beat (s5b), Wait-mystery (s7), 'You see,' pivot (s8), deadpan double-line (s10/s10b), ironic payoff lands on last word (s12 'rent'). Light arc golden->night-blue->dawn = the relit world showcase (research/friend-skill-cartoon-3d-short.md). Rates in the #0012 lane family; twist tail slowed. L-145: sources committed at preflight-clear after the recycle wipe.",
+ "note": "day-030 — 'nobody claps until morning' (the applause-rent test). Bible formula baked: hook paradox-as-fact (8w), setting, escalation with QUOTED dialogue friction (s2/s3 = the bible's mock beats), snap on its own beat (s5b), Wait-mystery (s7), 'You see,' pivot (s8), deadpan double-line (s10/s10b), ironic payoff lands on last word (s12 'rent'). Light arc golden->night-blue->dawn = the relit world showcase (research/friend-skill-cartoon-3d-short.md). Rates in the #0012 lane family; twist tail slowed. L-145: sources committed at preflight-clear after the recycle wipe.+ s1 split for A2 max-scene (day-030 gate r1 mechanical fail: 4.84s bow beat)",
  "lines": [
-  {"key": "hook", "role": "narration", "narration": "In this town, nobody claps until morning.", "rate": "+12%"},
-  {"key": "s0", "role": "narration", "narration": "One night a year, Main Street becomes a stage.", "rate": "+18%"},
-  {"key": "s0b", "role": "narration", "narration": "And every window fills with faces.", "rate": "+18%"},
-  {"key": "s1", "role": "narration", "narration": "The baker just played the best reel of her life. Silence. She bowed anyway.", "rate": "+18%"},
-  {"key": "s2", "role": "narration", "narration": "'Not yet,' the mayor said, like I was the strange one.", "rate": "+20%"},
-  {"key": "s3", "role": "narration", "narration": "A kid clapped once, and half the street grabbed his wrists.", "rate": "+18%"},
-  {"key": "s4", "role": "narration", "narration": "They aren't cold people. They cheer. They whistle. They just never clap.", "rate": "+18%"},
-  {"key": "s5", "role": "narration", "narration": "This year, the fiddler's last note hung in the air like it was waiting.", "rate": "+15%"},
-  {"key": "s5b", "role": "narration", "narration": "So I clapped.", "rate": "+0%"},
-  {"key": "s6", "role": "narration", "narration": "Once. The sound came back wrong. Too loud.", "rate": "+12%"},
-  {"key": "s6b", "role": "narration", "narration": "Like the street itself clapped with me.", "rate": "+8%"},
-  {"key": "s7", "role": "narration", "narration": "Wait. Every window on the street went dark at the same time.", "rate": "+10%"},
-  {"key": "s8", "role": "narration", "narration": "You see, the hill behind the town listens all year.", "rate": "+12%"},
-  {"key": "s9", "role": "narration", "narration": "Applause isn't praise here. It's payment.", "rate": "+8%"},
-  {"key": "s10", "role": "narration", "narration": "They were never saving their applause for the dancers.", "rate": "+14%"},
-  {"key": "s10b", "role": "narration", "narration": "They were saving it for the hill. And now it knows my hands.", "rate": "+8%"},
-  {"key": "s11", "role": "narration", "narration": "This morning, I heard the whole town applaud the sunrise.", "rate": "+14%"},
-  {"key": "s12", "role": "narration", "narration": "It sounded less like joy, and more like rent.", "rate": "+8%"}
+  {
+   "key": "hook",
+   "role": "narration",
+   "narration": "In this town, nobody claps until morning.",
+   "rate": "+12%"
+  },
+  {
+   "key": "s0",
+   "role": "narration",
+   "narration": "One night a year, Main Street becomes a stage.",
+   "rate": "+18%"
+  },
+  {
+   "key": "s0b",
+   "role": "narration",
+   "narration": "And every window fills with faces.",
+   "rate": "+18%"
+  },
+  {
+   "key": "s1",
+   "role": "narration",
+   "narration": "The baker just played the best reel of her life.",
+   "rate": "+18%"
+  },
+  {
+   "key": "s1b",
+   "role": "narration",
+   "narration": "Silence. She bowed anyway.",
+   "rate": "+14%"
+  },
+  {
+   "key": "s2",
+   "role": "narration",
+   "narration": "'Not yet,' the mayor said, like I was the strange one.",
+   "rate": "+20%"
+  },
+  {
+   "key": "s3",
+   "role": "narration",
+   "narration": "A kid clapped once, and half the street grabbed his wrists.",
+   "rate": "+18%"
+  },
+  {
+   "key": "s4",
+   "role": "narration",
+   "narration": "They aren't cold people.",
+   "rate": "+14%"
+  },
+  {
+   "key": "s4b",
+   "role": "narration",
+   "narration": "They cheer. They whistle. They just never clap.",
+   "rate": "+18%"
+  },
+  {
+   "key": "s5",
+   "role": "narration",
+   "narration": "This year, the fiddler's last note hung in the air like it was waiting.",
+   "rate": "+15%"
+  },
+  {
+   "key": "s5b",
+   "role": "narration",
+   "narration": "So I clapped.",
+   "rate": "+0%"
+  },
+  {
+   "key": "s6",
+   "role": "narration",
+   "narration": "Once. The sound came back wrong. Too loud.",
+   "rate": "+12%"
+  },
+  {
+   "key": "s6b",
+   "role": "narration",
+   "narration": "Like the street itself clapped with me.",
+   "rate": "+8%"
+  },
+  {
+   "key": "s7",
+   "role": "narration",
+   "narration": "Wait. Every window on the street went dark at the same time.",
+   "rate": "+10%"
+  },
+  {
+   "key": "s8",
+   "role": "narration",
+   "narration": "You see, the hill behind the town listens all year.",
+   "rate": "+12%"
+  },
+  {
+   "key": "s9",
+   "role": "narration",
+   "narration": "Applause isn't praise here. It's payment.",
+   "rate": "+8%"
+  },
+  {
+   "key": "s10",
+   "role": "narration",
+   "narration": "They were never saving their applause for the dancers.",
+   "rate": "+14%"
+  },
+  {
+   "key": "s10b",
+   "role": "narration",
+   "narration": "They were saving it for the hill. And now it knows my hands.",
+   "rate": "+8%"
+  },
+  {
+   "key": "s11",
+   "role": "narration",
+   "narration": "This morning, I heard the whole town applaud the sunrise.",
+   "rate": "+14%"
+  },
+  {
+   "key": "s12",
+   "role": "narration",
+   "narration": "It sounded less like joy, and more like rent.",
+   "rate": "+8%"
+  }
  ]
 }

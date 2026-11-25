@@ -1,33 +1,35 @@
 {
-  "short": "short-0013",
-  "gate_plan": "r1 ultracritic on keyframes (judge glm-5.3-flash if awake; else L-115b D8 agent review per twice-precedented path) + PNG motion probe (L-139: no full decode) + lum/sat vs bible bands (lum 0.43-0.54, sat 0.38-0.65 day frames) + L-135 verify recipe",
-  "look": "bright-3d v1: golden->night->nightdeep->night->dawn->day arc IS the story; camera creep every hold; 4f flash + 7f kick at the clap; blinks 4f; painted depth 3 layers + DOF blur",
-  "risks": [
-    "hill face pareidolia (sun on head bump) — sun shifted off-center 640",
-    "pay-beat window relights subtle at tile scale — verify at u50",
-    "mayor plate crop — fixed (plate x 560 center 740, zoom 1.45)",
-    "ASR tail throttled live — union verify owed before publish (L-091)",
-    "L-145: a recycle wiped the whole uncommitted build once — sources now committed at preflight-clear"
-  ],
-  "notes": {
-    "hook": "golden wide: stage+crowd+title card; flash at boundary",
-    "s0": "street glide entry, whoosh",
-    "s1": "facade tilt: windows+faces appear in sequence",
-    "s2": "baker bows, crowd pockets, thump on silence",
-    "s3": "mayor close, NOT YET. plate, dutch tilt",
-    "s4": "kid grab: wrists clamped, whip-ease in",
-    "s5": "crowd montage cheer/whistle/clamped, lateral follow",
-    "s6": "dusk falls golden->night; note quaver hangs, riser",
-    "s7": "FIRST-PERSON clap: 4f white flash + 7f kick, loudest thump",
-    "s8": "windows pulse unison (wrong echo), micro-shake",
-    "s9": "wave travels down the row",
-    "s10": "snuff: reverse wave to ember dark",
-    "s11": "dread hold: hill head-shoulders resolves between roofs",
-    "s12": "hill wide tilt-up: profile + one star, empty street",
-    "s13": "payment: windows relight as coins up the hill",
-    "s14": "crowd cupped facing hill, push-in among shoulders",
-    "s15": "my hands + gold seam pulse; hill leans 1.4deg",
-    "s16": "dawn: sun crests hill (off-center 640), sky peach->day, crowd claps rows",
-    "s17": "day payoff: banner FIDDLE NIGHT AGAIN TONIGHT, shoulders relax, rent lands"
-  }
+ "short": "short-0013",
+ "gate_plan": "r1 ultracritic on keyframes (judge glm-5.3-flash if awake; else L-115b D8 agent review per twice-precedented path) + PNG motion probe (L-139: no full decode) + lum/sat vs bible bands (lum 0.43-0.54, sat 0.38-0.65 day frames) + L-135 verify recipe",
+ "look": "bright-3d v1: golden->night->nightdeep->night->dawn->day arc IS the story; camera creep every hold; 4f flash + 7f kick at the clap; blinks 4f; painted depth 3 layers + DOF blur",
+ "risks": [
+  "hill face pareidolia (sun on head bump) \u2014 sun shifted off-center 640",
+  "pay-beat window relights subtle at tile scale \u2014 verify at u50",
+  "mayor plate crop \u2014 fixed (plate x 560 center 740, zoom 1.45)",
+  "ASR tail throttled live \u2014 union verify owed before publish (L-091)",
+  "L-145: a recycle wiped the whole uncommitted build once \u2014 sources now committed at preflight-clear"
+ ],
+ "notes": {
+  "hook": "golden wide: stage+crowd+title card; flash at boundary",
+  "s0": "street glide entry, whoosh",
+  "s1": "facade tilt: windows+faces in sequence",
+  "s2": "baker plays the reel (bow part 1)",
+  "s3": "the bow itself: silence lands, thump",
+  "s4": "mayor close, NOT YET. plate, dutch tilt",
+  "s5": "kid grab: wrists clamped",
+  "s6": "montage A: hands flat against coats (aren't cold, just silent)",
+  "s7": "montage B triptych: cheer / whistle / clamped",
+  "s8": "dusk falls; note quaver hangs, riser",
+  "s9": "FIRST-PERSON clap: 4f flash + 7f kick, loudest thump",
+  "s10": "windows pulse unison (wrong echo)",
+  "s11": "wave travels down the row",
+  "s12": "snuff: reverse wave to ember dark",
+  "s13": "dread hold: hill head-shoulders resolves",
+  "s14": "hill wide tilt-up + one star",
+  "s15": "payment: windows relight as coins up the hill",
+  "s16": "crowd cupped facing hill",
+  "s17": "my hands + gold seam pulse; hill leans",
+  "s18": "dawn: sun crests hill, sky peach->day, clap rows",
+  "s19": "day payoff: banner FIDDLE NIGHT AGAIN TONIGHT, rent lands"
+ }
 }

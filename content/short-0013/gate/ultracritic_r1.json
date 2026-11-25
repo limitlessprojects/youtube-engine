@@ -1,0 +1,11 @@
+{
+ "round": 1,
+ "mechanical_fails": [
+  "A2 max scene 4.55s > 4.2s (pacing)",
+  "A5 bed too loud: -1.0 dB under VO (mud)"
+ ],
+ "warns": [
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ],
+ "verdict": "MECHANICAL_FAIL"
+}
