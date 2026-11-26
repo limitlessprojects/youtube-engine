@@ -1,0 +1,17 @@
+{
+ "id": "3Q3eITC01Fg",
+ "duration_s": 565.0,
+ "words": 1202,
+ "wpm": 127.6,
+ "hook_15s_words": 33,
+ "opener_sentence_words": 55,
+ "sentences": 37,
+ "avg_sentence_words": 32.5,
+ "short_sentence_ratio": 0.24,
+ "cue_word_density_per_min": 4.9,
+ "connector_starts": 4,
+ "estimated_cuts_per_min_proxy": 3.9,
+ "open_loop_markers": [],
+ "top_bigrams": [],
+ "language_note": "ci-proxy"
+}

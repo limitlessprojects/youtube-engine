@@ -1,0 +1,761 @@
+{
+ "id": "3Q3eITC01Fg",
+ "path": "proxy-pool",
+ "segments": [
+  {
+   "start": 1.213,
+   "duration": 2.963,
+   "text": "Hi, my name is Tony, and this is Every Frame A Painting"
+  },
+  {
+   "start": 8.828,
+   "duration": 2.979,
+   "text": "The other day, someone asked me to describe my editing process"
+  },
+  {
+   "start": 12.248,
+   "duration": 3.034,
+   "text": "So I started talking about organizing footage and doing selects"
+  },
+  {
+   "start": 15.804,
+   "duration": 4.814,
+   "text": "And she said, \"No, your actual process; like, how do you know when to cut?\""
+  },
+  {
+   "start": 23.728,
+   "duration": 1.619,
+   "text": "And I couldn't describe it at all!"
+  },
+  {
+   "start": 26.025,
+   "duration": 2.435,
+   "text": "Like a lot of editors, I cut based on instinct"
+  },
+  {
+   "start": 28.897,
+   "duration": 2.67,
+   "text": "(Kahn) \"Nothing gets in the way of the editing process..."
+  },
+  {
+   "start": 31.567,
+   "duration": 3.0,
+   "text": "It's the process of your thinking."
+  },
+  {
+   "start": 34.567,
+   "duration": 2.883,
+   "text": "I don't cut from what I call 'knowledge'."
+  },
+  {
+   "start": 37.45,
+   "duration": 3.0,
+   "text": "I have to come into it and I have to feel it.\""
+  },
+  {
+   "start": 40.45,
+   "duration": 3.567,
+   "text": "It's the same way for me. I have to think and feel my way through the edit"
+  },
+  {
+   "start": 45.113,
+   "duration": 2.102,
+   "text": "So today, I'd like to talk about that process:"
+  },
+  {
+   "start": 48.01,
+   "duration": 1.862,
+   "text": "How does an editor think and feel?"
+  },
+  {
+   "start": 55.356,
+   "duration": 3.45,
+   "text": "The first thing you need to know is that editing is all about the eyes"
+  },
+  {
+   "start": 59.123,
+   "duration": 3.454,
+   "text": "More than any other factor, the eyes tell you the emotion of the scene"
+  },
+  {
+   "start": 62.688,
+   "duration": 1.972,
+   "text": "And the great actors understand that they"
+  },
+  {
+   "start": 64.66,
+   "duration": 2.45,
+   "text": "Convey more through their eyes than through dialogue"
+  },
+  {
+   "start": 67.393,
+   "duration": 2.95,
+   "text": "(Caine) \"I said, 'Well, I haven't got anything to say,'"
+  },
+  {
+   "start": 70.643,
+   "duration": 2.964,
+   "text": "So he said, 'What do you mean you haven't got anything to say?'"
+  },
+  {
+   "start": 73.999,
+   "duration": 4.322,
+   "text": "He says 'Of course you've got things to say! You've got wonderful things to say!"
+  },
+  {
+   "start": 79.485,
+   "duration": 4.186,
+   "text": "But you sit there and listen, think of these extraordinary things to say..."
+  },
+  {
+   "start": 84.707,
+   "duration": 1.747,
+   "text": "\"Elliot, sweetheart!\" \"Mhm?\""
+  },
+  {
+   "start": 86.82,
+   "duration": 2.119,
+   "text": "\"Have you tried these? These are wonderful!\""
+  },
+  {
+   "start": 89.459,
+   "duration": 2.392,
+   "text": "...and then decide not to say them! (Laughter)"
+  },
+  {
+   "start": 92.211,
+   "duration": 1.63,
+   "text": "That's what you're doing!'\""
+  },
+  {
+   "start": 93.921,
+   "duration": 2.818,
+   "text": "And when I'm watching footage, this is what I'm looking for:"
+  },
+  {
+   "start": 96.968,
+   "duration": 2.468,
+   "text": "Moments where I can see a change in the actor's eyes"
+  },
+  {
+   "start": 99.919,
+   "duration": 1.553,
+   "text": "Like when he's making a decision"
+  },
+  {
+   "start": 105.575,
+   "duration": 3.507,
+   "text": "Shots like these are powerful because they work so well with other shots"
+  },
+  {
+   "start": 109.233,
+   "duration": 3.051,
+   "text": "For instance, when we cut from his eyes to what he's looking at"
+  },
+  {
+   "start": 116.567,
+   "duration": 3.279,
+   "text": "It tells us, without words, what he's thinking"
+  },
+  {
+   "start": 121.482,
+   "duration": 2.581,
+   "text": "The next concept was really hard for me to learn:"
+  },
+  {
+   "start": 124.758,
+   "duration": 1.949,
+   "text": "Emotions take time"
+  },
+  {
+   "start": 127.257,
+   "duration": 2.983,
+   "text": "When we watch people on screen, we feel a connection to them"
+  },
+  {
+   "start": 130.528,
+   "duration": 3.318,
+   "text": "And that's because we have time to watch their faces before they speak"
+  },
+  {
+   "start": 135.197,
+   "duration": 1.617,
+   "text": "(Speaking Chinese)"
+  },
+  {
+   "start": 137.724,
+   "duration": 1.41,
+   "text": "(Door shuts)"
+  },
+  {
+   "start": 139.544,
+   "duration": 1.702,
+   "text": "And time to watch them afterwards"
+  },
+  {
+   "start": 146.219,
+   "duration": 3.85,
+   "text": "Editors have to decide: \"How much time do I give this emotion?\""
+  },
+  {
+   "start": 151.019,
+   "duration": 2.595,
+   "text": "So let's try an exercise: look at this shot"
+  },
+  {
+   "start": 154.027,
+   "duration": 1.775,
+   "text": "What do you feel while watching this?"
+  },
+  {
+   "start": 162.734,
+   "duration": 1.231,
+   "text": "Now let's try it again"
+  },
+  {
+   "start": 164.393,
+   "duration": 2.003,
+   "text": "What do you feel while watching this?"
+  },
+  {
+   "start": 176.375,
+   "duration": 1.595,
+   "text": "Was it a different emotion?"
+  },
+  {
+   "start": 179.178,
+   "duration": 1.893,
+   "text": "Editing is full of decisions like these,"
+  },
+  {
+   "start": 181.071,
+   "duration": 2.234,
+   "text": "Where four seconds makes a big difference"
+  },
+  {
+   "start": 183.587,
+   "duration": 3.07,
+   "text": "And these choices are difficult. There are no right answers"
+  },
+  {
+   "start": 187.306,
+   "duration": 3.403,
+   "text": "Some emotions play better if you see them in a single, continuous shot"
+  },
+  {
+   "start": 191.085,
+   "duration": 7.131,
+   "text": "(Speaking Chinese)"
+  },
+  {
+   "start": 199.287,
+   "duration": 2.904,
+   "text": "But other emotions play better over multiple shots,"
+  },
+  {
+   "start": 202.191,
+   "duration": 2.22,
+   "text": "So you can build up and come down"
+  },
+  {
+   "start": 204.411,
+   "duration": 3.086,
+   "text": "Consider this scene, where Luke Skywalker tests his skill"
+  },
+  {
+   "start": 208.231,
+   "duration": 1.324,
+   "text": "(Breathes out)"
+  },
+  {
+   "start": 210.285,
+   "duration": 3.768,
+   "text": "To make this simpler, let's just focus on how long each shot is held for"
+  },
+  {
+   "start": 218.683,
+   "duration": 3.864,
+   "text": "Notice that as we build, each shot gets shorter and shorter towards the climax"
+  },
+  {
+   "start": 223.207,
+   "duration": 1.524,
+   "text": "(Inspirational music playing)"
+  },
+  {
+   "start": 228.225,
+   "duration": 1.096,
+   "text": "(R2 beeps)"
+  },
+  {
+   "start": 229.993,
+   "duration": 2.856,
+   "text": "But after five shots, we hit the peak and start coming down"
+  },
+  {
+   "start": 234.93,
+   "duration": 1.61,
+   "text": "(Yoda sighs softly, sadly)"
+  },
+  {
+   "start": 239.24,
+   "duration": 3.684,
+   "text": "Not only are the shots getting longer again, they're actually held for longer"
+  },
+  {
+   "start": 242.924,
+   "duration": 1.4,
+   "text": "than they were the first time"
+  },
+  {
+   "start": 245.16,
+   "duration": 4.13,
+   "text": "And this whole sequence spends about 15 seconds going up, but twice that amount"
+  },
+  {
+   "start": 249.29,
+   "duration": 4.874,
+   "text": "coming down, so that we, the audience, have time to feel Luke's failure"
+  },
+  {
+   "start": 255.319,
+   "duration": 3.149,
+   "text": "(Breathing heavily) \"I can't, it's too big.\""
+  },
+  {
+   "start": 259.24,
+   "duration": 2.136,
+   "text": "But what happens if  you shorten this timing?"
+  },
+  {
+   "start": 261.556,
+   "duration": 2.93,
+   "text": "Let's take a look at a very similar scene, done more recently"
+  },
+  {
+   "start": 264.787,
+   "duration": 2.059,
+   "text": "See if you can feel the difference"
+  },
+  {
+   "start": 273.616,
+   "duration": 1.841,
+   "text": "(Hank) You can do it Scott, come on!"
+  },
+  {
+   "start": 276.879,
+   "duration": 0.771,
+   "text": "(Ant laughs)"
+  },
+  {
+   "start": 278.994,
+   "duration": 1.785,
+   "text": "(Scott) They're not listening to me!"
+  },
+  {
+   "start": 281.043,
+   "duration": 1.523,
+   "text": "Did you believe that emotion?"
+  },
+  {
+   "start": 282.748,
+   "duration": 5.067,
+   "text": "Because in this scene, Scott's failure took 30 frames"
+  },
+  {
+   "start": 288.872,
+   "duration": 2.483,
+   "text": "By comparison, Luke Skywalker's failure"
+  },
+  {
+   "start": 295.568,
+   "duration": 1.351,
+   "text": "Took 30 seconds"
+  },
+  {
+   "start": 299.809,
+   "duration": 1.562,
+   "text": "People aren't machines,"
+  },
+  {
+   "start": 301.371,
+   "duration": 1.96,
+   "text": "We need time to feel the emotion,"
+  },
+  {
+   "start": 303.771,
+   "duration": 2.07,
+   "text": "And if the movie doesn't give it to us..."
+  },
+  {
+   "start": 306.291,
+   "duration": 1.264,
+   "text": "We don't believe it."
+  },
+  {
+   "start": 307.645,
+   "duration": 3.322,
+   "text": "(Schoonmaker) \"And I'm finding in movies, recently, that I've seen,"
+  },
+  {
+   "start": 311.217,
+   "duration": 2.08,
+   "text": "A lot of things I don't believe."
+  },
+  {
+   "start": 313.297,
+   "duration": 3.131,
+   "text": "I think people are sticking stuff out there"
+  },
+  {
+   "start": 316.788,
+   "duration": 1.86,
+   "text": "And asking you to believe it,"
+  },
+  {
+   "start": 318.648,
+   "duration": 1.93,
+   "text": "But they're not making you believe it.\""
+  },
+  {
+   "start": 320.998,
+   "duration": 2.108,
+   "text": "And making it believable is really hard."
+  },
+  {
+   "start": 323.322,
+   "duration": 1.018,
+   "text": "(Man) \"Let Red go.\""
+  },
+  {
+   "start": 325.284,
+   "duration": 2.773,
+   "text": "Because timing is not a conscious process,"
+  },
+  {
+   "start": 328.057,
+   "duration": 1.78,
+   "text": "You're just responding to the fact"
+  },
+  {
+   "start": 329.837,
+   "duration": 2.76,
+   "text": "That every shot has a natural rhythm"
+  },
+  {
+   "start": 334.175,
+   "duration": 1.309,
+   "text": "(Three gunshots)"
+  },
+  {
+   "start": 335.622,
+   "duration": 1.05,
+   "text": "(Wood breaking)"
+  },
+  {
+   "start": 338.604,
+   "duration": 4.043,
+   "text": "(Murch) \"There's an in-built relationship between the story itself and"
+  },
+  {
+   "start": 342.647,
+   "duration": 3.37,
+   "text": "How to tell a story, and the rhythm with which you tell it,"
+  },
+  {
+   "start": 346.017,
+   "duration": 2.92,
+   "text": "And editing is..."
+  },
+  {
+   "start": 348.937,
+   "duration": 2.78,
+   "text": "70% about rhythm.\""
+  },
+  {
+   "start": 352.207,
+   "duration": 2.151,
+   "text": "(Man yelling at woman)"
+  },
+  {
+   "start": 356.119,
+   "duration": 1.841,
+   "text": "Sometimes the rhythm is obvious,"
+  },
+  {
+   "start": 357.96,
+   "duration": 3.1,
+   "text": "Like when the actor is doing something really physical"
+  },
+  {
+   "start": 361.21,
+   "duration": 4.37,
+   "text": "(Music intensifying)"
+  },
+  {
+   "start": 369.21,
+   "duration": 2.34,
+   "text": "But other times it's quite subtle"
+  },
+  {
+   "start": 371.55,
+   "duration": 3.21,
+   "text": "For instance, the rhythm of people walking back and forth"
+  },
+  {
+   "start": 375.712,
+   "duration": 4.994,
+   "text": "Or the rhythm of a restaurant, with cooks, customers, waitresses..."
+  },
+  {
+   "start": 382.564,
+   "duration": 2.876,
+   "text": "These rhythms are closer to what we feel in everyday life,"
+  },
+  {
+   "start": 385.44,
+   "duration": 2.113,
+   "text": "And, I actually think they're harder to edit"
+  },
+  {
+   "start": 388.429,
+   "duration": 3.672,
+   "text": "But if you watch anything over and over again, you eventually feel the moment"
+  },
+  {
+   "start": 392.101,
+   "duration": 2.254,
+   "text": "When the shot wants you to cut"
+  },
+  {
+   "start": 402.654,
+   "duration": 3.262,
+   "text": "Classical Hollywood editing is all about cutting with the rhythm"
+  },
+  {
+   "start": 406.393,
+   "duration": 3.069,
+   "text": "And this is what we mean when we say that editing is invisible"
+  },
+  {
+   "start": 410.205,
+   "duration": 2.019,
+   "text": "The cut happens so naturally"
+  },
+  {
+   "start": 412.987,
+   "duration": 3.024,
+   "text": "(Man) \"Now is there anything else you'd like to know about me?\""
+  },
+  {
+   "start": 416.011,
+   "duration": 1.222,
+   "text": "That you don't notice it."
+  },
+  {
+   "start": 417.42,
+   "duration": 2.241,
+   "text": "(Man) \"Would you like to go over to my room?\""
+  },
+  {
+   "start": 420.013,
+   "duration": 2.061,
+   "text": "But you don't always have to be invisible"
+  },
+  {
+   "start": 422.281,
+   "duration": 2.87,
+   "text": "Some emotions play better if you cut in a jarring way,"
+  },
+  {
+   "start": 425.151,
+   "duration": 1.88,
+   "text": "Like if someone is agitated"
+  },
+  {
+   "start": 427.031,
+   "duration": 7.269,
+   "text": "(Heels clicking on floor)"
+  },
+  {
+   "start": 435.43,
+   "duration": 1.387,
+   "text": "And other moments play better"
+  },
+  {
+   "start": 436.817,
+   "duration": 2.62,
+   "text": "If you actually cut to make the audience uncomfortable."
+  },
+  {
+   "start": 439.727,
+   "duration": 7.53,
+   "text": "(Water sizzling)"
+  },
+  {
+   "start": 447.907,
+   "duration": 3.98,
+   "text": "(Schoonmaker) \"One of the things Marty's always encouraged us to do is to"
+  },
+  {
+   "start": 451.887,
+   "duration": 3.243,
+   "text": "Sometimes hold just a little bit too long..."
+  },
+  {
+   "start": 455.259,
+   "duration": 4.96,
+   "text": "(Water sizzling)"
+  },
+  {
+   "start": 460.402,
+   "duration": 2.739,
+   "text": "And then make a cut, if it's justified.\""
+  },
+  {
+   "start": 464.138,
+   "duration": 3.902,
+   "text": "What really matters is, what reaction you want from people"
+  },
+  {
+   "start": 470.747,
+   "duration": 1.92,
+   "text": "(Two gunshots)"
+  },
+  {
+   "start": 475.814,
+   "duration": 3.324,
+   "text": "Because sometimes, you can only get that with an unusual cut"
+  },
+  {
+   "start": 482.91,
+   "duration": 1.999,
+   "text": "And that brings me to my last point:"
+  },
+  {
+   "start": 484.909,
+   "duration": 3.311,
+   "text": "If editing is so instinctive, how do you learn it?"
+  },
+  {
+   "start": 488.64,
+   "duration": 1.56,
+   "text": "I only know one way:"
+  },
+  {
+   "start": 490.799,
+   "duration": 1.14,
+   "text": "Practice."
+  },
+  {
+   "start": 492.227,
+   "duration": 3.113,
+   "text": "(Murch) \"And editing is very similar to dance in that way,"
+  },
+  {
+   "start": 495.702,
+   "duration": 2.89,
+   "text": "You can explain the rudiments of dance,"
+  },
+  {
+   "start": 499.056,
+   "duration": 2.812,
+   "text": "But to really learn how to dance, you have to dance.\""
+  },
+  {
+   "start": 502.571,
+   "duration": 1.303,
+   "text": "You have to cut."
+  },
+  {
+   "start": 503.874,
+   "duration": 3.031,
+   "text": "And as you cut, you'll develop a sense of rhythm and emotion"
+  },
+  {
+   "start": 506.905,
+   "duration": 1.85,
+   "text": "That's unique to you."
+  },
+  {
+   "start": 508.938,
+   "duration": 2.76,
+   "text": "I've been doing it for ten years and I'm still not there"
+  },
+  {
+   "start": 511.872,
+   "duration": 3.856,
+   "text": "But whenever I'm frustrated by an edit, I think about something Michael Khan said"
+  },
+  {
+   "start": 515.758,
+   "duration": 2.117,
+   "text": "(Khan) \"The beautiful thing about editing is,"
+  },
+  {
+   "start": 517.875,
+   "duration": 2.54,
+   "text": "I guess maybe writers feel that way,"
+  },
+  {
+   "start": 520.415,
+   "duration": 3.525,
+   "text": "I see all that film up there, doesn't matter, I'm doing one piece at a time"
+  },
+  {
+   "start": 525.004,
+   "duration": 2.074,
+   "text": "One scene at a time, one cut at a time."
+  },
+  {
+   "start": 527.41,
+   "duration": 2.697,
+   "text": "And there's a lot of film, I just do one thing at a time.\""
+  },
+  {
+   "start": 530.237,
+   "duration": 1.893,
+   "text": "So take it one shot at a time,"
+  },
+  {
+   "start": 532.684,
+   "duration": 1.72,
+   "text": "Because if you watch any image,"
+  },
+  {
+   "start": 535.066,
+   "duration": 1.45,
+   "text": "(Man) \"You really care?\""
+  },
+  {
+   "start": 536.982,
+   "duration": 1.98,
+   "text": "You'll see it has an emotion and a rhythm"
+  },
+  {
+   "start": 539.062,
+   "duration": 4.768,
+   "text": "(Woman sniffing and breathing heavy)"
+  },
+  {
+   "start": 546.151,
+   "duration": 1.023,
+   "text": "And you have to feel..."
+  },
+  {
+   "start": 547.637,
+   "duration": 0.741,
+   "text": "When..."
+  },
+  {
+   "start": 548.578,
+   "duration": 0.99,
+   "text": "To..."
+  },
+  {
+   "start": 562.0,
+   "duration": 3.0,
+   "text": "Subtitles by the Amara.org community"
+  }
+ ]
+}
