@@ -1,0 +1,22 @@
+{
+ "id": "9PJvV5PYDm0",
+ "duration_s": 153.0,
+ "words": 435,
+ "wpm": 170.5,
+ "hook_15s_words": 43,
+ "opener_sentence_words": 20,
+ "sentences": 18,
+ "avg_sentence_words": 24.2,
+ "short_sentence_ratio": 0.0,
+ "cue_word_density_per_min": 6.7,
+ "connector_starts": 4,
+ "estimated_cuts_per_min_proxy": 7.1,
+ "open_loop_markers": [],
+ "top_bigrams": [
+  {
+   "pair": "even more",
+   "n": 3
+  }
+ ],
+ "language_note": "ci-proxy"
+}
