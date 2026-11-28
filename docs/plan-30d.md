@@ -178,3 +178,9 @@
   09:45/23:45 EAT. Caveat: 5 fires through Nov 28 morning produced ZERO session
   commits — sessions die mid-loop; if day-032 shows no session commit, cron is
   unreliable platform-side and the loop falls back to boss pings.
+- **#0014 evening leg (same day)**: world built + 1216 frames rendered + muxed
+  (decode-clean) + gate 6.15->6.00->6.23 over 3 redesign laps — BELOW the 7.2 bar,
+  so CARRIED (L-150) with numbered directives (persistent observer bean, bigger
+  heroes, rhythm variety, tighten 30-37s, hero-scale hook) in
+  content/short-0014/gate/carry_r1.md. Next session pays the debt, publishes at
+  >= 7.2, or takes the L-125 exit and reports. NO publish today — the bar is the bar.
