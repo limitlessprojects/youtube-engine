@@ -160,3 +160,21 @@
   lane (Krakatau-class, blueprint lane live in Actions) takes the slot.
 - **Disclosure policy (day-030)**: uploads default to NO synthetic flag;
   boss Studio-checks the three live videos manually if a label shows there.
+
+## day-031 (Nov 28) — FORK VERDICT EXECUTED: fiction lane dead, science lane takes the slot
+
+- **#0013 relit verdict (T+61h): 22 → 108 → 133 → 133 flat.** The bright-3d look did
+  NOT break the fiction flatline (same pin shape as #0012's 55→100→105). Per the
+  day-030 pre-registered fork: the fiction lane dies; science takes the slot.
+  Reading: the PREMISE lane owns the flatline, not the look — #0013's gate was the
+  channel's second-best ever (7.20) and it still pinned, so quality was not the
+  blocker either.
+- **#0014 STAGED same-session**: "The stitches doctors never remove" (backlog rank-2,
+  dissolve story, sequel grammar to #0006 the #1 performer). Script 14 beats/110w/40.07s,
+  lint PASS, critic r1 PASS (agent-judged), VO 13/13 ASR-clean FIRST run (no union
+  debt), WPM 199.7 dead-center. Carry_r0: world (from #0013 engine) -> render ->
+  gate -> publish.
+- **Scheduler**: job 549218 reinstated agent-side (cron tool recovered). Fires
+  09:45/23:45 EAT. Caveat: 5 fires through Nov 28 morning produced ZERO session
+  commits — sessions die mid-loop; if day-032 shows no session commit, cron is
+  unreliable platform-side and the loop falls back to boss pings.
