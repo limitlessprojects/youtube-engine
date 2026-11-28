@@ -1,0 +1,288 @@
+{
+ "title": "The stitches doctors never remove",
+ "format": "short",
+ "staged": {
+  "by": "day-031 09:45-session (effective; boss 'continue') — fork verdict executed: fiction lane DEAD (#0013 relit 108→133→133 flat), science lane takes the slot per day-030 pre-registered fork. Topic = rank-2 backlog 'How stitches work' narrowed to the dissolve story; sequel grammar to #0006 (channel #1 performer).",
+  "status": "SCRIPT+VO day-031 v2: 14 beats (13 narrated + s7b 1.2s visual-only hold), timeline 40.07s, WPM 199.7 measured (dead center), ASR 13/13 PASS first run (zero throttle, no union debt). Lint PASS (110w, opener 11w, beat law 14 >= ceil(40.07/3.2)=13). Critic r1 agent-judged PASS (all dims >= 8, round 1). SFX 14 events beat-derived from measured TL (L-146). NEXT: 23:45 session owns world build (bright-3d v2 from #0013 engine), render --full, gate r1, publish.",
+  "look": "bright-3d v2 — reuses #0013 world engine (LOOKS{clinic-golden,deep,night,dawn,day} relabelable), ink outlines + DOF + camera creep on every hold; bean cast: surgeon-bean, water-bean droplets, macrophage-bean cleanup crew"
+ },
+ "hook": {
+  "timestamp_start": 0.0,
+  "narration": "When doctors stitch you shut, some thread is never coming out.",
+  "visual": {
+   "v3": "soft skin-hill landscape (bright clinic-golden, lum/sat in bible band); curved needle draws a bead-chain seam across the hill; the seam GLOWS once and stays; title THE STITCHES DOCTORS NEVER REMOVE on frame 0 (loop target)"
+  },
+  "fact_sources": [
+   "absorbable sutures are placed and left to degrade in tissue — Ethicon Wound Closure Manual (2005), 'Absorbable Materials' chapter"
+  ],
+  "audio_dur_s": 2.856
+ },
+ "scenes": [
+  {
+   "timestamp_start": 3.31,
+   "narration": "Nobody removes it. Nobody pulls anything.",
+   "visual": {
+    "v3": "surgeon-bean walks AWAY from the seam, hands empty; no tweezers, no pull; the seam stays shut behind him"
+   },
+   "fact_sources": [
+    "no removal visit for absorbable skin closures — Ethicon WCM; standard post-op instructions"
+   ],
+   "audio_dur_s": 2.592,
+   "_key": "s0"
+  },
+  {
+   "timestamp_start": 6.35,
+   "narration": "The thread is engineered to vanish inside you.",
+   "visual": {
+    "v3": "macro zoom to the bead-chain; each link has a tiny clock face; the whole thread fades from tail-end in a loop"
+   },
+   "fact_sources": [
+    "synthetic absorbable sutures are designed to lose strength and mass over defined timescales — Chu & von Fraunhofer, Wound Closure Biomaterials (1997)"
+   ],
+   "audio_dur_s": 2.208,
+   "_key": "s1"
+  },
+  {
+   "timestamp_start": 9.01,
+   "narration": "It's a polymer chain: thousands of links, sewn into your skin.",
+   "visual": {
+    "v3": "the chain re-renders as glowing polymer links (beads on a string) sewn INTO the hill's cross-section (x-ray view like #0006); count ticks up '1,000+ links'"
+   },
+   "fact_sources": [
+    "polyglycolide / polyglactin 910 are polyester chains of repeating units — Ethicon WCM materials table"
+   ],
+   "audio_dur_s": 3.144,
+   "_key": "s2"
+  },
+  {
+   "timestamp_start": 12.6,
+   "narration": "Water is the blade.",
+   "visual": {
+    "v3": "a single water-bean droplet slides into frame from the bright sky, glinting; freeze-frame flash (4f) on the droplet's edge"
+   },
+   "fact_sources": [
+    "hydrolysis = water-driven bond cleavage — chemistry of polyester degradation (Ethicon WCM)"
+   ],
+   "audio_dur_s": 1.872,
+   "_key": "s3"
+  },
+  {
+   "timestamp_start": 14.92,
+   "narration": "Each water molecule slips in and snaps one link.",
+   "visual": {
+    "v3": "droplet wedges between two beads; the link ping-pops apart (kick frame); second droplet repeats on the next link; chain gets shorter"
+   },
+   "fact_sources": [
+    "water hydrolyzes ester bonds in the polymer backbone, fragmenting the chain — Chu & von Fraunhofer (1997)"
+   ],
+   "audio_dur_s": 2.688,
+   "_key": "s4"
+  },
+  {
+   "timestamp_start": 18.06,
+   "narration": "Week one, the thread still holds your wound shut.",
+   "visual": {
+    "v3": "the hill-seam stays tightly zipped; a small 'WEEK 1' chalk tick; camera creeps closer on the seam (hold-creep law)"
+   },
+   "fact_sources": [
+    "polyglactin 910 retains ~65% tensile strength at 1 week — Ethicon VICRYL specification sheet"
+   ],
+   "audio_dur_s": 2.496,
+   "_key": "s5"
+  },
+  {
+   "timestamp_start": 21.01,
+   "narration": "By week two, it's lost half its strength.",
+   "visual": {
+    "v3": "'WEEK 2' tick; the chain's beads dim one-by-one (half go dark); a strength-bar over the seam drains to 50%; thump"
+   },
+   "fact_sources": [
+    "polyglactin 910 retains ~50% tensile strength at 2 weeks — Ethicon VICRYL specification sheet"
+   ],
+   "audio_dur_s": 2.208,
+   "_key": "s6"
+  },
+  {
+   "timestamp_start": 23.66,
+   "narration": "Your cleanup cells swallow the fragments whole.",
+   "visual": {
+    "v3": "macrophage-beans (round, purposeful) roll in, each absorbs a bead fragment and glows slightly; riser on the swallow"
+   },
+   "fact_sources": [
+    "macrophages phagocytose suture fragments in the foreign-body response — Ethicon WCM 'Tissue Response' section"
+   ],
+   "audio_dur_s": 2.184,
+   "_key": "s7"
+  },
+  {
+   "timestamp_start": 26.294,
+   "narration": "",
+   "audio_dur_s": 1.2,
+   "visual_only": true,
+   "visual": {
+    "v3": "VISUAL-ONLY HOLD (~1.2s): macro of the swallowed fragments inside the translucent tissue — each dimmed bead pulses faintly inside a macrophage-bean, one last pulse, then stillness; camera creeps closer through the whole hold (creep law)"
+   },
+   "fact_sources": [
+    "narrative"
+   ],
+   "_key": "s7b",
+   "note": "L-097 headroom beat (lint advice): buys VO-overrun slack between the swallow and the no-exit reveal"
+  },
+  {
+   "timestamp_start": 27.944,
+   "narration": "Inside your body, there is no other exit.",
+   "visual": {
+    "v3": "wide shot: the hill seam now INSIDE a translucent body cross-section; no door, no edge-exit; the seam only fades"
+   },
+   "fact_sources": [
+    "internal sutures cannot be removed without re-operation; absorbable materials are standard for deep closure — Ethicon WCM"
+   ],
+   "audio_dur_s": 2.208,
+   "_key": "s8"
+  },
+  {
+   "timestamp_start": 30.602,
+   "narration": "So the thread is tuned: fast for skin, slow for muscle.",
+   "visual": {
+    "v3": "two threads side by side: a slim fast chain (skin) dissolving quickly; a thick slow chain (muscle/fascia) holding months; blip pair on the two labels"
+   },
+   "fact_sources": [
+    "material selection matches absorption to tissue healing: fast-absorbing for skin/mucosa, PDS-class for fascia lasting months — Ethicon WCM materials selection guide"
+   ],
+   "audio_dur_s": 3.24,
+   "_key": "s9"
+  },
+  {
+   "timestamp_start": 34.292,
+   "narration": "Some stitches outlive you — the permanent kind never dissolves.",
+   "visual": {
+    "v3": "a steel-bright thread that never dims, glinting in the clinic-golden light; a small 'PERMANENT' plate; the dissolving chains fade behind it"
+   },
+   "fact_sources": [
+    "non-absorbable materials (polypropylene, silk) are effectively permanent — Ethicon WCM 'Nonabsorbable Materials'"
+   ],
+   "audio_dur_s": 2.928,
+   "_key": "s10"
+  },
+  {
+   "timestamp_start": 37.67,
+   "narration": "The best stitches are the ones your body erases.",
+   "visual": {
+    "v3": "the whole hill-seam dissolves to nothing; only clean smooth skin remains in full daylight (day LOOK); end frame mirrors the hook seam-pull (loop target); banner: GONE WITHOUT A TRACE"
+   },
+   "fact_sources": [
+    "optimal absorbable closure leaves minimal residue at end of absorption period — Chu & von Fraunhofer (1997)"
+   ],
+   "audio_dur_s": 2.4,
+   "_key": "s11"
+  }
+ ],
+ "sfx": [
+  {
+   "kind": "whoosh",
+   "at": 1.4,
+   "gain": 0.16,
+   "seed": 81,
+   "note": "needle draws the bead-chain seam (hook)"
+  },
+  {
+   "kind": "blip",
+   "at": 6.5,
+   "gain": 0.1,
+   "seed": 82,
+   "note": "surgeon-bean walk-away turn (s0)"
+  },
+  {
+   "kind": "blip",
+   "at": 10.2,
+   "gain": 0.1,
+   "seed": 83,
+   "note": "x-ray chain reveal (s2)"
+  },
+  {
+   "kind": "whoosh",
+   "at": 13.2,
+   "gain": 0.12,
+   "seed": 84,
+   "note": "droplet slides in (s3 entry)"
+  },
+  {
+   "kind": "blip",
+   "at": 15.6,
+   "gain": 0.14,
+   "seed": 85,
+   "note": "link snap #1 (s4)"
+  },
+  {
+   "kind": "blip",
+   "at": 16.8,
+   "gain": 0.14,
+   "seed": 86,
+   "note": "link snap #2 (s4)"
+  },
+  {
+   "kind": "blip",
+   "at": 18.4,
+   "gain": 0.08,
+   "seed": 87,
+   "note": "WEEK 1 chalk tick (s5)"
+  },
+  {
+   "kind": "thump",
+   "at": 22.6,
+   "gain": 0.18,
+   "seed": 88,
+   "note": "half-strength bar drains (s6)"
+  },
+  {
+   "kind": "riser",
+   "at": 24.6,
+   "gain": 0.14,
+   "seed": 89,
+   "note": "macrophage swallow (s7)"
+  },
+  {
+   "kind": "blip",
+   "at": 27.2,
+   "gain": 0.08,
+   "seed": 90,
+   "note": "last fragment pulse in hold (s7b)"
+  },
+  {
+   "kind": "blip",
+   "at": 31.0,
+   "gain": 0.1,
+   "seed": 91,
+   "note": "fast-chain clock label (s9)"
+  },
+  {
+   "kind": "blip",
+   "at": 32.2,
+   "gain": 0.1,
+   "seed": 92,
+   "note": "slow-chain clock label (s9)"
+  },
+  {
+   "kind": "blip",
+   "at": 34.8,
+   "gain": 0.1,
+   "seed": 93,
+   "note": "permanent thread glint (s10)"
+  },
+  {
+   "kind": "thump",
+   "at": 39.3,
+   "gain": 0.16,
+   "seed": 94,
+   "note": "seam gone - clean skin lands (s11 closer)"
+  }
+ ],
+ "timeline": {
+  "fps": 30,
+  "total_s": 40.074,
+  "gap_s": 0.45,
+  "voice": "edge-tts en-US-AndrewNeural rate +25% per line — MEASURED day-031 09:45-effective session: 13 lines, speech span 33.02s (38.424 - 12 gaps x 0.45), 110 words = 199.7 WPM canon (dead center 185-215), timeline end with s7b hold = 40.07s. ASR 13/13 PASS wer=0.00 first run, zero throttle, NO union debt.",
+  "words": 110,
+  "wpm_measured": 199.7
+ }
+}

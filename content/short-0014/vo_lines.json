@@ -1,0 +1,18 @@
+{
+  "short": "short-0014",
+  "lines": [
+    { "key": "hook", "role": "narration", "rate": "+25%", "narration": "When doctors stitch you shut, some thread is never coming out." },
+    { "key": "s0", "role": "narration", "rate": "+25%", "narration": "Nobody removes it. Nobody pulls anything." },
+    { "key": "s1", "role": "narration", "rate": "+25%", "narration": "The thread is engineered to vanish inside you." },
+    { "key": "s2", "role": "narration", "rate": "+25%", "narration": "It's a polymer chain: thousands of links, sewn into your skin." },
+    { "key": "s3", "role": "narration", "rate": "+25%", "narration": "Water is the blade." },
+    { "key": "s4", "role": "narration", "rate": "+25%", "narration": "Each water molecule slips in and snaps one link." },
+    { "key": "s5", "role": "narration", "rate": "+25%", "narration": "Week one, the thread still holds your wound shut." },
+    { "key": "s6", "role": "narration", "rate": "+25%", "narration": "By week two, it's lost half its strength." },
+    { "key": "s7", "role": "narration", "rate": "+25%", "narration": "Your cleanup cells swallow the fragments whole." },
+    { "key": "s8", "role": "narration", "rate": "+25%", "narration": "Inside your body, there is no other exit." },
+    { "key": "s9", "role": "narration", "rate": "+25%", "narration": "So the thread is tuned: fast for skin, slow for muscle." },
+    { "key": "s10", "role": "narration", "rate": "+25%", "narration": "Some stitches outlive you — the permanent kind never dissolves." },
+    { "key": "s11", "role": "narration", "rate": "+25%", "narration": "The best stitches are the ones your body erases." }
+  ]
+}

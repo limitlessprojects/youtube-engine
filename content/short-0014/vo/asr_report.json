@@ -1,0 +1,171 @@
+{
+  "short": "short-0014",
+  "verified_at": "2026-11-28T07:02:45.505324+00:00",
+  "voice": "edge-tts en-US-AndrewNeural rate +45%",
+  "gap_s": 0.45,
+  "total_vo_s": 33.024,
+  "timeline_end_s": 38.424,
+  "n_fail": 0,
+  "thresholds": {
+    "pass_wer": 0.15,
+    "warn_wer": 0.3
+  },
+  "lines": [
+    {
+      "line": "00",
+      "role": "narration",
+      "expected": "When doctors stitch you shut, some thread is never coming out.",
+      "heard": "When doctors stitch you shut, some thread is never coming out.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.856,
+      "synced_start_s": 0.0,
+      "rate": "+25%"
+    },
+    {
+      "line": "01",
+      "role": "narration",
+      "expected": "Nobody removes it. Nobody pulls anything.",
+      "heard": "Nobody removes it, nobody pulls anything.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.592,
+      "synced_start_s": 3.306,
+      "rate": "+25%"
+    },
+    {
+      "line": "02",
+      "role": "narration",
+      "expected": "The thread is engineered to vanish inside you.",
+      "heard": "The thread is engineered to vanish inside you.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.208,
+      "synced_start_s": 6.348,
+      "rate": "+25%"
+    },
+    {
+      "line": "03",
+      "role": "narration",
+      "expected": "It's a polymer chain: thousands of links, sewn into your skin.",
+      "heard": "It's a polymer chain, thousands of links sewn into your skin.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.144,
+      "synced_start_s": 9.006,
+      "rate": "+25%"
+    },
+    {
+      "line": "04",
+      "role": "narration",
+      "expected": "Water is the blade.",
+      "heard": "Water is the blade.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 1.872,
+      "synced_start_s": 12.6,
+      "rate": "+25%"
+    },
+    {
+      "line": "05",
+      "role": "narration",
+      "expected": "Each water molecule slips in and snaps one link.",
+      "heard": "Each water molecule slips in and snaps one link.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.688,
+      "synced_start_s": 14.922,
+      "rate": "+25%"
+    },
+    {
+      "line": "06",
+      "role": "narration",
+      "expected": "Week one, the thread still holds your wound shut.",
+      "heard": "Week one, the thread still holds your wound shut.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.496,
+      "synced_start_s": 18.06,
+      "rate": "+25%"
+    },
+    {
+      "line": "07",
+      "role": "narration",
+      "expected": "By week two, it's lost half its strength.",
+      "heard": "By week two, it's lost half its strength.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.208,
+      "synced_start_s": 21.006,
+      "rate": "+25%"
+    },
+    {
+      "line": "08",
+      "role": "narration",
+      "expected": "Your cleanup cells swallow the fragments whole.",
+      "heard": "Your cleanup cells swallow the fragments whole.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.184,
+      "synced_start_s": 23.664,
+      "rate": "+25%"
+    },
+    {
+      "line": "09",
+      "role": "narration",
+      "expected": "Inside your body, there is no other exit.",
+      "heard": "Inside your body, there is no other exit.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.208,
+      "synced_start_s": 26.298,
+      "rate": "+25%"
+    },
+    {
+      "line": "10",
+      "role": "narration",
+      "expected": "So the thread is tuned: fast for skin, slow for muscle.",
+      "heard": "So the thread is tuned fast for skin, slow for muscle.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 3.24,
+      "synced_start_s": 28.956,
+      "rate": "+25%"
+    },
+    {
+      "line": "11",
+      "role": "narration",
+      "expected": "Some stitches outlive you \u2014 the permanent kind never dissolves.",
+      "heard": "Some stitches outlive you, the permanent kind never dissolves.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.928,
+      "synced_start_s": 32.646,
+      "rate": "+25%"
+    },
+    {
+      "line": "12",
+      "role": "narration",
+      "expected": "The best stitches are the ones your body erases.",
+      "heard": "The best stitches are the ones your body erases.",
+      "wer": 0.0,
+      "accuracy": 1.0,
+      "verdict": "PASS",
+      "audio_dur_s": 2.4,
+      "synced_start_s": 36.024,
+      "rate": "+25%"
+    }
+  ]
+}
