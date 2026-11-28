@@ -1,0 +1,96 @@
+{
+ "id": "0fV8kYoGDNM",
+ "path": "proxy-pool",
+ "segments": [
+  {
+   "start": 0.0,
+   "duration": 3.16,
+   "text": "You probably learned that if a sheep is"
+  },
+  {
+   "start": 1.64,
+   "duration": 3.32,
+   "text": "moving 2 miles per hour relative to a"
+  },
+  {
+   "start": 3.16,
+   "duration": 3.2,
+   "text": "train and that train is moving 2 miles"
+  },
+  {
+   "start": 4.96,
+   "duration": 2.84,
+   "text": "per hour in the same direction relative"
+  },
+  {
+   "start": 6.36,
+   "duration": 3.2,
+   "text": "to the ground, then the sheep is moving"
+  },
+  {
+   "start": 7.8,
+   "duration": 3.32,
+   "text": "4 miles per hour relative to the ground."
+  },
+  {
+   "start": 9.56,
+   "duration": 4.0,
+   "text": "2 miles per hour plus 2 miles per hour"
+  },
+  {
+   "start": 11.12,
+   "duration": 4.24,
+   "text": "equals 4 miles per hour, right? False."
+  },
+  {
+   "start": 13.56,
+   "duration": 3.44,
+   "text": "Experiments in special relativity have"
+  },
+  {
+   "start": 15.36,
+   "duration": 3.04,
+   "text": "confirmed that velocities don't simply"
+  },
+  {
+   "start": 17.0,
+   "duration": 3.08,
+   "text": "add together and so the sheep will in"
+  },
+  {
+   "start": 18.4,
+   "duration": 3.36,
+   "text": "fact be moving very, very ever so"
+  },
+  {
+   "start": 20.08,
+   "duration": 3.64,
+   "text": "slightly slower than 4 miles per hour"
+  },
+  {
+   "start": 21.76,
+   "duration": 3.72,
+   "text": "relative to the ground. And the formula"
+  },
+  {
+   "start": 23.72,
+   "duration": 4.0,
+   "text": "that correctly predicts this deviation"
+  },
+  {
+   "start": 25.48,
+   "duration": 5.08,
+   "text": "from just adding the velocities is V1"
+  },
+  {
+   "start": 27.72,
+   "duration": 5.68,
+   "text": "plus V2 divided by 1 plus V1 times V2"
+  },
+  {
+   "start": 30.56,
+   "duration": 2.84,
+   "text": "over C squared."
+  }
+ ]
+}

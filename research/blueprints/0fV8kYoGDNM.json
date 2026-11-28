@@ -1,0 +1,34 @@
+{
+ "id": "0fV8kYoGDNM",
+ "duration_s": 33.4,
+ "words": 118,
+ "wpm": 212.0,
+ "hook_15s_words": 68,
+ "opener_sentence_words": 47,
+ "sentences": 5,
+ "avg_sentence_words": 25.2,
+ "short_sentence_ratio": 0.2,
+ "cue_word_density_per_min": 7.2,
+ "connector_starts": 1,
+ "estimated_cuts_per_min_proxy": 9.0,
+ "open_loop_markers": [],
+ "top_bigrams": [
+  {
+   "pair": "miles per",
+   "n": 7
+  },
+  {
+   "pair": "per hour",
+   "n": 7
+  },
+  {
+   "pair": "moving miles",
+   "n": 3
+  },
+  {
+   "pair": "hour relative",
+   "n": 3
+  }
+ ],
+ "language_note": "ci-proxy"
+}

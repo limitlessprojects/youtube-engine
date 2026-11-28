@@ -1,0 +1,18 @@
+You probably learned that if a sheep is
+moving 2 miles per hour relative to a
+train and that train is moving 2 miles
+per hour in the same direction relative
+to the ground, then the sheep is moving
+4 miles per hour relative to the ground.
+2 miles per hour plus 2 miles per hour
+equals 4 miles per hour, right? False.
+Experiments in special relativity have
+confirmed that velocities don't simply
+add together and so the sheep will in
+fact be moving very, very ever so
+slightly slower than 4 miles per hour
+relative to the ground. And the formula
+that correctly predicts this deviation
+from just adding the velocities is V1
+plus V2 divided by 1 plus V1 times V2
+over C squared.
