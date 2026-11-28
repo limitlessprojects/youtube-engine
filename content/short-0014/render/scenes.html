@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#c9885e;overflow:hidden;}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#c9885e;}
+  svg{display:block;width:1080px;height:1920px;}
+  text{font-family:'Bricolage Grotesque',sans-serif;}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+"use strict";
+/* short-0014 — "The stitches doctors never remove"
+   World: bright-3d v2 (relit engine carryover from #0013 — friend bible adoption).
+   ALL event timing is DERIVED FROM THE BEAT TABLE (TL) — no absolute anchors (L-146).
+   TL ids are SEQUENTIAL (build_timeline): hook, s0..s12 — the authored s7b hold is
+   TL id s8 (L-138 convention). Camera: every hold creeps, ease-out 20f entry glides,
+   4f flash + 7f kick at link snaps. Blinks 4f. C6: deterministic, no Math.random. */
+
+const TL = __TIMELINE__;
+const T_END = __T_END__;
+const W = 1080, H = 1920, FPS = 30;
+
+/* ---------- helpers ---------- */
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const lerp=(a,b,u)=>a+(b-a)*u;
+const smooth=u=>{u=clamp(u,0,1);return u*u*u*(u*(u*6-15)+10);};
+const TAU=Math.PI*2;
+function hex(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];}
+function mixc(h1,h2,u){const a=hex(h1),b=hex(h2);return `rgb(${Math.round(lerp(a[0],b[0],u))},${Math.round(lerp(a[1],b[1],u))},${Math.round(lerp(a[2],b[2],u))})`;}
+function mixh(h1,h2,u){const a=hex(h1),b=hex(h2);return [lerp(a[0],b[0],u),lerp(a[1],b[1],u),lerp(a[2],b[2],u)];}
+function rgb(a){return `rgb(${Math.round(a[0])},${Math.round(a[1])},${Math.round(a[2])})`;}
+function mulberry(seed){let t=seed>>>0;return function(){t+=0x6D2B79F5;let r=Math.imul(t^t>>>15,1|t);r^=r+Math.imul(r^r>>>7,61|r);return((r^r>>>14)>>>0)/4294967296;};}
+
+/* ---------- beats: sequential TL ids -> semantic kinds (L-138) ----------
+   hook=seam draw | s0=walkoff | s1=fadechain | s2=chainXR | s3=droplet |
+   s4=snaps | s5=week1 | s6=week2 | s7=cleanup | s8=holdfrag(visual-only) |
+   s9=noexit | s10=tuned | s11=permanent | s12=erased */
+const SEQ = {hook:"seam",s0:"walkoff",s1:"fadechain",s2:"chainXR",s3:"droplet",
+  s4:"snaps",s5:"week1",s6:"week2",s7:"cleanup",s8:"holdfrag",
+  s9:"noexit",s10:"tuned",s11:"permanent",s12:"erased"};
+function beatOf(t){for(let i=0;i<TL.length;i++) if(t>=TL[i].start&&t<TL[i].end) return TL[i]; return TL[TL.length-1];}
+function beatKind(t){return SEQ[beatOf(t).id]||"seam";}
+function startOf(kind){const b=TL.find(b=>SEQ[b.id]===kind);return b?b.start:0;}
+function localT(t){const B=beatOf(t);return t-B.start;}
+
+/* ---------- derived event times (single source: the beat table) ---------- */
+const T_CLEANUP=startOf("cleanup"), T_HOLDFRAG=startOf("holdfrag"),
+  T_NOEXIT=startOf("noexit"), T_TUNED=startOf("tuned"),
+  T_PERM=startOf("permanent"), T_ERASED=startOf("erased");
+const SNAP1 = startOf("snaps")+0.68;   // link snap #1 (sfx anchor 15.6)
+const SNAP2 = startOf("snaps")+1.88;   // link snap #2 (sfx anchor 16.8)
+
+/* ---------- looks (bible bands: lum .43-.54 / sat .38-.65) ---------- */
+const LOOKS = {
+  clinic:{skyT:"#d9a26e",skyH:"#c9885e",hill:"#a86a52",hillEdge:"#64301f",
+    hLit:["#dcb08c","#c29470","#aa7a5e"],hShade:"#8e5644",band:"#96526a",
+    bead:"#eadcc8",glow:"#ffd98a",ink:"#3a2420",plate:"#b8924a"},
+  tissue:{skyT:"#a06a74",skyH:"#825260",hill:"#74484e",hillEdge:"#46262c",
+    hLit:["#a87880","#8e6470","#7a5464"],hShade:"#624048",band:"#6a4456",
+    bead:"#d8c4bc",glow:"#ffc8a0",ink:"#3a2228",plate:"#a87a3e"},
+  day:{skyT:"#4a7ec0",skyH:"#b0c8e0",hill:"#c08868",hillEdge:"#76402e",
+    hLit:["#dcb08c","#d0a084","#c08868"],hShade:"#98705c",band:"#b08890",
+    bead:"#f0e8d8",glow:"#fff2c8",ink:"#3a2420",plate:"#b8924a"}
+};
+const LOOK_KEYS = [
+  [0,            "clinic","clinic",0],
+  [T_CLEANUP+0.9,"clinic","tissue",T_CLEANUP+2.4],
+  [T_ERASED,     "tissue","day",   T_ERASED+1.4],
+  [T_ERASED+1.4, "day","day",9999]
+];
+function lookAt(t){
+  let a=LOOK_KEYS[0];
+  for(let i=0;i<LOOK_KEYS.length;i++){ if(t>=LOOK_KEYS[i][0]) a=LOOK_KEYS[i]; else break; }
+  const u=a[3]>a[0]?smooth((t-a[0])/(a[3]-a[0])):1;
+  const A=LOOKS[a[1]],Bk=LOOKS[a[2]],out={};
+  for(const k in A){
+    if(typeof A[k]==="number"){out[k]=lerp(A[k],Bk[k],u);continue;}
+    if(Array.isArray(A[k])){out[k]=A[k].map((v,i)=>rgb(mixh(v,Bk[k][i],u)));continue;}
+    out[k]=rgb(mixh(A[k],Bk[k],u));
+  }
+  return out;
+}
+
+/* ---------- skin landscape (deterministic) ---------- */
+const rnd=mulberry(20261128);
+const HILLS=[];
+(function(){ // far soft hills
+  let x=-120;while(x<W+240){const w=300+rnd()*260,h=170+rnd()*130;
+    HILLS.push({x,w,h,seed:Math.floor(rnd()*9999),pi:Math.floor(rnd()*3)});
+    x+=w*0.62;}
+})();
+function skinHills(f,t,look){
+  let g=`<g filter="url(#dofFar)" opacity="0.8">`;
+  for(const hl of HILLS){
+    const top=760-hl.h;
+    g+=`<path d="M ${hl.x} 900 Q ${hl.x+hl.w*0.5} ${top} ${hl.x+hl.w} 900 Z" fill="${look.hLit[hl.pi]}" stroke="${look.hShade}" stroke-width="3"/>`;
+  }
+  g+="</g>";
+  // main skin hill: one soft dome across center
+  g+=`<path d="M -200 1240 Q 260 940 540 1000 Q 820 1060 1280 1180 L 1280 1920 L -200 1920 Z" fill="${look.hill}" stroke="${look.hillEdge}" stroke-width="5"/>`;
+  // skin texture: faint pores (deterministic dots on the dome)
+  const r=mulberry(31);let pores="";
+  for(let i=0;i<26;i++){const px=r()*W,py=1230+r()*560;
+    pores+=`<circle cx="${px}" cy="${py}" r="${2+r()*3}" fill="${look.hShade}" opacity="0.14"/>`;}
+  g+=pores;
+  return g;
+}
+
+/* ---------- THE SEAM: bead chain ---------- */
+const N_BEADS=16;
+function seamPoint(u,taut){
+  const x=lerp(140,940,u);
+  const sag=Math.sin(u*Math.PI)*(taut>0.5?26:96);
+  const y=lerp(1230,1075,u)+sag-Math.sin(u*2.6)*(taut>0.5?6:22);
+  return [x,y];
+}
+function beadState(i,t){
+  const k=beatKind(t),lt=localT(t);
+  let on=1,dim=0;
+  if(k==="seam"){ // hook: chain draws L->R behind the needle
+    const draw=smooth(lt/2.55);
+    on=i/(N_BEADS-1)<=draw?1:0;
+  } else if(k==="fadechain"){
+    dim=(Math.sin(t*1.2-i*0.55)+1)*0.5*0.3; // travelling dim wave
+  } else if(k==="week2"){
+    const order=(i%8);
+    dim=clamp((lt-0.4-order*0.16)/0.5,0,1)*0.75; // one-by-one dimming, half go dark
+  } else if(k==="cleanup"||k==="holdfrag"){
+    dim=0.7;
+  } else if(k==="noexit"){
+    dim=0.55;
+  } else if(k==="tuned"||k==="permanent"){
+    on=clamp(1-smooth((t-T_TUNED)/1.2),0,1); // seam fades under the twin chains
+  } else if(k==="erased"){
+    on=clamp(1-smooth(lt/1.6),0,1);
+  }
+  return {on,dim};
+}
+function seamChain(f,t,look){
+  const k=beatKind(t),lt=localT(t);
+  let g="";
+  const taut=(k==="week1"||k==="week2")?smooth(Math.max(0,(t-startOf("week1"))/0.6)):0;
+  const seamAlive=(k!=="tuned"&&k!=="permanent"&&k!=="erased")?1:
+    (k==="erased"?clamp(1-smooth(lt/1.6),0,1):clamp(1-smooth((t-T_TUNED)/1.2),0,1));
+  if(seamAlive>0.02){
+    let d="";
+    for(let i=0;i<N_BEADS;i++){
+      const [x,y]=seamPoint(i/(N_BEADS-1),taut);
+      d+=(i===0?"M ":"L ")+x.toFixed(1)+" "+y.toFixed(1)+" ";
+    }
+    g+=`<path d="${d}" fill="none" stroke="${look.ink}" stroke-width="4.5" opacity="${seamAlive}"/>`;
+  }
+  for(let i=0;i<N_BEADS;i++){
+    const st=beadState(i,t);
+    if(st.on<=0.02) continue;
+    let [x,y]=seamPoint(i/(N_BEADS-1),taut);
+    // snap physics: beads 5 & 8 fly apart at their snap moments
+    if(k==="snaps"){
+      if(i===5&&t>=SNAP1){const u=smooth((t-SNAP1)/0.5);x+=u*54;y-=u*40;}
+      if(i===8&&t>=SNAP2){const u=smooth((t-SNAP2)/0.5);x-=u*48;y-=u*44;}
+    }
+    // cleanup: swallowed beads vanish into macrophages
+    if(k==="cleanup"){
+      const order=[2,6,10,13].indexOf(i);
+      if(order>=0){const gone=smooth((lt-0.5-order*0.38)/0.4);if(gone>=1) continue;}
+    }
+    const op=(1-st.dim)*st.on;
+    if(op<=0.02) continue;
+    const bobY=Math.sin(t*1.3+i*0.7)*3; // micro-life: beads shimmer (idle motion law)
+    const fresh=(k==="seam")&&(i/(N_BEADS-1)<=smooth(lt/2.55))&&(i/(N_BEADS-1)>smooth(lt/2.55)-0.09);
+    const pulse=fresh?0.5+0.5*Math.sin(t*10):0;
+    g+=`<circle cx="${x}" cy="${y+bobY}" r="48" fill="${look.bead}" stroke="${look.ink}" stroke-width="7" opacity="${op}"/>`;
+    g+=`<ellipse cx="${x}" cy="${y+bobY+20}" rx="38" ry="22" fill="${look.ink}" opacity="${0.14*op}"/>`;
+    g+=`<circle cx="${x-16}" cy="${y+bobY-16}" r="13" fill="#fff" opacity="${0.5*op}"/>`;
+    if(pulse>0){g+=`<circle cx="${x}" cy="${y+bobY}" r="76" fill="${look.glow}" opacity="${0.5*pulse}" filter="url(#glow)"/>`;}
+    else if(st.dim<0.2&&(k==="seam"||k==="walkoff"||k==="week1")){
+      g+=`<circle cx="${x}" cy="${y+bobY}" r="64" fill="${look.glow}" opacity="0.22" filter="url(#glow)"/>`;}
+    // link bar to next bead
+    if(i<N_BEADS-1){
+      const st2=beadState(i+1,t);
+      if(st2.on>0.02){
+        const [x2,y2]=seamPoint((i+1)/(N_BEADS-1),taut);
+        const broken=(k==="snaps"&&((i===5&&t>=SNAP1)||(i===8&&t>=SNAP2)));
+        if(!broken){
+          g+=`<line x1="${x}" y1="${y}" x2="${(x+x2)/2}" y2="${(y+y2)/2}" stroke="${look.ink}" stroke-width="7" stroke-linecap="round" opacity="${op*0.9}"/>`;
+        }
+      }
+    }
+  }
+  return g;
+}
+/* tiny clock faces on beads (fadechain beat) */
+function clockFaces(f,t,look){
+  const k=beatKind(t);
+  if(k!=="fadechain")return "";
+  let g="";
+  for(let i=0;i<N_BEADS;i+=2){
+    const [x,y]=seamPoint(i/(N_BEADS-1),0);
+    const handA=t*1.6+i*0.4;
+    g+=`<g opacity="0.85"><circle cx="${x}" cy="${y-58}" r="14" fill="#fff" stroke="${look.ink}" stroke-width="2.5"/>
+    <line x1="${x}" y1="${y-58}" x2="${x+Math.cos(handA)*9}" y2="${y-58+Math.sin(handA)*9}" stroke="${look.ink}" stroke-width="2"/></g>`;
+  }
+  return g;
+}
+/* needle (hook): curved needle drawing the chain */
+function needle(f,t,look){
+  const k=beatKind(t);
+  if(k!=="seam")return "";
+  const draw=smooth(localT(t)/2.55);
+  const [x,y]=seamPoint(clamp(draw+0.05,0,1),0);
+  return `<g transform="translate(${x},${y}) rotate(24)">
+    <path d="M 0 60 Q 54 10 8 -74" fill="none" stroke="#c8ccd4" stroke-width="10" stroke-linecap="round"/>
+    <path d="M 8 -74 L 2 -60" stroke="#c8ccd4" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="0" cy="60" r="7" fill="${look.ink}"/></g>`;
+}
+/* surgeon bean (walkoff): walks away from the seam */
+function surgeon(f,t,look){
+  const k=beatKind(t);
+  if(k!=="walkoff")return "";
+  const lt=localT(t);
+  const walkAway=smooth(lt/2.4);
+  const x=lerp(560,240,walkAway);
+  return bean(x,1240,1.1,{pose:"pockets",face:"flat",walk:walkAway*0.9+0.1,
+    blink01:blinkOf(41,t),swayT:t,coat:"#2e5a4e",lean:1.5});
+}
+function bean(x,y,s,o){
+  const ink=o.ink||"#3a2420",skin="#f2ece2",coat=o.coat||"#4e4258";
+  const bob=o.walk?Math.sin(o.walk*TAU)*0.05:Math.sin((o.swayT||0)*1.3)*0.012;
+  const lean=(o.lean||0)+Math.sin((o.swayT||0)*0.9)*1.2;
+  const hh=210*s,hw=150*s,bodyH=150*s,legH=96*s;
+  const yy=y-legH-bodyH-hh-bob*hh;
+  let g=`<g transform="translate(${x},${y}) rotate(${lean}) translate(${-x},${-y})">`;
+  g+=`<line x1="${x-16*s}" y1="${y}" x2="${x-10*s}" y2="${y-legH}" stroke="${ink}" stroke-width="${9*s}" stroke-linecap="round"/>`;
+  g+=`<line x1="${x+16*s}" y1="${y}" x2="${x+10*s}" y2="${y-legH}" stroke="${ink}" stroke-width="${9*s}" stroke-linecap="round"/>`;
+  g+=`<path d="M ${x-46*s} ${y-legH} L ${x-38*s} ${y-legH-bodyH} Q ${x} ${y-legH-bodyH-18*s} ${x+38*s} ${y-legH-bodyH} L ${x+46*s} ${y-legH} Z" fill="${coat}" stroke="${ink}" stroke-width="${5*s}"/>`;
+  const shY=y-legH-bodyH+22*s;
+  const arm=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${ink}" stroke-width="${8*s}" stroke-linecap="round"/><circle cx="${x2}" cy="${y2}" r="${7*s}" fill="${ink}"/>`;
+  const P=o.pose||"pockets";
+  if(P==="pockets"){g+=arm(x-44*s,shY,x-30*s,shY+52*s)+arm(x+44*s,shY,x+30*s,shY+52*s);}
+  g+=`<path d="M ${x-hw/2} ${yy+hh*0.62} Q ${x-hw/2} ${yy+hh*0.08} ${x-hw*0.18} ${yy} Q ${x} ${yy-hh*0.06} ${x+hw*0.18} ${yy} Q ${x+hw/2} ${yy+hh*0.08} ${x+hw/2} ${yy+hh*0.62} Q ${x} ${yy+hh*1.02} ${x-hw/2} ${yy+hh*0.62} Z" fill="${skin}" stroke="${ink}" stroke-width="${5*s}"/>`;
+  const eyeY=yy+hh*0.48,ex=hw*0.26;
+  if((o.blink01||0)<0.5){g+=`<circle cx="${x-ex}" cy="${eyeY}" r="${6.5*s}" fill="${ink}"/><circle cx="${x+ex}" cy="${eyeY}" r="${6.5*s}" fill="${ink}"/>`;}
+  else{g+=`<line x1="${x-ex-7*s}" y1="${eyeY}" x2="${x-ex+7*s}" y2="${eyeY}" stroke="${ink}" stroke-width="${4.5*s}"/><line x1="${x+ex-7*s}" y1="${eyeY}" x2="${x+ex+7*s}" y2="${eyeY}" stroke="${ink}" stroke-width="${4.5*s}"/>`;}
+  if(o.face==="open")g+=`<ellipse cx="${x}" cy="${eyeY+34*s}" rx="${13*s}" ry="${17*s}" fill="${ink}"/>`;
+  else if(o.face==="smile")g+=`<path d="M ${x-20*s} ${eyeY+30*s} Q ${x} ${eyeY+46*s} ${x+20*s} ${eyeY+30*s}" stroke="${ink}" stroke-width="${5*s}" fill="none" stroke-linecap="round"/>`;
+  else if(o.face==="flat")g+=`<line x1="${x-16*s}" y1="${eyeY+36*s}" x2="${x+16*s}" y2="${eyeY+36*s}" stroke="${ink}" stroke-width="${5*s}" stroke-linecap="round"/>`;
+  return g+"</g>";
+}
+function blinkOf(seed,t){const r=mulberry(seed);const period=0.7+r()*1.6;const ph=r()*period;
+  return ((t+ph)%period)<4/FPS?1:0;}
+
+/* ---------- water droplet ---------- */
+function droplet(f,t,look){
+  const k=beatKind(t);
+  if(k!=="droplet"&&k!=="snaps")return "";
+  let x,y,sc=1;
+  if(k==="droplet"){
+    const lt=localT(t);
+    const u=smooth(lt/1.4);
+    x=lerp(700,486,u); y=lerp(380,940,u);
+    if(lt>1.4){const st=smooth((lt-1.4)/0.4);x=486;y=940+st*6;sc=1-st*0.35;}
+  } else {
+    const lt=localT(t);
+    if(lt<0.35)return ""; // first wedge
+    if(t<SNAP2){ // droplet 1 wedged at bead 5
+      const [bx,by]=seamPoint(5/(N_BEADS-1),0);
+      x=bx+6;y=by-4;
+    } else { // droplet 2 arrives at bead 8
+      const u2=clamp((t-SNAP2)/0.4,0,1);
+      const [tx,ty]=seamPoint(8/(N_BEADS-1),0);
+      x=lerp(760,tx+6,u2);y=lerp(420,ty-4,u2);
+    }
+  }
+  return `<g transform="translate(${x},${y}) scale(${sc})">
+    <path d="M 0 -34 C 20 -6 26 12 16 26 Q 0 38 -16 26 C -26 12 -20 -6 0 -34 Z"
+      fill="#7ab0d8" stroke="${look.ink}" stroke-width="4"/>
+    <circle cx="-6" cy="-6" r="6" fill="#eef6ff" opacity="0.9"/>
+    <circle cx="0" cy="6" r="9" fill="#7ab0d8" opacity="0.35" filter="url(#glow)"/></g>`;
+}
+/* ---------- WEEK ticks + strength bar ---------- */
+function weekPlates(f,t,look){
+  const k=beatKind(t);
+  if(k!=="week1"&&k!=="week2")return "";
+  const lt=localT(t);
+  const w1=k==="week1";
+  const a=smooth(lt/0.45);
+  const ease=smooth(Math.min(1,lt/0.45));
+  const settle=1+0.08*(1-ease)*Math.sin(ease*Math.PI*2); // ease-out bounce stamp
+  const label=w1?"WEEK 1":"WEEK 2";
+  return `<g opacity="${a}" transform="translate(900,676) scale(${settle}) translate(-900,-676)"><rect x="790" y="630" width="220" height="92" rx="14" fill="#10142e" opacity="0.92"/>
+  <text x="900" y="700" text-anchor="middle" font-size="56" font-weight="800" fill="#fff">${label}</text></g>`;
+}
+function strengthBar(f,t,look){
+  const k=beatKind(t);
+  if(k!=="week2")return "";
+  const lt=localT(t);
+  const drain=smooth((lt-0.5)/1.3);
+  const wL=420*(1-drain*0.5);
+  let g=`<rect x="330" y="590" width="420" height="54" rx="12" fill="#fff" opacity="0.92" stroke="${look.ink}" stroke-width="5"/>`;
+  if(wL>4)g+=`<rect x="336" y="596" width="${wL-12}" height="42" rx="9" fill="${look.plate}"/>`;
+  if(drain>=0.99)g+=`<text x="790" y="632" text-anchor="middle" font-size="54" font-weight="800" fill="${look.ink}">50%</text>`;
+  return g;
+}
+/* ---------- macrophages (cleanup + holdfrag) ---------- */
+const MACROS=[{fx:0,tx:320,ty:1150},{fx:1,tx:760,ty:1190},{fx:2,tx:560,ty:1260},{fx:3,tx:180,ty:1080}];
+function macrophages(f,t,look){
+  const k=beatKind(t);
+  if(k!=="cleanup"&&k!=="holdfrag"&&k!=="noexit")return "";
+  let g="";
+  if(k==="cleanup"||k==="holdfrag"){
+    const sa=smooth((k==="cleanup"?localT(t)/0.6:1));
+    g+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${look.ink}" opacity="${0.22*sa}"/>`;
+  }
+  for(let i=0;i<4;i++){
+    const m=MACROS[i];
+    let mx,my,glow=0;
+    if(k==="cleanup"){
+      const lt=localT(t);
+      const u=smooth(clamp((lt-0.3-i*0.32)/0.7,0,1));
+      mx=lerp(m.fx===0?-60:m.fx===1?1140:(m.fx===2?540:-80),m.tx,u);
+      my=lerp(m.fx===2?1650:1460,m.ty,u);
+    } else if(k==="holdfrag"){
+      mx=m.tx;my=m.ty+Math.sin(t*1.2+i)*4;glow=0.25+0.2*Math.sin(t*2+i*1.7);
+    } else { // noexit: faint, inside body, breathing
+      mx=m.tx*0.7+150;my=m.ty*0.75+380+Math.sin(t*1.1+i)*5;glow=0;
+    }
+    const roll=(t*0.7+i*1.3)*40;
+    g+=`<g transform="translate(${mx},${my}) rotate(${Math.sin((t*0.7+i*1.3))*9})">
+      <circle r="56" fill="#f2e2b8" stroke="${look.ink}" stroke-width="4"/>
+      <circle r="56" fill="none" stroke="${look.plate}" stroke-width="3" stroke-dasharray="14 22" stroke-dashoffset="${-roll}"/>
+      <circle cx="14" cy="8" r="17" fill="${look.plate}" opacity="0.75"/>
+      ${glow>0.05?`<circle r="72" fill="${look.glow}" opacity="${glow}" filter="url(#glow)"/>`:""}</g>`;
+    // swallowed dark bead inside (holdfrag pulse)
+    if(k==="holdfrag"){
+      const pu=0.5+0.5*Math.sin(t*1.6+i*2.2);
+      g+=`<circle cx="${mx-12}" cy="${my-10}" r="12" fill="${look.ink}" opacity="${0.25+0.4*pu}"/>`;
+    }
+  }
+  return g;
+}
+/* ---------- x-ray band + links stamp (chainXR) ---------- */
+function xrayBand(f,t,look){
+  const k=beatKind(t);
+  if(k!=="chainXR")return "";
+  const lt=localT(t);
+  const a=smooth(lt/0.5);
+  // scrim: dim everything EXCEPT the band so the chain-in-skin is the hero
+  let g=`<rect x="0" y="0" width="${W}" height="${H}" fill="${look.ink}" opacity="${0.3*a}"/>`;
+  g+=`<g opacity="${a}"><rect x="70" y="960" width="940" height="270" rx="26" fill="${look.band}" opacity="0.55" stroke="${look.ink}" stroke-width="4" stroke-dasharray="18 12"/></g>`;
+  return g;
+}
+/* UI overlay (screen-fixed, outside the camera): plates never crop or blur */
+function uiStamp(f,t,look){ // links counter (chainXR)
+  const k=beatKind(t);
+  if(k!=="chainXR")return "";
+  const lt=localT(t);
+  const stamp=smooth((lt-1.4)/0.4);
+  if(stamp<=0)return "";
+  return `<g opacity="${stamp}"><rect x="630" y="545" width="390" height="100" rx="14" fill="${look.plate}" stroke="${look.ink}" stroke-width="6"/>
+    <text x="825" y="620" text-anchor="middle" font-size="54" font-weight="800" fill="${look.ink}">1,000+ LINKS</text></g>`;
+}
+/* ---------- body cross-section (noexit) ---------- */
+function bodyXray(f,t,look){
+  const k=beatKind(t);
+  if(k!=="noexit")return "";
+  const lt=localT(t);
+  const a=smooth(lt/0.6);
+  const breathe=Math.sin(t*1.1)*0.02; // the body breathes
+  let g=`<g opacity="${a}" transform="translate(540,950) scale(${1+breathe}) translate(-540,-950)">
+    <ellipse cx="540" cy="1060" rx="380" ry="400" fill="${look.band}" opacity="0.4" stroke="${look.ink}" stroke-width="6"/>
+    <ellipse cx="540" cy="660" rx="190" ry="130" fill="${look.band}" opacity="0.4" stroke="${look.ink}" stroke-width="6"/>
+    <circle cx="540" cy="1060" r="18" fill="${look.ink}"/>`;
+  // dashed exit arrows at edges that DISSOLVE (there is no exit)
+  const fade=clamp(1-smooth((lt-1.1)/0.7),0,1);
+  if(fade>0.02){
+    g+=`<g opacity="${fade}">
+      <path d="M 860 830 L 960 730" stroke="${look.ink}" stroke-width="6" stroke-dasharray="10 10"/>
+      <path d="M 860 1230 L 960 1330" stroke="${look.ink}" stroke-width="6" stroke-dasharray="10 10"/>
+      <path d="M 220 830 L 120 730" stroke="${look.ink}" stroke-width="6" stroke-dasharray="10 10"/></g>`;
+  }
+  return g+"</g>";
+}
+/* ---------- twin chains (tuned) ---------- */
+function twinChains(f,t,look){
+  const k=beatKind(t);
+  if(k!=="tuned"&&k!=="permanent")return "";
+  const alive=(k==="tuned")?1:clamp(1-smooth((t-startOf("permanent"))/1.1),0,1);
+  if(alive<=0.02)return "";
+  const lt=(k==="tuned")?localT(t):1;
+  let g=`<g opacity="${alive}">`;
+  // FAST chain (skin): slim, dissolving L->R
+  const fastVanish=(k==="tuned")?smooth(lt/1.8):1;
+  for(let i=0;i<13;i++){
+    const fx=lerp(170,820,i/12),fy=760+Math.sin(i/12*Math.PI)*8;
+    const bobF=Math.sin(t*1.6+i*0.5)*2;
+    const gone=(i/12)<fastVanish;
+    if(!gone){
+      g+=`<circle cx="${fx}" cy="${fy+bobF}" r="30" fill="${look.bead}" stroke="${look.ink}" stroke-width="5" opacity="${alive}"/>`;
+      g+=`<circle cx="${fx-10}" cy="${fy+bobF-10}" r="8" fill="#fff" opacity="${0.45*alive}"/>`;
+    } else if(k==="tuned"&&(i/12)<fastVanish+0.12){
+      g+=`<circle cx="${fx}" cy="${fy}" r="18" fill="${look.glow}" opacity="${0.5*(1-(i/12-fastVanish)/0.12)}" filter="url(#glow)"/>`;
+    }
+  }
+  // SLOW chain (muscle): thick beads, holding steady
+  for(let i=0;i<9;i++){
+    const sx=lerp(170,820,i/8),sy=1160+Math.sin(i/8*Math.PI)*6;
+    const bobS=Math.sin(t*0.9+i*0.8)*2.5;
+    g+=`<circle cx="${sx}" cy="${sy+bobS}" r="48" fill="${look.bead}" stroke="${look.ink}" stroke-width="6" opacity="${alive}"/>`;
+    g+=`<ellipse cx="${sx}" cy="${sy+bobS+20}" rx="36" ry="20" fill="${look.ink}" opacity="${0.14*alive}"/>`;
+  }
+  // clock dials: fast hand spins, slow hand crawls
+  const fastHand=t*5.2, slowHand=t*0.55;
+  g+=`<circle cx="930" cy="760" r="30" fill="#fff" stroke="${look.ink}" stroke-width="4"/>
+  <line x1="930" y1="760" x2="${930+Math.cos(fastHand)*20}" y2="${760+Math.sin(fastHand)*20}" stroke="${look.ink}" stroke-width="4"/>
+  <circle cx="930" cy="1160" r="30" fill="#fff" stroke="${look.ink}" stroke-width="4"/>
+  <line x1="930" y1="1160" x2="${930+Math.cos(slowHand)*20}" y2="${1160+Math.sin(slowHand)*20}" stroke="${look.ink}" stroke-width="4"/>`;
+  return g+"</g>";
+}
+function uiChainLabels(f,t,look){
+  const k=beatKind(t);
+  if(k!=="tuned"&&k!=="permanent")return "";
+  const alive=(k==="tuned")?1:clamp(1-smooth((t-startOf("permanent"))/1.1),0,1);
+  return `<g opacity="${alive}"><rect x="60" y="676" width="150" height="92" rx="12" fill="${look.plate}" stroke="${look.ink}" stroke-width="5"/>
+  <text x="135" y="718" text-anchor="middle" font-size="36" font-weight="800" fill="${look.ink}">SKIN</text>
+  <text x="135" y="754" text-anchor="middle" font-size="32" font-weight="700" fill="${look.ink}">FAST</text>
+  <rect x="60" y="1076" width="170" height="92" rx="12" fill="${look.plate}" stroke="${look.ink}" stroke-width="5"/>
+  <text x="145" y="1118" text-anchor="middle" font-size="34" font-weight="800" fill="${look.ink}">MUSCLE</text>
+  <text x="145" y="1154" text-anchor="middle" font-size="32" font-weight="700" fill="${look.ink}">SLOW</text></g>`;
+}
+/* ---------- permanent steel thread (permanent) ---------- */
+function permThread(f,t,look){
+  const k=beatKind(t);
+  if(k!=="permanent")return "";
+  const lt=localT(t);
+  const a=smooth(lt/0.5);
+  const glintX=lerp(180,900,(t*0.55)%1);
+  return `<g opacity="${a}">
+    <line x1="140" y1="980" x2="940" y2="980" stroke="#c8ccd4" stroke-width="34" stroke-linecap="round"/>
+    <line x1="140" y1="972" x2="940" y2="972" stroke="#eef1f4" stroke-width="8" stroke-linecap="round" opacity="0.9"/>
+    <rect x="${glintX}" y="948" width="130" height="66" fill="#fff" opacity="0.9" filter="url(#glow)"/></g>`;
+}
+function uiPermPlate(f,t,look){
+  const k=beatKind(t);
+  if(k!=="permanent")return "";
+  const a=smooth(localT(t)/0.5);
+  return `<g opacity="${a}"><rect x="360" y="1080" width="360" height="100" rx="14" fill="${look.plate}" stroke="${look.ink}" stroke-width="6"/>
+    <text x="540" y="1152" text-anchor="middle" font-size="56" font-weight="800" fill="${look.ink}">PERMANENT</text></g>`;
+}
+/* ---------- banner + title ---------- */
+function banner(f,t,look){
+  const k=beatKind(t);
+  if(k!=="erased")return "";
+  const a=smooth((localT(t)-0.9)/0.5);
+  const settle=1+0.1*(1-a); // scale-settle landing (motivated pause)
+  if(a<=0)return "";
+  return `<g opacity="${a}" transform="translate(540,1228) scale(${settle}) translate(-540,-1228)"><rect x="150" y="1180" width="780" height="96" rx="12" fill="${look.plate}" stroke="${look.ink}" stroke-width="7"/>
+  <text x="540" y="1244" text-anchor="middle" font-size="58" font-weight="800" fill="${look.ink}">GONE WITHOUT A TRACE</text></g>`;
+}
+function titleCard(f,t){
+  if(t>2.6)return "";
+  const a=t<2.1?1:1-smooth((t-2.1)/0.5);
+  const settle=t<0.45?1.07-0.07*smooth(t/0.45):1.0; // ease-out settle on entry
+  return `<g opacity="${a}" transform="translate(540,485) scale(${settle}) translate(-540,-485)"><text x="540" y="430" text-anchor="middle" font-size="92" font-weight="800" fill="#fff2d8" stroke="#3a2420" stroke-width="4">THE STITCHES</text>
+  <text x="540" y="540" text-anchor="middle" font-size="92" font-weight="800" fill="#fff2d8" stroke="#3a2420" stroke-width="4">DOCTORS NEVER REMOVE</text></g>`;
+}
+/* ---------- sun reveal (erased, day look) ---------- */
+function sunDisc(f,t){
+  if(t<T_ERASED-0.6) return "";
+  const u=smooth((t-(T_ERASED-0.6))/2.0);
+  const sy=lerp(760,470,u);
+  return `<circle cx="640" cy="${sy}" r="112" fill="#ffcf9e" opacity="${0.3+0.5*u}" filter="url(#glow)"/>
+  <circle cx="640" cy="${sy}" r="68" fill="#ffe9c8"/>`;
+}
+/* ---------- foreground band ---------- */
+function fgBand(f,t,look){
+  const dark=mixc(look.hillEdge,"#3a2228",0.35);
+  return `<g filter="url(#dofFg)"><path d="M -80 1920 L -80 1560 L 180 1620 L 200 1920 Z" fill="${dark}" opacity="0.85"/>
+  <path d="M 900 1920 L 930 1660 L 1180 1600 L 1180 1920 Z" fill="${dark}" opacity="0.85"/></g>`;
+}
+
+/* ---------- camera ---------- */
+const CAMS={
+  hook:{z0:1.35,z1:1.41,x:0,y:-70,roll:-1.2},
+  s0:{z0:1.14,z1:1.2,x:-60,y:-10,roll:1.2},
+  s1:{z0:1.5,z1:1.56,x:0,y:-150,roll:0},
+  s2:{z0:1.3,z1:1.36,x:20,y:-80,roll:-1.0},
+  s3:{z0:1.45,z1:1.51,x:100,y:-120,roll:0.8},
+  s4:{z0:1.5,z1:1.56,x:-60,y:-130,roll:-0.6},
+  s5:{z0:1.4,z1:1.46,x:0,y:-140,roll:0.4},
+  s6:{z0:1.4,z1:1.46,x:0,y:-150,roll:-0.8},
+  s7:{z0:1.35,z1:1.41,x:-80,y:-90,roll:1.0},
+  s8:{z0:1.45,z1:1.51,x:0,y:-140,roll:0},
+  s9:{z0:1.22,z1:1.28,x:0,y:-30,roll:-1.0},
+  s10:{z0:1.2,z1:1.26,x:0,y:-60,roll:0.9},
+  s11:{z0:1.3,z1:1.36,x:0,y:-80,roll:-0.5},
+  s12:{z0:1.15,z1:1.2,x:0,y:-60,roll:0.6}
+};
+function camAt(t){
+  const B=beatOf(t),c=CAMS[B.id]||CAMS.hook;
+  const local=(t-B.start)/(B.end-B.start);
+  const z=lerp(c.z0,c.z1,local);
+  const idx=TL.findIndex(x=>x.id===B.id);
+  const prev=TL[idx-1],pc=prev?(CAMS[prev.id]||CAMS.hook):c;
+  const g=smooth(local*FPS/20);
+  const z2=lerp(pc.z0,z,g),x2=lerp(pc.x,c.x,g),y2=lerp(pc.y,c.y,g),r2=lerp(pc.roll,c.roll,g);
+  let kx=0,ky=0;
+  if(t>=SNAP1&&t<SNAP1+0.28){const f=(t-SNAP1)*FPS;const amp=13*Math.pow(0.72,f);kx=(f%2<1?amp:-amp);ky=amp*0.35;}
+  if(t>=SNAP2&&t<SNAP2+0.28){const f=(t-SNAP2)*FPS;const amp=11*Math.pow(0.72,f);kx=(f%2<1?-amp:amp);}
+  return {z:z2,x:x2+kx,y:y2+ky,r:r2};
+}
+function flash(t){
+  if(t>=SNAP1-0.03&&t<SNAP1-0.03+4/FPS)return 1-((t-(SNAP1-0.03))*FPS)/4*0.85;
+  return 0;
+}
+
+/* ---------- frame ---------- */
+function renderFrame(t){
+  t=Math.min(t,T_END);
+  const look=lookAt(t),cam=camAt(t);
+  const kind=beatKind(t);
+  let world="";
+  world+=`<defs><linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="${look.skyT}"/><stop offset="1" stop-color="${look.skyH}"/></linearGradient>
+    <filter id="dofFar"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="dofFg"><feGaussianBlur stdDeviation="9"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="12"/></filter></defs>`;
+  world+=`<rect x="-220" y="-220" width="${W+440}" height="1270" fill="url(#skyg)"/>`;
+  world+=skinHills(null,t,look)+sunDisc(null,t);
+  world+=seamChain(null,t,look)+clockFaces(null,t,look)+needle(null,t,look);
+  if(kind==="walkoff")world+=surgeon(null,t,look);
+  if(kind==="chainXR")world+=xrayBand(null,t,look);
+  if(kind==="droplet"||kind==="snaps")world+=droplet(null,t,look);
+  if(kind==="cleanup"||kind==="holdfrag"||kind==="noexit")world+=macrophages(null,t,look);
+  if(kind==="noexit")world+=bodyXray(null,t,look);
+  if(kind==="tuned"||kind==="permanent")world+=twinChains(null,t,look);
+  if(kind==="permanent")world+=permThread(null,t,look);
+  world+=fgBand(null,t,look);
+  // UI overlay (screen-fixed): plates never crop/blur under the camera
+  let ui="";
+  ui+=uiStamp(null,t,look)+uiChainLabels(null,t,look)+uiPermPlate(null,t,look);
+  ui+=weekPlates(null,t,look)+strengthBar(null,t,look)+banner(null,t,look);
+  const fl=flash(t);
+  const vigDeep=(kind==="noexit"||kind==="holdfrag")?0.44:0.30;
+  const html=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+    <g transform="translate(${W/2+cam.x},${H/2+cam.y}) scale(${cam.z}) rotate(${cam.r}) translate(${-W/2},${-H/2})">${world}</g>
+    ${ui}
+    ${titleCard(null,t)}
+    <rect width="${W}" height="${H}" fill="#fff" opacity="${fl}"/>
+    <defs><radialGradient id="vig" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="${vigDeep}"/></radialGradient></defs>
+    <rect width="${W}" height="${H}" fill="url(#vig)"/></svg>`;
+  document.getElementById("stage").innerHTML=html;
+}
+renderFrame(0);
+</script>
+</body>
+</html>

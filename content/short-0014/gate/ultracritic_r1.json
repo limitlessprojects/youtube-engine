@@ -1,0 +1,297 @@
+{
+ "round": 1,
+ "verdict": "BELOW_BAR_NO_POST",
+ "grand_mean": 6.15,
+ "frame_grand_mean": 6.11,
+ "dim_means": {
+  "frame:hook_impact": 6.0,
+  "frame:text_discipline": 8.0,
+  "frame:visual_hierarchy": 5.07,
+  "frame:contrast_legibility": 5.93,
+  "frame:production_polish": 5.5,
+  "video:pacing_rhythm": 7,
+  "video:character_life": 5,
+  "video:edit_flow": 7
+ },
+ "frame_means": {
+  "hook_u50": 6.8,
+  "s0_u50": 6.3,
+  "s10_u50": 5.0,
+  "s11_u50": 4.25,
+  "s12_u50": 6.5,
+  "s1_u50": 6.5,
+  "s2_u50": 5.0,
+  "s3_u50": 7.5,
+  "s4_u50": 7.0,
+  "s5_u50": 6.0,
+  "s6_u50": 6.0,
+  "s7_u50": 6.5,
+  "s8_u50": 6.75,
+  "s9_u50": 5.5
+ },
+ "floor_breaches": [
+  "s0_u50",
+  "s10_u50",
+  "s11_u50",
+  "s12_u50",
+  "s1_u50",
+  "s2_u50",
+  "s4_u50",
+  "s5_u50",
+  "s6_u50",
+  "s7_u50",
+  "s8_u50",
+  "s9_u50"
+ ],
+ "video_directives": [
+  "Give the little character at least blinking, breathing, or a head-tilt reaction when appearing (0:03-0:06) \u2014 currently a static cutout sliding across",
+  "Break the long static holds around 0:19-0:22 and 0:37-0:39 with subtle idle motion (ambient drift, bead shimmer) so the frame never feels frozen",
+  "Add a soft ease/settle on the title card at 0:38-0:39 so the closing beat lands with a motivated pause instead of a flat hold"
+ ],
+ "video_pass_source": "glm-4.6v via z-ai SDK video_url",
+ "frames": [
+  {
+   "scores": {
+    "hook_impact": 6,
+    "text_discipline": 8,
+    "visual_hierarchy": 6,
+    "contrast_legibility": 8,
+    "production_polish": 6
+   },
+   "mean": 6.8,
+   "words_visible": 5,
+   "top3_directives": [
+    "Remove or resolve the unexplained black shapes in the bottom corners \u2014 they read as unfinished mask artifacts and create dead zones",
+    "Enlarge and center the suture illustration; it currently sits small and low, leaving the lower half of the frame empty while the title floats in the top third",
+    "Add a subtle vignette or gradient behind the stitch so the cream suture beads separate more cleanly from the mid-tone skin background at small sizes"
+   ],
+   "frame": "hook_u50",
+   "is_hook_frame": true
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 5
+   },
+   "mean": 6.3,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill or crop the empty upper ~40% of the frame \u2014 it's a dead zone that pushes the focal character below the natural eye anchor for 9:16",
+    "Remove or explain the two unlit black rectangles at the bottom corners \u2014 they read as rendering artifacts and read like compositing errors on a phone screen",
+    "Push the character and bead-chain higher and larger; right now the composition's true focal path (figure \u2192 glowing bead curve) sits in the bottom third, leaving hierarchy lopsided"
+   ],
+   "frame": "s0_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 4,
+    "production_polish": 5
+   },
+   "mean": 5.0,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fix the 'MUSCLE' and 'SKIN' label plates being clipped off the left edge \u2014 pad the layout so full labels render inside frame.",
+    "Darken label text or lighten plate fill: dark-brown-on-gold at this size is borderline illegible on a 6-inch daylight screen.",
+    "Fill the top ~35% and bottom ~30% dead zones \u2014 add a header/title element, vignette interest, or reframe the two progress tracks vertically centered with supporting context."
+   ],
+   "frame": "s10_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 5,
+    "visual_hierarchy": 4,
+    "contrast_legibility": 4,
+    "production_polish": 4
+   },
+   "mean": 4.25,
+   "words_visible": 1,
+   "top3_directives": [
+    "The 'PERMANENT' label is clipped at the right frame edge \u2014 reposition so the full word and badge are inside the safe area, or animate it fully on-screen",
+    "The frame is ~70% flat mauve dead zone with no focal subject \u2014 add a foreground anchor element or tighten framing so the viewer's eye has a target",
+    "Foreground mauve shape nearly matches background hue \u2014 introduce value separation (rim light, outline shift, or darker foreground) to restore depth and legibility"
+   ],
+   "frame": "s11_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 6
+   },
+   "mean": 6.5,
+   "words_visible": 4,
+   "top3_directives": [
+    "Fill or cut the empty lower third \u2014 the dune body from the banner down to the dark blobs is a dead zone; move the title card to optical center or add a focal subject (footprints, tracks, silhouette) on the sand",
+    "Resolve or remove the unexplained dark blobs in the bottom corners \u2014 they read as rendering errors, not intentional framing/vignette",
+    "Break the faint footprint trail's collision with the title banner \u2014 the trail visually pierces the card's left edge; reroute it around or fade it before the banner"
+   ],
+   "frame": "s12_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the dead lower two-thirds \u2014 the composition collapses into empty rust-brown space below the bead chain; crop tighter or add a foreground element",
+    "Boost contrast between the bead strand and the hill behind it: the pale beads on mid-brown mud are mushy on a 6-inch daylight screen, especially the tiny tick-mark circles which read as smudges",
+    "Give the chain a clear focal anchor (highlighted head bead, glow, or shadow) \u2014 right now the eye wanders across 13 identical beads with no entry point"
+   ],
+   "frame": "s1_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 6,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 4
+   },
+   "mean": 5.0,
+   "words_visible": 3,
+   "top3_directives": [
+    "Fix the badge bleed: '1,000+ LINKS' is clipped at the right edge \u2014 pull it fully into frame with safe-margin padding",
+    "Fill or compose the bottom third \u2014 a large empty dead zone below the dashed panel kills the vertical framing; either extend the diagram down or recenter the focal element",
+    "Increase badge separation: olive tag on the tan background is low-contrast \u2014 add a subtle drop shadow or darken the text/background pairing for daylight phone legibility"
+   ],
+   "frame": "s2_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 7,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Lower third is a large flat dead zone (~40% of frame) \u2014 add subtle foreground detail or vignette to balance the composition",
+    "The blue sweat drop is the only focal accent but sits small and low \u2014 scale it up or add a soft highlight/motion arc to anchor the eye path",
+    "Necklace pearls have inconsistent link strokes (some dashes missing between beads) \u2014 unify connector detail for cleaner craft"
+   ],
+   "frame": "s3_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 7
+   },
+   "mean": 7.0,
+   "words_visible": 0,
+   "top3_directives": [
+    "Fill the top 40% dead zone: the entire upper frame is empty blurred background with no subject, branding, or hook text \u2014 crop tighter or place a single visual anchor there",
+    "Enlarge/reposition the focal bead-and-sweat-drop moment: it's small and off-center; make the emotional beat read instantly on a 6-inch screen",
+    "Resolve the unexplained dark blobs in the bottom corners \u2014 they read as render artifacts and cheapen otherwise clean flat-style craft"
+   ],
+   "frame": "s4_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 8,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 4
+   },
+   "mean": 6.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "The 'WEEK...' badge is clipped off the right edge \u2014 pull it fully inside frame with ~80px safe-margin padding",
+    "Bottom ~40% of frame is a flat empty dead zone \u2014 place a subject or secondary element there, or crop composition upward",
+    "The pearl chain has no clear reason for its diagonal; align it along a deliberate guide line or add depth (shadow/parallax layer) so the eye path reads as intentional"
+   ],
+   "frame": "s5_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 7,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 7,
+    "production_polish": 5
+   },
+   "mean": 6.0,
+   "words_visible": 1,
+   "top3_directives": [
+    "Fix the 'WEEK' label being clipped off the right edge \u2014 pull the pill fully into the safe zone with margin from frame edge.",
+    "Fill or crop the large dead zone in the bottom 40% of the frame \u2014 the bead trail should be centered vertically or a foreground element should occupy the lower third.",
+    "Remove the stray black block bleeding into the bottom-left corner and give the bead trail a defined focal anchor (largest bead, glow, or motion emphasis) instead of a uniform diagonal string."
+   ],
+   "frame": "s6_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 6,
+    "production_polish": 5
+   },
+   "mean": 6.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "Establish one clear focal point \u2014 the three identical cells carry equal visual weight with no compositional lead (size, glow, or camera emphasis); make the 'hero' cell 1.5-2x larger or add a subtle highlight.",
+    "Remove or explain the unexplained dark blobs bleeding in from the bottom corners \u2014 they read as rendering artifacts, not intentional foreground framing.",
+    "Increase foreground/background separation: the cream cells sit on a terracotta field with similar luminance; add a soft drop shadow or rim glow behind each cell so they pop on a 6-inch daylight screen."
+   ],
+   "frame": "s7_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 10,
+    "visual_hierarchy": 5,
+    "contrast_legibility": 5,
+    "production_polish": 7
+   },
+   "mean": 6.75,
+   "words_visible": 0,
+   "top3_directives": [
+    "Eliminate the large dead zones \u2014 top ~45% and bottom ~30% of the frame carry no subject, no text, no focal energy; recenter the lit beads or add a mid-frame anchor",
+    "Raise foreground/background separation: the glowing bead string blends into the muted mauve wash; push a darker vignette or rim-light the beads so the focal subject reads at 6 inches in daylight",
+    "Establish one clear hero element (largest, brightest bead or a short title card) \u2014 right now four equal-weight circles scatter the eye with no guided path"
+   ],
+   "frame": "s8_u50",
+   "is_hook_frame": false
+  },
+  {
+   "scores": {
+    "text_discipline": 9,
+    "visual_hierarchy": 4,
+    "contrast_legibility": 4,
+    "production_polish": 5
+   },
+   "mean": 5.5,
+   "words_visible": 0,
+   "top3_directives": [
+    "The frame is almost entirely one muddy mauve value \u2014 introduce a true accent color or darkened vignette so the subject separates from the background on a 6-inch screen in daylight",
+    "Establish one unambiguous focal point; the circular diagram floats center-frame with no scale contrast, framing device, or eye-path cue \u2014 enlarge the key node ~2x and dim everything else",
+    "Kill the dead zones: top 35% and bottom 30% are empty gradient voids with two stray black corner slivers \u2014 recompose the diagram to occupy the safe area or add depth layers (background texture/midground shape)"
+   ],
+   "frame": "s9_u50",
+   "is_hook_frame": false
+  }
+ ],
+ "warns": [
+  "A4 new entity ['Some'] appears only in the closer \u2014 tangent? (L-077 spine rule)",
+  "A1 no EMPHASIS table found \u2014 caption budget unverifiable"
+ ]
+}
